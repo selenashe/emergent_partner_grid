@@ -1,0 +1,46 @@
+# CoordinationGrid recurrent IPPO — Stage A (single learned agent, single
+# round, one fixed layout, fixed partner_z). See ippo_rnn_coordination_grid.py.
+
+"ENV_NAME": "coordination_grid"
+"ENV_KWARGS":
+  "layout_path": "/juice6/u/jshe/emergent_partner_modelling/dev/grids/layouts/train/train_0000.json"
+  "partner_z": 1.0
+  "max_steps": 15
+  "step_penalty": 0.01
+  "success_reward": 1.0
+
+"SEED": 1
+"NUM_SEEDS": 1
+
+# --- optimizer / schedule ---
+"LR": 5e-4
+"ANNEAL_LR": True
+"LR_WARMUP": 0.05
+
+# --- PPO rollout & update ---
+"NUM_ENVS": 256
+"NUM_STEPS": 128
+"UPDATE_EPOCHS": 4
+"NUM_MINIBATCHES": 8
+
+"TOTAL_TIMESTEPS": 5e6
+
+# --- objective ---
+"CLIP_EPS": 0.2
+"ENT_COEF": 0.01
+"GAMMA": 0.99
+"GAE_LAMBDA": 0.95
+"VF_COEF": 1.0
+"MAX_GRAD_NORM": 0.25
+
+# --- network ---
+"FC_DIM_SIZE": 128
+"GRU_HIDDEN_DIM": 128
+"GRID_EMB_DIM": 64
+"MSG_EMB_DIM": 8
+"ACTIVATION": "relu"
+
+# --- W&B (defaults to disabled; flip mode to "online" / "offline" to enable) ---
+"ENTITY": ""
+"PROJECT": "coordination_grid"
+"WANDB_MODE": "disabled"

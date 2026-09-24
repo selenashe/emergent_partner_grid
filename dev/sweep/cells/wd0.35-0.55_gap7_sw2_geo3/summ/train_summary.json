@@ -1,0 +1,147 @@
+{
+  "split": "train",
+  "n": 100,
+  "metadata_distributions": {
+    "realized_wall_density": {
+      "median": 0.3469387755102041,
+      "q1": 0.30612244897959184,
+      "q3": 0.40816326530612246
+    },
+    "num_junctions": {
+      "median": 13.0,
+      "q1": 9.0,
+      "q3": 17.0
+    },
+    "num_dead_ends": {
+      "median": 5.0,
+      "q1": 4.0,
+      "q3": 7.0
+    },
+    "num_shortest_paths_ego_red": {
+      "median": 1.0,
+      "q1": 1.0,
+      "q3": 3.0
+    },
+    "num_shortest_paths_ego_blue": {
+      "median": 1.5,
+      "q1": 1.0,
+      "q3": 2.0
+    },
+    "num_shortest_paths_partner_red": {
+      "median": 1.0,
+      "q1": 1.0,
+      "q3": 2.0
+    },
+    "num_shortest_paths_partner_blue": {
+      "median": 1.0,
+      "q1": 1.0,
+      "q3": 3.0
+    },
+    "shortest_path_overlap_assignment_1": {
+      "median": 0.0,
+      "q1": 0.0,
+      "q3": 0.190625
+    },
+    "shortest_path_overlap_assignment_2": {
+      "median": 0.0,
+      "q1": 0.0,
+      "q3": 0.125
+    },
+    "assignment_cost_difference": {
+      "median": 4.0,
+      "q1": 2.0,
+      "q3": 6.0
+    },
+    "switching_cost_mean": {
+      "median": 2.0,
+      "q1": 2.0,
+      "q3": 2.625
+    },
+    "switching_cost_min": {
+      "median": 0.0,
+      "q1": 0.0,
+      "q3": 2.0
+    }
+  },
+  "pairwise_spearman": [
+    {
+      "x": "realized_wall_density",
+      "y": "switching_cost_mean",
+      "rho": -0.1736042367100664,
+      "p": 0.08410334880035804
+    },
+    {
+      "x": "assignment_cost_difference",
+      "y": "switching_cost_mean",
+      "rho": -0.0802917362638608,
+      "p": 0.42713375585310176
+    },
+    {
+      "x": "num_junctions",
+      "y": "num_shortest_paths_ego_red",
+      "rho": 0.2354545022660194,
+      "p": 0.01836383248243657
+    },
+    {
+      "x": "shortest_path_overlap_assignment_1",
+      "y": "switching_cost_mean",
+      "rho": -0.15990959064304827,
+      "p": 0.11200706288009789
+    },
+    {
+      "x": "num_junctions",
+      "y": "num_dead_ends",
+      "rho": -0.6203723500156864,
+      "p": 5.828246669687144e-12
+    },
+    {
+      "x": "realized_wall_density",
+      "y": "assignment_cost_difference",
+      "rho": -0.0224611391290669,
+      "p": 0.8244575586744359
+    },
+    {
+      "x": "realized_wall_density",
+      "y": "num_junctions",
+      "rho": -0.873167742985632,
+      "p": 2.3839189205772746e-32
+    },
+    {
+      "x": "switching_cost_min",
+      "y": "switching_cost_mean",
+      "rho": 0.7644833839232809,
+      "p": 2.148483733869367e-20
+    },
+    {
+      "x": "shortest_path_overlap_assignment_1",
+      "y": "assignment_cost_difference",
+      "rho": 0.37667940936575367,
+      "p": 0.00011213100040079146
+    }
+  ],
+  "baselines": {
+    "config": {
+      "trials": 100,
+      "max_steps": 40,
+      "wait_k": 2,
+      "seed": 0
+    },
+    "baselines": {
+      "nearest": {
+        "mean_success": 0.40809999999999996,
+        "mean_cost": 4.346153846153846,
+        "n_cost": 52
+      },
+      "wait_react": {
+        "mean_success": 0.9178000000000001,
+        "mean_cost": 7.13563829787234,
+        "n_cost": 94
+      },
+      "random": {
+        "mean_success": 0.46519999999999995,
+        "mean_cost": 6.129854471866343,
+        "n_cost": 100
+      }
+    }
+  }
+}

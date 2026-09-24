@@ -1,0 +1,38 @@
+{
+  "layout_id": "train_0039",
+  "seed": 1919288368,
+  "grid": [
+    [1, 0, 1, 1, 0, 1, 0],
+    [0, 2, 1, 1, 1, 1, 0],
+    [0, 1, 1, 0, 0, 0, 3],
+    [0, 0, 0, 0, 4, 0, 1],
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 1, 0, 0, 0, 1],
+    [1, 0, 0, 5, 0, 1, 1]
+  ],
+  "ego_start": [3, 4],
+  "partner_start": [6, 3],
+  "red_goal": [1, 1],
+  "blue_goal": [2, 6],
+  "metadata": {
+    "ego_to_red": 7,
+    "ego_to_blue": 3,
+    "partner_to_red": 9,
+    "partner_to_blue": 7,
+    "sampled_wall_probability": 0.48737652137397547,
+    "realized_wall_density": 0.32653061224489793,
+    "num_junctions": 18,
+    "num_dead_ends": 3,
+    "num_shortest_paths_ego_red": 1,
+    "num_shortest_paths_ego_blue": 2,
+    "num_shortest_paths_partner_red": 7,
+    "num_shortest_paths_partner_blue": 14,
+    "shortest_path_overlap_assignment_1": 0.06666666666666667,
+    "shortest_path_overlap_assignment_2": 0.0,
+    "assignment_cost_1": 14,
+    "assignment_cost_2": 12,
+    "assignment_cost_difference": 2,
+    "switching_cost_mean": 2.0,
+    "switching_cost_min": 0.0
+  }
+}

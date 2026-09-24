@@ -1,0 +1,1514 @@
+{
+  "config": {
+    "n_per_cell": 100,
+    "grid_size": 7,
+    "max_attempts": 5000,
+    "split_ratio": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "trials": 100,
+    "wait_k": 2,
+    "analysis_seed": 0,
+    "master_seed": 0
+  },
+  "grid": {
+    "wall_density": [
+      [
+        0.15,
+        0.35
+      ],
+      [
+        0.25,
+        0.45
+      ],
+      [
+        0.35,
+        0.55
+      ]
+    ],
+    "max_assignment_gap": [
+      3,
+      5,
+      7
+    ],
+    "min_switching_cost": [
+      1,
+      2,
+      3
+    ],
+    "geometric_pref_threshold": [
+      1,
+      2,
+      3
+    ]
+  },
+  "counts": {
+    "total": 81,
+    "ok": 81,
+    "cached": 0,
+    "failed": 0
+  },
+  "wall_seconds": 949.42,
+  "cells": {
+    "wd0.15-0.35_gap3_sw1_geo1": {
+      "cell_id": "wd0.15-0.35_gap3_sw1_geo1",
+      "params": {
+        "wall_density": [
+          0.15,
+          0.35
+        ],
+        "max_assignment_gap": 3,
+        "min_switching_cost": 1.0,
+        "geometric_pref_threshold": 1
+      },
+      "seed": 0,
+      "gen_dir": "cells/wd0.15-0.35_gap3_sw1_geo1/gen",
+      "summ_dir": "cells/wd0.15-0.35_gap3_sw1_geo1/summ",
+      "status": "ok",
+      "elapsed_seconds": 66.52,
+      "error": null
+    },
+    "wd0.15-0.35_gap3_sw1_geo2": {
+      "cell_id": "wd0.15-0.35_gap3_sw1_geo2",
+      "params": {
+        "wall_density": [
+          0.15,
+          0.35
+        ],
+        "max_assignment_gap": 3,
+        "min_switching_cost": 1.0,
+        "geometric_pref_threshold": 2
+      },
+      "seed": 1,
+      "gen_dir": "cells/wd0.15-0.35_gap3_sw1_geo2/gen",
+      "summ_dir": "cells/wd0.15-0.35_gap3_sw1_geo2/summ",
+      "status": "ok",
+      "elapsed_seconds": 64.34,
+      "error": null
+    },
+    "wd0.15-0.35_gap3_sw1_geo3": {
+      "cell_id": "wd0.15-0.35_gap3_sw1_geo3",
+      "params": {
+        "wall_density": [
+          0.15,
+          0.35
+        ],
+        "max_assignment_gap": 3,
+        "min_switching_cost": 1.0,
+        "geometric_pref_threshold": 3
+      },
+      "seed": 2,
+      "gen_dir": "cells/wd0.15-0.35_gap3_sw1_geo3/gen",
+      "summ_dir": "cells/wd0.15-0.35_gap3_sw1_geo3/summ",
+      "status": "ok",
+      "elapsed_seconds": 65.07,
+      "error": null
+    },
+    "wd0.15-0.35_gap3_sw2_geo1": {
+      "cell_id": "wd0.15-0.35_gap3_sw2_geo1",
+      "params": {
+        "wall_density": [
+          0.15,
+          0.35
+        ],
+        "max_assignment_gap": 3,
+        "min_switching_cost": 2.0,
+        "geometric_pref_threshold": 1
+      },
+      "seed": 3,
+      "gen_dir": "cells/wd0.15-0.35_gap3_sw2_geo1/gen",
+      "summ_dir": "cells/wd0.15-0.35_gap3_sw2_geo1/summ",
+      "status": "ok",
+      "elapsed_seconds": 78.5,
+      "error": null
+    },
+    "wd0.15-0.35_gap3_sw2_geo2": {
+      "cell_id": "wd0.15-0.35_gap3_sw2_geo2",
+      "params": {
+        "wall_density": [
+          0.15,
+          0.35
+        ],
+        "max_assignment_gap": 3,
+        "min_switching_cost": 2.0,
+        "geometric_pref_threshold": 2
+      },
+      "seed": 4,
+      "gen_dir": "cells/wd0.15-0.35_gap3_sw2_geo2/gen",
+      "summ_dir": "cells/wd0.15-0.35_gap3_sw2_geo2/summ",
+      "status": "ok",
+      "elapsed_seconds": 74.0,
+      "error": null
+    },
+    "wd0.15-0.35_gap3_sw2_geo3": {
+      "cell_id": "wd0.15-0.35_gap3_sw2_geo3",
+      "params": {
+        "wall_density": [
+          0.15,
+          0.35
+        ],
+        "max_assignment_gap": 3,
+        "min_switching_cost": 2.0,
+        "geometric_pref_threshold": 3
+      },
+      "seed": 5,
+      "gen_dir": "cells/wd0.15-0.35_gap3_sw2_geo3/gen",
+      "summ_dir": "cells/wd0.15-0.35_gap3_sw2_geo3/summ",
+      "status": "ok",
+      "elapsed_seconds": 73.95,
+      "error": null
+    },
+    "wd0.15-0.35_gap3_sw3_geo1": {
+      "cell_id": "wd0.15-0.35_gap3_sw3_geo1",
+      "params": {
+        "wall_density": [
+          0.15,
+          0.35
+        ],
+        "max_assignment_gap": 3,
+        "min_switching_cost": 3.0,
+        "geometric_pref_threshold": 1
+      },
+      "seed": 6,
+      "gen_dir": "cells/wd0.15-0.35_gap3_sw3_geo1/gen",
+      "summ_dir": "cells/wd0.15-0.35_gap3_sw3_geo1/summ",
+      "status": "ok",
+      "elapsed_seconds": 104.42,
+      "error": null
+    },
+    "wd0.15-0.35_gap3_sw3_geo2": {
+      "cell_id": "wd0.15-0.35_gap3_sw3_geo2",
+      "params": {
+        "wall_density": [
+          0.15,
+          0.35
+        ],
+        "max_assignment_gap": 3,
+        "min_switching_cost": 3.0,
+        "geometric_pref_threshold": 2
+      },
+      "seed": 7,
+      "gen_dir": "cells/wd0.15-0.35_gap3_sw3_geo2/gen",
+      "summ_dir": "cells/wd0.15-0.35_gap3_sw3_geo2/summ",
+      "status": "ok",
+      "elapsed_seconds": 103.2,
+      "error": null
+    },
+    "wd0.15-0.35_gap3_sw3_geo3": {
+      "cell_id": "wd0.15-0.35_gap3_sw3_geo3",
+      "params": {
+        "wall_density": [
+          0.15,
+          0.35
+        ],
+        "max_assignment_gap": 3,
+        "min_switching_cost": 3.0,
+        "geometric_pref_threshold": 3
+      },
+      "seed": 8,
+      "gen_dir": "cells/wd0.15-0.35_gap3_sw3_geo3/gen",
+      "summ_dir": "cells/wd0.15-0.35_gap3_sw3_geo3/summ",
+      "status": "ok",
+      "elapsed_seconds": 101.99,
+      "error": null
+    },
+    "wd0.15-0.35_gap5_sw1_geo1": {
+      "cell_id": "wd0.15-0.35_gap5_sw1_geo1",
+      "params": {
+        "wall_density": [
+          0.15,
+          0.35
+        ],
+        "max_assignment_gap": 5,
+        "min_switching_cost": 1.0,
+        "geometric_pref_threshold": 1
+      },
+      "seed": 9,
+      "gen_dir": "cells/wd0.15-0.35_gap5_sw1_geo1/gen",
+      "summ_dir": "cells/wd0.15-0.35_gap5_sw1_geo1/summ",
+      "status": "ok",
+      "elapsed_seconds": 62.69,
+      "error": null
+    },
+    "wd0.15-0.35_gap5_sw1_geo2": {
+      "cell_id": "wd0.15-0.35_gap5_sw1_geo2",
+      "params": {
+        "wall_density": [
+          0.15,
+          0.35
+        ],
+        "max_assignment_gap": 5,
+        "min_switching_cost": 1.0,
+        "geometric_pref_threshold": 2
+      },
+      "seed": 10,
+      "gen_dir": "cells/wd0.15-0.35_gap5_sw1_geo2/gen",
+      "summ_dir": "cells/wd0.15-0.35_gap5_sw1_geo2/summ",
+      "status": "ok",
+      "elapsed_seconds": 64.76,
+      "error": null
+    },
+    "wd0.15-0.35_gap5_sw1_geo3": {
+      "cell_id": "wd0.15-0.35_gap5_sw1_geo3",
+      "params": {
+        "wall_density": [
+          0.15,
+          0.35
+        ],
+        "max_assignment_gap": 5,
+        "min_switching_cost": 1.0,
+        "geometric_pref_threshold": 3
+      },
+      "seed": 11,
+      "gen_dir": "cells/wd0.15-0.35_gap5_sw1_geo3/gen",
+      "summ_dir": "cells/wd0.15-0.35_gap5_sw1_geo3/summ",
+      "status": "ok",
+      "elapsed_seconds": 62.09,
+      "error": null
+    },
+    "wd0.15-0.35_gap5_sw2_geo1": {
+      "cell_id": "wd0.15-0.35_gap5_sw2_geo1",
+      "params": {
+        "wall_density": [
+          0.15,
+          0.35
+        ],
+        "max_assignment_gap": 5,
+        "min_switching_cost": 2.0,
+        "geometric_pref_threshold": 1
+      },
+      "seed": 12,
+      "gen_dir": "cells/wd0.15-0.35_gap5_sw2_geo1/gen",
+      "summ_dir": "cells/wd0.15-0.35_gap5_sw2_geo1/summ",
+      "status": "ok",
+      "elapsed_seconds": 69.76,
+      "error": null
+    },
+    "wd0.15-0.35_gap5_sw2_geo2": {
+      "cell_id": "wd0.15-0.35_gap5_sw2_geo2",
+      "params": {
+        "wall_density": [
+          0.15,
+          0.35
+        ],
+        "max_assignment_gap": 5,
+        "min_switching_cost": 2.0,
+        "geometric_pref_threshold": 2
+      },
+      "seed": 13,
+      "gen_dir": "cells/wd0.15-0.35_gap5_sw2_geo2/gen",
+      "summ_dir": "cells/wd0.15-0.35_gap5_sw2_geo2/summ",
+      "status": "ok",
+      "elapsed_seconds": 67.06,
+      "error": null
+    },
+    "wd0.15-0.35_gap5_sw2_geo3": {
+      "cell_id": "wd0.15-0.35_gap5_sw2_geo3",
+      "params": {
+        "wall_density": [
+          0.15,
+          0.35
+        ],
+        "max_assignment_gap": 5,
+        "min_switching_cost": 2.0,
+        "geometric_pref_threshold": 3
+      },
+      "seed": 14,
+      "gen_dir": "cells/wd0.15-0.35_gap5_sw2_geo3/gen",
+      "summ_dir": "cells/wd0.15-0.35_gap5_sw2_geo3/summ",
+      "status": "ok",
+      "elapsed_seconds": 64.51,
+      "error": null
+    },
+    "wd0.15-0.35_gap5_sw3_geo1": {
+      "cell_id": "wd0.15-0.35_gap5_sw3_geo1",
+      "params": {
+        "wall_density": [
+          0.15,
+          0.35
+        ],
+        "max_assignment_gap": 5,
+        "min_switching_cost": 3.0,
+        "geometric_pref_threshold": 1
+      },
+      "seed": 15,
+      "gen_dir": "cells/wd0.15-0.35_gap5_sw3_geo1/gen",
+      "summ_dir": "cells/wd0.15-0.35_gap5_sw3_geo1/summ",
+      "status": "ok",
+      "elapsed_seconds": 89.93,
+      "error": null
+    },
+    "wd0.15-0.35_gap5_sw3_geo2": {
+      "cell_id": "wd0.15-0.35_gap5_sw3_geo2",
+      "params": {
+        "wall_density": [
+          0.15,
+          0.35
+        ],
+        "max_assignment_gap": 5,
+        "min_switching_cost": 3.0,
+        "geometric_pref_threshold": 2
+      },
+      "seed": 16,
+      "gen_dir": "cells/wd0.15-0.35_gap5_sw3_geo2/gen",
+      "summ_dir": "cells/wd0.15-0.35_gap5_sw3_geo2/summ",
+      "status": "ok",
+      "elapsed_seconds": 84.26,
+      "error": null
+    },
+    "wd0.15-0.35_gap5_sw3_geo3": {
+      "cell_id": "wd0.15-0.35_gap5_sw3_geo3",
+      "params": {
+        "wall_density": [
+          0.15,
+          0.35
+        ],
+        "max_assignment_gap": 5,
+        "min_switching_cost": 3.0,
+        "geometric_pref_threshold": 3
+      },
+      "seed": 17,
+      "gen_dir": "cells/wd0.15-0.35_gap5_sw3_geo3/gen",
+      "summ_dir": "cells/wd0.15-0.35_gap5_sw3_geo3/summ",
+      "status": "ok",
+      "elapsed_seconds": 78.17,
+      "error": null
+    },
+    "wd0.15-0.35_gap7_sw1_geo1": {
+      "cell_id": "wd0.15-0.35_gap7_sw1_geo1",
+      "params": {
+        "wall_density": [
+          0.15,
+          0.35
+        ],
+        "max_assignment_gap": 7,
+        "min_switching_cost": 1.0,
+        "geometric_pref_threshold": 1
+      },
+      "seed": 18,
+      "gen_dir": "cells/wd0.15-0.35_gap7_sw1_geo1/gen",
+      "summ_dir": "cells/wd0.15-0.35_gap7_sw1_geo1/summ",
+      "status": "ok",
+      "elapsed_seconds": 59.43,
+      "error": null
+    },
+    "wd0.15-0.35_gap7_sw1_geo2": {
+      "cell_id": "wd0.15-0.35_gap7_sw1_geo2",
+      "params": {
+        "wall_density": [
+          0.15,
+          0.35
+        ],
+        "max_assignment_gap": 7,
+        "min_switching_cost": 1.0,
+        "geometric_pref_threshold": 2
+      },
+      "seed": 19,
+      "gen_dir": "cells/wd0.15-0.35_gap7_sw1_geo2/gen",
+      "summ_dir": "cells/wd0.15-0.35_gap7_sw1_geo2/summ",
+      "status": "ok",
+      "elapsed_seconds": 60.3,
+      "error": null
+    },
+    "wd0.15-0.35_gap7_sw1_geo3": {
+      "cell_id": "wd0.15-0.35_gap7_sw1_geo3",
+      "params": {
+        "wall_density": [
+          0.15,
+          0.35
+        ],
+        "max_assignment_gap": 7,
+        "min_switching_cost": 1.0,
+        "geometric_pref_threshold": 3
+      },
+      "seed": 20,
+      "gen_dir": "cells/wd0.15-0.35_gap7_sw1_geo3/gen",
+      "summ_dir": "cells/wd0.15-0.35_gap7_sw1_geo3/summ",
+      "status": "ok",
+      "elapsed_seconds": 59.38,
+      "error": null
+    },
+    "wd0.15-0.35_gap7_sw2_geo1": {
+      "cell_id": "wd0.15-0.35_gap7_sw2_geo1",
+      "params": {
+        "wall_density": [
+          0.15,
+          0.35
+        ],
+        "max_assignment_gap": 7,
+        "min_switching_cost": 2.0,
+        "geometric_pref_threshold": 1
+      },
+      "seed": 21,
+      "gen_dir": "cells/wd0.15-0.35_gap7_sw2_geo1/gen",
+      "summ_dir": "cells/wd0.15-0.35_gap7_sw2_geo1/summ",
+      "status": "ok",
+      "elapsed_seconds": 64.36,
+      "error": null
+    },
+    "wd0.15-0.35_gap7_sw2_geo2": {
+      "cell_id": "wd0.15-0.35_gap7_sw2_geo2",
+      "params": {
+        "wall_density": [
+          0.15,
+          0.35
+        ],
+        "max_assignment_gap": 7,
+        "min_switching_cost": 2.0,
+        "geometric_pref_threshold": 2
+      },
+      "seed": 22,
+      "gen_dir": "cells/wd0.15-0.35_gap7_sw2_geo2/gen",
+      "summ_dir": "cells/wd0.15-0.35_gap7_sw2_geo2/summ",
+      "status": "ok",
+      "elapsed_seconds": 65.74,
+      "error": null
+    },
+    "wd0.15-0.35_gap7_sw2_geo3": {
+      "cell_id": "wd0.15-0.35_gap7_sw2_geo3",
+      "params": {
+        "wall_density": [
+          0.15,
+          0.35
+        ],
+        "max_assignment_gap": 7,
+        "min_switching_cost": 2.0,
+        "geometric_pref_threshold": 3
+      },
+      "seed": 23,
+      "gen_dir": "cells/wd0.15-0.35_gap7_sw2_geo3/gen",
+      "summ_dir": "cells/wd0.15-0.35_gap7_sw2_geo3/summ",
+      "status": "ok",
+      "elapsed_seconds": 60.77,
+      "error": null
+    },
+    "wd0.15-0.35_gap7_sw3_geo1": {
+      "cell_id": "wd0.15-0.35_gap7_sw3_geo1",
+      "params": {
+        "wall_density": [
+          0.15,
+          0.35
+        ],
+        "max_assignment_gap": 7,
+        "min_switching_cost": 3.0,
+        "geometric_pref_threshold": 1
+      },
+      "seed": 24,
+      "gen_dir": "cells/wd0.15-0.35_gap7_sw3_geo1/gen",
+      "summ_dir": "cells/wd0.15-0.35_gap7_sw3_geo1/summ",
+      "status": "ok",
+      "elapsed_seconds": 81.77,
+      "error": null
+    },
+    "wd0.15-0.35_gap7_sw3_geo2": {
+      "cell_id": "wd0.15-0.35_gap7_sw3_geo2",
+      "params": {
+        "wall_density": [
+          0.15,
+          0.35
+        ],
+        "max_assignment_gap": 7,
+        "min_switching_cost": 3.0,
+        "geometric_pref_threshold": 2
+      },
+      "seed": 25,
+      "gen_dir": "cells/wd0.15-0.35_gap7_sw3_geo2/gen",
+      "summ_dir": "cells/wd0.15-0.35_gap7_sw3_geo2/summ",
+      "status": "ok",
+      "elapsed_seconds": 79.3,
+      "error": null
+    },
+    "wd0.15-0.35_gap7_sw3_geo3": {
+      "cell_id": "wd0.15-0.35_gap7_sw3_geo3",
+      "params": {
+        "wall_density": [
+          0.15,
+          0.35
+        ],
+        "max_assignment_gap": 7,
+        "min_switching_cost": 3.0,
+        "geometric_pref_threshold": 3
+      },
+      "seed": 26,
+      "gen_dir": "cells/wd0.15-0.35_gap7_sw3_geo3/gen",
+      "summ_dir": "cells/wd0.15-0.35_gap7_sw3_geo3/summ",
+      "status": "ok",
+      "elapsed_seconds": 77.78,
+      "error": null
+    },
+    "wd0.25-0.45_gap3_sw1_geo1": {
+      "cell_id": "wd0.25-0.45_gap3_sw1_geo1",
+      "params": {
+        "wall_density": [
+          0.25,
+          0.45
+        ],
+        "max_assignment_gap": 3,
+        "min_switching_cost": 1.0,
+        "geometric_pref_threshold": 1
+      },
+      "seed": 27,
+      "gen_dir": "cells/wd0.25-0.45_gap3_sw1_geo1/gen",
+      "summ_dir": "cells/wd0.25-0.45_gap3_sw1_geo1/summ",
+      "status": "ok",
+      "elapsed_seconds": 55.85,
+      "error": null
+    },
+    "wd0.25-0.45_gap3_sw1_geo2": {
+      "cell_id": "wd0.25-0.45_gap3_sw1_geo2",
+      "params": {
+        "wall_density": [
+          0.25,
+          0.45
+        ],
+        "max_assignment_gap": 3,
+        "min_switching_cost": 1.0,
+        "geometric_pref_threshold": 2
+      },
+      "seed": 28,
+      "gen_dir": "cells/wd0.25-0.45_gap3_sw1_geo2/gen",
+      "summ_dir": "cells/wd0.25-0.45_gap3_sw1_geo2/summ",
+      "status": "ok",
+      "elapsed_seconds": 57.04,
+      "error": null
+    },
+    "wd0.25-0.45_gap3_sw1_geo3": {
+      "cell_id": "wd0.25-0.45_gap3_sw1_geo3",
+      "params": {
+        "wall_density": [
+          0.25,
+          0.45
+        ],
+        "max_assignment_gap": 3,
+        "min_switching_cost": 1.0,
+        "geometric_pref_threshold": 3
+      },
+      "seed": 29,
+      "gen_dir": "cells/wd0.25-0.45_gap3_sw1_geo3/gen",
+      "summ_dir": "cells/wd0.25-0.45_gap3_sw1_geo3/summ",
+      "status": "ok",
+      "elapsed_seconds": 55.31,
+      "error": null
+    },
+    "wd0.25-0.45_gap3_sw2_geo1": {
+      "cell_id": "wd0.25-0.45_gap3_sw2_geo1",
+      "params": {
+        "wall_density": [
+          0.25,
+          0.45
+        ],
+        "max_assignment_gap": 3,
+        "min_switching_cost": 2.0,
+        "geometric_pref_threshold": 1
+      },
+      "seed": 30,
+      "gen_dir": "cells/wd0.25-0.45_gap3_sw2_geo1/gen",
+      "summ_dir": "cells/wd0.25-0.45_gap3_sw2_geo1/summ",
+      "status": "ok",
+      "elapsed_seconds": 70.22,
+      "error": null
+    },
+    "wd0.25-0.45_gap3_sw2_geo2": {
+      "cell_id": "wd0.25-0.45_gap3_sw2_geo2",
+      "params": {
+        "wall_density": [
+          0.25,
+          0.45
+        ],
+        "max_assignment_gap": 3,
+        "min_switching_cost": 2.0,
+        "geometric_pref_threshold": 2
+      },
+      "seed": 31,
+      "gen_dir": "cells/wd0.25-0.45_gap3_sw2_geo2/gen",
+      "summ_dir": "cells/wd0.25-0.45_gap3_sw2_geo2/summ",
+      "status": "ok",
+      "elapsed_seconds": 65.75,
+      "error": null
+    },
+    "wd0.25-0.45_gap3_sw2_geo3": {
+      "cell_id": "wd0.25-0.45_gap3_sw2_geo3",
+      "params": {
+        "wall_density": [
+          0.25,
+          0.45
+        ],
+        "max_assignment_gap": 3,
+        "min_switching_cost": 2.0,
+        "geometric_pref_threshold": 3
+      },
+      "seed": 32,
+      "gen_dir": "cells/wd0.25-0.45_gap3_sw2_geo3/gen",
+      "summ_dir": "cells/wd0.25-0.45_gap3_sw2_geo3/summ",
+      "status": "ok",
+      "elapsed_seconds": 66.64,
+      "error": null
+    },
+    "wd0.25-0.45_gap3_sw3_geo1": {
+      "cell_id": "wd0.25-0.45_gap3_sw3_geo1",
+      "params": {
+        "wall_density": [
+          0.25,
+          0.45
+        ],
+        "max_assignment_gap": 3,
+        "min_switching_cost": 3.0,
+        "geometric_pref_threshold": 1
+      },
+      "seed": 33,
+      "gen_dir": "cells/wd0.25-0.45_gap3_sw3_geo1/gen",
+      "summ_dir": "cells/wd0.25-0.45_gap3_sw3_geo1/summ",
+      "status": "ok",
+      "elapsed_seconds": 108.14,
+      "error": null
+    },
+    "wd0.25-0.45_gap3_sw3_geo2": {
+      "cell_id": "wd0.25-0.45_gap3_sw3_geo2",
+      "params": {
+        "wall_density": [
+          0.25,
+          0.45
+        ],
+        "max_assignment_gap": 3,
+        "min_switching_cost": 3.0,
+        "geometric_pref_threshold": 2
+      },
+      "seed": 34,
+      "gen_dir": "cells/wd0.25-0.45_gap3_sw3_geo2/gen",
+      "summ_dir": "cells/wd0.25-0.45_gap3_sw3_geo2/summ",
+      "status": "ok",
+      "elapsed_seconds": 100.18,
+      "error": null
+    },
+    "wd0.25-0.45_gap3_sw3_geo3": {
+      "cell_id": "wd0.25-0.45_gap3_sw3_geo3",
+      "params": {
+        "wall_density": [
+          0.25,
+          0.45
+        ],
+        "max_assignment_gap": 3,
+        "min_switching_cost": 3.0,
+        "geometric_pref_threshold": 3
+      },
+      "seed": 35,
+      "gen_dir": "cells/wd0.25-0.45_gap3_sw3_geo3/gen",
+      "summ_dir": "cells/wd0.25-0.45_gap3_sw3_geo3/summ",
+      "status": "ok",
+      "elapsed_seconds": 108.36,
+      "error": null
+    },
+    "wd0.25-0.45_gap5_sw1_geo1": {
+      "cell_id": "wd0.25-0.45_gap5_sw1_geo1",
+      "params": {
+        "wall_density": [
+          0.25,
+          0.45
+        ],
+        "max_assignment_gap": 5,
+        "min_switching_cost": 1.0,
+        "geometric_pref_threshold": 1
+      },
+      "seed": 36,
+      "gen_dir": "cells/wd0.25-0.45_gap5_sw1_geo1/gen",
+      "summ_dir": "cells/wd0.25-0.45_gap5_sw1_geo1/summ",
+      "status": "ok",
+      "elapsed_seconds": 57.35,
+      "error": null
+    },
+    "wd0.25-0.45_gap5_sw1_geo2": {
+      "cell_id": "wd0.25-0.45_gap5_sw1_geo2",
+      "params": {
+        "wall_density": [
+          0.25,
+          0.45
+        ],
+        "max_assignment_gap": 5,
+        "min_switching_cost": 1.0,
+        "geometric_pref_threshold": 2
+      },
+      "seed": 37,
+      "gen_dir": "cells/wd0.25-0.45_gap5_sw1_geo2/gen",
+      "summ_dir": "cells/wd0.25-0.45_gap5_sw1_geo2/summ",
+      "status": "ok",
+      "elapsed_seconds": 55.03,
+      "error": null
+    },
+    "wd0.25-0.45_gap5_sw1_geo3": {
+      "cell_id": "wd0.25-0.45_gap5_sw1_geo3",
+      "params": {
+        "wall_density": [
+          0.25,
+          0.45
+        ],
+        "max_assignment_gap": 5,
+        "min_switching_cost": 1.0,
+        "geometric_pref_threshold": 3
+      },
+      "seed": 38,
+      "gen_dir": "cells/wd0.25-0.45_gap5_sw1_geo3/gen",
+      "summ_dir": "cells/wd0.25-0.45_gap5_sw1_geo3/summ",
+      "status": "ok",
+      "elapsed_seconds": 52.63,
+      "error": null
+    },
+    "wd0.25-0.45_gap5_sw2_geo1": {
+      "cell_id": "wd0.25-0.45_gap5_sw2_geo1",
+      "params": {
+        "wall_density": [
+          0.25,
+          0.45
+        ],
+        "max_assignment_gap": 5,
+        "min_switching_cost": 2.0,
+        "geometric_pref_threshold": 1
+      },
+      "seed": 39,
+      "gen_dir": "cells/wd0.25-0.45_gap5_sw2_geo1/gen",
+      "summ_dir": "cells/wd0.25-0.45_gap5_sw2_geo1/summ",
+      "status": "ok",
+      "elapsed_seconds": 56.7,
+      "error": null
+    },
+    "wd0.25-0.45_gap5_sw2_geo2": {
+      "cell_id": "wd0.25-0.45_gap5_sw2_geo2",
+      "params": {
+        "wall_density": [
+          0.25,
+          0.45
+        ],
+        "max_assignment_gap": 5,
+        "min_switching_cost": 2.0,
+        "geometric_pref_threshold": 2
+      },
+      "seed": 40,
+      "gen_dir": "cells/wd0.25-0.45_gap5_sw2_geo2/gen",
+      "summ_dir": "cells/wd0.25-0.45_gap5_sw2_geo2/summ",
+      "status": "ok",
+      "elapsed_seconds": 55.14,
+      "error": null
+    },
+    "wd0.25-0.45_gap5_sw2_geo3": {
+      "cell_id": "wd0.25-0.45_gap5_sw2_geo3",
+      "params": {
+        "wall_density": [
+          0.25,
+          0.45
+        ],
+        "max_assignment_gap": 5,
+        "min_switching_cost": 2.0,
+        "geometric_pref_threshold": 3
+      },
+      "seed": 41,
+      "gen_dir": "cells/wd0.25-0.45_gap5_sw2_geo3/gen",
+      "summ_dir": "cells/wd0.25-0.45_gap5_sw2_geo3/summ",
+      "status": "ok",
+      "elapsed_seconds": 57.86,
+      "error": null
+    },
+    "wd0.25-0.45_gap5_sw3_geo1": {
+      "cell_id": "wd0.25-0.45_gap5_sw3_geo1",
+      "params": {
+        "wall_density": [
+          0.25,
+          0.45
+        ],
+        "max_assignment_gap": 5,
+        "min_switching_cost": 3.0,
+        "geometric_pref_threshold": 1
+      },
+      "seed": 42,
+      "gen_dir": "cells/wd0.25-0.45_gap5_sw3_geo1/gen",
+      "summ_dir": "cells/wd0.25-0.45_gap5_sw3_geo1/summ",
+      "status": "ok",
+      "elapsed_seconds": 98.82,
+      "error": null
+    },
+    "wd0.25-0.45_gap5_sw3_geo2": {
+      "cell_id": "wd0.25-0.45_gap5_sw3_geo2",
+      "params": {
+        "wall_density": [
+          0.25,
+          0.45
+        ],
+        "max_assignment_gap": 5,
+        "min_switching_cost": 3.0,
+        "geometric_pref_threshold": 2
+      },
+      "seed": 43,
+      "gen_dir": "cells/wd0.25-0.45_gap5_sw3_geo2/gen",
+      "summ_dir": "cells/wd0.25-0.45_gap5_sw3_geo2/summ",
+      "status": "ok",
+      "elapsed_seconds": 81.27,
+      "error": null
+    },
+    "wd0.25-0.45_gap5_sw3_geo3": {
+      "cell_id": "wd0.25-0.45_gap5_sw3_geo3",
+      "params": {
+        "wall_density": [
+          0.25,
+          0.45
+        ],
+        "max_assignment_gap": 5,
+        "min_switching_cost": 3.0,
+        "geometric_pref_threshold": 3
+      },
+      "seed": 44,
+      "gen_dir": "cells/wd0.25-0.45_gap5_sw3_geo3/gen",
+      "summ_dir": "cells/wd0.25-0.45_gap5_sw3_geo3/summ",
+      "status": "ok",
+      "elapsed_seconds": 83.61,
+      "error": null
+    },
+    "wd0.25-0.45_gap7_sw1_geo1": {
+      "cell_id": "wd0.25-0.45_gap7_sw1_geo1",
+      "params": {
+        "wall_density": [
+          0.25,
+          0.45
+        ],
+        "max_assignment_gap": 7,
+        "min_switching_cost": 1.0,
+        "geometric_pref_threshold": 1
+      },
+      "seed": 45,
+      "gen_dir": "cells/wd0.25-0.45_gap7_sw1_geo1/gen",
+      "summ_dir": "cells/wd0.25-0.45_gap7_sw1_geo1/summ",
+      "status": "ok",
+      "elapsed_seconds": 55.61,
+      "error": null
+    },
+    "wd0.25-0.45_gap7_sw1_geo2": {
+      "cell_id": "wd0.25-0.45_gap7_sw1_geo2",
+      "params": {
+        "wall_density": [
+          0.25,
+          0.45
+        ],
+        "max_assignment_gap": 7,
+        "min_switching_cost": 1.0,
+        "geometric_pref_threshold": 2
+      },
+      "seed": 46,
+      "gen_dir": "cells/wd0.25-0.45_gap7_sw1_geo2/gen",
+      "summ_dir": "cells/wd0.25-0.45_gap7_sw1_geo2/summ",
+      "status": "ok",
+      "elapsed_seconds": 52.91,
+      "error": null
+    },
+    "wd0.25-0.45_gap7_sw1_geo3": {
+      "cell_id": "wd0.25-0.45_gap7_sw1_geo3",
+      "params": {
+        "wall_density": [
+          0.25,
+          0.45
+        ],
+        "max_assignment_gap": 7,
+        "min_switching_cost": 1.0,
+        "geometric_pref_threshold": 3
+      },
+      "seed": 47,
+      "gen_dir": "cells/wd0.25-0.45_gap7_sw1_geo3/gen",
+      "summ_dir": "cells/wd0.25-0.45_gap7_sw1_geo3/summ",
+      "status": "ok",
+      "elapsed_seconds": 54.22,
+      "error": null
+    },
+    "wd0.25-0.45_gap7_sw2_geo1": {
+      "cell_id": "wd0.25-0.45_gap7_sw2_geo1",
+      "params": {
+        "wall_density": [
+          0.25,
+          0.45
+        ],
+        "max_assignment_gap": 7,
+        "min_switching_cost": 2.0,
+        "geometric_pref_threshold": 1
+      },
+      "seed": 48,
+      "gen_dir": "cells/wd0.25-0.45_gap7_sw2_geo1/gen",
+      "summ_dir": "cells/wd0.25-0.45_gap7_sw2_geo1/summ",
+      "status": "ok",
+      "elapsed_seconds": 56.57,
+      "error": null
+    },
+    "wd0.25-0.45_gap7_sw2_geo2": {
+      "cell_id": "wd0.25-0.45_gap7_sw2_geo2",
+      "params": {
+        "wall_density": [
+          0.25,
+          0.45
+        ],
+        "max_assignment_gap": 7,
+        "min_switching_cost": 2.0,
+        "geometric_pref_threshold": 2
+      },
+      "seed": 49,
+      "gen_dir": "cells/wd0.25-0.45_gap7_sw2_geo2/gen",
+      "summ_dir": "cells/wd0.25-0.45_gap7_sw2_geo2/summ",
+      "status": "ok",
+      "elapsed_seconds": 58.4,
+      "error": null
+    },
+    "wd0.25-0.45_gap7_sw2_geo3": {
+      "cell_id": "wd0.25-0.45_gap7_sw2_geo3",
+      "params": {
+        "wall_density": [
+          0.25,
+          0.45
+        ],
+        "max_assignment_gap": 7,
+        "min_switching_cost": 2.0,
+        "geometric_pref_threshold": 3
+      },
+      "seed": 50,
+      "gen_dir": "cells/wd0.25-0.45_gap7_sw2_geo3/gen",
+      "summ_dir": "cells/wd0.25-0.45_gap7_sw2_geo3/summ",
+      "status": "ok",
+      "elapsed_seconds": 60.1,
+      "error": null
+    },
+    "wd0.25-0.45_gap7_sw3_geo1": {
+      "cell_id": "wd0.25-0.45_gap7_sw3_geo1",
+      "params": {
+        "wall_density": [
+          0.25,
+          0.45
+        ],
+        "max_assignment_gap": 7,
+        "min_switching_cost": 3.0,
+        "geometric_pref_threshold": 1
+      },
+      "seed": 51,
+      "gen_dir": "cells/wd0.25-0.45_gap7_sw3_geo1/gen",
+      "summ_dir": "cells/wd0.25-0.45_gap7_sw3_geo1/summ",
+      "status": "ok",
+      "elapsed_seconds": 85.56,
+      "error": null
+    },
+    "wd0.25-0.45_gap7_sw3_geo2": {
+      "cell_id": "wd0.25-0.45_gap7_sw3_geo2",
+      "params": {
+        "wall_density": [
+          0.25,
+          0.45
+        ],
+        "max_assignment_gap": 7,
+        "min_switching_cost": 3.0,
+        "geometric_pref_threshold": 2
+      },
+      "seed": 52,
+      "gen_dir": "cells/wd0.25-0.45_gap7_sw3_geo2/gen",
+      "summ_dir": "cells/wd0.25-0.45_gap7_sw3_geo2/summ",
+      "status": "ok",
+      "elapsed_seconds": 73.53,
+      "error": null
+    },
+    "wd0.25-0.45_gap7_sw3_geo3": {
+      "cell_id": "wd0.25-0.45_gap7_sw3_geo3",
+      "params": {
+        "wall_density": [
+          0.25,
+          0.45
+        ],
+        "max_assignment_gap": 7,
+        "min_switching_cost": 3.0,
+        "geometric_pref_threshold": 3
+      },
+      "seed": 53,
+      "gen_dir": "cells/wd0.25-0.45_gap7_sw3_geo3/gen",
+      "summ_dir": "cells/wd0.25-0.45_gap7_sw3_geo3/summ",
+      "status": "ok",
+      "elapsed_seconds": 71.77,
+      "error": null
+    },
+    "wd0.35-0.55_gap3_sw1_geo1": {
+      "cell_id": "wd0.35-0.55_gap3_sw1_geo1",
+      "params": {
+        "wall_density": [
+          0.35,
+          0.55
+        ],
+        "max_assignment_gap": 3,
+        "min_switching_cost": 1.0,
+        "geometric_pref_threshold": 1
+      },
+      "seed": 54,
+      "gen_dir": "cells/wd0.35-0.55_gap3_sw1_geo1/gen",
+      "summ_dir": "cells/wd0.35-0.55_gap3_sw1_geo1/summ",
+      "status": "ok",
+      "elapsed_seconds": 51.76,
+      "error": null
+    },
+    "wd0.35-0.55_gap3_sw1_geo2": {
+      "cell_id": "wd0.35-0.55_gap3_sw1_geo2",
+      "params": {
+        "wall_density": [
+          0.35,
+          0.55
+        ],
+        "max_assignment_gap": 3,
+        "min_switching_cost": 1.0,
+        "geometric_pref_threshold": 2
+      },
+      "seed": 55,
+      "gen_dir": "cells/wd0.35-0.55_gap3_sw1_geo2/gen",
+      "summ_dir": "cells/wd0.35-0.55_gap3_sw1_geo2/summ",
+      "status": "ok",
+      "elapsed_seconds": 52.44,
+      "error": null
+    },
+    "wd0.35-0.55_gap3_sw1_geo3": {
+      "cell_id": "wd0.35-0.55_gap3_sw1_geo3",
+      "params": {
+        "wall_density": [
+          0.35,
+          0.55
+        ],
+        "max_assignment_gap": 3,
+        "min_switching_cost": 1.0,
+        "geometric_pref_threshold": 3
+      },
+      "seed": 56,
+      "gen_dir": "cells/wd0.35-0.55_gap3_sw1_geo3/gen",
+      "summ_dir": "cells/wd0.35-0.55_gap3_sw1_geo3/summ",
+      "status": "ok",
+      "elapsed_seconds": 49.45,
+      "error": null
+    },
+    "wd0.35-0.55_gap3_sw2_geo1": {
+      "cell_id": "wd0.35-0.55_gap3_sw2_geo1",
+      "params": {
+        "wall_density": [
+          0.35,
+          0.55
+        ],
+        "max_assignment_gap": 3,
+        "min_switching_cost": 2.0,
+        "geometric_pref_threshold": 1
+      },
+      "seed": 57,
+      "gen_dir": "cells/wd0.35-0.55_gap3_sw2_geo1/gen",
+      "summ_dir": "cells/wd0.35-0.55_gap3_sw2_geo1/summ",
+      "status": "ok",
+      "elapsed_seconds": 64.34,
+      "error": null
+    },
+    "wd0.35-0.55_gap3_sw2_geo2": {
+      "cell_id": "wd0.35-0.55_gap3_sw2_geo2",
+      "params": {
+        "wall_density": [
+          0.35,
+          0.55
+        ],
+        "max_assignment_gap": 3,
+        "min_switching_cost": 2.0,
+        "geometric_pref_threshold": 2
+      },
+      "seed": 58,
+      "gen_dir": "cells/wd0.35-0.55_gap3_sw2_geo2/gen",
+      "summ_dir": "cells/wd0.35-0.55_gap3_sw2_geo2/summ",
+      "status": "ok",
+      "elapsed_seconds": 55.99,
+      "error": null
+    },
+    "wd0.35-0.55_gap3_sw2_geo3": {
+      "cell_id": "wd0.35-0.55_gap3_sw2_geo3",
+      "params": {
+        "wall_density": [
+          0.35,
+          0.55
+        ],
+        "max_assignment_gap": 3,
+        "min_switching_cost": 2.0,
+        "geometric_pref_threshold": 3
+      },
+      "seed": 59,
+      "gen_dir": "cells/wd0.35-0.55_gap3_sw2_geo3/gen",
+      "summ_dir": "cells/wd0.35-0.55_gap3_sw2_geo3/summ",
+      "status": "ok",
+      "elapsed_seconds": 55.73,
+      "error": null
+    },
+    "wd0.35-0.55_gap3_sw3_geo1": {
+      "cell_id": "wd0.35-0.55_gap3_sw3_geo1",
+      "params": {
+        "wall_density": [
+          0.35,
+          0.55
+        ],
+        "max_assignment_gap": 3,
+        "min_switching_cost": 3.0,
+        "geometric_pref_threshold": 1
+      },
+      "seed": 60,
+      "gen_dir": "cells/wd0.35-0.55_gap3_sw3_geo1/gen",
+      "summ_dir": "cells/wd0.35-0.55_gap3_sw3_geo1/summ",
+      "status": "ok",
+      "elapsed_seconds": 135.83,
+      "error": null
+    },
+    "wd0.35-0.55_gap3_sw3_geo2": {
+      "cell_id": "wd0.35-0.55_gap3_sw3_geo2",
+      "params": {
+        "wall_density": [
+          0.35,
+          0.55
+        ],
+        "max_assignment_gap": 3,
+        "min_switching_cost": 3.0,
+        "geometric_pref_threshold": 2
+      },
+      "seed": 61,
+      "gen_dir": "cells/wd0.35-0.55_gap3_sw3_geo2/gen",
+      "summ_dir": "cells/wd0.35-0.55_gap3_sw3_geo2/summ",
+      "status": "ok",
+      "elapsed_seconds": 110.97,
+      "error": null
+    },
+    "wd0.35-0.55_gap3_sw3_geo3": {
+      "cell_id": "wd0.35-0.55_gap3_sw3_geo3",
+      "params": {
+        "wall_density": [
+          0.35,
+          0.55
+        ],
+        "max_assignment_gap": 3,
+        "min_switching_cost": 3.0,
+        "geometric_pref_threshold": 3
+      },
+      "seed": 62,
+      "gen_dir": "cells/wd0.35-0.55_gap3_sw3_geo3/gen",
+      "summ_dir": "cells/wd0.35-0.55_gap3_sw3_geo3/summ",
+      "status": "ok",
+      "elapsed_seconds": 112.3,
+      "error": null
+    },
+    "wd0.35-0.55_gap5_sw1_geo1": {
+      "cell_id": "wd0.35-0.55_gap5_sw1_geo1",
+      "params": {
+        "wall_density": [
+          0.35,
+          0.55
+        ],
+        "max_assignment_gap": 5,
+        "min_switching_cost": 1.0,
+        "geometric_pref_threshold": 1
+      },
+      "seed": 63,
+      "gen_dir": "cells/wd0.35-0.55_gap5_sw1_geo1/gen",
+      "summ_dir": "cells/wd0.35-0.55_gap5_sw1_geo1/summ",
+      "status": "ok",
+      "elapsed_seconds": 50.2,
+      "error": null
+    },
+    "wd0.35-0.55_gap5_sw1_geo2": {
+      "cell_id": "wd0.35-0.55_gap5_sw1_geo2",
+      "params": {
+        "wall_density": [
+          0.35,
+          0.55
+        ],
+        "max_assignment_gap": 5,
+        "min_switching_cost": 1.0,
+        "geometric_pref_threshold": 2
+      },
+      "seed": 64,
+      "gen_dir": "cells/wd0.35-0.55_gap5_sw1_geo2/gen",
+      "summ_dir": "cells/wd0.35-0.55_gap5_sw1_geo2/summ",
+      "status": "ok",
+      "elapsed_seconds": 46.08,
+      "error": null
+    },
+    "wd0.35-0.55_gap5_sw1_geo3": {
+      "cell_id": "wd0.35-0.55_gap5_sw1_geo3",
+      "params": {
+        "wall_density": [
+          0.35,
+          0.55
+        ],
+        "max_assignment_gap": 5,
+        "min_switching_cost": 1.0,
+        "geometric_pref_threshold": 3
+      },
+      "seed": 65,
+      "gen_dir": "cells/wd0.35-0.55_gap5_sw1_geo3/gen",
+      "summ_dir": "cells/wd0.35-0.55_gap5_sw1_geo3/summ",
+      "status": "ok",
+      "elapsed_seconds": 46.66,
+      "error": null
+    },
+    "wd0.35-0.55_gap5_sw2_geo1": {
+      "cell_id": "wd0.35-0.55_gap5_sw2_geo1",
+      "params": {
+        "wall_density": [
+          0.35,
+          0.55
+        ],
+        "max_assignment_gap": 5,
+        "min_switching_cost": 2.0,
+        "geometric_pref_threshold": 1
+      },
+      "seed": 66,
+      "gen_dir": "cells/wd0.35-0.55_gap5_sw2_geo1/gen",
+      "summ_dir": "cells/wd0.35-0.55_gap5_sw2_geo1/summ",
+      "status": "ok",
+      "elapsed_seconds": 55.65,
+      "error": null
+    },
+    "wd0.35-0.55_gap5_sw2_geo2": {
+      "cell_id": "wd0.35-0.55_gap5_sw2_geo2",
+      "params": {
+        "wall_density": [
+          0.35,
+          0.55
+        ],
+        "max_assignment_gap": 5,
+        "min_switching_cost": 2.0,
+        "geometric_pref_threshold": 2
+      },
+      "seed": 67,
+      "gen_dir": "cells/wd0.35-0.55_gap5_sw2_geo2/gen",
+      "summ_dir": "cells/wd0.35-0.55_gap5_sw2_geo2/summ",
+      "status": "ok",
+      "elapsed_seconds": 52.55,
+      "error": null
+    },
+    "wd0.35-0.55_gap5_sw2_geo3": {
+      "cell_id": "wd0.35-0.55_gap5_sw2_geo3",
+      "params": {
+        "wall_density": [
+          0.35,
+          0.55
+        ],
+        "max_assignment_gap": 5,
+        "min_switching_cost": 2.0,
+        "geometric_pref_threshold": 3
+      },
+      "seed": 68,
+      "gen_dir": "cells/wd0.35-0.55_gap5_sw2_geo3/gen",
+      "summ_dir": "cells/wd0.35-0.55_gap5_sw2_geo3/summ",
+      "status": "ok",
+      "elapsed_seconds": 53.64,
+      "error": null
+    },
+    "wd0.35-0.55_gap5_sw3_geo1": {
+      "cell_id": "wd0.35-0.55_gap5_sw3_geo1",
+      "params": {
+        "wall_density": [
+          0.35,
+          0.55
+        ],
+        "max_assignment_gap": 5,
+        "min_switching_cost": 3.0,
+        "geometric_pref_threshold": 1
+      },
+      "seed": 69,
+      "gen_dir": "cells/wd0.35-0.55_gap5_sw3_geo1/gen",
+      "summ_dir": "cells/wd0.35-0.55_gap5_sw3_geo1/summ",
+      "status": "ok",
+      "elapsed_seconds": 93.56,
+      "error": null
+    },
+    "wd0.35-0.55_gap5_sw3_geo2": {
+      "cell_id": "wd0.35-0.55_gap5_sw3_geo2",
+      "params": {
+        "wall_density": [
+          0.35,
+          0.55
+        ],
+        "max_assignment_gap": 5,
+        "min_switching_cost": 3.0,
+        "geometric_pref_threshold": 2
+      },
+      "seed": 70,
+      "gen_dir": "cells/wd0.35-0.55_gap5_sw3_geo2/gen",
+      "summ_dir": "cells/wd0.35-0.55_gap5_sw3_geo2/summ",
+      "status": "ok",
+      "elapsed_seconds": 81.06,
+      "error": null
+    },
+    "wd0.35-0.55_gap5_sw3_geo3": {
+      "cell_id": "wd0.35-0.55_gap5_sw3_geo3",
+      "params": {
+        "wall_density": [
+          0.35,
+          0.55
+        ],
+        "max_assignment_gap": 5,
+        "min_switching_cost": 3.0,
+        "geometric_pref_threshold": 3
+      },
+      "seed": 71,
+      "gen_dir": "cells/wd0.35-0.55_gap5_sw3_geo3/gen",
+      "summ_dir": "cells/wd0.35-0.55_gap5_sw3_geo3/summ",
+      "status": "ok",
+      "elapsed_seconds": 73.79,
+      "error": null
+    },
+    "wd0.35-0.55_gap7_sw1_geo1": {
+      "cell_id": "wd0.35-0.55_gap7_sw1_geo1",
+      "params": {
+        "wall_density": [
+          0.35,
+          0.55
+        ],
+        "max_assignment_gap": 7,
+        "min_switching_cost": 1.0,
+        "geometric_pref_threshold": 1
+      },
+      "seed": 72,
+      "gen_dir": "cells/wd0.35-0.55_gap7_sw1_geo1/gen",
+      "summ_dir": "cells/wd0.35-0.55_gap7_sw1_geo1/summ",
+      "status": "ok",
+      "elapsed_seconds": 50.22,
+      "error": null
+    },
+    "wd0.35-0.55_gap7_sw1_geo2": {
+      "cell_id": "wd0.35-0.55_gap7_sw1_geo2",
+      "params": {
+        "wall_density": [
+          0.35,
+          0.55
+        ],
+        "max_assignment_gap": 7,
+        "min_switching_cost": 1.0,
+        "geometric_pref_threshold": 2
+      },
+      "seed": 73,
+      "gen_dir": "cells/wd0.35-0.55_gap7_sw1_geo2/gen",
+      "summ_dir": "cells/wd0.35-0.55_gap7_sw1_geo2/summ",
+      "status": "ok",
+      "elapsed_seconds": 46.56,
+      "error": null
+    },
+    "wd0.35-0.55_gap7_sw1_geo3": {
+      "cell_id": "wd0.35-0.55_gap7_sw1_geo3",
+      "params": {
+        "wall_density": [
+          0.35,
+          0.55
+        ],
+        "max_assignment_gap": 7,
+        "min_switching_cost": 1.0,
+        "geometric_pref_threshold": 3
+      },
+      "seed": 74,
+      "gen_dir": "cells/wd0.35-0.55_gap7_sw1_geo3/gen",
+      "summ_dir": "cells/wd0.35-0.55_gap7_sw1_geo3/summ",
+      "status": "ok",
+      "elapsed_seconds": 46.34,
+      "error": null
+    },
+    "wd0.35-0.55_gap7_sw2_geo1": {
+      "cell_id": "wd0.35-0.55_gap7_sw2_geo1",
+      "params": {
+        "wall_density": [
+          0.35,
+          0.55
+        ],
+        "max_assignment_gap": 7,
+        "min_switching_cost": 2.0,
+        "geometric_pref_threshold": 1
+      },
+      "seed": 75,
+      "gen_dir": "cells/wd0.35-0.55_gap7_sw2_geo1/gen",
+      "summ_dir": "cells/wd0.35-0.55_gap7_sw2_geo1/summ",
+      "status": "ok",
+      "elapsed_seconds": 51.46,
+      "error": null
+    },
+    "wd0.35-0.55_gap7_sw2_geo2": {
+      "cell_id": "wd0.35-0.55_gap7_sw2_geo2",
+      "params": {
+        "wall_density": [
+          0.35,
+          0.55
+        ],
+        "max_assignment_gap": 7,
+        "min_switching_cost": 2.0,
+        "geometric_pref_threshold": 2
+      },
+      "seed": 76,
+      "gen_dir": "cells/wd0.35-0.55_gap7_sw2_geo2/gen",
+      "summ_dir": "cells/wd0.35-0.55_gap7_sw2_geo2/summ",
+      "status": "ok",
+      "elapsed_seconds": 47.95,
+      "error": null
+    },
+    "wd0.35-0.55_gap7_sw2_geo3": {
+      "cell_id": "wd0.35-0.55_gap7_sw2_geo3",
+      "params": {
+        "wall_density": [
+          0.35,
+          0.55
+        ],
+        "max_assignment_gap": 7,
+        "min_switching_cost": 2.0,
+        "geometric_pref_threshold": 3
+      },
+      "seed": 77,
+      "gen_dir": "cells/wd0.35-0.55_gap7_sw2_geo3/gen",
+      "summ_dir": "cells/wd0.35-0.55_gap7_sw2_geo3/summ",
+      "status": "ok",
+      "elapsed_seconds": 51.9,
+      "error": null
+    },
+    "wd0.35-0.55_gap7_sw3_geo1": {
+      "cell_id": "wd0.35-0.55_gap7_sw3_geo1",
+      "params": {
+        "wall_density": [
+          0.35,
+          0.55
+        ],
+        "max_assignment_gap": 7,
+        "min_switching_cost": 3.0,
+        "geometric_pref_threshold": 1
+      },
+      "seed": 78,
+      "gen_dir": "cells/wd0.35-0.55_gap7_sw3_geo1/gen",
+      "summ_dir": "cells/wd0.35-0.55_gap7_sw3_geo1/summ",
+      "status": "ok",
+      "elapsed_seconds": 74.85,
+      "error": null
+    },
+    "wd0.35-0.55_gap7_sw3_geo2": {
+      "cell_id": "wd0.35-0.55_gap7_sw3_geo2",
+      "params": {
+        "wall_density": [
+          0.35,
+          0.55
+        ],
+        "max_assignment_gap": 7,
+        "min_switching_cost": 3.0,
+        "geometric_pref_threshold": 2
+      },
+      "seed": 79,
+      "gen_dir": "cells/wd0.35-0.55_gap7_sw3_geo2/gen",
+      "summ_dir": "cells/wd0.35-0.55_gap7_sw3_geo2/summ",
+      "status": "ok",
+      "elapsed_seconds": 69.21,
+      "error": null
+    },
+    "wd0.35-0.55_gap7_sw3_geo3": {
+      "cell_id": "wd0.35-0.55_gap7_sw3_geo3",
+      "params": {
+        "wall_density": [
+          0.35,
+          0.55
+        ],
+        "max_assignment_gap": 7,
+        "min_switching_cost": 3.0,
+        "geometric_pref_threshold": 3
+      },
+      "seed": 80,
+      "gen_dir": "cells/wd0.35-0.55_gap7_sw3_geo3/gen",
+      "summ_dir": "cells/wd0.35-0.55_gap7_sw3_geo3/summ",
+      "status": "ok",
+      "elapsed_seconds": 64.86,
+      "error": null
+    }
+  }
+}

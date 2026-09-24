@@ -1,0 +1,45 @@
+[train] wrote 100 envs -> /juice6/u/jshe/emergent_partner_modelling/dev/sweep/cells/wd0.35-0.55_gap5_sw3_geo3/gen
+[test ] wrote 0 envs -> /juice6/u/jshe/emergent_partner_modelling/dev/sweep/cells/wd0.35-0.55_gap5_sw3_geo3/gen
+[val  ] wrote 0 envs -> /juice6/u/jshe/emergent_partner_modelling/dev/sweep/cells/wd0.35-0.55_gap5_sw3_geo3/gen
+Done. Total: 100 envs across ['train', 'test', 'val'].
+
+=== Split: train  (N=100) ===
+=============================
+[1] Metadata distributions: median [Q1, Q3]
+    realized_wall_density                  0.347  [  0.306,   0.413]
+    num_junctions                         13.000  [  9.000,  16.000]
+    num_dead_ends                          5.000  [  4.000,   7.000]
+    num_shortest_paths_ego_red             1.000  [  1.000,   2.000]
+    num_shortest_paths_ego_blue            1.000  [  1.000,   2.000]
+    num_shortest_paths_partner_red         1.000  [  1.000,   2.000]
+    num_shortest_paths_partner_blue        1.000  [  1.000,   2.000]
+    shortest_path_overlap_assignment_1     0.000  [  0.000,   0.000]
+    shortest_path_overlap_assignment_2     0.000  [  0.000,   0.000]
+    assignment_cost_difference             2.000  [  2.000,   4.000]
+    switching_cost_mean                    3.000  [  3.000,   3.500]
+    switching_cost_min                     2.000  [  2.000,   2.000]
+
+[2] Pairwise Spearman correlations
+    realized_wall_density              x switching_cost_mean         rho=-0.204  p=4.14e-02
+    assignment_cost_difference         x switching_cost_mean         rho=-0.207  p=3.90e-02
+    num_junctions                      x num_shortest_paths_ego_red  rho=+0.196  p=5.02e-02
+    shortest_path_overlap_assignment_1 x switching_cost_mean         rho=-0.245  p=1.41e-02
+    num_junctions                      x num_dead_ends               rho=-0.346  p=4.20e-04
+    realized_wall_density              x assignment_cost_difference  rho=+0.025  p=8.07e-01
+    realized_wall_density              x num_junctions               rho=-0.865  p=4.02e-31
+    switching_cost_min                 x switching_cost_mean         rho=+0.696  p=9.46e-16
+    shortest_path_overlap_assignment_1 x assignment_cost_difference  rho=+0.401  p=3.52e-05
+
+[3] Non-communicating baselines (mean over layouts; 100 trials/layout, max_steps=40, wait_k=2)
+    baseline       mean_success   mean_cost  n_cost
+    nearest               0.403       3.593      54
+    wait_react            0.980       6.644      99
+    random                0.463       5.142     100
+wrote /juice6/u/jshe/emergent_partner_modelling/dev/sweep/cells/wd0.35-0.55_gap5_sw3_geo3/summ/train_summary.json
+=== gen cmd ===
+/nlp/scr/jshe/miniconda3/envs/emergent_partner_model/bin/python /juice6/u/jshe/emergent_partner_modelling/dev/env_generator.py --n 100 --master_seed 71 --grid_size 7 --wall_density 0.35 0.55 --train_test_val_ratio 1.0 0.0 0.0 --max_assignment_gap 5 --min_switching_cost 3.0 --geometric_pref_threshold 3 --max_attempts 5000 --out_dir /juice6/u/jshe/emergent_partner_modelling/dev/sweep/cells/wd0.35-0.55_gap5_sw3_geo3/gen
+
+
+=== analysis cmd ===
+/nlp/scr/jshe/miniconda3/envs/emergent_partner_model/bin/python /juice6/u/jshe/emergent_partner_modelling/dev/analyze_grids_lite.py /juice6/u/jshe/emergent_partner_modelling/dev/sweep/cells/wd0.35-0.55_gap5_sw3_geo3/gen/layouts --trials 100 --wait_k 2 --seed 0 --out_dir /juice6/u/jshe/emergent_partner_modelling/dev/sweep/cells/wd0.35-0.55_gap5_sw3_geo3/summ
+
