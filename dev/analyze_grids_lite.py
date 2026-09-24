@@ -24,14 +24,17 @@ from __future__ import annotations
 
 import argparse
 import json
-import random
-from collections import deque
 from pathlib import Path
 from typing import Dict, List, Tuple
 
 import numpy as np
 import pandas as pd
 from scipy.stats import spearmanr
+
+from coordination_grid_baselines import (
+    summarize_baselines,
+    NON_COMM_BASELINES,
+)
 
 # --- cell codes (mirror env_generator.py) ---
 EMPTY, WALL, RED, BLUE, EGO, PARTNER = 0, 1, 2, 3, 4, 5
@@ -63,11 +66,6 @@ PAIRS: List[Tuple[str, str]] = [
     ("shortest_path_overlap_assignment_1", "assignment_cost_difference"),
 ]
 
-NON_COMM_BASELINES = ["nearest", "wait_react", "random"]
-
-DIRS = ((-1, 0), (1, 0), (0, -1), (0, 1))
-
-
 # --------------------------------------------------------------------------- #
 # Corpus loading                                                              #
 # --------------------------------------------------------------------------- #
@@ -76,6 +74,9 @@ def _load_jsons(dir_: Path) -> Tuple[pd.DataFrame, Dict[str, dict]]:
     rows, envs = [], {}
     for path in sorted(dir_.glob("*.json")):
         d = json.load(open(path))
+        # Baselines need this so they can build a CoordinationGrid from the
+        # same layout file the metadata was scraped from.
+        d["_path"] = str(path.resolve())
         rows.append({"layout_id": d["layout_id"], "seed": d["seed"], **d["metadata"]})
         envs[d["layout_id"]] = d
     return pd.DataFrame(rows), envs
@@ -137,178 +138,14 @@ def summarize_correlations(df: pd.DataFrame) -> List[dict]:
 
 # --------------------------------------------------------------------------- #
 # 3. Non-communicating baselines                                              #
+#    Delegated to coordination_grid_baselines so semantics match the env      #
+#    exactly (collision rules, walls, t=0 free-comm step, partner sampling,   #
+#    horizon, deterministic tie-break). See dev/coordination_grid_baselines.  #
 # --------------------------------------------------------------------------- #
 
-def _bool_grid(env: dict) -> np.ndarray:
-    return np.array(env["grid"], dtype=np.int8) != WALL
-
-
-def _bfs(grid_b: np.ndarray, src: Tuple[int, int]) -> np.ndarray:
-    H, W = grid_b.shape
-    dist = -np.ones((H, W), dtype=np.int32)
-    dist[src] = 0
-    q = deque([src])
-    while q:
-        r, c = q.popleft()
-        for dr, dc in DIRS:
-            nr, nc = r + dr, c + dc
-            if 0 <= nr < H and 0 <= nc < W and grid_b[nr, nc] and dist[nr, nc] == -1:
-                dist[nr, nc] = dist[r, c] + 1
-                q.append((nr, nc))
-    return dist
-
-
-def _greedy_step(grid_b, dist_to_goal, pos, rng):
-    r, c = pos
-    cur = dist_to_goal[r, c]
-    if cur <= 0:
-        return pos
-    cands = []
-    H, W = grid_b.shape
-    for dr, dc in DIRS:
-        nr, nc = r + dr, c + dc
-        if 0 <= nr < H and 0 <= nc < W and grid_b[nr, nc] and dist_to_goal[nr, nc] == cur - 1:
-            cands.append((nr, nc))
-    if not cands:
-        return pos
-    return cands[rng.randrange(len(cands))]
-
-
-def _resolve(pos_e, pos_p, next_e, next_p):
-    if next_e == next_p and (next_e != pos_e or next_p != pos_p):
-        return pos_e, pos_p
-    if next_e == pos_p and next_p == pos_e:
-        return pos_e, pos_p
-    return next_e, next_p
-
-
-def _success(pos_e, pos_p, red, blue) -> bool:
-    return {tuple(pos_e), tuple(pos_p)} == {tuple(red), tuple(blue)}
-
-
-def _simulate(env, ego_goal, partner_goal, rng, max_steps: int):
-    gb = _bool_grid(env)
-    d_e = _bfs(gb, tuple(ego_goal))
-    d_p = _bfs(gb, tuple(partner_goal))
-    pos_e = tuple(env["ego_start"]); pos_p = tuple(env["partner_start"])
-    if _success(pos_e, pos_p, env["red_goal"], env["blue_goal"]):
-        return True, 0
-    for t in range(1, max_steps + 1):
-        ne = _greedy_step(gb, d_e, pos_e, rng) if pos_e != tuple(ego_goal) else pos_e
-        np_ = _greedy_step(gb, d_p, pos_p, rng) if pos_p != tuple(partner_goal) else pos_p
-        pos_e, pos_p = _resolve(pos_e, pos_p, ne, np_)
-        if _success(pos_e, pos_p, env["red_goal"], env["blue_goal"]):
-            return True, t
-    return False, max_steps
-
-
-def _nearest_goal(gb, src, red, blue, rng):
-    d = _bfs(gb, tuple(src))
-    dr, db = int(d[tuple(red)]), int(d[tuple(blue)])
-    if dr < db: return red
-    if db < dr: return blue
-    return red if rng.random() < 0.5 else blue
-
-
-def _baseline_nearest(env, rng, max_steps):
-    gb = _bool_grid(env)
-    ego_g = _nearest_goal(gb, env["ego_start"], env["red_goal"], env["blue_goal"], rng)
-    par_g = _nearest_goal(gb, env["partner_start"], env["red_goal"], env["blue_goal"], rng)
-    return _simulate(env, ego_g, par_g, rng, max_steps)
-
-
-def _baseline_random(env, rng, max_steps):
-    goals = [env["red_goal"], env["blue_goal"]]
-    return _simulate(env, goals[rng.randrange(2)], goals[rng.randrange(2)], rng, max_steps)
-
-
-def _baseline_wait_react(env, rng, max_steps, k: int):
-    """Matches analyze_grids.ipynb: ego waits up to k steps, then commits to
-    the goal the partner is not heading toward. Wait steps are charged to
-    the total step budget.
-    """
-    gb = _bool_grid(env)
-    partner_goal = _nearest_goal(gb, env["partner_start"], env["red_goal"], env["blue_goal"], rng)
-    d_par = _bfs(gb, tuple(partner_goal))
-    pos_e = tuple(env["ego_start"]); pos_p = tuple(env["partner_start"])
-
-    actual_wait_steps = 0
-    for _ in range(k):
-        if pos_p == tuple(partner_goal):
-            break
-        np_ = _greedy_step(gb, d_par, pos_p, rng)
-        _, pos_p = _resolve(pos_e, pos_p, pos_e, np_)
-        actual_wait_steps += 1
-
-    d_pr = int(_bfs(gb, tuple(env["red_goal"]))[pos_p])
-    d_pb = int(_bfs(gb, tuple(env["blue_goal"]))[pos_p])
-    inferred = env["red_goal"] if d_pr < d_pb else env["blue_goal"] if d_pb < d_pr else (env["red_goal"] if rng.random() < 0.5 else env["blue_goal"])
-    ego_goal = env["blue_goal"] if tuple(inferred) == tuple(env["red_goal"]) else env["red_goal"]
-
-    d_ego = _bfs(gb, tuple(ego_goal))
-    if _success(pos_e, pos_p, env["red_goal"], env["blue_goal"]):
-        return True, actual_wait_steps
-    for t in range(1, max_steps - actual_wait_steps + 1):
-        ne = _greedy_step(gb, d_ego, pos_e, rng) if pos_e != tuple(ego_goal) else pos_e
-        np_ = _greedy_step(gb, d_par, pos_p, rng) if pos_p != tuple(partner_goal) else pos_p
-        pos_e, pos_p = _resolve(pos_e, pos_p, ne, np_)
-        if _success(pos_e, pos_p, env["red_goal"], env["blue_goal"]):
-            return True, actual_wait_steps + t
-    return False, max_steps
-
-
-def summarize_baselines(envs: Dict[str, dict],
-                        trials: int,
-                        max_steps: int,
-                        wait_k: int,
-                        seed: int) -> Dict[str, dict]:
-    """Aggregate over layouts:
-      - mean success = mean over layouts of per-layout success rate.
-      - mean cost    = mean over layouts of per-layout mean steps-to-success
-                       (skipping layouts where the baseline never succeeded).
-    """
-    baselines = {
-        "nearest":    lambda e, r: _baseline_nearest(e, r, max_steps),
-        "wait_react": lambda e, r: _baseline_wait_react(e, r, max_steps, wait_k),
-        "random":     lambda e, r: _baseline_random(e, r, max_steps),
-    }
-
-    per_layout: Dict[str, List[Tuple[float, float]]] = {n: [] for n in baselines}
-    master = random.Random(seed)
-    for env in envs.values():
-        for name, fn in baselines.items():
-            rng = random.Random(master.randrange(2**31))
-            n_succ = 0
-            step_sum = 0
-            for _ in range(trials):
-                s, t = fn(env, rng)
-                if s:
-                    n_succ += 1
-                    step_sum += t
-            per_layout[name].append((n_succ / trials,
-                                     (step_sum / n_succ) if n_succ else float("nan")))
-
-    print(f"[3] Non-communicating baselines (mean over layouts; {trials} trials/layout, "
-          f"max_steps={max_steps}, wait_k={wait_k})")
-    print(f"    {'baseline':<12}  {'mean_success':>13}  {'mean_cost':>10}  {'n_cost':>6}")
-
-    out: Dict[str, dict] = {"config": {"trials": trials, "max_steps": max_steps,
-                                        "wait_k": wait_k, "seed": seed},
-                             "baselines": {}}
-    for name in NON_COMM_BASELINES:
-        arr = np.array(per_layout[name], dtype=float)
-        mean_succ = float(arr[:, 0].mean())
-        cost_col  = arr[:, 1]
-        ok = ~np.isnan(cost_col)
-        mean_cost = float(cost_col[ok].mean()) if ok.any() else float("nan")
-        n_cost = int(ok.sum())
-        print(f"    {name:<12}  {mean_succ:13.3f}  {mean_cost:10.3f}  {n_cost:6d}")
-        out["baselines"][name] = {
-            "mean_success": mean_succ,
-            "mean_cost": mean_cost if not np.isnan(mean_cost) else None,
-            "n_cost": n_cost,
-        }
-    return out
+# Re-export so callers importing summarize_baselines from lite still work.
+__all__ = ["summarize_metadata", "summarize_correlations", "summarize_baselines",
+           "load_corpus", "NON_COMM_BASELINES"]
 
 
 # --------------------------------------------------------------------------- #
@@ -323,10 +160,13 @@ def _parse_args() -> argparse.Namespace:
                         "split subdirectories (e.g. dev/grids/layouts).")
     p.add_argument("--trials", type=int, default=100,
                    help="Baseline trials per layout.")
-    p.add_argument("--max_steps", type=int, default=40,
-                   help="Per-episode step budget for baseline simulation.")
+    p.add_argument("--max_steps", type=int, default=15,
+                   help="Per-episode step budget for baseline simulation "
+                        "(should match CoordinationGrid.max_steps).")
     p.add_argument("--wait_k", type=int, default=2,
-                   help="Wait-and-react observation window.")
+                   help="Wait-and-react observation window (env steps).")
+    p.add_argument("--partner_z", type=float, default=0.5,
+                   help="Partner type z. NONE-only baselines are z-invariant.")
     p.add_argument("--seed", type=int, default=0,
                    help="Master seed for baseline trials.")
     p.add_argument("--skip_baselines", action="store_true",
@@ -358,7 +198,8 @@ def main() -> None:
                                             trials=args.trials,
                                             max_steps=args.max_steps,
                                             wait_k=args.wait_k,
-                                            seed=args.seed)
+                                            seed=args.seed,
+                                            partner_z=args.partner_z)
 
         if args.out_dir is not None:
             payload = {

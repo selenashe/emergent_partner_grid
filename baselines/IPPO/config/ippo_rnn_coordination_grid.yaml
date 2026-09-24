@@ -1,13 +1,33 @@
-# CoordinationGrid recurrent IPPO — Stage A (single learned agent, single
-# round, one fixed layout, fixed partner_z). See ippo_rnn_coordination_grid.py.
+# CoordinationGrid recurrent IPPO — Stage B (learned ego, scripted partner,
+# fixed z=1, layout sampled per-episode from a training pool; eval on held-out
+# val / test pools at the end of training).
+#
+# See ippo_rnn_coordination_grid.py for the trainer + evaluate_policy().
 
 "ENV_NAME": "coordination_grid"
 "ENV_KWARGS":
-  "layout_path": "/juice6/u/jshe/emergent_partner_modelling/dev/grids/layouts/train/train_0000.json"
+  # Provide EITHER layout_path (single) OR layouts_dir (a directory of *.json).
+  # For Stage B we point at the full training pool.
+  "layouts_dir": "/juice6/u/jshe/emergent_partner_grid/dev/grids/layouts/train"
   "partner_z": 1.0
   "max_steps": 15
   "step_penalty": 0.01
   "success_reward": 1.0
+  # D4 dihedral augmentation of the training pool (identity + 3 rotations
+  # + 2 flips + 2 diagonal reflections). Effective train pool becomes 8x.
+  # Eval env forces this to False regardless of the training setting.
+  "augment_symmetries": True
+
+# Held-out evaluation after training. Keys become the "eval_<split>/*" wandb
+# metrics; leave empty to skip eval entirely.
+"EVAL_LAYOUTS_DIRS":
+  "val":  "/juice6/u/jshe/emergent_partner_grid/dev/grids/layouts/val"
+  "test": "/juice6/u/jshe/emergent_partner_grid/dev/grids/layouts/test"
+"EVAL_TRIALS_PER_LAYOUT": 32
+"EVAL_SEED": 12345
+
+# Where to dump trained params (safetensors). Empty -> no save.
+"SAVE_PARAMS_PATH": "/juice6/u/jshe/emergent_partner_grid/dev/train_logs/stage_b_z1_params.safetensors"
 
 "SEED": 1
 "NUM_SEEDS": 1
@@ -19,11 +39,12 @@
 
 # --- PPO rollout & update ---
 "NUM_ENVS": 256
-"NUM_STEPS": 128
+"NUM_STEPS": 32
 "UPDATE_EPOCHS": 4
 "NUM_MINIBATCHES": 8
 
-"TOTAL_TIMESTEPS": 5e6
+# Multi-layout is meaningfully harder than single-layout; give it more budget.
+"TOTAL_TIMESTEPS": 20000000
 
 # --- objective ---
 "CLIP_EPS": 0.2

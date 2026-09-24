@@ -1,0 +1,29 @@
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+2026-09-24 12:26:46.755719: E external/xla/xla/stream_executor/cuda/cuda_driver.cc:273] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+CUDA backend failed to initialize: FAILED_PRECONDITION: No visible GPU devices. (Set TF_CPP_MIN_LOG_LEVEL=0 and rerun for more info.)
+[main] compiling and running 1 seed(s)...
+[u    1] env=     8192 succ=0.004 ret=-0.146 len=15.0 ent=2.708 aL=-0.0002 vL=0.2483 t0=[none=0.33 m0=0.32 m1=0.35]
+[u    2] env=    16384 succ=0.006 ret=-0.144 len=15.0 ent=2.708 aL=-0.0008 vL=0.0792 t0=[none=0.33 m0=0.35 m1=0.33]
+[u    3] env=    24576 succ=0.008 ret=-0.142 len=15.0 ent=2.706 aL=-0.0025 vL=0.0249 t0=[none=0.36 m0=0.31 m1=0.33]
+[u    4] env=    32768 succ=0.006 ret=-0.144 len=15.0 ent=2.685 aL=-0.0095 vL=0.0068 t0=[none=0.36 m0=0.30 m1=0.34]
+[u    5] env=    40960 succ=0.014 ret=-0.136 len=15.0 ent=2.653 aL=-0.0041 vL=0.0048 t0=[none=0.34 m0=0.27 m1=0.39]
+[u    6] env=    49152 succ=0.019 ret=-0.130 len=15.0 ent=2.605 aL=-0.0047 vL=0.0042 t0=[none=0.39 m0=0.24 m1=0.37]
+[u    7] env=    57344 succ=0.035 ret=-0.113 len=14.9 ent=2.561 aL=-0.0061 vL=0.0070 t0=[none=0.36 m0=0.20 m1=0.44]
+[u    8] env=    65536 succ=0.030 ret=-0.119 len=15.0 ent=2.499 aL=-0.0059 vL=0.0085 t0=[none=0.33 m0=0.23 m1=0.44]
+[u    9] env=    73728 succ=0.094 ret=-0.053 len=14.8 ent=2.420 aL=-0.0064 vL=0.0195 t0=[none=0.34 m0=0.21 m1=0.45]
+[u   10] env=    81920 succ=0.114 ret=-0.032 len=14.7 ent=2.329 aL=-0.0043 vL=0.0214 t0=[none=0.36 m0=0.20 m1=0.45]
+[u   11] env=    90112 succ=0.173 ret=+0.029 len=14.5 ent=2.288 aL=-0.0094 vL=0.0284 t0=[none=0.36 m0=0.17 m1=0.47]
+[u   12] env=    98304 succ=0.254 ret=+0.114 len=14.2 ent=2.222 aL=-0.0163 vL=0.0335 t0=[none=0.33 m0=0.20 m1=0.47]
+[u   13] env=   106496 succ=0.297 ret=+0.159 len=14.1 ent=2.192 aL=-0.0217 vL=0.0372 t0=[none=0.31 m0=0.22 m1=0.47]
+[u   14] env=   114688 succ=0.428 ret=+0.297 len=13.5 ent=2.081 aL=-0.0263 vL=0.0394 t0=[none=0.28 m0=0.19 m1=0.53]
+[u   15] env=   122880 succ=0.569 ret=+0.447 len=12.8 ent=2.017 aL=-0.0260 vL=0.0387 t0=[none=0.24 m0=0.13 m1=0.63]
+[u   16] env=   131072 succ=0.671 ret=+0.556 len=12.2 ent=1.959 aL=-0.0314 vL=0.0287 t0=[none=0.22 m0=0.12 m1=0.66]
+[u   17] env=   139264 succ=0.757 ret=+0.647 len=11.7 ent=1.896 aL=-0.0293 vL=0.0228 t0=[none=0.16 m0=0.05 m1=0.80]
+[u   18] env=   147456 succ=0.879 ret=+0.778 len=10.9 ent=1.811 aL=-0.0252 vL=0.0149 t0=[none=0.07 m0=0.01 m1=0.91]
+[u   19] env=   155648 succ=0.938 ret=+0.842 len=10.5 ent=1.717 aL=-0.0209 vL=0.0084 t0=[none=0.06 m0=0.02 m1=0.92]
+[u   20] env=   163840 succ=0.943 ret=+0.852 len=10.0 ent=1.658 aL=-0.0151 vL=0.0066 t0=[none=0.04 m0=0.01 m1=0.95]
+[u   21] env=   172032 succ=0.974 ret=+0.885 len= 9.8 ent=1.620 aL=-0.0153 vL=0.0046 t0=[none=0.02 m0=0.01 m1=0.97]
+[u   22] env=   180224 succ=0.984 ret=+0.898 len= 9.6 ent=1.565 aL=-0.0153 vL=0.0021 t0=[none=0.01 m0=0.00 m1=0.98]

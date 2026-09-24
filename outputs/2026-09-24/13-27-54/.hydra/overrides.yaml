@@ -1,0 +1,11 @@
+- ENV_KWARGS.layouts_dir=/tmp/cg_stageB_smoke/train
+- EVAL_LAYOUTS_DIRS.val=/tmp/cg_stageB_smoke/val
+- EVAL_LAYOUTS_DIRS.test=/tmp/cg_stageB_smoke/test
+- EVAL_TRIALS_PER_LAYOUT=4
+- SAVE_PARAMS_PATH=/tmp/cg_stageB_smoke/params.safetensors
+- NUM_ENVS=16
+- NUM_STEPS=16
+- NUM_MINIBATCHES=2
+- UPDATE_EPOCHS=2
+- TOTAL_TIMESTEPS=1024
+- +STDOUT_LOG=true

@@ -22,17 +22,21 @@ Partner (agent_1) is scripted:
       depend on z.
 
 Observation for each agent is a dict:
-    {"grid": (H, W, 5), "last_message": (3,)}
+    {"grid": (H, W, 5), "last_message": (3,), "is_t0": scalar float32}
 where "last_message" is a one-hot over {NONE, M0, M1} for the message ego
 sent on the immediately preceding step (NONE at t=0). This is what the ego
 uses to correlate its own utterances with partner responses when inferring z.
+``is_t0`` is 1.0 when ``state.time == 0`` (the free-comm step) and 0.0 else;
+policies use it to mask their action space so movement is only sampled at
+t>=1 and communication is only sampled at t=0.
 """
 
+import glob
 import json
 import os
 from collections import deque
 from enum import IntEnum
-from typing import Dict, Tuple
+from typing import Dict, List, Optional, Sequence, Tuple
 
 import chex
 import jax
@@ -74,6 +78,20 @@ class Messages(IntEnum):
 N_MOVES = 5
 N_MESSAGES = 3
 N_EGO_ACTIONS = N_MOVES * N_MESSAGES  # 15
+
+# Legality of the flat ego actions per environment phase. At t=0 the env
+# forces movement=STAY, so only the three (STAY, msg) actions are behaviorally
+# distinct. At t>=1 the scripted partner ignores the message channel (it
+# committed at t=1 and never revisits), so only the five (move, NONE) actions
+# are behaviorally distinct. Flat encoding is ``a = 3 * move + msg``.
+#   t=0 legal ids: STAY(4)*3 + NONE/M0/M1 -> {12, 13, 14}
+#   t>=1 legal ids: {UP,DOWN,RIGHT,LEFT,STAY}*3 + NONE -> {0, 3, 6, 9, 12}
+LEGAL_ACTION_IDS_T0 = tuple(3 * int(Actions.stay) + m for m in range(N_MESSAGES))
+LEGAL_ACTION_IDS_TGEQ1 = tuple(3 * mv + int(Messages.none) for mv in range(N_MOVES))
+ACTION_MASK_T0 = np.zeros(N_EGO_ACTIONS, dtype=np.bool_)
+ACTION_MASK_T0[list(LEGAL_ACTION_IDS_T0)] = True
+ACTION_MASK_TGEQ1 = np.zeros(N_EGO_ACTIONS, dtype=np.bool_)
+ACTION_MASK_TGEQ1[list(LEGAL_ACTION_IDS_TGEQ1)] = True
 
 # Partner-goal state encoding.
 GOAL_UNSET = 0
@@ -133,6 +151,7 @@ def _load_layout(layout_path: str) -> dict:
         return np.array([rc[1], rc[0]], dtype=np.int32)
 
     return {
+        "_path": os.path.abspath(layout_path),
         "height": int(h),
         "width": int(w),
         "wall_map": jnp.asarray(wall_map, dtype=jnp.bool_),
@@ -191,27 +210,213 @@ def _bfs_next_actions(wall_map_np: np.ndarray, goal_xy_np: np.ndarray) -> np.nda
     return next_action
 
 
+SYMMETRY_NAMES = (
+    "identity",         # 0
+    "rot90_cw",         # 1
+    "rot180",           # 2
+    "rot270_cw",        # 3
+    "flip_lr",          # 4  mirror across the vertical axis (left <-> right)
+    "flip_ud",          # 5  mirror across the horizontal axis (top <-> bottom)
+    "transpose",        # 6  mirror across the main diagonal
+    "anti_transpose",   # 7  mirror across the anti-diagonal
+)
+N_SYMMETRIES = len(SYMMETRY_NAMES)
+
+
+def _sym_position(g: int, xy: np.ndarray, n: int) -> np.ndarray:
+    """Apply D4 symmetry ``g`` to a single (x, y) position on an n×n grid.
+    Returns a new np.int32 array of shape (2,).
+    """
+    x = int(xy[0]); y = int(xy[1])
+    if g == 0:                                     # identity
+        nx, ny = x, y
+    elif g == 1:                                   # rot 90 CW
+        nx, ny = n - 1 - y, x
+    elif g == 2:                                   # rot 180
+        nx, ny = n - 1 - x, n - 1 - y
+    elif g == 3:                                   # rot 270 CW (= 90 CCW)
+        nx, ny = y, n - 1 - x
+    elif g == 4:                                   # flip left <-> right
+        nx, ny = n - 1 - x, y
+    elif g == 5:                                   # flip top <-> bottom
+        nx, ny = x, n - 1 - y
+    elif g == 6:                                   # transpose (main diag)
+        nx, ny = y, x
+    elif g == 7:                                   # anti-transpose
+        nx, ny = n - 1 - y, n - 1 - x
+    else:
+        raise ValueError(f"unknown symmetry idx {g}")
+    return np.array([nx, ny], dtype=np.int32)
+
+
+def _sym_wall(g: int, wall_np: np.ndarray) -> np.ndarray:
+    """Apply D4 symmetry ``g`` to a (H, W) wall array (indexed [y, x])."""
+    if g == 0:
+        return wall_np.copy()
+    if g == 1:
+        return np.rot90(wall_np, k=-1).copy()       # CW 90
+    if g == 2:
+        return np.rot90(wall_np, k=2).copy()
+    if g == 3:
+        return np.rot90(wall_np, k=1).copy()        # CCW 90
+    if g == 4:
+        return np.fliplr(wall_np).copy()
+    if g == 5:
+        return np.flipud(wall_np).copy()
+    if g == 6:
+        return wall_np.T.copy()
+    if g == 7:
+        return wall_np[::-1, ::-1].T.copy()
+    raise ValueError(f"unknown symmetry idx {g}")
+
+
+def _augment_layout(base: dict, g: int, n: int) -> dict:
+    """Return a new layout dict obtained by applying D4 symmetry ``g`` to
+    ``base``. Positions and walls are transformed; BFS tables are NOT copied
+    from ``base`` — the caller re-runs BFS on the transformed geometry so
+    action-direction remaps can't get out of sync.
+    """
+    wall_np = _sym_wall(g, base["wall_map_np"])
+    ego = _sym_position(g, np.asarray(base["ego_start"], dtype=np.int32), n)
+    partner = _sym_position(g, np.asarray(base["partner_start"], dtype=np.int32), n)
+    red = _sym_position(g, np.asarray(base["red_goal"], dtype=np.int32), n)
+    blue = _sym_position(g, np.asarray(base["blue_goal"], dtype=np.int32), n)
+    return {
+        "height": base["height"],
+        "width": base["width"],
+        "wall_map": jnp.asarray(wall_np, dtype=jnp.bool_),
+        "wall_map_np": wall_np,
+        "ego_start": jnp.asarray(ego, dtype=jnp.int32),
+        "partner_start": jnp.asarray(partner, dtype=jnp.int32),
+        "red_goal": jnp.asarray(red, dtype=jnp.int32),
+        "blue_goal": jnp.asarray(blue, dtype=jnp.int32),
+        "red_goal_np": red,
+        "blue_goal_np": blue,
+        "_sym_source_path": base.get("_path", None),
+        "_sym_idx": int(g),
+    }
+
+
+def _resolve_layout_paths(
+    layout_path: Optional[str],
+    layout_paths: Optional[Sequence[str]],
+    layouts_dir: Optional[str],
+) -> List[str]:
+    """Collapse the three ways to specify layouts into a concrete list."""
+    if layout_paths is not None and len(list(layout_paths)) > 0:
+        return list(layout_paths)
+    if layouts_dir is not None:
+        paths = sorted(glob.glob(os.path.join(layouts_dir, "*.json")))
+        if not paths:
+            raise FileNotFoundError(f"No *.json under {layouts_dir}")
+        return paths
+    if layout_path is not None:
+        return [layout_path]
+    raise ValueError(
+        "Provide exactly one of layout_path=..., layout_paths=[...], "
+        "or layouts_dir=..."
+    )
+
+
 class CoordinationGrid(MultiAgentEnv):
-    """CoordinationGrid with scripted, message-conditioned partner."""
+    """CoordinationGrid with scripted, message-conditioned partner.
+
+    Supports a *pool* of layouts. On each ``reset`` a layout is sampled
+    uniformly from the pool (or the pool has size 1 for the single-layout
+    case, which is fully backward compatible). All per-layout geometry
+    (wall_map, starts, goals) plus precomputed BFS next-action tables are
+    stacked along a leading ``K`` axis; ``state.layout_idx`` records which
+    slice the current episode uses, and ``_partner_next_move`` indexes into
+    the stacked BFS tables using it. Layouts must all be the same H×W.
+    """
 
     def __init__(
         self,
-        layout_path: str = DEFAULT_LAYOUT_PATH,
+        layout_path: Optional[str] = None,
+        layout_paths: Optional[Sequence[str]] = None,
+        layouts_dir: Optional[str] = None,
         max_steps: int = 15,
         step_penalty: float = 0.01,
         success_reward: float = 1.0,
         partner_z: float = 0.5,
+        augment_symmetries: bool = False,
     ):
         super().__init__(num_agents=2)
 
-        layout = _load_layout(layout_path)
-        self.height = layout["height"]
-        self.width = layout["width"]
-        self.wall_map = layout["wall_map"]
-        self.ego_start = layout["ego_start"]
-        self.partner_start = layout["partner_start"]
-        self.red_goal = layout["red_goal"]
-        self.blue_goal = layout["blue_goal"]
+        if layout_path is None and layout_paths is None and layouts_dir is None:
+            layout_path = DEFAULT_LAYOUT_PATH
+        paths = _resolve_layout_paths(layout_path, layout_paths, layouts_dir)
+        loaded_base = [_load_layout(p) for p in paths]
+        self.layout_paths: List[str] = list(paths)
+        self.n_base_layouts: int = len(loaded_base)
+
+        # H×W must match across all base layouts (network / obs shape depends
+        # on it). Grids must also be *square* to admit the D4 group without
+        # changing shape.
+        h0, w0 = loaded_base[0]["height"], loaded_base[0]["width"]
+        for i, ld in enumerate(loaded_base):
+            if (ld["height"], ld["width"]) != (h0, w0):
+                raise ValueError(
+                    f"layout {paths[i]} shape {(ld['height'], ld['width'])} != "
+                    f"first layout shape {(h0, w0)}"
+                )
+        if augment_symmetries and h0 != w0:
+            raise ValueError(
+                f"augment_symmetries=True requires square grids; got {h0}x{w0}"
+            )
+        self.height = h0
+        self.width = w0
+
+        # Expand the base layouts through the D4 group, or not. When augmented,
+        # the effective pool is 8x larger; ``reset`` samples uniformly from it.
+        # We recompute BFS on each transformed geometry rather than remapping
+        # action IDs — same result, half the failure modes.
+        self.augment_symmetries: bool = bool(augment_symmetries)
+        self.symmetries_per_layout: int = (
+            N_SYMMETRIES if self.augment_symmetries else 1
+        )
+        if self.augment_symmetries:
+            loaded: List[dict] = []
+            self.layout_source_paths: List[str] = []
+            self.layout_sym_idx: List[int] = []
+            for base in loaded_base:
+                for g in range(N_SYMMETRIES):
+                    loaded.append(_augment_layout(base, g, h0))
+                    self.layout_source_paths.append(base["_path"])
+                    self.layout_sym_idx.append(g)
+        else:
+            loaded = loaded_base
+            self.layout_source_paths = [ld["_path"] for ld in loaded_base]
+            self.layout_sym_idx = [0] * len(loaded_base)
+
+        self.n_layouts: int = len(loaded)
+
+        # Stack per-layout geometry along a leading axis (K, ...). Cast/stack
+        # via numpy first so we do everything in one shot and hand JAX a
+        # concrete dtype.
+        wall_maps_np = np.stack([np.asarray(ld["wall_map_np"], dtype=np.bool_)
+                                  for ld in loaded], axis=0)  # (K, H, W)
+        ego_starts_np = np.stack([np.asarray(ld["ego_start"], dtype=np.int32)
+                                   for ld in loaded], axis=0)                       # (K, 2)
+        partner_starts_np = np.stack([np.asarray(ld["partner_start"], dtype=np.int32)
+                                       for ld in loaded], axis=0)                    # (K, 2)
+        red_goals_np = np.stack([np.asarray(ld["red_goal"], dtype=np.int32)
+                                  for ld in loaded], axis=0)                         # (K, 2)
+        blue_goals_np = np.stack([np.asarray(ld["blue_goal"], dtype=np.int32)
+                                   for ld in loaded], axis=0)                        # (K, 2)
+
+        self.wall_maps = jnp.asarray(wall_maps_np, dtype=jnp.bool_)
+        self.ego_starts = jnp.asarray(ego_starts_np, dtype=jnp.int32)
+        self.partner_starts = jnp.asarray(partner_starts_np, dtype=jnp.int32)
+        self.red_goals = jnp.asarray(red_goals_np, dtype=jnp.int32)
+        self.blue_goals = jnp.asarray(blue_goals_np, dtype=jnp.int32)
+
+        # For single-layout callers who reach in directly for these fields.
+        self.wall_map = self.wall_maps[0]
+        self.ego_start = self.ego_starts[0]
+        self.partner_start = self.partner_starts[0]
+        self.red_goal = self.red_goals[0]
+        self.blue_goal = self.blue_goals[0]
 
         # Observation shapes for downstream code that inspects .obs_shape /
         # .msg_shape (e.g. policy heads). obs_shape stays the grid shape for
@@ -235,35 +440,59 @@ class CoordinationGrid(MultiAgentEnv):
         self.success_reward = float(success_reward)
         self.partner_z = float(partner_z)
 
-        # Precompute BFS next-action tables. Shape (K=1, H, W) — leading
-        # dim anticipates a per-layout stack once multi-layout scaffolding
-        # lands. Partner navigation lookups always index by layout_idx.
-        next_red = _bfs_next_actions(layout["wall_map_np"], layout["red_goal_np"])
-        next_blue = _bfs_next_actions(layout["wall_map_np"], layout["blue_goal_np"])
-        self.next_action_toward_red = jnp.asarray(
-            next_red[None, :, :], dtype=jnp.int32
-        )   # (1, H, W)
-        self.next_action_toward_blue = jnp.asarray(
-            next_blue[None, :, :], dtype=jnp.int32
-        )   # (1, H, W)
+        # Precompute BFS next-action tables per layout. Shape (K, H, W).
+        # Partner navigation lookups always index by state.layout_idx, which
+        # means later stages (layout×z sampling wrappers) only need to point
+        # at these tables with a different idx; no other code path changes.
+        next_red_np = np.stack(
+            [_bfs_next_actions(ld["wall_map_np"], ld["red_goal_np"])
+             for ld in loaded], axis=0,
+        )
+        next_blue_np = np.stack(
+            [_bfs_next_actions(ld["wall_map_np"], ld["blue_goal_np"])
+             for ld in loaded], axis=0,
+        )
+        self.next_action_toward_red = jnp.asarray(next_red_np, dtype=jnp.int32)
+        self.next_action_toward_blue = jnp.asarray(next_blue_np, dtype=jnp.int32)
 
     # ------------------------------------------------------------------- reset
-    def reset(self, key: chex.PRNGKey) -> Tuple[Dict[str, chex.Array], State]:
-        agent_pos = jnp.stack([self.ego_start, self.partner_start], axis=0).astype(
-            jnp.int32
-        )
-        state = State(
+    def _build_state_for(self, layout_idx: chex.Array) -> "State":
+        idx = layout_idx.astype(jnp.int32)
+        wall_map = self.wall_maps[idx]
+        ego_start = self.ego_starts[idx]
+        partner_start = self.partner_starts[idx]
+        red_goal = self.red_goals[idx]
+        blue_goal = self.blue_goals[idx]
+        agent_pos = jnp.stack([ego_start, partner_start], axis=0).astype(jnp.int32)
+        return State(
             agent_pos=agent_pos,
-            wall_map=self.wall_map,
-            red_goal=self.red_goal,
-            blue_goal=self.blue_goal,
+            wall_map=wall_map,
+            red_goal=red_goal,
+            blue_goal=blue_goal,
             time=jnp.int32(0),
             terminal=jnp.bool_(False),
             z=jnp.float32(self.partner_z),
             partner_goal=jnp.int32(GOAL_UNSET),
             pending_message=jnp.int32(Messages.none),
-            layout_idx=jnp.int32(0),
+            layout_idx=idx,
         )
+
+    def reset(self, key: chex.PRNGKey) -> Tuple[Dict[str, chex.Array], "State"]:
+        # Sample uniformly over the layout pool.
+        key, subkey = jax.random.split(key)
+        layout_idx = jax.random.randint(
+            subkey, shape=(), minval=0, maxval=self.n_layouts, dtype=jnp.int32
+        )
+        state = self._build_state_for(layout_idx)
+        obs = self.get_obs(state)
+        return lax.stop_gradient(obs), lax.stop_gradient(state)
+
+    def reset_to_layout(
+        self, key: chex.PRNGKey, layout_idx: chex.Array
+    ) -> Tuple[Dict[str, chex.Array], "State"]:
+        """Deterministic reset to a specific layout — for eval loops that need
+        to visit every val/test layout N times."""
+        state = self._build_state_for(jnp.asarray(layout_idx, dtype=jnp.int32))
         obs = self.get_obs(state)
         return lax.stop_gradient(obs), lax.stop_gradient(state)
 
@@ -414,9 +643,12 @@ class CoordinationGrid(MultiAgentEnv):
     # ---------------------------------------------------------------- get_obs
     def get_obs(self, state: State) -> Dict[str, Dict[str, chex.Array]]:
         """Per-agent obs is a dict:
-            {"grid": (H, W, 5), "last_message": (3,)}
+            {"grid": (H, W, 5), "last_message": (3,), "is_t0": ()}
         "last_message" is a one-hot over {NONE, M0, M1} for the message ego
         sent on the immediately preceding step (== state.pending_message).
+        "is_t0" is 1.0 iff state.time == 0 (the free-comm step) and 0.0
+        otherwise; a masked-action policy uses it to disable movement at
+        t=0 and messaging at t>=1.
         """
         h, w = self.height, self.width
 
@@ -439,5 +671,7 @@ class CoordinationGrid(MultiAgentEnv):
             state.pending_message, N_MESSAGES
         ).astype(jnp.float32)  # (3,)
 
-        obs_i = {"grid": grid, "last_message": last_message}
+        is_t0 = (state.time == 0).astype(jnp.float32)                 # scalar
+
+        obs_i = {"grid": grid, "last_message": last_message, "is_t0": is_t0}
         return {"agent_0": obs_i, "agent_1": obs_i}

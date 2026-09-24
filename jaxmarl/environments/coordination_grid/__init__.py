@@ -11,4 +11,8 @@ from .coordination_grid import (
     GOAL_UNSET,
     GOAL_RED,
     GOAL_BLUE,
+    LEGAL_ACTION_IDS_T0,
+    LEGAL_ACTION_IDS_TGEQ1,
+    ACTION_MASK_T0,
+    ACTION_MASK_TGEQ1,
 )

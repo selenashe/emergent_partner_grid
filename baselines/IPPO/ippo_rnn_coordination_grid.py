@@ -21,6 +21,7 @@ round_done ≠ episode_done + per-partner z sampling.
 """
 
 import functools
+import os
 from datetime import datetime
 from typing import Any, Callable, Dict, NamedTuple, Sequence
 
@@ -37,7 +38,17 @@ from flax.training.train_state import TrainState
 from omegaconf import OmegaConf
 
 import jaxmarl
-from jaxmarl.wrappers.baselines import LogWrapper
+from jaxmarl.wrappers.baselines import LogWrapper, save_params, load_params
+from jaxmarl.environments.coordination_grid import (
+    CoordinationGrid,
+    ACTION_MASK_T0, ACTION_MASK_TGEQ1,
+)
+
+
+# Static mask tensors (bool) for the network. jnp arrays so they broadcast
+# cleanly with logit tensors of arbitrary leading shape.
+_ACTION_MASK_T0_J = jnp.asarray(ACTION_MASK_T0, dtype=jnp.bool_)      # (15,)
+_ACTION_MASK_TGEQ1_J = jnp.asarray(ACTION_MASK_TGEQ1, dtype=jnp.bool_)  # (15,)
 
 
 # ---------------------------------------------------------------------------
@@ -179,12 +190,25 @@ class ActorCriticCommRNN(nn.Module):
             bias_init=constant(0.0),
         )(embedding)
         actor_mean = nn.relu(actor_mean)
-        actor_mean = nn.Dense(
+        logits = nn.Dense(
             self.action_dim,
             kernel_init=orthogonal(0.01),
             bias_init=constant(0.0),
-        )(actor_mean)
-        pi = distrax.Categorical(logits=actor_mean)
+        )(actor_mean)   # (T, N, action_dim=15)
+
+        # Legality mask: state-dependent, drives sample / log_prob / entropy.
+        # is_t0 has leading (T, N) shape (scalar per env-step); broadcast against
+        # the two (15,) masks and set illegal logits to -inf so distrax's
+        # Categorical excludes them from the softmax.
+        is_t0 = obs["is_t0"]                                          # (T, N)
+        is_t0_bool = (is_t0 > 0.5)[..., None]                         # (T, N, 1)
+        legal = jnp.where(
+            is_t0_bool,
+            _ACTION_MASK_T0_J[None, None, :],
+            _ACTION_MASK_TGEQ1_J[None, None, :],
+        )                                                             # (T, N, 15)
+        logits = jnp.where(legal, logits, jnp.full_like(logits, -jnp.inf))
+        pi = distrax.Categorical(logits=logits)
 
         critic = nn.Dense(
             self.config["FC_DIM_SIZE"],
@@ -209,6 +233,8 @@ class Transition(NamedTuple):
     log_prob: jnp.ndarray
     obs: Any  # dict pytree {"grid": ..., "last_message": ...}
     info: Dict
+    # env-state fields captured for logging (BEFORE step_env ran on this step)
+    pre_step_time: jnp.ndarray  # (N,) int32
 
 
 # ---------------------------------------------------------------------------
@@ -254,6 +280,9 @@ def make_train(config):
         return {
             "grid": jnp.zeros((1, config["NUM_ENVS"], h, w, c), dtype=jnp.float32),
             "last_message": jnp.zeros((1, config["NUM_ENVS"], m), dtype=jnp.float32),
+            # is_t0 is a scalar-per-env obs; leading (T=1, N) mirrors the
+            # trajectory layout the network consumes.
+            "is_t0": jnp.zeros((1, config["NUM_ENVS"]), dtype=jnp.float32),
         }
 
     def train(rng):
@@ -295,6 +324,13 @@ def make_train(config):
                 (train_state, env_state, last_obs, last_done,
                  update_step, hstate, rng) = runner_state
 
+                # Grab the ENV's pre-step time. LogWrapper wraps the env so the
+                # underlying CoordinationGrid state (with .time) lives at
+                # env_state.env_state. This is 0 on the free-comm step of every
+                # episode — which is exactly the mask we need to condition the
+                # t=0 message distribution on.
+                pre_step_time = env_state.env_state.time
+
                 obs_agent0 = last_obs["agent_0"]
                 obs_in = jax.tree_util.tree_map(
                     lambda x: x[jnp.newaxis, :], obs_agent0
@@ -332,6 +368,7 @@ def make_train(config):
                     log_prob=log_prob.squeeze(0),
                     obs=obs_agent0,
                     info=info,
+                    pre_step_time=pre_step_time,
                 )
                 runner_state = (
                     train_state, env_state, obsv, done_all,
@@ -417,14 +454,36 @@ def make_train(config):
                             * gae
                         )
                         loss_actor = -jnp.minimum(loss_actor1, loss_actor2).mean()
-                        entropy = pi.entropy().mean()
+                        # Per-step entropy of the (already masked) categorical.
+                        step_entropy = pi.entropy()                        # (T, N)
+                        entropy = step_entropy.mean()
+
+                        # Split entropy by t=0 vs t>=1 for logging. Uses the
+                        # SAME is_t0 the mask was derived from, so t=0 entropy
+                        # is capped at ln(3) and t>=1 at ln(5).
+                        is_t0_mask = (traj_batch.obs["is_t0"] > 0.5)       # (T, N)
+                        n_t0 = is_t0_mask.sum()
+                        n_tge1 = (~is_t0_mask).sum()
+                        entropy_t0 = jnp.where(
+                            n_t0 > 0,
+                            (step_entropy * is_t0_mask).sum() / jnp.maximum(n_t0, 1),
+                            0.0,
+                        )
+                        entropy_tge1 = jnp.where(
+                            n_tge1 > 0,
+                            (step_entropy * (~is_t0_mask)).sum() / jnp.maximum(n_tge1, 1),
+                            0.0,
+                        )
 
                         total_loss = (
                             loss_actor
                             + config["VF_COEF"] * value_loss
                             - config["ENT_COEF"] * entropy
                         )
-                        return total_loss, (value_loss, loss_actor, entropy)
+                        return total_loss, (
+                            value_loss, loss_actor, entropy,
+                            entropy_t0, entropy_tge1,
+                        )
 
                     grad_fn = jax.value_and_grad(_loss_fn, has_aux=True)
                     total_loss, grads = grad_fn(
@@ -485,28 +544,67 @@ def make_train(config):
 
             # --------- metrics ---------
             total_loss = loss_info[0]                      # (UPDATE_EPOCHS, NUM_MINIBATCHES)
-            (value_loss, actor_loss, entropy) = loss_info[1]
-            success_arr = traj_batch.info.get("success", jnp.zeros(()))
+            (value_loss, actor_loss, entropy,
+             entropy_t0, entropy_tge1) = loss_info[1]
             new_update_step = update_step + 1
 
+            # Episode-level success rate: only count timesteps that are
+            # actually episode-terminal, so a single success flag doesn't
+            # get averaged across all preceding steps of the episode.
+            completed = traj_batch.done.astype(jnp.float32)                  # (T, N)
+            successes = traj_batch.info.get(
+                "success", jnp.zeros_like(traj_batch.done)
+            ).astype(jnp.float32)                                            # (T, N)
+            n_completed = completed.sum()
+            success_rate = jnp.where(
+                n_completed > 0,
+                (successes * completed).sum() / jnp.maximum(n_completed, 1),
+                0.0,
+            )
+
+            # t=0 message distribution: decode msg from stored flat action
+            # (a = 3*move + msg), mask to steps where pre_step_time == 0.
+            ego_msg_all = traj_batch.action % 3                              # (T, N) int
+            is_t0 = (traj_batch.pre_step_time == 0).astype(jnp.float32)      # (T, N)
+            n_t0 = is_t0.sum()
+            frac_msg_none = jnp.where(
+                n_t0 > 0, ((ego_msg_all == 0) * is_t0).sum() / jnp.maximum(n_t0, 1), 0.0)
+            frac_msg_m0 = jnp.where(
+                n_t0 > 0, ((ego_msg_all == 1) * is_t0).sum() / jnp.maximum(n_t0, 1), 0.0)
+            frac_msg_m1 = jnp.where(
+                n_t0 > 0, ((ego_msg_all == 2) * is_t0).sum() / jnp.maximum(n_t0, 1), 0.0)
+
             metric = {
-                "success_rate": success_arr.mean(),
+                "success_rate": success_rate,
+                "episodes_completed": n_completed,
                 "reward_mean": traj_batch.reward.mean(),
                 "value_loss": value_loss.mean(),
                 "actor_loss": actor_loss.mean(),
-                "entropy": entropy.mean(),
+                "entropy": entropy.mean(),           # combined masked entropy
+                "entropy_t0": entropy_t0.mean(),      # over 3 msg options, max=ln 3
+                "entropy_tge1": entropy_tge1.mean(),  # over 5 move options, max=ln 5
                 "total_loss": total_loss.mean(),
+                "t0_msg_none": frac_msg_none,
+                "t0_msg_m0": frac_msg_m0,
+                "t0_msg_m1": frac_msg_m1,
+                "t0_steps_seen": n_t0,
                 "update_step": new_update_step,
                 "env_step": new_update_step
                             * config["NUM_STEPS"] * config["NUM_ENVS"],
             }
             if "returned_episode_returns" in traj_batch.info:
-                # LogWrapper puts a per-agent leading axis; ego is index 0.
-                metric["ep_return_mean"] = (
-                    traj_batch.info["returned_episode_returns"][..., 0].mean()
+                # LogWrapper writes returned_episode_* every step; the mask
+                # returned_episode is True only on the step an episode ends.
+                # Ego is at agent index 0.
+                ret_mask = traj_batch.info["returned_episode"][..., 0].astype(jnp.float32)
+                ret_val = traj_batch.info["returned_episode_returns"][..., 0]
+                ret_len = traj_batch.info["returned_episode_lengths"][..., 0]
+                n_ret = ret_mask.sum()
+                metric["ep_return_mean"] = jnp.where(
+                    n_ret > 0, (ret_val * ret_mask).sum() / jnp.maximum(n_ret, 1), 0.0
                 )
-                metric["ep_length_mean"] = (
-                    traj_batch.info["returned_episode_lengths"][..., 0].mean()
+                metric["ep_length_mean"] = jnp.where(
+                    n_ret > 0, (ret_len * ret_mask).sum() / jnp.maximum(n_ret, 1), 0.0
                 )
 
             def _log_cb(m):
@@ -515,14 +613,18 @@ def make_train(config):
                         for k, v in m.items()}
                 wandb.log(flat)
                 if config.get("STDOUT_LOG", False):
+                    ep_ret = flat.get("ep_return_mean", float("nan"))
+                    ep_len = flat.get("ep_length_mean", float("nan"))
                     print(
-                        f"[update {int(flat['update_step']):>4d}] "
-                        f"env_step={int(flat['env_step']):>8d} "
-                        f"success={flat['success_rate']:.3f} "
-                        f"reward={flat['reward_mean']:+.3f} "
-                        f"actor_loss={flat['actor_loss']:+.4f} "
-                        f"value_loss={flat['value_loss']:.4f} "
-                        f"entropy={flat['entropy']:.3f}",
+                        f"[u {int(flat['update_step']):>4d}] "
+                        f"env={int(flat['env_step']):>9d} "
+                        f"succ={flat['success_rate']:.3f} "
+                        f"ret={ep_ret:+.3f} len={ep_len:4.1f} "
+                        f"ent(t0,t>=1)=({flat['entropy_t0']:.3f},"
+                        f"{flat['entropy_tge1']:.3f}) "
+                        f"aL={flat['actor_loss']:+.4f} vL={flat['value_loss']:.4f} "
+                        f"t0=[none={flat['t0_msg_none']:.2f} "
+                        f"m0={flat['t0_msg_m0']:.2f} m1={flat['t0_msg_m1']:.2f}]",
                         flush=True,
                     )
             jax.debug.callback(_log_cb, metric)
@@ -549,6 +651,99 @@ def make_train(config):
         return {"runner_state": runner_state, "metrics": metric}
 
     return train
+
+
+# ---------------------------------------------------------------------------
+# Held-out evaluation
+# ---------------------------------------------------------------------------
+
+def evaluate_policy(params, config, layouts_dir, key, n_trials_per_layout=32):
+    """Run the trained policy on every layout under ``layouts_dir``,
+    ``n_trials_per_layout`` times each. Returns per-layout and mean success /
+    return / length. Fully jitted vmap over (K × N) rollouts.
+    """
+    env_eval = CoordinationGrid(
+        layouts_dir=layouts_dir,
+        partner_z=config["ENV_KWARGS"]["partner_z"],
+        max_steps=config["ENV_KWARGS"]["max_steps"],
+        step_penalty=config["ENV_KWARGS"].get("step_penalty", 0.01),
+        success_reward=config["ENV_KWARGS"].get("success_reward", 1.0),
+        # Eval always runs on the actual held-out layouts, never their symmetry
+        # variants — even if training augmentation was on.
+        augment_symmetries=False,
+    )
+    network = ActorCriticCommRNN(
+        action_dim=env_eval.n_ego_actions, config=config
+    )
+    K = env_eval.n_layouts
+    N = int(n_trials_per_layout)
+    B = K * N
+    layout_idxs = jnp.repeat(jnp.arange(K, dtype=jnp.int32), N)     # (B,)
+
+    key_reset, key_step = jax.random.split(key)
+    reset_keys = jax.random.split(key_reset, B)
+    obs, states = jax.vmap(env_eval.reset_to_layout)(reset_keys, layout_idxs)
+
+    hstate0 = ScannedRNN.initialize_carry(B, config["GRU_HIDDEN_DIM"])
+    done_prev0 = jnp.zeros((B,), dtype=bool)
+
+    @jax.jit
+    def rollout(params, obs, states, hstate, done_prev, key):
+        def body(carry, _):
+            obs, states, hstate, done_prev, key = carry
+            obs_agent0 = obs["agent_0"]
+            obs_in = jax.tree_util.tree_map(
+                lambda x: x[jnp.newaxis, :], obs_agent0
+            )
+            done_in = done_prev[jnp.newaxis, :]
+            hstate, pi, _ = network.apply(params, hstate, (obs_in, done_in))
+            key, ka, ks = jax.random.split(key, 3)
+            action = pi.sample(seed=ka).squeeze(0)                 # (B,)
+            step_keys = jax.random.split(ks, B)
+            obs, states, reward, done, info = jax.vmap(
+                env_eval.step_env, in_axes=(0, 0, {"agent_0": 0})
+            )(step_keys, states, {"agent_0": action})
+            done_all = done["__all__"]
+            succ = info["success"].astype(jnp.float32)
+            return (obs, states, hstate, done_all, key), (
+                reward["agent_0"], done_all, succ
+            )
+
+        init_carry = (obs, states, hstate, done_prev, key)
+        _, (rewards, dones, successes) = jax.lax.scan(
+            body, init_carry, None, length=env_eval.max_steps
+        )
+        return rewards, dones, successes
+
+    rewards, dones, successes = rollout(
+        params, obs, states, hstate0, done_prev0, key_step
+    )
+    # rewards, dones, successes shape (T, B).
+
+    # Per-episode terminal step and mask that zeroes out any post-terminal
+    # steps (which would belong to auto-reset next-episode data).
+    first_done_idx = jnp.argmax(dones.astype(jnp.int32), axis=0)   # (B,)
+    t_range = jnp.arange(dones.shape[0])[:, None]
+    alive_mask = (t_range <= first_done_idx[None, :]).astype(jnp.float32)
+    succ_terminal = successes[first_done_idx, jnp.arange(B)]        # (B,)
+    ep_return = (rewards * alive_mask).sum(axis=0)                  # (B,)
+    ep_length = (first_done_idx + 1).astype(jnp.float32)            # (B,)
+
+    per_layout_success = succ_terminal.reshape(K, N).mean(axis=1)
+    per_layout_return = ep_return.reshape(K, N).mean(axis=1)
+    per_layout_length = ep_length.reshape(K, N).mean(axis=1)
+
+    return {
+        "n_layouts": int(K),
+        "n_trials_per_layout": int(N),
+        "mean_success": float(per_layout_success.mean()),
+        "mean_return": float(per_layout_return.mean()),
+        "mean_length": float(per_layout_length.mean()),
+        "per_layout_success": np.asarray(per_layout_success),
+        "per_layout_return": np.asarray(per_layout_return),
+        "per_layout_length": np.asarray(per_layout_length),
+        "layout_paths": list(env_eval.layout_paths),
+    }
 
 
 # ---------------------------------------------------------------------------
@@ -590,19 +785,89 @@ def main(config):
 
     elapsed = (datetime.now() - start_time).total_seconds()
     wandb.log({"wallclock_seconds": elapsed})
-    print(f"[main] done in {elapsed:.1f}s", flush=True)
+    print(f"[main] training done in {elapsed:.1f}s", flush=True)
 
     # Print a summary if requested (smoke tests / no W&B).
     if config.get("STDOUT_SUMMARY", False):
         m = out["metrics"]
         # Vmapped over seeds so shape is (num_seeds, num_updates).
-        for k in ("success_rate", "reward_mean", "actor_loss",
-                  "value_loss", "entropy"):
+        for k in ("success_rate", "ep_return_mean", "ep_length_mean",
+                  "reward_mean", "actor_loss", "value_loss",
+                  "entropy", "entropy_t0", "entropy_tge1",
+                  "t0_msg_none", "t0_msg_m0", "t0_msg_m1"):
             if k in m:
                 v = np.asarray(m[k])  # (S, U)
                 seq = v.mean(axis=0)  # avg over seeds
                 nice = ", ".join(f"{x:+.4f}" for x in seq.tolist())
                 print(f"    {k:>12s}: [{nice}]", flush=True)
+
+    # -------------- Save params (per seed, seed 0 as canonical) --------------
+    # out["runner_state"][0] is the TrainState (vmapped over seeds).
+    save_path = config.get("SAVE_PARAMS_PATH", "")
+    if save_path:
+        os.makedirs(os.path.dirname(save_path) or ".", exist_ok=True)
+        params_all_seeds = out["runner_state"][0].params
+        # For the canonical dump, take seed 0.
+        params_seed0 = jax.tree_util.tree_map(lambda x: x[0], params_all_seeds)
+        save_params(params_seed0, save_path)
+        print(f"[main] saved params (seed 0) -> {save_path}", flush=True)
+        # If multiple seeds, also drop per-seed dumps next to it.
+        if num_seeds > 1:
+            base, ext = os.path.splitext(save_path)
+            for s in range(num_seeds):
+                ps = jax.tree_util.tree_map(lambda x, i=s: x[i], params_all_seeds)
+                path_s = f"{base}_seed{s}{ext}"
+                save_params(ps, path_s)
+            print(f"[main] saved {num_seeds} per-seed dumps beside {save_path}",
+                  flush=True)
+
+    # -------------- Held-out eval on val / test layout pools --------------
+    eval_dirs: Dict[str, str] = config.get("EVAL_LAYOUTS_DIRS", {}) or {}
+    n_trials = int(config.get("EVAL_TRIALS_PER_LAYOUT", 32))
+    if eval_dirs:
+        # Use seed 0's params. To eval every seed, wrap this in a loop.
+        params_seed0 = jax.tree_util.tree_map(
+            lambda x: x[0], out["runner_state"][0].params
+        )
+        rng_eval = jax.random.PRNGKey(int(config.get("EVAL_SEED", 12345)))
+        eval_summary: Dict[str, dict] = {}
+        for split, ldir in eval_dirs.items():
+            rng_eval, sub = jax.random.split(rng_eval)
+            print(
+                f"[eval] {split}: layouts_dir={ldir} × {n_trials} "
+                f"trials/layout...",
+                flush=True,
+            )
+            r = evaluate_policy(
+                params_seed0, config, ldir, sub,
+                n_trials_per_layout=n_trials,
+            )
+            eval_summary[split] = r
+            print(
+                f"[eval] {split}: n_layouts={r['n_layouts']}  "
+                f"mean_success={r['mean_success']:.3f}  "
+                f"mean_return={r['mean_return']:+.3f}  "
+                f"mean_length={r['mean_length']:4.1f}",
+                flush=True,
+            )
+            wandb.log({
+                f"eval_{split}/mean_success": r["mean_success"],
+                f"eval_{split}/mean_return": r["mean_return"],
+                f"eval_{split}/mean_length": r["mean_length"],
+            })
+        # Persist the full per-layout numbers if a save path was given.
+        if save_path:
+            eval_json_path = os.path.splitext(save_path)[0] + "_eval.json"
+            import json as _json
+            with open(eval_json_path, "w") as f:
+                _json.dump({
+                    k: {**v, "per_layout_success": v["per_layout_success"].tolist(),
+                            "per_layout_return":  v["per_layout_return"].tolist(),
+                            "per_layout_length":  v["per_layout_length"].tolist()}
+                    for k, v in eval_summary.items()
+                }, f, indent=2)
+            print(f"[eval] wrote per-layout numbers -> {eval_json_path}",
+                  flush=True)
 
     return out
 

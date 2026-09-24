@@ -1,0 +1,33 @@
+ENV_NAME: coordination_grid
+ENV_KWARGS:
+  layout_path: /juice6/u/jshe/emergent_partner_grid/dev/grids/layouts/train/train_0000.json
+  partner_z: 1.0
+  max_steps: 15
+  step_penalty: 0.01
+  success_reward: 1.0
+SEED: 1
+NUM_SEEDS: 1
+LR: 0.0005
+ANNEAL_LR: true
+LR_WARMUP: 0.05
+NUM_ENVS: 64
+NUM_STEPS: 32
+UPDATE_EPOCHS: 2
+NUM_MINIBATCHES: 4
+TOTAL_TIMESTEPS: 8192
+CLIP_EPS: 0.2
+ENT_COEF: 0.01
+GAMMA: 0.99
+GAE_LAMBDA: 0.95
+VF_COEF: 1.0
+MAX_GRAD_NORM: 0.25
+FC_DIM_SIZE: 128
+GRU_HIDDEN_DIM: 128
+GRID_EMB_DIM: 64
+MSG_EMB_DIM: 8
+ACTIVATION: relu
+ENTITY: ''
+PROJECT: coordination_grid
+WANDB_MODE: disabled
+STDOUT_SUMMARY: true
+STDOUT_LOG: true
