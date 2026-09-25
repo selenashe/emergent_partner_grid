@@ -52,7 +52,7 @@ from jaxmarl.wrappers.baselines import load_params
 from jaxmarl.environments.coordination_grid import CoordinationGrid
 
 
-VARIANTS = ("normal", "round_reset", "shuffle")
+VARIANTS = ("normal", "round_reset", "shuffle", "cross_z_shuffle")
 
 
 def _build_eval_env(config: dict, layouts_dir: str) -> CoordinationGrid:
@@ -64,9 +64,16 @@ def _build_eval_env(config: dict, layouts_dir: str) -> CoordinationGrid:
     return CoordinationGrid(**env_kwargs)
 
 
-def _make_rollout(env, network, mode: str, config: dict, B: int, T: int):
+def _make_rollout(env, network, mode: str, config: dict, B: int, T: int,
+                   Z: int, N: int):
     """Return a jitted function that rolls one full partner episode under
-    the specified intervention mode. Compiled once per mode."""
+    the specified intervention mode. Compiled once per mode.
+
+    ``Z`` = number of partner-z values, ``N`` = eps per z. Assumes the
+    parallel-slot layout is ``z_index_per_ep = repeat(arange(Z), N)`` so
+    within-z groups are contiguous — used by ``cross_z_shuffle`` to
+    guarantee cross-z swaps.
+    """
 
     @jax.jit
     def rollout(params, obs, states, hstate, done_prev, key):
@@ -77,7 +84,7 @@ def _make_rollout(env, network, mode: str, config: dict, B: int, T: int):
             )
             done_in = done_prev[None, :]
             hstate, pi, _ = network.apply(params, hstate, (obs_in, done_in))
-            key, ka, ks, kp = jax.random.split(key, 4)
+            key, ka, ks, kp, kzs = jax.random.split(key, 5)
             action = pi.sample(seed=ka).squeeze(0)                # (B,)
             step_keys = jax.random.split(ks, B)
             obs, states, reward, done, info = jax.vmap(
@@ -95,8 +102,30 @@ def _make_rollout(env, network, mode: str, config: dict, B: int, T: int):
             if mode == "round_reset":
                 hstate = jnp.where(rd_mask, jnp.zeros_like(hstate), hstate)
             elif mode == "shuffle":
+                # Random permutation over all B slots. Some in-z swaps sneak
+                # through because within-z groups are 1/Z of the slots.
                 perm = jax.random.permutation(kp, B)
                 shuffled = hstate[perm]
+                hstate = jnp.where(rd_mask, shuffled, hstate)
+            elif mode == "cross_z_shuffle":
+                # STRICT cross-z: for each slot b, pick a target z' != z[b],
+                # then a random slot within that z-group. Guaranteed the
+                # incoming hidden was accumulated with a different z.
+                # slots [zi*N, (zi+1)*N) belong to z index zi.
+                slot_ids = jnp.arange(B)
+                own_z = slot_ids // N                              # (B,)
+                key_off, key_slot = jax.random.split(kzs)
+                # Sample offset in [1, Z), forcing z' = (own_z + off) mod Z.
+                offsets = jax.random.randint(
+                    key_off, (B,), minval=1, maxval=Z
+                )
+                target_z = (own_z + offsets) % Z
+                # Random slot within the target z-group.
+                in_group = jax.random.randint(
+                    key_slot, (B,), minval=0, maxval=N
+                )
+                target_slot = target_z * N + in_group              # (B,)
+                shuffled = hstate[target_slot]
                 hstate = jnp.where(rd_mask, shuffled, hstate)
             # mode == "normal" — leave hstate alone.
 
@@ -137,7 +166,7 @@ def _run_one_variant(params, config, env, key, n_eps_per_z, mode):
     done_prev0 = jnp.zeros((B,), dtype=bool)
 
     network = ActorCriticCommRNN(action_dim=env.n_ego_actions, config=config)
-    rollout = _make_rollout(env, network, mode, config, B, T)
+    rollout = _make_rollout(env, network, mode, config, B, T, Z, N)
     (rewards, dones, successes, round_dones, round_idxs, hstates) = rollout(
         params, obs, states, hstate0, done_prev0, key_step
     )
@@ -221,9 +250,14 @@ def _run_one_variant(params, config, env, key, n_eps_per_z, mode):
 
 def _linear_probe_z(hstates: np.ndarray, z_true: np.ndarray,
                     z_pool: np.ndarray, train_frac: float = 0.7,
+                    ridge_alpha: float = 1.0,
                     rng: np.random.Generator | None = None):
-    """Fit an ordinary linear regression on hstate -> z_true. Return train/
-    test R², MSE, and (rounded-to-pool) classification accuracy.
+    """Fit a *ridge-regularized* linear regression on hstate -> z_true.
+
+    Hidden dim can be > sample size on smaller runs, so ordinary lstsq
+    overfits catastrophically. Ridge (small L2) is the appropriate probe.
+    Reports test R², MSE, and snap-to-pool classification accuracy.
+    Chance-level accuracy = 1 / len(z_pool).
     """
     if rng is None:
         rng = np.random.default_rng(0)
@@ -238,11 +272,18 @@ def _linear_probe_z(hstates: np.ndarray, z_true: np.ndarray,
     X_tr, X_te = hstates[tr], hstates[te]
     y_tr, y_te = z_true[tr], z_true[te]
 
-    # Least-squares with a bias column.
-    Xa = np.concatenate([X_tr, np.ones((X_tr.shape[0], 1), dtype=X_tr.dtype)], axis=1)
-    Xb = np.concatenate([X_te, np.ones((X_te.shape[0], 1), dtype=X_te.dtype)], axis=1)
-    w, *_ = np.linalg.lstsq(Xa, y_tr, rcond=None)
-    y_tr_pred = Xa @ w
+    # Ridge regression with a bias column. Standardize features so alpha is
+    # comparable across models with different hidden-dim norms.
+    mu = X_tr.mean(axis=0, keepdims=True)
+    sd = X_tr.std(axis=0, keepdims=True) + 1e-6
+    Xtr_s = (X_tr - mu) / sd
+    Xte_s = (X_te - mu) / sd
+    Xa = np.concatenate([Xtr_s, np.ones((Xtr_s.shape[0], 1), dtype=Xtr_s.dtype)], axis=1)
+    Xb = np.concatenate([Xte_s, np.ones((Xte_s.shape[0], 1), dtype=Xte_s.dtype)], axis=1)
+    D = Xa.shape[1]
+    reg = ridge_alpha * np.eye(D, dtype=Xa.dtype)
+    reg[-1, -1] = 0.0                   # don't regularize the bias term
+    w = np.linalg.solve(Xa.T @ Xa + reg, Xa.T @ y_tr)
     y_te_pred = Xb @ w
     ss_tot_te = float(((y_te - y_te.mean()) ** 2).sum())
     ss_res_te = float(((y_te - y_te_pred) ** 2).sum())
@@ -255,6 +296,7 @@ def _linear_probe_z(hstates: np.ndarray, z_true: np.ndarray,
         dists = np.abs(vals[:, None] - z_pool[None, :])
         return z_pool[np.argmin(dists, axis=1)]
     acc_te = float(np.mean(np.isclose(_snap(y_te_pred), y_te, atol=1e-6)))
+    chance = float(1.0 / len(z_pool))
 
     return {
         "n": int(N),
@@ -263,6 +305,7 @@ def _linear_probe_z(hstates: np.ndarray, z_true: np.ndarray,
         "r2_test": float(r2_te),
         "mse_test": float(mse_te),
         "acc_test": float(acc_te),
+        "chance_acc": chance,
     }
 
 
