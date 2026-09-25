@@ -24,8 +24,6 @@ from .environments import (
     InTheGrid,
     InTheGrid_2p,
     Hanabi,
-    Overcooked,
-    Overcooked_v2,
     CoinGame,
     JaxNav,
     CoordinationGrid,
@@ -101,12 +99,6 @@ def make(env_id: str, **env_kwargs):
     elif env_id == "hanabi":
         env = Hanabi(**env_kwargs)
 
-    # 7. Overcooked
-    elif env_id == "overcooked":
-        env = Overcooked(**env_kwargs)
-    elif env_id == "overcooked_v2":
-        env = Overcooked_v2(**env_kwargs)        
-
     # 8. Coin Game
     elif env_id == "coin_game":
         env = CoinGame(**env_kwargs)
@@ -147,8 +139,6 @@ registered_envs = [
     "storm",
     "storm_2p",
     "hanabi",
-    "overcooked",
-    "overcooked_v2",
     "coin_game",
     "jaxnav",
     "coordination_grid",

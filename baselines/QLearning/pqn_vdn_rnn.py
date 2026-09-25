@@ -22,7 +22,6 @@ from jaxmarl.wrappers.baselines import (
     LogWrapper,
     CTRolloutManager,
 )
-from jaxmarl.environments.overcooked import overcooked_layouts
 
 
 class ScannedRNN(nn.Module):
@@ -653,14 +652,6 @@ def env_from_config(config):
         env_name = f"{config['ENV_NAME']}_{config['MAP_NAME']}"
         env = make(config["ENV_NAME"], **config["ENV_KWARGS"])
         env = SMAXLogWrapper(env)
-    # overcooked needs a layout
-    elif "overcooked" in env_name.lower():
-        env_name = f"{config['ENV_NAME']}_{config['ENV_KWARGS']['layout']}"
-        config["ENV_KWARGS"]["layout"] = overcooked_layouts[
-            config["ENV_KWARGS"]["layout"]
-        ]
-        env = make(config["ENV_NAME"], **config["ENV_KWARGS"])
-        env = LogWrapper(env)
     elif "mpe" in env_name.lower():
         env = make(config["ENV_NAME"], **config["ENV_KWARGS"])
         env = MPELogWrapper(env)

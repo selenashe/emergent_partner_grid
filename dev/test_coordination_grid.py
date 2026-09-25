@@ -29,13 +29,7 @@ from jaxmarl.environments.coordination_grid.coordination_grid import (
     LEGAL_ACTION_IDS_TGEQ1,
     ACTION_MASK_T0,
     ACTION_MASK_TGEQ1,
-    ACTION_MASK_T0_ACTION_ONLY,
-    ACTION_MASK_T0_VERBAL,
-    LEGAL_ACTION_IDS_T0_ACTION_ONLY,
-    LEGAL_ACTION_IDS_T0_VERBAL,
     COMM_ACTION_ONLY,
-    COMM_UNIVERSAL,
-    COMM_PARTNER_SPECIFIC,
     COMM_CONDITIONS,
 )
 
@@ -160,53 +154,8 @@ def main():
     check("t=0 done False", not bool(d1["__all__"]))
     check("t=0 time == 1", int(s1.time) == 1)
 
-    # ------------------ z=1: M0 -> RED, M1 -> BLUE deterministically ---------
-    print("\n[deterministic goal commit at z=1 and z=0]")
-    env_z1 = make_env(partner_z=1.0)
-    env_z0 = make_env(partner_z=0.0)
-
-    # z=1, msg=M0 at t=0 -> commit RED at t=1 with prob 1.
-    _, s0 = env_z1.reset(key)
-    _, s1z1_m0, _, _, _ = env_z1.step_env(
-        key, s0, {"agent_0": encode_ego(STAY, M0)}
-    )
-    _, s2z1_m0, _, _, info2 = env_z1.step_env(
-        key, s1z1_m0, {"agent_0": encode_ego(STAY, NONE)}
-    )
-    check("z=1 + M0 commits RED", int(s2z1_m0.partner_goal) == GOAL_RED)
-
-    # z=1, msg=M1 at t=0 -> commit BLUE.
-    _, s0 = env_z1.reset(key)
-    _, s1z1_m1, _, _, _ = env_z1.step_env(
-        key, s0, {"agent_0": encode_ego(STAY, M1)}
-    )
-    _, s2z1_m1, _, _, _ = env_z1.step_env(
-        key, s1z1_m1, {"agent_0": encode_ego(STAY, NONE)}
-    )
-    check("z=1 + M1 commits BLUE", int(s2z1_m1.partner_goal) == GOAL_BLUE)
-
-    # z=0, msg=M0 -> commit BLUE.
-    _, s0 = env_z0.reset(key)
-    _, s1z0_m0, _, _, _ = env_z0.step_env(
-        key, s0, {"agent_0": encode_ego(STAY, M0)}
-    )
-    _, s2z0_m0, _, _, _ = env_z0.step_env(
-        key, s1z0_m0, {"agent_0": encode_ego(STAY, NONE)}
-    )
-    check("z=0 + M0 commits BLUE", int(s2z0_m0.partner_goal) == GOAL_BLUE)
-
-    # z=0, msg=M1 -> commit RED.
-    _, s0 = env_z0.reset(key)
-    _, s1z0_m1, _, _, _ = env_z0.step_env(
-        key, s0, {"agent_0": encode_ego(STAY, M1)}
-    )
-    _, s2z0_m1, _, _, _ = env_z0.step_env(
-        key, s1z0_m1, {"agent_0": encode_ego(STAY, NONE)}
-    )
-    check("z=0 + M1 commits RED", int(s2z0_m1.partner_goal) == GOAL_RED)
-
-    # ------------------ NONE at t=0: ~50/50 across seeds ---------------------
-    print("\n[NONE at t=0: 50/50 prior]")
+    # ------------------ partner goal is 50/50 regardless of msg ---------------
+    print("\n[action_only: partner commits 50/50 regardless of msg]")
     n_trials = 400
     reds = 0
     env_neutral = make_env(partner_z=0.7)
@@ -220,81 +169,25 @@ def main():
     print(f"    P(RED | NONE) empirical = {frac_red:.3f}  (target 0.5)")
     check("NONE gives ~50/50 partner goal", 0.40 <= frac_red <= 0.60)
 
-    # ------------------ commit-once: later msg does not change goal ----------
-    print("\n[commit-once semantics]")
-    env_z1 = make_env(partner_z=1.0)
-    _, s0 = env_z1.reset(key)
-    # t=0: M0 -> partner should commit RED at t=1.
-    _, s1, _, _, _ = env_z1.step_env(key, s0, {"agent_0": encode_ego(STAY, M0)})
-    # t=1: (partner commits) and ego now sends M1 (which would flip to BLUE if it could).
-    _, s2, _, _, _ = env_z1.step_env(key, s1, {"agent_0": encode_ego(STAY, M1)})
-    check("goal committed to RED at t=1", int(s2.partner_goal) == GOAL_RED)
-    # t=2: ego keeps sending M1; goal must remain RED.
-    _, s3, _, _, _ = env_z1.step_env(key, s2, {"agent_0": encode_ego(STAY, M1)})
-    check("goal STAYS RED after later M1", int(s3.partner_goal) == GOAL_RED)
-
-    # ------------------ partner navigation goes to committed goal ------------
-    print("\n[partner walks toward committed goal]")
-    env_z1 = make_env(partner_z=1.0, max_steps=25)
-    _, s = env_z1.reset(key)
-    # tell partner RED with M0 at t=0; ego STAYs afterward so only partner moves.
-    _, s, _, _, _ = env_z1.step_env(key, s, {"agent_0": encode_ego(STAY, M0)})
+    # ------------------ partner reaches its committed goal ------------------
+    print("\n[partner walks toward its (uniformly-committed) goal]")
+    env_walk = make_env(partner_z=0.5, max_steps=25)
+    _, s = env_walk.reset(key)
+    _, s, _, _, _ = env_walk.step_env(key, s, {"agent_0": encode_ego(STAY, NONE)})
+    # At t=1 the partner commits (uniformly); record which goal.
+    _, s, _, _, _ = env_walk.step_env(key, s, {"agent_0": encode_ego(STAY, NONE)})
+    committed = int(s.partner_goal)
+    check("partner committed a goal at t=1", committed in (GOAL_RED, GOAL_BLUE))
     partner_positions = [tuple(int(v) for v in s.agent_pos[1])]
-    for _ in range(env_z1.max_steps - 1):
-        _, s, _, d, _ = env_z1.step_env(key, s, {"agent_0": encode_ego(STAY, NONE)})
+    for _ in range(env_walk.max_steps - 2):
+        _, s, _, d, _ = env_walk.step_env(key, s, {"agent_0": encode_ego(STAY, NONE)})
         partner_positions.append(tuple(int(v) for v in s.agent_pos[1]))
         if bool(d["__all__"]):
             break
-    red_xy = tuple(int(v) for v in env_z1.red_goal)
-    check("partner reached RED", red_xy in partner_positions)
-
-    # ------------------ full comm-guided rollout succeeds --------------------
-    print("\n[comm-guided rollout end-to-end]")
-    # z=1, ego sends M0 at t=0 -> partner commits RED. Ego walks to BLUE.
-    env_z1 = make_env(partner_z=1.0, max_steps=25)
-    _, s = env_z1.reset(key)
-    blue_xy = tuple(int(v) for v in env_z1.blue_goal)
-
-    # BFS from ego_start to BLUE for ego's move plan.
-    from collections import deque
-    def bfs(w, sx, sy, gx, gy):
-        H, W = w.shape
-        visited = {(sx, sy): None}
-        q = deque([(sx, sy)])
-        while q:
-            cx, cy = q.popleft()
-            if (cx, cy) == (gx, gy):
-                break
-            for a, dx, dy in [(UP, 0, -1), (DOWN, 0, 1), (RIGHT, 1, 0), (LEFT, -1, 0)]:
-                nx, ny = cx + dx, cy + dy
-                if 0 <= nx < W and 0 <= ny < H and not w[ny, nx] and (nx, ny) not in visited:
-                    visited[(nx, ny)] = ((cx, cy), a)
-                    q.append((nx, ny))
-        if (gx, gy) not in visited:
-            return []
-        acts = []
-        cur = (gx, gy)
-        while visited[cur] is not None:
-            prev, a = visited[cur]
-            acts.append(a); cur = prev
-        return list(reversed(acts))
-
-    wall_np = np.array(env_z1.wall_map)
-    ex, ey = int(env_z1.ego_start[0]), int(env_z1.ego_start[1])
-    ego_plan = bfs(wall_np, ex, ey, blue_xy[0], blue_xy[1])
-
-    # Step 1 (t=0): STAY + M0.
-    _, s, _, d, info = env_z1.step_env(key, s, {"agent_0": encode_ego(STAY, M0)})
-    trace_done = False
-    for i in range(env_z1.max_steps - 1):
-        mv = ego_plan[i] if i < len(ego_plan) else STAY
-        _, s, r, d, info = env_z1.step_env(key, s, {"agent_0": encode_ego(mv, NONE)})
-        if bool(d["__all__"]):
-            trace_done = True
-            break
-    check("comm-guided rollout terminated", trace_done)
-    check("comm-guided rollout success", bool(info["success"]))
-    check("comm-guided rollout final reward > 0", float(r["agent_0"]) > 0)
+    target_xy = tuple(int(v) for v in (
+        env_walk.red_goal if committed == GOAL_RED else env_walk.blue_goal
+    ))
+    check("partner reached its committed goal", target_xy in partner_positions)
 
     # ------------------ walls / boundaries / collision still work -----------
     print("\n[movement primitives after t=0]")
@@ -527,17 +420,18 @@ def main():
     check("reset never samples out-of-range layout_idx",
           all(0 <= i < env_aug.n_layouts for i in seen_idxs))
 
-    # Under z=1 + M0, partner commits RED on every augmented variant too.
+    # On every augmented variant, the partner commits to *some* goal at t=1.
+    # action_only: commitment is 50/50, so we just check it happened.
     for i in range(env_aug.n_layouts):
         _, s = env_aug.reset_to_layout(jax.random.PRNGKey(i), i)
         _, s, _, _, _ = env_aug.step_env(
-            jax.random.PRNGKey(0), s, {"agent_0": encode_ego(STAY, M0)}
+            jax.random.PRNGKey(0), s, {"agent_0": encode_ego(STAY, NONE)}
         )
         _, s, _, _, _ = env_aug.step_env(
             jax.random.PRNGKey(0), s, {"agent_0": encode_ego(STAY, NONE)}
         )
-        check(f"augmented layout {i}: z=1+M0 commits RED",
-              int(s.partner_goal) == GOAL_RED)
+        check(f"augmented layout {i}: partner committed a goal",
+              int(s.partner_goal) in (GOAL_RED, GOAL_BLUE))
 
     # augment_symmetries=False stays untouched.
     env_noaug = CoordinationGrid(
@@ -597,28 +491,20 @@ def main():
         check(f"reset_to_layout({target_idx}) sets layout_idx",
               int(s.layout_idx) == target_idx)
 
-    # Per-layout goal commit: z=1 + M0 at t=0 must commit partner_goal to
-    # RED on every layout, and state.red_goal must be the sampled layout's
-    # RED coords (i.e. the state uses the right slice, not layout 0's).
-    #
-    # We don't require the partner to actually REACH RED because on some
-    # layouts the greedy BFS path is blocked by a stationary ego (that's an
-    # env-collision property, not a multi-layout property, and is tested
-    # separately by the collision suite).
+    # Per-layout goal commit: at t=1 the partner samples a goal (action_only:
+    # uniformly) and state.red_goal/blue_goal must be the sampled layout's
+    # coords (i.e. state uses the right slice, not layout 0's).
     for target_idx in range(5):
-        env_z1 = env_multi
-        _, s = env_z1.reset_to_layout(jax.random.PRNGKey(target_idx), target_idx)
-        # After the t=0 step, partner_goal commits at the NEXT step (t=1);
-        # advance one more env call so we can observe the commit.
-        _, s, _, _, _ = env_z1.step_env(
-            jax.random.PRNGKey(0), s, {"agent_0": encode_ego(STAY, M0)}
+        _, s = env_multi.reset_to_layout(jax.random.PRNGKey(target_idx), target_idx)
+        _, s, _, _, _ = env_multi.step_env(
+            jax.random.PRNGKey(0), s, {"agent_0": encode_ego(STAY, NONE)}
         )
-        _, s, _, _, _ = env_z1.step_env(
+        _, s, _, _, _ = env_multi.step_env(
             jax.random.PRNGKey(0), s, {"agent_0": encode_ego(STAY, NONE)}
         )
         check(
-            f"layout {target_idx}: partner committed RED",
-            int(s.partner_goal) == GOAL_RED,
+            f"layout {target_idx}: partner committed a goal",
+            int(s.partner_goal) in (GOAL_RED, GOAL_BLUE),
         )
         check(
             f"layout {target_idx}: state.red_goal matches layout slice",
@@ -645,11 +531,11 @@ def main():
 
     # ------------------ action-legality masks + masked policy ---------------
     print("\n[action legality masks]")
-    check("LEGAL_ACTION_IDS_T0 == (12, 13, 14)",
-          tuple(LEGAL_ACTION_IDS_T0) == (12, 13, 14))
+    check("LEGAL_ACTION_IDS_T0 == (12,)",
+          tuple(LEGAL_ACTION_IDS_T0) == (12,))
     check("LEGAL_ACTION_IDS_TGEQ1 == (0, 3, 6, 9, 12)",
           tuple(LEGAL_ACTION_IDS_TGEQ1) == (0, 3, 6, 9, 12))
-    check("ACTION_MASK_T0 has 3 True entries", int(ACTION_MASK_T0.sum()) == 3)
+    check("ACTION_MASK_T0 has 1 True entry", int(ACTION_MASK_T0.sum()) == 1)
     check("ACTION_MASK_TGEQ1 has 5 True entries",
           int(ACTION_MASK_TGEQ1.sum()) == 5)
     check("intersection of masks == {12} (STAY+NONE)",
@@ -681,10 +567,10 @@ def main():
     params = net.init(jax.random.PRNGKey(0), hstate,
                       (_mk_obs(1.0), dones))
 
-    # Sample at t=0: all samples must be in the t=0 legal set.
+    # Sample at t=0: all samples must be in the t=0 legal set (just {12}).
     _, pi_t0, _ = net.apply(params, hstate, (_mk_obs(1.0), dones))
     a_t0 = np.asarray(pi_t0.sample(seed=jax.random.PRNGKey(1)))   # (1, N)
-    check("all t=0 samples in {12,13,14}",
+    check("all t=0 samples in {12}",
           set(int(x) for x in a_t0.reshape(-1).tolist())
           <= set(LEGAL_ACTION_IDS_T0))
     # log_prob is finite for legal actions
@@ -713,11 +599,10 @@ def main():
     check("t>=1 probs on illegal ids == 0",
           float(probs_tg1[..., ill_tg1].max()) < 1e-6)
 
-    # Entropy caps: t=0 entropy ≤ ln 3, t>=1 entropy ≤ ln 5.
+    # Entropy caps: t=0 entropy == 0 (only 1 legal action); t>=1 entropy ≤ ln 5.
     ent_t0 = float(np.asarray(pi_t0.entropy()).mean())
     ent_tg1 = float(np.asarray(pi_tg1.entropy()).mean())
-    check(f"t=0 entropy ≤ ln 3 ({ent_t0:.3f} ≤ {np.log(3):.3f})",
-          ent_t0 <= np.log(3) + 1e-4)
+    check(f"t=0 entropy ≈ 0 ({ent_t0:.3f})", ent_t0 <= 1e-4)
     check(f"t>=1 entropy ≤ ln 5 ({ent_tg1:.3f} ≤ {np.log(5):.3f})",
           ent_tg1 <= np.log(5) + 1e-4)
 
@@ -1001,7 +886,7 @@ def main():
     # only the CONDITION-SPECIFIC differences: legal-action masks and p_red rules.
     print("\n[communication conditions]")
 
-    # ---- action_only ----
+    # ---- action_only (the only supported condition) ----
     print("\n[condition: action_only]")
     env_ao = CoordinationGrid(
         layout_paths=base_paths, augment_symmetries=True,
@@ -1044,94 +929,6 @@ def main():
             p = reds / N_TRIALS
             check(f"    z={z_val} msg={msg_name}: P(RED)={p:.3f} in [0.44,0.56]",
                   0.44 <= p <= 0.56)
-
-    # ---- universal ----
-    print("\n[condition: universal]")
-    env_u = CoordinationGrid(
-        layout_paths=base_paths, augment_symmetries=True,
-        partner_z_values=[0.2, 0.4, 0.6, 0.8],
-        rounds_per_episode=2, max_steps=6,
-        communication_condition=COMM_UNIVERSAL,
-    )
-    check("universal: t0 mask has exactly 3 legal actions",
-          int(np.asarray(env_u.t0_action_mask).sum()) == 3)
-    check("universal: {12,13,14} legal at t0",
-          set(int(i) for i in np.where(np.asarray(env_u.t0_action_mask))[0].tolist())
-          == set(LEGAL_ACTION_IDS_T0_VERBAL))
-
-    print("  p_red under universal (M0->RED=1, M1->RED=0, NONE=0.5), all z:")
-    for z_val in (0.2, 0.8):   # decoder ignores z; just show two extremes
-        env_uz = CoordinationGrid(
-            layout_paths=base_paths, augment_symmetries=False,
-            partner_z_values=[z_val], rounds_per_episode=1, max_steps=8,
-            communication_condition=COMM_UNIVERSAL,
-        )
-        # M0 → RED always
-        for seed in range(50):
-            key_s = jax.random.PRNGKey(seed)
-            _, s = env_uz.reset(key_s)
-            _, s, _, _, _ = env_uz.step_env(key_s, s, {"agent_0": encode_ego(STAY, M0)})
-            _, s, _, _, _ = env_uz.step_env(key_s, s, {"agent_0": encode_ego(STAY, NONE)})
-            if int(s.partner_goal) != GOAL_RED:
-                check(f"    z={z_val} M0 seed={seed}: partner_goal must be RED",
-                      False)
-        check(f"    z={z_val}: M0 -> RED w.p. 1 across 50 seeds", True)
-        # M1 → BLUE always
-        for seed in range(50):
-            key_s = jax.random.PRNGKey(seed)
-            _, s = env_uz.reset(key_s)
-            _, s, _, _, _ = env_uz.step_env(key_s, s, {"agent_0": encode_ego(STAY, M1)})
-            _, s, _, _, _ = env_uz.step_env(key_s, s, {"agent_0": encode_ego(STAY, NONE)})
-            if int(s.partner_goal) != GOAL_BLUE:
-                check(f"    z={z_val} M1 seed={seed}: partner_goal must be BLUE",
-                      False)
-        check(f"    z={z_val}: M1 -> BLUE w.p. 1 across 50 seeds", True)
-        # NONE → 50/50
-        reds = 0
-        for seed in range(N_TRIALS):
-            key_s = jax.random.PRNGKey(seed)
-            _, s = env_uz.reset(key_s)
-            _, s, _, _, _ = env_uz.step_env(key_s, s, {"agent_0": encode_ego(STAY, NONE)})
-            _, s, _, _, _ = env_uz.step_env(key_s, s, {"agent_0": encode_ego(STAY, NONE)})
-            reds += int(int(s.partner_goal) == GOAL_RED)
-        p = reds / N_TRIALS
-        check(f"    z={z_val}: NONE -> P(RED)={p:.3f} in [0.44,0.56]",
-              0.44 <= p <= 0.56)
-
-    # ---- partner_specific ----
-    print("\n[condition: partner_specific] (preserved current decoder)")
-    for z_val, expected_p_red_given_M0 in ((0.2, 0.2), (0.4, 0.4),
-                                            (0.6, 0.6), (0.8, 0.8)):
-        env_ps = CoordinationGrid(
-            layout_paths=base_paths, augment_symmetries=False,
-            partner_z_values=[z_val], rounds_per_episode=1, max_steps=8,
-            communication_condition=COMM_PARTNER_SPECIFIC,
-        )
-        check("partner_specific: t0 mask has 3 legal actions",
-              int(np.asarray(env_ps.t0_action_mask).sum()) == 3)
-        for msg_int, msg_name, expected in (
-            (M0, "M0", expected_p_red_given_M0),
-            (M1, "M1", 1.0 - expected_p_red_given_M0),
-            (NONE, "NONE", 0.5),
-        ):
-            reds = 0
-            for seed in range(N_TRIALS):
-                key_s = jax.random.PRNGKey(seed)
-                _, s = env_ps.reset(key_s)
-                _, s, _, _, _ = env_ps.step_env(
-                    key_s, s, {"agent_0": encode_ego(STAY, msg_int)}
-                )
-                _, s, _, _, _ = env_ps.step_env(
-                    key_s, s, {"agent_0": encode_ego(STAY, NONE)}
-                )
-                reds += int(int(s.partner_goal) == GOAL_RED)
-            p = reds / N_TRIALS
-            # Tighter tolerance for the deterministic ends (0/1); wider for 0.5.
-            lo = max(0.0, expected - 0.08)
-            hi = min(1.0, expected + 0.08)
-            check(f"    z={z_val} msg={msg_name}: P(RED)={p:.3f} "
-                  f"in [{lo:.2f},{hi:.2f}] (expected {expected:.2f})",
-                  lo <= p <= hi)
 
     # ---- invalid condition ----
     try:

@@ -1,25 +1,20 @@
 #!/usr/bin/env bash
 #SBATCH --job-name=cg_final
 #SBATCH --account=nlp
-#SBATCH --output=/juice6/u/jshe/emergent_partner_grid/logs/cg_final_%A_%a.out
-#SBATCH --error=/juice6/u/jshe/emergent_partner_grid/logs/cg_final_%A_%a.err
+#SBATCH --output=/juice6/u/jshe/emergent_partner_grid/logs/cg_final_%j.out
+#SBATCH --error=/juice6/u/jshe/emergent_partner_grid/logs/cg_final_%j.err
 #SBATCH --partition=sphinx
 #SBATCH --gres=gpu:1
 #SBATCH --constraint=80G
 #SBATCH --mem=32G
 #SBATCH --cpus-per-task=4
 #SBATCH --time=6:00:00
-#SBATCH --array=0-2
 # ---------------------------------------------------------------------------
-# Final experiment: 3-condition communication study over the balanced
-# (z × layout) sweep schedule.
+# Final experiment: single-condition (action_only) run over the balanced
+# (z × layout) sweep schedule. The prior three-condition study has been
+# retired; only action_only is supported.
 #
-# Job-array indices:
-#   0 -> action_only
-#   1 -> universal
-#   2 -> partner_specific
-#
-# Shared, matched hyperparameters (see also
+# Shared hyperparameters (see also
 # baselines/IPPO/config/ippo_rnn_coordination_grid.yaml):
 #   * partner_z_values     : [0.1, 0.3, 0.5, 0.7, 0.9]
 #   * rounds_per_episode   : 20
@@ -48,14 +43,7 @@ cd "${REPO_ROOT}" || exit 1
 
 mkdir -p "${REPO_ROOT}/logs" "${REPO_ROOT}/dev/train_logs"
 
-# --- Resolve which condition this array-task runs ---
-CONDITIONS=(action_only universal partner_specific)
-IDX="${SLURM_ARRAY_TASK_ID:-0}"
-if (( IDX < 0 || IDX >= ${#CONDITIONS[@]} )); then
-    echo "ERROR: SLURM_ARRAY_TASK_ID=${IDX} out of range 0..$((${#CONDITIONS[@]}-1))" >&2
-    exit 2
-fi
-COMM_CONDITION="${CONDITIONS[$IDX]}"
+COMM_CONDITION="action_only"
 
 # --- Matched hyperparameters (env-overridable) ---
 SEED="${SEED:-1}"
@@ -93,7 +81,7 @@ WANDB_ENTITY="${WANDB_ENTITY:-}"
 WANDB_PROJECT="${WANDB_PROJECT:-coordination_grid}"
 
 echo "===================================================================="
-echo "  Final experiment  (job=${SLURM_JOB_ID:-local}/${SLURM_ARRAY_TASK_ID:-.})"
+echo "  Final experiment  (job=${SLURM_JOB_ID:-local})"
 echo "===================================================================="
 echo "  communication condition : ${COMM_CONDITION}"
 echo "  partner_z_values        : ${PARTNER_Z_VALUES}     (|z|=${Z_POOL_LEN})"

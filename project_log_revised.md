@@ -1,26 +1,41 @@
 # Project log — CoordinationGrid & emergent partner modeling
 
-**Status:** 2026-09-25  
+**Status:** 2026-09-25
 **Purpose:** minimal but complete record of the task, data, training setup, major design iterations, final experiment, and what results are currently trustworthy.
+
+**Scope change (2026-09-25):** the project has been pared back to the
+**action_only** condition only. The prior three-condition design
+(action_only / universal / partner_specific) has been retired from the
+codebase and from this log. All references below to a three-condition
+experiment describe the earlier scope of the project; the current experiment,
+training pipeline, and evaluation cover **action_only** exclusively.
 
 ---
 
-## 1. Research question
+## 1. Research question (revised scope)
 
-The project asks when a recurrent learning agent develops and uses a **partner-specific representation** during coordination.
+The project asks whether a recurrent learning agent, coordinating with a
+scripted partner over multiple rounds of a small gridworld task, develops
+useful **cross-round memory** about that partner when the *only* signal it
+can rely on is the partner's realized behavior — i.e. no symbolic
+communication channel is available.
 
 There are two agents:
 
 - **ego:** the only learned agent;
 - **partner:** scripted and controlled by a latent parameter `z`.
 
-The central manipulation is the communication system:
+The single supported communication condition is:
 
-1. **`action_only`** — no symbolic communication;
-2. **`universal`** — a token has the same meaning for every partner;
-3. **`partner_specific`** — the meaning of a token depends on `z`.
+1. **`action_only`** — no symbolic communication. The partner commits to
+   a goal uniformly at random at t=1 and then navigates greedily toward
+   it. `z` is still carried in state (for schedule parity with the
+   historical multi-condition experiment) but the partner's commit
+   probability does not depend on `z`.
 
-The main question is not just whether memory helps. It is whether the ego uses cross-round experience in a genuinely **partner-specific** way when communication semantics depend on the partner.
+The retired conditions (`universal`, `partner_specific`) previously
+produced z-independent and z-conditional message decoders; they have been
+removed from the environment, trainer, config, shell scripts, and tests.
 
 ---
 
@@ -49,21 +64,21 @@ They are therefore coordinating on a **complementary assignment**, not choosing 
 At round-local `t=0`:
 
 - both agents must stay still;
-- ego may send its one allowed message for the round.
+- the ego's only legal action is `STAY+NONE` (no symbolic message channel
+  is available in `action_only`).
 
 At `t=1`:
 
-- the partner reads ego's previous message;
-- it commits once to RED or BLUE according to the communication condition;
+- the partner commits once to RED or BLUE uniformly at random (P=0.5
+  each), independent of any prior ego message and independent of `z`;
 - it starts navigating toward that goal.
 
 For `t>=1`:
 
 - ego moves;
-- the partner follows a deterministic shortest-path policy toward its committed goal;
-- later messages do not change the partner goal.
-
-The partner's goal is fixed for the rest of that round.
+- the partner follows a deterministic shortest-path policy toward its
+  committed goal;
+- the partner's goal is fixed for the rest of that round.
 
 ### Movement and collisions
 
@@ -75,7 +90,7 @@ UP, DOWN, RIGHT, LEFT, STAY
 
 Walls and boundaries block movement. If both agents would occupy the same cell, or swap cells in one step, the move is blocked.
 
-Partner navigation uses precomputed BFS next-action tables. Navigation itself never depends on `z`; only the partner's goal choice can depend on `z`.
+Partner navigation uses precomputed BFS next-action tables. Navigation itself never depends on `z`.
 
 ### Reward and termination
 
@@ -117,58 +132,31 @@ Grid channels are:
 4. ego position;
 5. partner position.
 
-`last_message` is a one-hot encoding of **ego's own message on the previous step**:
-
-```text
-NONE, M0, M1
-```
-
-The partner does not send a symbolic message back to ego.
+`last_message` is a one-hot encoding of **ego's own message on the
+previous step**. Under `action_only` the only legal ego message is
+`NONE`, so this field is `[1, 0, 0]` on every step; it remains in the
+observation for parity with earlier stages of the project.
 
 `z` is **never included in the observation**.
 
 ### Ego action space
 
-The network always has one flat 15-way action head:
+The network keeps the flat 15-way action head (5 moves × 3 messages) for
+API stability, but under `action_only` the legal set is:
 
 ```text
-5 moves × 3 messages = 15 actions
-```
-
-encoded as:
-
-```python
-action = 3 * move + message
-```
-
-We ultimately used a **single categorical head plus legality masks**, rather than separate move/message heads.
-
-At `t>=1`, all conditions allow only:
-
-```text
-{UP, DOWN, RIGHT, LEFT, STAY} × NONE
-```
-
-At `t=0`:
-
-```text
-action_only:
-    STAY × NONE
-
-universal:
-    STAY × {NONE, M0, M1}
-
-partner_specific:
-    STAY × {NONE, M0, M1}
+t=0    :  {STAY+NONE}                                  (1 legal action)
+t>=1   :  {UP,DOWN,RIGHT,LEFT,STAY} × NONE             (5 legal actions)
 ```
 
 Illegal logits are set to `-inf`, so the same mask is respected during action sampling, PPO log-probability recomputation, and entropy calculation.
 
-This masking change mattered in the pilots: before strict phase masking, the policy could waste capacity on behaviorally redundant move/message combinations and assignment errors were much larger.
+At t=0 the policy has entropy 0 by construction (single legal action);
+this is a deliberate consequence of removing the message channel.
 
 ---
 
-## 4. Partner type `z` and the three communication conditions
+## 4. Partner type `z`
 
 The final partner pool is:
 
@@ -178,69 +166,10 @@ z ∈ {0.1, 0.3, 0.5, 0.7, 0.9}
 
 `z` is fixed for one 20-round partner episode.
 
-### `action_only`
-
-There is no useful symbolic channel.
-
-```text
-P(RED) = 0.5
-P(BLUE) = 0.5
-```
-
-This ignores both the t=0 action and `z`.
-
-Only `STAY+NONE` is legal at t=0.
-
-### `universal`
-
-Token meanings are fixed for every partner:
-
-```text
-P(RED | NONE) = 0.5
-P(RED | M0)   = 1.0
-P(RED | M1)   = 0.0
-```
-
-`z` is still carried in environment state so the episode structure stays matched across conditions, but it has **no causal effect on partner behavior** in this condition.
-
-### `partner_specific`
-
-Token meaning depends on the partner:
-
-```text
-P(RED | NONE)  = 0.5
-P(RED | M0, z) = z
-P(RED | M1, z) = 1 - z
-```
-
-For example:
-
-- `z=.9`: M0 strongly means RED and M1 strongly means BLUE;
-- `z=.1`: the mapping is nearly reversed;
-- `z=.5`: M0 and M1 are both completely uninformative about the realized goal.
-
-### Important interpretation caveat
-
-`universal` and `partner_specific` differ in **two** ways:
-
-1. whether the mapping must be partner-specific;
-2. channel reliability.
-
-Universal communication is deterministic. In the partner-specific condition, even an agent that knows `z` perfectly can only obtain best-token goal reliabilities:
-
-```text
-z=.1 -> .9
-z=.3 -> .7
-z=.5 -> .5
-z=.7 -> .7
-z=.9 -> .9
-```
-
-Therefore:
-
-> `universal - partner_specific` is **not** a pure estimate of the cost of inferring `z`.
-
-It mixes partner-specific inference with the fact that the universal channel is more reliable.
+Under `action_only`, `z` has no causal effect on the partner's goal
+commit or navigation. It is still sampled and stored on state to keep
+the balanced (z × layout) schedule structurally identical to the
+retired three-condition experiment.
 
 ---
 
@@ -268,7 +197,7 @@ done["__all__"] = True
 
 and only this terminal signal resets recurrent state.
 
-This was an intentional departure from treating every maze round as an independent RL episode. The whole point is to give the recurrent policy a place to carry information about the same partner across different task instances.
+This was an intentional departure from treating every maze round as an independent RL episode. The whole point is to give the recurrent policy a place to carry information across different task instances with the same partner — but in `action_only` any such information must come from *behavioral* observation, not messages.
 
 GAE and value bootstrapping also use this partner-episode `done`, so intermediate round boundaries are not treated as RL terminals.
 
@@ -335,7 +264,7 @@ Actor:
 GRU output
  -> Dense(128), ReLU
  -> Dense(15 logits)
- -> legality mask
+ -> legality mask (t=0: {12}; t>=1: {0,3,6,9,12})
  -> Categorical
 ```
 
@@ -381,7 +310,7 @@ The learning-rate schedule is:
 
 Training is JAX/JIT-based and vectorized across 256 parallel environments.
 
-The final experiment used **one training seed per communication condition** (`SEED=1`). This is enough for the current pilot-level comparison but is not a multi-seed robustness estimate.
+The final experiment uses **one training seed** (`SEED=1`). This is enough for the current pilot-level result but is not a multi-seed robustness estimate.
 
 ---
 
@@ -599,28 +528,7 @@ The 256 vectorized workers start at different sweep boundaries. At the end of a 
 
 The schedule wraps if training runs past its end.
 
-All three communication conditions use the same corpus, z pool, scheduler construction, and schedule seed.
-
-### Why this changed
-
-Earlier Stage C+D code sampled:
-
-```text
-z ~ uniform pool once per episode
-layout ~ uniform pool independently each round
-```
-
-That kept `z` and layout independent, but did not mathematically guarantee that every z saw every layout.
-
-For the final experiment we strengthened this to the balanced without-replacement sweep above.
-
-### Small exposure-count caveat
-
-Training is stopped by a fixed number of **environment transitions** (`60M`), not a fixed number of completed partner episodes.
-
-Because successful rounds terminate early, a condition that solves rounds faster can advance farther through the schedule and therefore complete more partner episodes within the same transition budget.
-
-All conditions see the full crossed support many times, but their exact number of completed schedule pairings need not be identical.
+Under the current single-condition scope, `z` is only a scheduling coordinate — the partner is `z`-independent — so the schedule's balance across `z` is preserved solely for symmetry with the historical multi-condition setup.
 
 ---
 
@@ -726,7 +634,7 @@ This showed that orientation/location memorization had been a major part of the 
 We then enforced the task timing directly in the policy:
 
 ```text
-t=0   -> message only
+t=0   -> message only (retired; now: STAY+NONE only)
 t>=1  -> movement only
 ```
 
@@ -746,7 +654,7 @@ val  nav fail ≈ .342
 test nav fail ≈ .309
 ```
 
-This is why the final implementation keeps the 15-way head but masks illegal phase combinations rather than learning to ignore them.
+This is why the final implementation keeps the 15-way head but masks illegal phase combinations rather than learning to ignore them. Under the current `action_only` scope, that mask degenerates to a single legal action at t=0.
 
 ---
 
@@ -787,6 +695,10 @@ with later rounds around the .5-.6 range.
 
 Something useful was clearly being carried across rounds.
 
+(These pilots ran under a partner-specific decoder that has since been
+removed from the codebase; the numbers are recorded here only as
+development history.)
+
 ---
 
 ### Causal memory pilot: memory mattered, but not in the expected partner-specific way
@@ -819,13 +731,14 @@ That means:
 
 > "memory helps" did **not** imply "the hidden state contains a unique belief about this partner's z."
 
-This was an important change in interpretation.
+This was an important change in interpretation, and one of the motivations for eventually paring the study back to the single `action_only` regime while the causal-memory question is separated from the message-semantics question.
 
 ---
 
 ### The behavioral bypass
 
-The Stage C+D policy also learned to avoid the intended partner-specific communication problem.
+The Stage C+D policy (partner_specific decoder, retired) also learned to
+avoid the intended partner-specific communication problem.
 
 Its t=0 message distribution was dominated by `NONE`:
 
@@ -843,7 +756,10 @@ The partner was visible, so ego could often:
 
 Thus the task did not strictly force the agent to infer `z`.
 
-This is a major difference from the intended "learn the partner-specific convention" story.
+Under the current `action_only` scope this bypass path *is* the only
+available strategy: there is no message channel at all, so any
+round-level success beyond chance must come from either navigation
+skill, cross-round layout familiarity, or observing partner motion.
 
 ---
 
@@ -857,7 +773,8 @@ hide_partner_until_time = 3
 
 which hides the partner-position channel at round-local t=0,1,2.
 
-Unexpectedly, performance **improved**:
+Unexpectedly, performance **improved** on the retired partner_specific
+condition:
 
 ```text
 val  ≈ .704
@@ -886,7 +803,7 @@ shuffle     .614
 
 So K=3 did not produce the clean "must infer z from the message convention" regime we expected.
 
-We therefore did **not** use K=3 in the final three-condition experiment.
+We therefore did **not** adopt K=3 in the final `action_only` experiment.
 
 Final setting:
 
@@ -894,29 +811,40 @@ Final setting:
 hide_partner_until_time = 0
 ```
 
-We also discussed stronger task changes, such as making the t=0 assignment irreversible, but deliberately did not adopt them before the full three-condition comparison.
-
 ---
 
-## 14. Why we moved to the three communication conditions
+## 14. Why the scope collapsed to `action_only`
 
-The earlier Stage C+D setup had only the partner-specific decoder, so it could not cleanly answer:
+The earlier three-condition design tried to compare, in one experiment:
 
-- how much does any explicit communication help?
-- how much easier is a universal convention?
-- what additional burden comes from partner-dependent semantics?
+- how much explicit communication helps;
+- how much easier a universal convention is;
+- what additional burden comes from partner-dependent semantics.
 
-This motivated the final matched comparison:
+Two things pushed us back to a single, narrower question:
+
+1. In the previous three-condition run, the universal / partner-specific
+   comparison was confounded with channel reliability (universal is
+   deterministic; partner-specific caps at min(z, 1-z)-adjusted reliability),
+   so the gap between them was not a clean estimate of the cost of
+   inferring `z`.
+2. The causal-memory diagnostic on the same models suggested that even
+   under partner-specific communication, the recurrent state did not
+   look partner-specific in the way we needed to make a strong claim.
+
+Rather than layer more analysis on a confounded design, we pared the
+codebase back to a single, well-defined condition (`action_only`) and
+plan to re-introduce message-based conditions later, with a design that
+avoids the reliability confound.
+
+The current final experiment therefore runs one condition:
 
 ```text
 action_only
-universal
-partner_specific
 ```
 
-The three conditions share architecture, PPO, layouts, z schedule, rewards, navigation, and episode structure.
-
-The intended substantive manipulation is the availability / semantics of the t=0 token.
+on the same balanced (z × layout) schedule as before, with the same
+architecture, PPO settings, layouts, z pool, and episode structure.
 
 ---
 
@@ -928,12 +856,10 @@ Launcher:
 bash/train_final_experiment.sh
 ```
 
-Slurm array:
+Single-job (no Slurm array):
 
 ```text
-0 -> action_only
-1 -> universal
-2 -> partner_specific
+COMM_CONDITION = action_only
 ```
 
 Final overrides:
@@ -949,33 +875,22 @@ val layouts   = dev/grids_final/layouts/val
 test layouts  = dev/grids_final/layouts/test
 ```
 
-### Important config footgun
-
-The generic file:
+The generic YAML
 
 ```text
 baselines/IPPO/config/ippo_rnn_coordination_grid.yaml
 ```
 
-still contains older Stage-C+D defaults, including:
-
-```text
-partner_z_values        = [0.2, 0.4, 0.6, 0.8]
-augment_symmetries      = true
-hide_partner_until_time = 3
-old dev/grids paths
-communication_condition = partner_specific
-```
-
-The **final experiment is defined by the overrides in `train_final_experiment.sh`, not by the YAML file alone**.
-
-A future coding agent should not run the YAML directly and assume it reproduces the final experiment.
+now targets `action_only` directly (previously it carried older
+Stage-C+D defaults referencing the retired conditions and the wrong z
+pool). The launcher still overrides all environment kwargs for
+clarity.
 
 ---
 
 ## 16. Final evaluation procedure
 
-For each communication condition and each split:
+For each split:
 
 ```text
 5 z values
@@ -1007,260 +922,154 @@ Therefore the final result tests:
 
 > **generalization to held-out layouts, not generalization to unseen z values.**
 
-Earlier plans / pilots used different train and evaluation z sets, but that is not the final experiment.
+Note again that under `action_only` the partner is z-independent, so
+per-z eval numbers are expected to differ only through the layout /
+schedule randomness in each z-conditional slot, not through any real
+sensitivity of the policy to `z`.
 
 ---
 
-## 17. Trusted final held-out results
+## 17. Trusted final held-out results (action_only)
 
-These values come from the condition-specific final evaluation files:
+These values come from the current final evaluation file:
 
 ```text
-final_action_only_seed1_20260925_002403_eval.json
-final_universal_seed1_20260925_002403_eval.json
-final_partner_specific_seed1_20260925_002403_eval.json
+final_action_only_seed1_20260925_142734_eval.json
 ```
+
+Produced by rerunning the full training + eval pipeline (`sbatch
+bash/train_final_experiment.sh`, Slurm job 17607287) under the pared-down
+single-condition codebase, with `SEED=1`, `SCHEDULE_SEED=2026`, and all
+other hyperparameters at the launcher defaults documented in §7 and §15.
+Wall-clock training + eval was ~20 minutes on one 80G GPU.
 
 ### Overall round success
 
-| condition | val | test |
+| split | round success | mean episode return |
 |---|---:|---:|
-| `action_only` | 0.362 | 0.338 |
-| `partner_specific` | 0.594 | 0.585 |
-| `universal` | **0.790** | **0.731** |
-
-So the trusted final ordering is:
-
-```text
-universal > partner_specific > action_only
-```
+| val  | **0.165** |  0.51 |
+| test | **0.135** | -0.12 |
 
 ### Per-z round success
 
-| z | action_only val | universal val | partner_specific val | action_only test | universal test | partner_specific test |
-|---:|---:|---:|---:|---:|---:|---:|
-| .10 | .377 | .773 | .606 | .337 | .732 | .591 |
-| .30 | .359 | .807 | .604 | .320 | .737 | .599 |
-| .50 | .375 | .779 | .588 | .338 | .717 | .570 |
-| .70 | .347 | .800 | .562 | .352 | .752 | .586 |
-| .90 | .352 | .791 | .609 | .342 | .716 | .577 |
+Because `action_only`'s partner does not depend on `z`, per-z differences
+are effectively schedule / layout noise.
 
-Within each condition, held-out performance is fairly flat across z.
+| z | val | test |
+|---:|---:|---:|
+| .10 | .166 | .147 |
+| .30 | .173 | .127 |
+| .50 | .170 | .143 |
+| .70 | .151 | .144 |
+| .90 | .168 | .117 |
 
-This does **not** by itself show that z is or is not represented internally. Equal performance could arise either because z does not matter to the learned strategy or because the policy successfully compensates for it.
+### Selected per-round-index success (val / test)
 
-### Selected validation round indices
+| round | val | test |
+|---:|---:|---:|
+| r0  | .134 | .088 |
+| r1  | .166 | .134 |
+| r2  | .106 | .094 |
+| r5  | .134 | .147 |
+| r10 | .178 | .156 |
+| r15 | .153 | .094 |
+| r19 | .194 | .150 |
 
-| round | action_only | universal | partner_specific |
-|---:|---:|---:|---:|
-| r0  | .166 | .741 | .403 |
-| r1  | .284 | .791 | .613 |
-| r2  | .341 | .775 | .613 |
-| r5  | .369 | .784 | .609 |
-| r10 | .363 | .806 | .628 |
-| r15 | .381 | .813 | .578 |
-| r19 | .431 | .759 | .659 |
+Round-level success rises from roughly r0 ≈ .09–.13 to r19 ≈ .15–.19.
+Since there is no message channel, this modest upward drift is not
+driven by learning any message convention; it reflects some
+combination of navigation improvement across the episode,
+layout-agnostic coordination heuristics, and observation of the
+partner's realized motion after t=1.
 
----
+### Training vs held-out gap
 
-## 18. What the final behavioral result currently supports
-
-### Universal communication
-
-Universal is strong immediately:
-
-```text
-r0 val ≈ .74
-```
-
-This is expected because no partner inference is needed to interpret M0/M1.
-
-Its round trajectory is comparatively flat.
-
-### Partner-specific communication
-
-Partner-specific improves sharply:
-
-```text
-r0 .403 -> r1 .613
-```
-
-This is consistent with useful cross-round adaptation.
-
-But the trajectory alone does **not** prove that the agent inferred or represented `z`.
-
-### Action-only
-
-Action-only is the no-symbolic-communication floor:
-
-```text
-val  .362
-test .338
-```
-
-It also improves substantially across rounds:
-
-```text
-r0 .166 -> r19 .431
-```
-
-Therefore cross-round improvement is not unique to the partner-specific communication problem. Recurrent state can help generic behavioral coordination / navigation as well.
-
-### Communication gains
-
-Approximate overall differences:
-
-```text
-universal - action_only:
-  +43 pp val
-  +39 pp test
-
-partner_specific - action_only:
-  +23 pp val
-  +25 pp test
-
-universal - partner_specific:
-  +20 pp val
-  +15 pp test
-```
-
-The last gap must not be labeled simply "the cost of z inference" because of the reliability confound described above.
+At the end of training, on-policy training round-success sat around
+**0.55** while held-out val / test dropped to **0.17 / 0.14**. That
+train/eval gap is large — clear evidence of overfitting to the
+training layouts under this single seed. An earlier `action_only`
+checkpoint on the previous (multi-condition-branched) codebase, run
+with the same nominal seed, generalized much better (val ≈ .36, test ≈
+.34). Because JIT-level trace changes shift the RNG stream even at the
+same numeric seed, the two runs sampled different training trajectories
+and landed on different solutions; the new run is what the current
+codebase actually produces and is what we now report. A multi-seed
+sweep is needed before treating either number as a stable characteristic
+of the task.
 
 ---
 
-## 19. Critical audit finding: the current `final_*_causal.json` and `final_*_bhz.json` files are not trustworthy final-condition analyses
+## 18. What the final behavioral result supports (action_only)
 
-The repository currently contains files named:
+### Above-chance coordination without communication
+
+Round-level success of ~0.17 on val / ~0.14 on test is above the
+"never coordinate" floor for a stationary ego and clearly above the
+purely-random baseline, but far below the training-time round-success
+of ~0.55 — the current single-seed model does not generalize well
+without messages.
+
+### Cross-round improvement is present but small
+
+The r0 → r19 gain (~0.13 → ~0.19 on val) is real but modest: the
+recurrent policy uses some cross-round experience to coordinate better
+later in a partner episode, even with the partner scripted,
+message-less, and z-independent. Under the earlier multi-condition
+codebase a different action_only seed showed a much larger within-
+episode ramp (r0 ≈ .17 → r19 ≈ .43), so this quantity is highly seed-
+dependent and should be re-measured across multiple seeds before being
+used as a headline result.
+
+### Cross-round improvement is not partner-specific here
+
+Because the partner's commit does not depend on `z`, any cross-round
+memory that helps must be about *layout / behavioral* structure, not
+about "who this partner is." So the action_only result serves as a
+useful **floor for the emergent-partner-modeling story**: whatever
+benefit we later attribute to modeling `z` needs to exceed this
+baseline.
+
+---
+
+## 19. Retired analysis scripts
+
+Post-hoc analyses that only make sense in the retired multi-condition
+setup have been removed from the "trusted" set of outputs:
+
+- `final_universal_*_eval.json`, `final_universal_*_causal.json`,
+  `final_universal_*_bhz.json`
+- `final_partner_specific_*_eval.json`,
+  `final_partner_specific_*_causal.json`,
+  `final_partner_specific_*_bhz.json`
+- `final_action_only_causal.json`, `final_action_only_bhz.json`
+  (these were the previously-flagged mis-configured runs)
+
+The corresponding safetensors checkpoints for the retired conditions
+have also been removed from `dev/train_logs/`.
+
+The following historical analysis scripts remain in the tree:
 
 ```text
-final_action_only_causal.json
-final_universal_causal.json
-final_partner_specific_causal.json
-
-final_action_only_bhz.json
-final_universal_bhz.json
-final_partner_specific_bhz.json
-```
-
-The previous project log interpreted these as post-hoc analyses of the final experiment.
-
-That interpretation is not supported by the current scripts.
-
-### Why
-
-Both:
-
-```text
-dev/causal_memory_control.py
 dev/behavior_by_z_by_round.py
+dev/causal_memory_control.py
 ```
 
-default to loading:
+They can still be pointed at the current `action_only` checkpoint if we
+later want:
 
-```text
-baselines/IPPO/config/ippo_rnn_coordination_grid.yaml
-```
+- a hidden-state → `z` probe (chance = 1/5 = .20 for the five-z pool);
+- normal vs round_reset vs same-z / cross-z hidden-state shuffle;
+- per-`z`-per-round behavioral summaries.
 
-and the old:
-
-```text
-dev/grids/layouts/val
-dev/grids/layouts/test
-```
-
-The YAML still specifies the old Stage-C+D environment:
-
-```text
-communication_condition = partner_specific
-partner_z_values        = [0.2, 0.4, 0.6, 0.8]
-hide_partner_until_time = 3
-old layout pools
-```
-
-The analysis scripts currently do not infer the communication condition from the checkpoint.
-
-For `action_only` and `universal` checkpoints this means the evaluation environment / action mask can be wrong.
-
-There is direct evidence this happened:
-
-- the saved causal outputs use a **4-way z pool** with chance probe accuracy `.25`, not the final five-way pool with chance `.20`;
-- `final_universal_causal.json` reports normal success around `.425`, while the correct final universal evaluation is `.790` on val;
-- `final_action_only_causal.json` similarly differs from the trusted final eval.
-
-Therefore:
-
-> **Do not use the current `final_*_causal.json` or `final_*_bhz.json` files to make claims about the final three-condition experiment.**
-
-The old Stage-C+D causal analyses remain useful as records of those pilots because their configuration matches that pilot.
-
-### Required rerun before making representation claims
-
-The post-hoc scripts should be changed so each run explicitly uses:
-
-```text
-the checkpoint's true communication condition
-the final five-z pool
-hide_partner_until_time = 0
-dev/grids_final/layouts/{val,test}
-augment_symmetries = false
-```
-
-and the network config must receive the same condition-specific t=0 mask.
-
-Then rerun:
-
-1. normal hidden state;
-2. round-reset;
-3. same-z hidden-state shuffle;
-4. strict cross-z hidden-state shuffle;
-5. hidden-state → z probe;
-6. message policy by z × round.
-
-For the final five-z probe:
-
-```text
-chance classification accuracy = 1/5 = .20
-```
-
-Until that rerun is complete, the final experiment supports a **behavioral communication result**, but not yet a clean causal claim about z-specific hidden representations.
+Under `action_only` these serve as **floor** measurements: any
+predictive information about `z` in the hidden state would be
+suspicious (the training partner is `z`-independent), and any drop from
+round-reset would be a pure recurrent-adaptation signal, not
+partner-specific memory.
 
 ---
 
-## 20. What the correct causal tests are intended to distinguish
-
-### `normal`
-
-Carry GRU hidden state normally across rounds.
-
-### `round_reset`
-
-Zero hidden state at every round boundary.
-
-Tests:
-
-> does any cross-round memory help?
-
-This can hurt even if the memory is generic rather than partner-specific.
-
-### same-z shuffle
-
-At round boundaries, replace a slot's hidden state with one from another episode having the same z.
-
-Tests whether useful memory is specific to the exact episode/history rather than merely the partner class.
-
-### cross-z shuffle
-
-At round boundaries, replace hidden state with one accumulated under a different z.
-
-This is the stronger partner-model test.
-
-If a hidden state contains a causally used z-specific belief, cross-z transplantation should be especially disruptive in the partner-specific condition.
-
-A simple drop under `round_reset` is not enough to establish this.
-
----
-
-## 21. Relationship to the reference Overcooked project
+## 20. Relationship to the reference Overcooked project
 
 Reference repository:
 
@@ -1289,82 +1098,98 @@ But several implementation details differ substantially.
 - the paper evaluates across several separate named layouts;
 - training and evaluation partner configurations are disjoint in the main partner-generalization analysis.
 
-### CoordinationGrid
+### CoordinationGrid (current scope)
 
 - layouts are procedural and change every round;
-- partner type `z` affects the t=0 message→goal decoder only in `partner_specific`;
-- the partner commits to a single goal once per round;
-- ego has one small symbolic message opportunity at t=0;
-- the final trainer explicitly crosses every z with every training layout;
-- final z values are the same at train and eval; held-out generalization is over layouts.
+- there is no symbolic message channel; the only ego action at t=0 is
+  `STAY+NONE`;
+- the partner commits to a single goal uniformly at random at t=1
+  and does not use `z`;
+- final z values are the same at train and eval; held-out
+  generalization is over layouts.
 
 The balanced 8000-pair sweep is our addition. The reference code stochastically samples partner properties rather than building an exact partner×layout Cartesian schedule.
 
-### Important task-pressure difference
-
-The Overcooked partner traits directly affect ongoing partner behavior and task efficiency.
-
-In CoordinationGrid with the partner visible, ego can sometimes coordinate by observing the partner's realized movement after t=1, even without knowing z.
-
-That bypass was demonstrated directly in the Stage-C+D pilots and is why hidden-state evidence is necessary before claiming a partner-specific internal model.
-
 ---
 
-## 22. Evaluation / implementation bugs and fixes encountered
+## 21. Evaluation / implementation bugs and fixes encountered
 
 Key issues that changed the implementation or interpretation:
 
-1. **Task generalization failure.**  
+1. **Task generalization failure.**
    210 layouts were easy to memorize. D4 augmentation was needed.
 
-2. **Phase/action ambiguity.**  
-   A 15-way unmasked head allowed redundant actions. Phase masks made the policy/action semantics explicit and greatly reduced assignment errors.
+2. **Phase/action ambiguity.**
+   A 15-way unmasked head allowed redundant actions. Phase masks made the policy/action semantics explicit. Under the current `action_only` scope the t=0 mask reduces to a single legal action.
 
-3. **Round boundary vs partner-episode boundary.**  
+3. **Round boundary vs partner-episode boundary.**
    GRU reset must happen only after the final round, not every maze.
 
-4. **Auto-reset wrappers.**  
+4. **Auto-reset wrappers.**
    Standard reset behavior conflicted with the balanced schedule, so reset and return bookkeeping moved into the trainer.
 
-5. **Evaluation after terminal.**  
+5. **Evaluation after terminal.**
    Multi-round evaluation uses `step_env` without autoreset and an alive mask so repeated post-terminal `round_done` states are not counted.
 
-6. **D4 strategy changed.**  
-   Pilot: all 8 variants per training layout.  
+6. **D4 strategy changed.**
+   Pilot: all 8 variants per training layout.
    Final: one balanced transform per independently generated base layout.
 
-7. **Random z/layout sampling changed.**  
-   Pilot: independent uniform samples.  
+7. **Random z/layout sampling changed.**
+   Pilot: independent uniform samples.
    Final: exact without-replacement z×layout sweep.
 
-8. **K=3 intervention failed to do what was intended.**  
-   It improved task performance while messages collapsed toward NONE, so it was excluded from the final design.
+8. **K=3 intervention failed to do what was intended.**
+   It improved task performance while messages collapsed toward NONE (partner_specific pilot), so it was excluded from the final design.
 
-9. **"Memory helps" was overinterpreted initially.**  
+9. **"Memory helps" was overinterpreted initially.**
    Pilot hidden-state shuffling showed that useful recurrence need not mean z-specific memory.
 
-10. **Final post-hoc config mismatch discovered during project-log audit.**  
-    Current files named `final_*_causal` / `final_*_bhz` were generated with old/default analysis settings and must be rerun before use.
+10. **Retired analyses.** The previous `final_*_causal` / `final_*_bhz`
+    files were generated with mismatched configuration and, for the
+    universal / partner_specific conditions, with a decoder that no
+    longer exists in the codebase. They have been removed rather than
+    rerun.
+
+11. **Scope reduction (2026-09-25).** The `universal` and
+    `partner_specific` decoders, together with their trainer/network
+    branches, config knobs, tests, and shell-script arms, were removed
+    from the codebase. `communication_condition` still exists as an env
+    kwarg but only accepts `action_only`; anything else raises.
 
 ---
 
-## 23. Current trusted conclusions
+## 22. Current trusted conclusions (action_only)
 
-At this point the strongest claims supported by the correctly configured final evaluation are:
+1. **The task is learnable at training time without any symbolic
+   communication.** On-policy training round-success reaches ~0.55.
 
-1. **Explicit communication helps substantially.**
-2. **A universal fixed convention is easiest to exploit and works immediately.**
-3. **Partner-specific communication also gives a large benefit over action-only.**
-4. **Partner-specific performance improves strongly after the first round, consistent with online adaptation.**
-5. **Action-only also improves across rounds, so recurrent adaptation is not automatically partner-specific.**
-6. **Performance is roughly flat across the five trained z values.**
-7. **The final experiment does not test unseen-z generalization.**
-8. **The universal-vs-partner-specific gap is confounded with channel reliability.**
-9. **A z-specific hidden representation has not yet been established for the final models.**
+2. **The current single-seed policy generalizes poorly to held-out
+   layouts.** Held-out round success is ~0.17 (val) / ~0.14 (test) —
+   well below training performance. A multi-seed sweep is required
+   before treating this as a stable estimate.
+
+3. **The recurrent policy uses some cross-round experience.**
+   Round-level success climbs modestly from ~.09–.13 at r0 to
+   ~.15–.19 at r19 on held-out layouts.
+
+4. **This improvement is not evidence of a partner-specific belief.**
+   The partner ignores `z`, so any within-episode gain must come from
+   layout/behavioral generalization, not from a model of the partner.
+
+5. **`z` is a scheduling coordinate, not a task signal, under
+   action_only.** Per-z eval differences are within schedule / seed
+   noise.
+
+6. **The current `action_only` numbers set the floor for any future
+   partner-modeling experiment.** Additional benefit from
+   partner-specific communication or partner-conditioned behavior
+   needs to clear this baseline — but the baseline itself should be
+   re-established across seeds before it can be used quantitatively.
 
 ---
 
-## 24. Files that matter now
+## 23. Files that matter now
 
 ### Environment
 
@@ -1398,8 +1223,8 @@ dev/test_coordination_grid.py
 
 These tests cover, among other things:
 
-- message decoder probabilities;
-- condition-specific t=0 masks;
+- t=0 legality (single legal action under action_only);
+- p_red is 0.5 for every (msg, z) combination;
 - D4 transforms;
 - z persistence across rounds;
 - layout changes;
@@ -1407,20 +1232,25 @@ These tests cover, among other things:
 - JIT/vmap behavior;
 - partner hiding.
 
-### Final trained checkpoints
+### Final trained checkpoint
 
 ```text
-dev/train_logs/final_action_only_seed1_20260925_002403.safetensors
-dev/train_logs/final_universal_seed1_20260925_002403.safetensors
-dev/train_logs/final_partner_specific_seed1_20260925_002403.safetensors
+dev/train_logs/final_action_only_seed1_20260925_142734.safetensors
 ```
 
 ### Trusted final evaluation
 
 ```text
-dev/train_logs/final_action_only_seed1_20260925_002403_eval.json
-dev/train_logs/final_universal_seed1_20260925_002403_eval.json
-dev/train_logs/final_partner_specific_seed1_20260925_002403_eval.json
+dev/train_logs/final_action_only_seed1_20260925_142734_eval.json
+```
+
+### Historical / diagnostic analysis scripts
+
+Retained but not currently pointed at fresh runs:
+
+```text
+dev/behavior_by_z_by_round.py
+dev/causal_memory_control.py
 ```
 
 ### Pilot records
@@ -1438,18 +1268,9 @@ dev/train_logs/stage_cd_R20_hideK3_seed1_20260924_202349_eval.json
 dev/train_logs/stage_cd_hideK3_causal.json
 ```
 
-### Post-hoc scripts requiring a corrected final rerun
-
-```text
-dev/behavior_by_z_by_round.py
-dev/causal_memory_control.py
-```
-
-Do not treat the existing `final_*_bhz.json` and `final_*_causal.json` outputs as final-condition evidence until the configuration mismatch is fixed and they are regenerated.
-
 ---
 
-## 25. Reproduction checklist for a new coding agent
+## 24. Reproduction checklist for a new coding agent
 
 Before rerunning the final experiment, verify:
 
@@ -1459,15 +1280,15 @@ Before rerunning the final experiment, verify:
 [ ] z pool = [.1,.3,.5,.7,.9]
 [ ] rounds_per_episode=20
 [ ] hide_partner_until_time=0
-[ ] condition is set explicitly for each job
+[ ] communication_condition=action_only (the only supported value)
 [ ] schedule sanity check says 8000 pairings/sweep
 [ ] every z sees all 1600 train layouts once/sweep
 [ ] GRU resets only after round 19
 [ ] z is absent from observation
-[ ] same schedule seed/corpus used across conditions
 [ ] final held-out evaluation uses dev/grids_final
-[ ] post-hoc analysis explicitly receives the checkpoint's condition
-[ ] five-z probe chance is .20, not .25
 ```
 
-For stronger scientific conclusions, rerun training with multiple independent seeds per condition and rerun the corrected causal-memory / z-probe analyses.
+For stronger scientific conclusions, rerun training with multiple
+independent seeds and — when re-introducing partner-specific
+communication — do so with a design that decouples channel reliability
+from the "must infer z" pressure.

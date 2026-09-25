@@ -1,6 +1,6 @@
 """
-CoordinationGrid: single-round 7x7 grid coordination task with a scripted,
-message-conditioned partner.
+CoordinationGrid: single-round 7x7 grid coordination task with a scripted
+partner in the ``action_only`` (no-communication) regime.
 
 Ego (agent_0) action is a *joint* (move, message) pair, encoded as a single
 discrete int in [0, 15):
@@ -9,26 +9,27 @@ discrete int in [0, 15):
     msg  ∈ {0:NONE, 1:M0, 2:M1}
 Use ``encode_ego(move, msg)`` / ``decode_ego(a)``.
 
+Only the STAY+NONE action is legal at t=0 in this action-only setup; the
+message channel exists only in the flat action encoding for backward
+compatibility and is otherwise unused (partner ignores it).
+
 Partner (agent_1) is scripted:
     * Latent partner type z ∈ [0, 1] is fixed per env (i.e. per partner).
-    * At timestep 0 neither agent moves; ego only communicates.
+    * At timestep 0 neither agent moves.
     * At timestep 1, if partner_goal is UNSET, partner commits to a goal
-      using the message ego sent at t=0 and z:
-          P(RED | M0, z) = z,  P(RED | M1, z) = 1 - z
-          P(RED | NONE) = 0.5  (neutral prior)
-      This commit happens ONCE; later messages do not change the goal.
+      uniformly at random (P(RED)=P(BLUE)=0.5); it does NOT read any
+      message and does NOT use z.
+      This commit happens ONCE.
     * From t ≥ 1 the partner navigates greedily along a precomputed
       shortest-path table toward its committed goal. Navigation does NOT
       depend on z.
 
 Observation for each agent is a dict:
     {"grid": (H, W, 5), "last_message": (3,), "is_t0": scalar float32}
-where "last_message" is a one-hot over {NONE, M0, M1} for the message ego
-sent on the immediately preceding step (NONE at t=0). This is what the ego
-uses to correlate its own utterances with partner responses when inferring z.
-``is_t0`` is 1.0 when ``state.time == 0`` (the free-comm step) and 0.0 else;
-policies use it to mask their action space so movement is only sampled at
-t>=1 and communication is only sampled at t=0.
+where "last_message" is a one-hot over {NONE, M0, M1}. Under action_only
+it is always NONE (kept in the obs so tensor shapes match earlier stages).
+``is_t0`` is 1.0 when ``state.time == 0`` and 0.0 else; policies use it
+to mask their action space so movement is only sampled at t>=1.
 """
 
 import glob
@@ -79,14 +80,11 @@ N_MOVES = 5
 N_MESSAGES = 3
 N_EGO_ACTIONS = N_MOVES * N_MESSAGES  # 15
 
-# Legality of the flat ego actions per environment phase. At t=0 the env
-# forces movement=STAY, so only the three (STAY, msg) actions are behaviorally
-# distinct. At t>=1 the scripted partner ignores the message channel (it
-# committed at t=1 and never revisits), so only the five (move, NONE) actions
-# are behaviorally distinct. Flat encoding is ``a = 3 * move + msg``.
-#   t=0 legal ids: STAY(4)*3 + NONE/M0/M1 -> {12, 13, 14}
-#   t>=1 legal ids: {UP,DOWN,RIGHT,LEFT,STAY}*3 + NONE -> {0, 3, 6, 9, 12}
-LEGAL_ACTION_IDS_T0 = tuple(3 * int(Actions.stay) + m for m in range(N_MESSAGES))
+# Legality of the flat ego actions per environment phase. Flat encoding is
+# ``a = 3 * move + msg``.
+#   t=0    (action_only): STAY+NONE only -> {12}
+#   t>=1  (all phases)  : {UP,DOWN,RIGHT,LEFT,STAY}*3 + NONE -> {0, 3, 6, 9, 12}
+LEGAL_ACTION_IDS_T0 = (3 * int(Actions.stay) + int(Messages.none),)   # {12}
 LEGAL_ACTION_IDS_TGEQ1 = tuple(3 * mv + int(Messages.none) for mv in range(N_MOVES))
 ACTION_MASK_T0 = np.zeros(N_EGO_ACTIONS, dtype=np.bool_)
 ACTION_MASK_T0[list(LEGAL_ACTION_IDS_T0)] = True
@@ -94,47 +92,14 @@ ACTION_MASK_TGEQ1 = np.zeros(N_EGO_ACTIONS, dtype=np.bool_)
 ACTION_MASK_TGEQ1[list(LEGAL_ACTION_IDS_TGEQ1)] = True
 
 # ---------------------------------------------------------------------------
-# Communication conditions.
+# Communication condition
 # ---------------------------------------------------------------------------
-# Three experimental settings that differ *only* in the causal role of the
-# t=0 message channel (what messages mean, and whether they exist at all).
-# The environment API (15-way flat action, obs dict, timing, rewards, nav
-# dynamics, multi-round + z-per-episode sampling, D4 augmentation, mask-based
-# policy) is otherwise identical across conditions.
-#
-#   action_only     : no explicit message channel. Partner samples
-#                     uniformly regardless of the ego's t=0 action.
-#                     Only ``STAY+NONE`` is legal at t=0.
-#   universal       : messages have globally fixed meanings, independent of
-#                     the partner's z. z is still sampled+stored (so the
-#                     ego cannot detect the condition via obs), but the
-#                     decoder ignores it.
-#                         P(RED | NONE) = 0.5
-#                         P(RED | M0)   = 1.0
-#                         P(RED | M1)   = 0.0
-#   partner_specific: messages are z-conditional (current behaviour).
-#                         P(RED | NONE)     = 0.5
-#                         P(RED | M0, z)    = z
-#                         P(RED | M1, z)    = 1 - z
+# This build supports ONLY the ``action_only`` regime: no explicit message
+# channel, partner samples RED/BLUE uniformly regardless of ego's t=0 action
+# or z. Only STAY+NONE is legal at t=0. The prior universal /
+# partner_specific decoders have been removed.
 COMM_ACTION_ONLY = "action_only"
-COMM_UNIVERSAL = "universal"
-COMM_PARTNER_SPECIFIC = "partner_specific"
-COMM_CONDITIONS = (COMM_ACTION_ONLY, COMM_UNIVERSAL, COMM_PARTNER_SPECIFIC)
-
-# t=0 legal action set is condition-specific. t>=1 is always the movement-only
-# 5-way mask, in all conditions.
-_LEGAL_T0_ACTION_ONLY = (3 * int(Actions.stay) + int(Messages.none),)   # {12}
-ACTION_MASK_T0_ACTION_ONLY = np.zeros(N_EGO_ACTIONS, dtype=np.bool_)
-ACTION_MASK_T0_ACTION_ONLY[list(_LEGAL_T0_ACTION_ONLY)] = True
-ACTION_MASK_T0_VERBAL = ACTION_MASK_T0   # {12, 13, 14}
-LEGAL_ACTION_IDS_T0_ACTION_ONLY = _LEGAL_T0_ACTION_ONLY
-LEGAL_ACTION_IDS_T0_VERBAL = LEGAL_ACTION_IDS_T0
-
-_T0_ACTION_MASKS_BY_CONDITION = {
-    COMM_ACTION_ONLY: ACTION_MASK_T0_ACTION_ONLY,
-    COMM_UNIVERSAL: ACTION_MASK_T0_VERBAL,
-    COMM_PARTNER_SPECIFIC: ACTION_MASK_T0_VERBAL,
-}
+COMM_CONDITIONS = (COMM_ACTION_ONLY,)
 
 # Partner-goal state encoding.
 GOAL_UNSET = 0
@@ -398,7 +363,7 @@ class CoordinationGrid(MultiAgentEnv):
         rounds_per_episode: int = 1,
         augment_symmetries: bool = False,
         hide_partner_until_time: int = 0,
-        communication_condition: str = COMM_PARTNER_SPECIFIC,
+        communication_condition: str = COMM_ACTION_ONLY,
     ):
         super().__init__(num_agents=2)
 
@@ -534,25 +499,18 @@ class CoordinationGrid(MultiAgentEnv):
         if self.hide_partner_until_time < 0:
             raise ValueError("hide_partner_until_time must be >= 0")
 
-        # Communication condition (see COMM_CONDITIONS above). Fixed per env
-        # instance. Different conditions produce different p_red rules and a
-        # different t=0 action-legality mask; nothing else in the env changes.
+        # Only ``action_only`` is supported in this build. The kwarg is kept
+        # for API stability with earlier configs / trainers.
         if communication_condition not in COMM_CONDITIONS:
             raise ValueError(
                 f"communication_condition must be one of {COMM_CONDITIONS}, "
                 f"got {communication_condition!r}"
             )
         self.communication_condition: str = communication_condition
-        # Convenient handle so downstream code (network mask, tests) can grab
-        # the correct t=0 mask without re-implementing the switch.
-        self.t0_action_mask = jnp.asarray(
-            _T0_ACTION_MASKS_BY_CONDITION[self.communication_condition],
-            dtype=jnp.bool_,
-        )
-        self.t0_action_mask_np = np.asarray(
-            _T0_ACTION_MASKS_BY_CONDITION[self.communication_condition],
-            dtype=np.bool_,
-        )
+        # t=0 legality mask (STAY+NONE only). Downstream code (network, tests)
+        # reads this rather than re-deriving it.
+        self.t0_action_mask = jnp.asarray(ACTION_MASK_T0, dtype=jnp.bool_)
+        self.t0_action_mask_np = np.asarray(ACTION_MASK_T0, dtype=np.bool_)
 
         # Precompute BFS next-action tables per layout. Shape (K, H, W).
         # Partner navigation lookups always index by state.layout_idx, which
@@ -710,34 +668,12 @@ class CoordinationGrid(MultiAgentEnv):
         # step ends a non-final round), and one to thread out for future use.
         key, k_partner, k_next_layout = jax.random.split(key, 3)
 
-        # ------- Partner goal commitment (once, at t=1, from t=0's msg) -------
-        # p_red is the ONLY thing the communication condition changes.
-        pending_msg = state.pending_message
-        if self.communication_condition == COMM_ACTION_ONLY:
-            # No message channel. Partner samples uniformly regardless of the
-            # ego's t=0 action or z. If the ego somehow sends an M0/M1 anyway
-            # (e.g. hand-written test with the mask bypassed) the message is
-            # ignored — that's the entire point of this condition.
-            p_red = jnp.float32(0.5)
-        elif self.communication_condition == COMM_UNIVERSAL:
-            # Universal fixed meanings. z is stored on state (so the ego can't
-            # deduce the condition from obs), but the decoder ignores it.
-            #   NONE -> 0.5, M0 -> RED w.p. 1, M1 -> BLUE w.p. 1.
-            p_red = jnp.where(
-                pending_msg == Messages.none, jnp.float32(0.5),
-                jnp.where(
-                    pending_msg == Messages.m0, jnp.float32(1.0),
-                    jnp.float32(0.0),
-                ),
-            )
-        else:  # COMM_PARTNER_SPECIFIC (current)
-            p_red = jnp.where(
-                pending_msg == Messages.none, jnp.float32(0.5),
-                jnp.where(
-                    pending_msg == Messages.m0, state.z,
-                    jnp.float32(1.0) - state.z,
-                ),
-            )
+        # ------- Partner goal commitment (once, at t=1) -------
+        # action_only: no message channel; partner samples RED/BLUE
+        # uniformly regardless of the ego's t=0 action or z. If the ego
+        # somehow sends an M0/M1 anyway (e.g. hand-written test with the
+        # mask bypassed) the message is ignored.
+        p_red = jnp.float32(0.5)
         sample_red = jax.random.bernoulli(k_partner, p=p_red)
         sampled_goal = jnp.where(
             sample_red, jnp.int32(GOAL_RED), jnp.int32(GOAL_BLUE)

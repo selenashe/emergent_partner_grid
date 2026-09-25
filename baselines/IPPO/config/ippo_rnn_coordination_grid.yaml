@@ -1,16 +1,22 @@
-# CoordinationGrid recurrent IPPO — Stage C+D (multi-round partner episodes,
-# z sampled per partner from a discrete pool, layouts vary per round).
+# CoordinationGrid recurrent IPPO — action_only regime.
+#
+# This is the pared-down configuration: only the action_only communication
+# condition is supported. Multi-round partner episodes, z sampled per
+# partner from a discrete pool, layouts vary per round.
 #
 # See ippo_rnn_coordination_grid.py for the trainer + evaluate_policy().
 
 "ENV_NAME": "coordination_grid"
 "ENV_KWARGS":
-  # Training pool of layouts. D4-augmented at env-init time.
-  "layouts_dir": "/juice6/u/jshe/emergent_partner_grid/dev/grids/layouts/train"
-  "augment_symmetries": True
+  # Training pool of layouts. The final corpus already has one D4 transform
+  # baked in per base layout, so augment_symmetries stays False here.
+  "layouts_dir": "/juice6/u/jshe/emergent_partner_grid/dev/grids_final/layouts/train"
+  "augment_symmetries": False
   # Partner-type pool: one z sampled per partner-episode reset, held fixed
-  # for all rounds of that episode. z is never in obs.
-  "partner_z_values": [0.2, 0.4, 0.6, 0.8]
+  # for all rounds of that episode. z is never in obs. Under action_only
+  # the partner ignores z at commit-time (samples 50/50), so z is only used
+  # to preserve schedule structure across the historical experiment plan.
+  "partner_z_values": [0.1, 0.3, 0.5, 0.7, 0.9]
   # Rounds per partner episode (round_done ≠ episode_done, done['__all__']
   # only True after the final round). GRU hidden state persists across
   # intermediate round boundaries; only reset on partner-episode reset.
@@ -19,32 +25,21 @@
   "max_steps": 15
   "step_penalty": 0.01
   "success_reward": 1.0
-  # Info-structure intervention: hide the partner-position channel of the
-  # grid obs while state.time < K (round-local). K=0 keeps the old behaviour
-  # (partner always visible). K=3 hides partner at t=0, 1, 2 and reveals it
-  # at t=3 — forces the ego to commit its t=0 message before it can cheaply
-  # infer the partner's realized goal from motion, so knowing the (msg → z)
-  # convention becomes instrumentally useful.
-  "hide_partner_until_time": 3
-  # Communication condition — one of {action_only, universal, partner_specific}:
-  #   action_only      : no message channel; partner samples 50/50; only
-  #                      STAY+NONE is legal at t=0.
-  #   universal        : messages have globally fixed meanings, decoder
-  #                      ignores z. Legal at t=0: STAY+{NONE, M0, M1}.
-  #   partner_specific : messages are z-conditional (Stage C+D baseline).
-  #                      Legal at t=0: STAY+{NONE, M0, M1}.
-  "communication_condition": "partner_specific"
+  # Info-structure knob (kept for API stability; final experiment uses 0).
+  "hide_partner_until_time": 0
+  # Only "action_only" is supported.
+  "communication_condition": "action_only"
 
 # Held-out eval on val + test layout pools (full partner-episodes, per-z
 # breakdown, per-round-index success curve).
 "EVAL_LAYOUTS_DIRS":
-  "val":  "/juice6/u/jshe/emergent_partner_grid/dev/grids/layouts/val"
-  "test": "/juice6/u/jshe/emergent_partner_grid/dev/grids/layouts/test"
+  "val":  "/juice6/u/jshe/emergent_partner_grid/dev/grids_final/layouts/val"
+  "test": "/juice6/u/jshe/emergent_partner_grid/dev/grids_final/layouts/test"
 "EVAL_EPISODES_PER_Z": 64
 "EVAL_SEED": 12345
 
 # Where to dump trained params (safetensors). Empty -> no save.
-"SAVE_PARAMS_PATH": "/juice6/u/jshe/emergent_partner_grid/dev/train_logs/stage_cd_params.safetensors"
+"SAVE_PARAMS_PATH": "/juice6/u/jshe/emergent_partner_grid/dev/train_logs/action_only_params.safetensors"
 
 "SEED": 1
 "NUM_SEEDS": 1

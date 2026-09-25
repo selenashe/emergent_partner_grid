@@ -14,13 +14,11 @@ PQN implementation follows [purejaxql](https://github.com/mttga/purejaxql). IQL,
 Standard algorithms (iql, vdn, qmix) support:
 - MPE
 - SMAX
-- Overcooked (qmix not supported)
 
 PQN-VDN supports:
 - MPE
 - SMAX
 - Hanabi
-- Overcooked
 
 **At the moment, PQN-VDN should be the most performant baseline for Q-Learning in terms of returns and training speed.**
 
@@ -48,8 +46,6 @@ python baselines/QLearning/vdn_rnn.py +alg=ql_rnn_mpe
 python baselines/QLearning/iql_rnn.py +alg=ql_rnn_mpe alg.ENV_NAME=MPE_simple_tag_v3
 # QMix with SMAX
 python baselines/QLearning/qmix_rnn.py +alg=ql_rnn_smax
-# VDN overcooked
-python baselines/QLearning/vdn_cnn_overcooked.py +alg=ql_cnn_overcooked alg.ENV_KWARGS.LAYOUT=counter_circuit
 # TransfQMix
 python baselines/QLearning/transf_qmix.py +alg=transf_qmix_smax
 
@@ -57,8 +53,6 @@ python baselines/QLearning/transf_qmix.py +alg=transf_qmix_smax
 python baselines/QLearning/pqn_vdn_ff.py +alg=pqn_vdn_ff_mpe
 # pqn feed-forward in hanabi
 python baselines/QLearning/pqn_vdn_ff.py +alg=pqn_vdn_ff_hanabi
-# pqn CNN in overcooked
-python baselines/QLearning/pqn_vdn_cnn_overcooked.py +alg=pqn_vdn_cnn_overcooked
 # pqn with RNN in SMAX
 python baselines/QLearning/pqn_vdn_rnn.py +alg=pqn_vdn_rnn_smax
 ```
@@ -68,8 +62,6 @@ Notice that with Hydra, you can modify parameters on the go in this way:
 ```bash
 # change learning rate
 python baselines/QLearning/iql_rnn.py +alg=ql_rnn_mpe alg.LR=0.001
-# change overcooked layout
-python baselines/QLearning/pqn_vdn_cnn_overcooked.py +alg=pqn_vdn_cnn_overcooked alg.ENV_KWARGS.LAYOUT=counter_circuit
 # change smax map
 python baselines/QLearning/pqn_vdn_rnn.py +alg=pqn_vdn_rnn_smax alg.MAP_NAME=5m_vs_6m
 ```

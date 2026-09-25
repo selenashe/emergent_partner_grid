@@ -236,7 +236,6 @@ class CTRolloutManager(JaxMARLWrapper):
         self.training_agents = self.agents if training_agents is None else training_agents  
         self.preprocess_obs = preprocess_obs  
 
-        # TOREMOVE: this is because overcooked doesn't follow other envs conventions
         if len(env.observation_spaces) == 0:
             self.observation_spaces = {agent:self.observation_space() for agent in self.agents}
         if len(env.action_spaces) == 0:
@@ -263,9 +262,6 @@ class CTRolloutManager(JaxMARLWrapper):
             self.global_state = lambda obs, state: obs['world_state']
             self.global_reward = lambda rewards: rewards[self.training_agents[0]]
             self.get_valid_actions = lambda state: jax.vmap(env.get_avail_actions)(state)
-        elif 'overcooked' in env.name.lower():
-            self.global_state = lambda obs, state:  jnp.concatenate([obs[agent].flatten() for agent in self.agents], axis=-1)
-            self.global_reward = lambda rewards: rewards[self.training_agents[0]]
         elif 'hanabi' in env.name.lower():
             self.global_reward = lambda rewards: rewards[self.training_agents[0]]
             self.get_valid_actions = lambda state: jax.vmap(env.get_legal_moves)(state)
