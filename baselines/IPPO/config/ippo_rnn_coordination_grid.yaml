@@ -26,6 +26,14 @@
   # infer the partner's realized goal from motion, so knowing the (msg → z)
   # convention becomes instrumentally useful.
   "hide_partner_until_time": 3
+  # Communication condition — one of {action_only, universal, partner_specific}:
+  #   action_only      : no message channel; partner samples 50/50; only
+  #                      STAY+NONE is legal at t=0.
+  #   universal        : messages have globally fixed meanings, decoder
+  #                      ignores z. Legal at t=0: STAY+{NONE, M0, M1}.
+  #   partner_specific : messages are z-conditional (Stage C+D baseline).
+  #                      Legal at t=0: STAY+{NONE, M0, M1}.
+  "communication_condition": "partner_specific"
 
 # Held-out eval on val + test layout pools (full partner-episodes, per-z
 # breakdown, per-round-index success curve).

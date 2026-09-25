@@ -1,0 +1,16 @@
+- ENV_KWARGS.layouts_dir=/tmp/cg_stageB_smoke/train
+- ENV_KWARGS.augment_symmetries=true
+- ENV_KWARGS.partner_z_values=[0.2,0.4,0.6,0.8]
+- ENV_KWARGS.rounds_per_episode=3
+- ENV_KWARGS.hide_partner_until_time=0
+- ENV_KWARGS.communication_condition=action_only
+- EVAL_LAYOUTS_DIRS.val=/tmp/cg_stageB_smoke/val
+- EVAL_LAYOUTS_DIRS.test=/tmp/cg_stageB_smoke/test
+- EVAL_EPISODES_PER_Z=2
+- SAVE_PARAMS_PATH=/tmp/comm_smoke/action_only.safetensors
+- NUM_ENVS=8
+- NUM_STEPS=32
+- NUM_MINIBATCHES=2
+- UPDATE_EPOCHS=2
+- TOTAL_TIMESTEPS=512
+- +STDOUT_LOG=true

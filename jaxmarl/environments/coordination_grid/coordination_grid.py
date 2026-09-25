@@ -93,6 +93,49 @@ ACTION_MASK_T0[list(LEGAL_ACTION_IDS_T0)] = True
 ACTION_MASK_TGEQ1 = np.zeros(N_EGO_ACTIONS, dtype=np.bool_)
 ACTION_MASK_TGEQ1[list(LEGAL_ACTION_IDS_TGEQ1)] = True
 
+# ---------------------------------------------------------------------------
+# Communication conditions.
+# ---------------------------------------------------------------------------
+# Three experimental settings that differ *only* in the causal role of the
+# t=0 message channel (what messages mean, and whether they exist at all).
+# The environment API (15-way flat action, obs dict, timing, rewards, nav
+# dynamics, multi-round + z-per-episode sampling, D4 augmentation, mask-based
+# policy) is otherwise identical across conditions.
+#
+#   action_only     : no explicit message channel. Partner samples
+#                     uniformly regardless of the ego's t=0 action.
+#                     Only ``STAY+NONE`` is legal at t=0.
+#   universal       : messages have globally fixed meanings, independent of
+#                     the partner's z. z is still sampled+stored (so the
+#                     ego cannot detect the condition via obs), but the
+#                     decoder ignores it.
+#                         P(RED | NONE) = 0.5
+#                         P(RED | M0)   = 1.0
+#                         P(RED | M1)   = 0.0
+#   partner_specific: messages are z-conditional (current behaviour).
+#                         P(RED | NONE)     = 0.5
+#                         P(RED | M0, z)    = z
+#                         P(RED | M1, z)    = 1 - z
+COMM_ACTION_ONLY = "action_only"
+COMM_UNIVERSAL = "universal"
+COMM_PARTNER_SPECIFIC = "partner_specific"
+COMM_CONDITIONS = (COMM_ACTION_ONLY, COMM_UNIVERSAL, COMM_PARTNER_SPECIFIC)
+
+# t=0 legal action set is condition-specific. t>=1 is always the movement-only
+# 5-way mask, in all conditions.
+_LEGAL_T0_ACTION_ONLY = (3 * int(Actions.stay) + int(Messages.none),)   # {12}
+ACTION_MASK_T0_ACTION_ONLY = np.zeros(N_EGO_ACTIONS, dtype=np.bool_)
+ACTION_MASK_T0_ACTION_ONLY[list(_LEGAL_T0_ACTION_ONLY)] = True
+ACTION_MASK_T0_VERBAL = ACTION_MASK_T0   # {12, 13, 14}
+LEGAL_ACTION_IDS_T0_ACTION_ONLY = _LEGAL_T0_ACTION_ONLY
+LEGAL_ACTION_IDS_T0_VERBAL = LEGAL_ACTION_IDS_T0
+
+_T0_ACTION_MASKS_BY_CONDITION = {
+    COMM_ACTION_ONLY: ACTION_MASK_T0_ACTION_ONLY,
+    COMM_UNIVERSAL: ACTION_MASK_T0_VERBAL,
+    COMM_PARTNER_SPECIFIC: ACTION_MASK_T0_VERBAL,
+}
+
 # Partner-goal state encoding.
 GOAL_UNSET = 0
 GOAL_RED = 1
@@ -346,6 +389,7 @@ class CoordinationGrid(MultiAgentEnv):
         rounds_per_episode: int = 1,
         augment_symmetries: bool = False,
         hide_partner_until_time: int = 0,
+        communication_condition: str = COMM_PARTNER_SPECIFIC,
     ):
         super().__init__(num_agents=2)
 
@@ -481,6 +525,26 @@ class CoordinationGrid(MultiAgentEnv):
         if self.hide_partner_until_time < 0:
             raise ValueError("hide_partner_until_time must be >= 0")
 
+        # Communication condition (see COMM_CONDITIONS above). Fixed per env
+        # instance. Different conditions produce different p_red rules and a
+        # different t=0 action-legality mask; nothing else in the env changes.
+        if communication_condition not in COMM_CONDITIONS:
+            raise ValueError(
+                f"communication_condition must be one of {COMM_CONDITIONS}, "
+                f"got {communication_condition!r}"
+            )
+        self.communication_condition: str = communication_condition
+        # Convenient handle so downstream code (network mask, tests) can grab
+        # the correct t=0 mask without re-implementing the switch.
+        self.t0_action_mask = jnp.asarray(
+            _T0_ACTION_MASKS_BY_CONDITION[self.communication_condition],
+            dtype=jnp.bool_,
+        )
+        self.t0_action_mask_np = np.asarray(
+            _T0_ACTION_MASKS_BY_CONDITION[self.communication_condition],
+            dtype=np.bool_,
+        )
+
         # Precompute BFS next-action tables per layout. Shape (K, H, W).
         # Partner navigation lookups always index by state.layout_idx, which
         # means later stages (layout×z sampling wrappers) only need to point
@@ -603,14 +667,33 @@ class CoordinationGrid(MultiAgentEnv):
         key, k_partner, k_next_layout = jax.random.split(key, 3)
 
         # ------- Partner goal commitment (once, at t=1, from t=0's msg) -------
+        # p_red is the ONLY thing the communication condition changes.
         pending_msg = state.pending_message
-        p_red = jnp.where(
-            pending_msg == Messages.none, jnp.float32(0.5),
-            jnp.where(
-                pending_msg == Messages.m0, state.z,
-                jnp.float32(1.0) - state.z,
-            ),
-        )
+        if self.communication_condition == COMM_ACTION_ONLY:
+            # No message channel. Partner samples uniformly regardless of the
+            # ego's t=0 action or z. If the ego somehow sends an M0/M1 anyway
+            # (e.g. hand-written test with the mask bypassed) the message is
+            # ignored — that's the entire point of this condition.
+            p_red = jnp.float32(0.5)
+        elif self.communication_condition == COMM_UNIVERSAL:
+            # Universal fixed meanings. z is stored on state (so the ego can't
+            # deduce the condition from obs), but the decoder ignores it.
+            #   NONE -> 0.5, M0 -> RED w.p. 1, M1 -> BLUE w.p. 1.
+            p_red = jnp.where(
+                pending_msg == Messages.none, jnp.float32(0.5),
+                jnp.where(
+                    pending_msg == Messages.m0, jnp.float32(1.0),
+                    jnp.float32(0.0),
+                ),
+            )
+        else:  # COMM_PARTNER_SPECIFIC (current)
+            p_red = jnp.where(
+                pending_msg == Messages.none, jnp.float32(0.5),
+                jnp.where(
+                    pending_msg == Messages.m0, state.z,
+                    jnp.float32(1.0) - state.z,
+                ),
+            )
         sample_red = jax.random.bernoulli(k_partner, p=p_red)
         sampled_goal = jnp.where(
             sample_red, jnp.int32(GOAL_RED), jnp.int32(GOAL_BLUE)

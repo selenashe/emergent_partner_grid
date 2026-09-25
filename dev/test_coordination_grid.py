@@ -29,6 +29,14 @@ from jaxmarl.environments.coordination_grid.coordination_grid import (
     LEGAL_ACTION_IDS_TGEQ1,
     ACTION_MASK_T0,
     ACTION_MASK_TGEQ1,
+    ACTION_MASK_T0_ACTION_ONLY,
+    ACTION_MASK_T0_VERBAL,
+    LEGAL_ACTION_IDS_T0_ACTION_ONLY,
+    LEGAL_ACTION_IDS_T0_VERBAL,
+    COMM_ACTION_ONLY,
+    COMM_UNIVERSAL,
+    COMM_PARTNER_SPECIFIC,
+    COMM_CONDITIONS,
 )
 
 
@@ -979,6 +987,152 @@ def main():
     _, s_nh = env_no_hide.reset(jax.random.PRNGKey(3))
     ch_nh = np.array(env_no_hide.get_obs(s_nh)["agent_0"]["grid"][:, :, 4])
     check("K=0 (BC): partner visible at t=0", float(ch_nh.sum()) > 0.0)
+
+    # ------------------ 3-condition communication experiment ----------------
+    # Shared invariants (movement / reward / z-const / round / GRU / done semantics)
+    # are already covered above via the default construction, so we validate here
+    # only the CONDITION-SPECIFIC differences: legal-action masks and p_red rules.
+    print("\n[communication conditions]")
+
+    # ---- action_only ----
+    print("\n[condition: action_only]")
+    env_ao = CoordinationGrid(
+        layout_paths=base_paths, augment_symmetries=True,
+        partner_z_values=[0.2, 0.4, 0.6, 0.8],
+        rounds_per_episode=2, max_steps=6,
+        communication_condition=COMM_ACTION_ONLY,
+    )
+    check("env.communication_condition == 'action_only'",
+          env_ao.communication_condition == COMM_ACTION_ONLY)
+    check("action_only: t0 mask has exactly 1 legal action",
+          int(np.asarray(env_ao.t0_action_mask).sum()) == 1)
+    check("action_only: STAY+NONE (id=12) is the only legal t0 action",
+          bool(np.asarray(env_ao.t0_action_mask)[12]) and
+          int(np.asarray(env_ao.t0_action_mask).sum()) == 1)
+
+    # p_red statistical test: force each of {NONE, M0, M1} at env level (bypassing
+    # the network mask) and confirm partner samples 50/50 for ALL of them, and
+    # independently for all z.
+    print("  p_red statistical test (should be ≈ 0.5 for every msg AND every z):")
+    N_TRIALS = 600
+    for z_val in (0.2, 0.4, 0.6, 0.8):
+        env_ao_z = CoordinationGrid(
+            layout_paths=base_paths, augment_symmetries=False,
+            partner_z_values=[z_val], rounds_per_episode=1, max_steps=8,
+            communication_condition=COMM_ACTION_ONLY,
+        )
+        for msg_int, msg_name in ((NONE, "NONE"), (M0, "M0"), (M1, "M1")):
+            reds = 0
+            for seed in range(N_TRIALS):
+                key_s = jax.random.PRNGKey(seed)
+                _, s = env_ao_z.reset(key_s)
+                # t=0: send this msg (bypass the mask). Then t=1 partner commits.
+                _, s, _, _, _ = env_ao_z.step_env(
+                    key_s, s, {"agent_0": encode_ego(STAY, msg_int)}
+                )
+                _, s, _, _, _ = env_ao_z.step_env(
+                    key_s, s, {"agent_0": encode_ego(STAY, NONE)}
+                )
+                reds += int(int(s.partner_goal) == GOAL_RED)
+            p = reds / N_TRIALS
+            check(f"    z={z_val} msg={msg_name}: P(RED)={p:.3f} in [0.44,0.56]",
+                  0.44 <= p <= 0.56)
+
+    # ---- universal ----
+    print("\n[condition: universal]")
+    env_u = CoordinationGrid(
+        layout_paths=base_paths, augment_symmetries=True,
+        partner_z_values=[0.2, 0.4, 0.6, 0.8],
+        rounds_per_episode=2, max_steps=6,
+        communication_condition=COMM_UNIVERSAL,
+    )
+    check("universal: t0 mask has exactly 3 legal actions",
+          int(np.asarray(env_u.t0_action_mask).sum()) == 3)
+    check("universal: {12,13,14} legal at t0",
+          set(int(i) for i in np.where(np.asarray(env_u.t0_action_mask))[0].tolist())
+          == set(LEGAL_ACTION_IDS_T0_VERBAL))
+
+    print("  p_red under universal (M0->RED=1, M1->RED=0, NONE=0.5), all z:")
+    for z_val in (0.2, 0.8):   # decoder ignores z; just show two extremes
+        env_uz = CoordinationGrid(
+            layout_paths=base_paths, augment_symmetries=False,
+            partner_z_values=[z_val], rounds_per_episode=1, max_steps=8,
+            communication_condition=COMM_UNIVERSAL,
+        )
+        # M0 → RED always
+        for seed in range(50):
+            key_s = jax.random.PRNGKey(seed)
+            _, s = env_uz.reset(key_s)
+            _, s, _, _, _ = env_uz.step_env(key_s, s, {"agent_0": encode_ego(STAY, M0)})
+            _, s, _, _, _ = env_uz.step_env(key_s, s, {"agent_0": encode_ego(STAY, NONE)})
+            if int(s.partner_goal) != GOAL_RED:
+                check(f"    z={z_val} M0 seed={seed}: partner_goal must be RED",
+                      False)
+        check(f"    z={z_val}: M0 -> RED w.p. 1 across 50 seeds", True)
+        # M1 → BLUE always
+        for seed in range(50):
+            key_s = jax.random.PRNGKey(seed)
+            _, s = env_uz.reset(key_s)
+            _, s, _, _, _ = env_uz.step_env(key_s, s, {"agent_0": encode_ego(STAY, M1)})
+            _, s, _, _, _ = env_uz.step_env(key_s, s, {"agent_0": encode_ego(STAY, NONE)})
+            if int(s.partner_goal) != GOAL_BLUE:
+                check(f"    z={z_val} M1 seed={seed}: partner_goal must be BLUE",
+                      False)
+        check(f"    z={z_val}: M1 -> BLUE w.p. 1 across 50 seeds", True)
+        # NONE → 50/50
+        reds = 0
+        for seed in range(N_TRIALS):
+            key_s = jax.random.PRNGKey(seed)
+            _, s = env_uz.reset(key_s)
+            _, s, _, _, _ = env_uz.step_env(key_s, s, {"agent_0": encode_ego(STAY, NONE)})
+            _, s, _, _, _ = env_uz.step_env(key_s, s, {"agent_0": encode_ego(STAY, NONE)})
+            reds += int(int(s.partner_goal) == GOAL_RED)
+        p = reds / N_TRIALS
+        check(f"    z={z_val}: NONE -> P(RED)={p:.3f} in [0.44,0.56]",
+              0.44 <= p <= 0.56)
+
+    # ---- partner_specific ----
+    print("\n[condition: partner_specific] (preserved current decoder)")
+    for z_val, expected_p_red_given_M0 in ((0.2, 0.2), (0.4, 0.4),
+                                            (0.6, 0.6), (0.8, 0.8)):
+        env_ps = CoordinationGrid(
+            layout_paths=base_paths, augment_symmetries=False,
+            partner_z_values=[z_val], rounds_per_episode=1, max_steps=8,
+            communication_condition=COMM_PARTNER_SPECIFIC,
+        )
+        check("partner_specific: t0 mask has 3 legal actions",
+              int(np.asarray(env_ps.t0_action_mask).sum()) == 3)
+        for msg_int, msg_name, expected in (
+            (M0, "M0", expected_p_red_given_M0),
+            (M1, "M1", 1.0 - expected_p_red_given_M0),
+            (NONE, "NONE", 0.5),
+        ):
+            reds = 0
+            for seed in range(N_TRIALS):
+                key_s = jax.random.PRNGKey(seed)
+                _, s = env_ps.reset(key_s)
+                _, s, _, _, _ = env_ps.step_env(
+                    key_s, s, {"agent_0": encode_ego(STAY, msg_int)}
+                )
+                _, s, _, _, _ = env_ps.step_env(
+                    key_s, s, {"agent_0": encode_ego(STAY, NONE)}
+                )
+                reds += int(int(s.partner_goal) == GOAL_RED)
+            p = reds / N_TRIALS
+            # Tighter tolerance for the deterministic ends (0/1); wider for 0.5.
+            lo = max(0.0, expected - 0.08)
+            hi = min(1.0, expected + 0.08)
+            check(f"    z={z_val} msg={msg_name}: P(RED)={p:.3f} "
+                  f"in [{lo:.2f},{hi:.2f}] (expected {expected:.2f})",
+                  lo <= p <= hi)
+
+    # ---- invalid condition ----
+    try:
+        _ = CoordinationGrid(layout_path=paths[0],
+                              communication_condition="bogus")
+        check("invalid communication_condition raises", False)
+    except ValueError:
+        check("invalid communication_condition raises", True)
 
     print("\nAll checks passed.")
 

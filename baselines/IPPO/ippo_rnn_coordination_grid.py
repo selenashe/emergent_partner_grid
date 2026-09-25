@@ -41,14 +41,25 @@ import jaxmarl
 from jaxmarl.wrappers.baselines import LogWrapper, save_params, load_params
 from jaxmarl.environments.coordination_grid import (
     CoordinationGrid,
-    ACTION_MASK_T0, ACTION_MASK_TGEQ1,
+    ACTION_MASK_TGEQ1,
+    ACTION_MASK_T0_ACTION_ONLY,
+    ACTION_MASK_T0_VERBAL,
+    COMM_ACTION_ONLY, COMM_UNIVERSAL, COMM_PARTNER_SPECIFIC,
+    COMM_CONDITIONS,
 )
 
 
 # Static mask tensors (bool) for the network. jnp arrays so they broadcast
 # cleanly with logit tensors of arbitrary leading shape.
-_ACTION_MASK_T0_J = jnp.asarray(ACTION_MASK_T0, dtype=jnp.bool_)      # (15,)
-_ACTION_MASK_TGEQ1_J = jnp.asarray(ACTION_MASK_TGEQ1, dtype=jnp.bool_)  # (15,)
+_ACTION_MASK_TGEQ1_J = jnp.asarray(ACTION_MASK_TGEQ1, dtype=jnp.bool_)   # (15,)
+# t=0 mask is condition-specific. Keyed at trace-time from a Python string
+# in ``self.config['COMMUNICATION_CONDITION']`` — so different conditions
+# compile separate traces, and the mask is a concrete jnp array under jit.
+_T0_MASKS_BY_CONDITION = {
+    COMM_ACTION_ONLY:      jnp.asarray(ACTION_MASK_T0_ACTION_ONLY, dtype=jnp.bool_),
+    COMM_UNIVERSAL:        jnp.asarray(ACTION_MASK_T0_VERBAL,      dtype=jnp.bool_),
+    COMM_PARTNER_SPECIFIC: jnp.asarray(ACTION_MASK_T0_VERBAL,      dtype=jnp.bool_),
+}
 
 
 # ---------------------------------------------------------------------------
@@ -196,15 +207,23 @@ class ActorCriticCommRNN(nn.Module):
             bias_init=constant(0.0),
         )(actor_mean)   # (T, N, action_dim=15)
 
-        # Legality mask: state-dependent, drives sample / log_prob / entropy.
-        # is_t0 has leading (T, N) shape (scalar per env-step); broadcast against
-        # the two (15,) masks and set illegal logits to -inf so distrax's
+        # Legality mask: state-dependent AND condition-specific at t=0.
+        # is_t0 has leading (T, N) shape (scalar per env-step); broadcast
+        # against the (15,) masks and set illegal logits to -inf so distrax
         # Categorical excludes them from the softmax.
+        # Under ``action_only`` the t=0 mask is a single legal action
+        # (STAY+NONE). Under ``universal`` / ``partner_specific`` it's the
+        # existing 3-way {STAY+NONE, STAY+M0, STAY+M1} set. The Python
+        # ``self.config['COMMUNICATION_CONDITION']`` lookup is at trace time,
+        # so different conditions compile separate jit traces — each has a
+        # concrete jnp bool array baked in for the softmax.
+        cond = self.config.get("COMMUNICATION_CONDITION", COMM_PARTNER_SPECIFIC)
+        t0_mask = _T0_MASKS_BY_CONDITION[cond]
         is_t0 = obs["is_t0"]                                          # (T, N)
         is_t0_bool = (is_t0 > 0.5)[..., None]                         # (T, N, 1)
         legal = jnp.where(
             is_t0_bool,
-            _ACTION_MASK_T0_J[None, None, :],
+            t0_mask[None, None, :],
             _ACTION_MASK_TGEQ1_J[None, None, :],
         )                                                             # (T, N, 15)
         logits = jnp.where(legal, logits, jnp.full_like(logits, -jnp.inf))
@@ -243,6 +262,10 @@ class Transition(NamedTuple):
 
 def make_train(config):
     env = jaxmarl.make(config["ENV_NAME"], **config["ENV_KWARGS"])
+
+    # Mirror the env's communication_condition into the top-level config so
+    # the network (which reads self.config) can pick the correct t=0 mask.
+    config["COMMUNICATION_CONDITION"] = env.communication_condition
 
     # ONE learned actor per env (partner is scripted inside the env).
     config["NUM_ACTORS"] = config["NUM_ENVS"]
@@ -757,8 +780,12 @@ def evaluate_policy(params, config, layouts_dir, key,
     env_kwargs.pop("layout_paths", None)
     env_eval = CoordinationGrid(**env_kwargs)
 
+    # Ensure the network re-evaluation uses the same t=0 mask the trained
+    # policy was optimized under (i.e. the training env's condition).
+    eval_config = dict(config)
+    eval_config["COMMUNICATION_CONDITION"] = env_eval.communication_condition
     network = ActorCriticCommRNN(
-        action_dim=env_eval.n_ego_actions, config=config
+        action_dim=env_eval.n_ego_actions, config=eval_config
     )
     Z = int(env_eval.n_partner_z)
     N = int(n_episodes_per_z)
@@ -912,7 +939,9 @@ def main(config):
         mode=config.get("WANDB_MODE", "disabled"),
         name=(
             f"ippo_rnn_coordination_grid"
+            f"_cond={config['ENV_KWARGS'].get('communication_condition', 'partner_specific')}"
             f"_R{config['ENV_KWARGS'].get('rounds_per_episode', 1)}"
+            f"_hideK{config['ENV_KWARGS'].get('hide_partner_until_time', 0)}"
             f"_zpool={config['ENV_KWARGS'].get('partner_z_values', [config['ENV_KWARGS'].get('partner_z', 0.5)])}"
         ),
     )
