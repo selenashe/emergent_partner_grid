@@ -179,6 +179,15 @@ class State:
     layout_idx: chex.Array      # scalar int32; addresses the stacked layout / BFS tables.
     round_idx: chex.Array       # scalar int32; which round of the partner episode we're in.
                                 # 0-indexed; ranges over [0, rounds_per_episode).
+    episode_layout_seq: chex.Array   # (rounds_per_episode,) int32 — sequence of
+                                # layout_idx values the partner episode will visit
+                                # across its rounds. On the intermediate-round
+                                # transition inside step_env, the next layout is
+                                # ``episode_layout_seq[round_idx + 1]`` instead of
+                                # a fresh random sample. reset(key) fills this
+                                # with a random draw for BC; the trainer's
+                                # scheduler uses reset_from_schedule to fill it
+                                # with a pre-scheduled sequence.
 
 
 def _load_layout(layout_path: str) -> dict:
@@ -566,6 +575,7 @@ class CoordinationGrid(MultiAgentEnv):
         layout_idx: chex.Array,
         z: Optional[chex.Array] = None,
         round_idx: Optional[chex.Array] = None,
+        episode_layout_seq: Optional[chex.Array] = None,
     ) -> "State":
         """Build a fresh round-start State on the given layout.
 
@@ -583,6 +593,13 @@ class CoordinationGrid(MultiAgentEnv):
         agent_pos = jnp.stack([ego_start, partner_start], axis=0).astype(jnp.int32)
         z_val = jnp.float32(self.partner_z) if z is None else jnp.asarray(z, dtype=jnp.float32)
         round_val = jnp.int32(0) if round_idx is None else jnp.asarray(round_idx, dtype=jnp.int32)
+        if episode_layout_seq is None:
+            # Fill remaining rounds with the current layout as a benign
+            # default. Random-reset callers (`reset(key)`) override this
+            # further down with a proper random sequence.
+            eps_seq = jnp.full((self.rounds_per_episode,), idx, dtype=jnp.int32)
+        else:
+            eps_seq = jnp.asarray(episode_layout_seq, dtype=jnp.int32)
         return State(
             agent_pos=agent_pos,
             wall_map=wall_map,
@@ -595,20 +612,47 @@ class CoordinationGrid(MultiAgentEnv):
             pending_message=jnp.int32(Messages.none),
             layout_idx=idx,
             round_idx=round_val,
+            episode_layout_seq=eps_seq,
         )
 
     def reset(self, key: chex.PRNGKey) -> Tuple[Dict[str, chex.Array], "State"]:
         # Full partner-episode reset: sample a fresh partner-type z from the
-        # allowed pool AND a fresh layout, and start at round 0.
+        # allowed pool AND a fresh sequence of ``rounds_per_episode`` random
+        # layouts, and start at round 0.
         key, k_layout, k_z = jax.random.split(key, 3)
-        layout_idx = jax.random.randint(
-            k_layout, shape=(), minval=0, maxval=self.n_layouts, dtype=jnp.int32
+        # Uniform random layout for each round of the partner episode.
+        layout_seq = jax.random.randint(
+            k_layout, shape=(self.rounds_per_episode,),
+            minval=0, maxval=self.n_layouts, dtype=jnp.int32,
         )
         z_idx = jax.random.randint(
             k_z, shape=(), minval=0, maxval=self.n_partner_z, dtype=jnp.int32
         )
         z = self.partner_z_values[z_idx]
-        state = self._build_state_for(layout_idx, z=z, round_idx=jnp.int32(0))
+        state = self._build_state_for(
+            layout_seq[0], z=z, round_idx=jnp.int32(0),
+            episode_layout_seq=layout_seq,
+        )
+        obs = self.get_obs(state)
+        return lax.stop_gradient(obs), lax.stop_gradient(state)
+
+    def reset_from_schedule(
+        self, z: chex.Array, layout_seq: chex.Array,
+    ) -> Tuple[Dict[str, chex.Array], "State"]:
+        """Deterministic reset from a pre-scheduled (z, layout_seq).
+
+        Used by the training scheduler to enforce a balanced sweep: every
+        z sees every training layout exactly once per sweep. Bypasses
+        random sampling entirely; layout_seq must have length exactly
+        ``rounds_per_episode``.
+        """
+        layout_seq = jnp.asarray(layout_seq, dtype=jnp.int32)
+        state = self._build_state_for(
+            layout_seq[0],
+            z=jnp.asarray(z, dtype=jnp.float32),
+            round_idx=jnp.int32(0),
+            episode_layout_seq=layout_seq,
+        )
         obs = self.get_obs(state)
         return lax.stop_gradient(obs), lax.stop_gradient(state)
 
@@ -790,13 +834,21 @@ class CoordinationGrid(MultiAgentEnv):
             # round_idx and z unchanged by a plain step.
         )
 
-        # State if an intermediate round just ended: build a fresh next-round
-        # state on a newly-sampled layout, but KEEP z and BUMP round_idx.
-        next_layout_idx = jax.random.randint(
-            k_next_layout, shape=(), minval=0, maxval=self.n_layouts, dtype=jnp.int32
+        # State if an intermediate round just ended: pull the pre-scheduled
+        # layout for the NEXT round from state.episode_layout_seq, keep z,
+        # keep the full sequence, bump round_idx by 1. If the sequence was
+        # populated by ``reset(key)`` (random) the effect is a fresh random
+        # layout; if it came from ``reset_from_schedule`` the effect is the
+        # trainer's pre-planned sweep.
+        next_round_local = jnp.minimum(
+            state.round_idx + 1, jnp.int32(self.rounds_per_episode - 1)
         )
+        next_layout_idx = state.episode_layout_seq[next_round_local]
         next_round_state = self._build_state_for(
-            next_layout_idx, z=state.z, round_idx=state.round_idx + 1,
+            next_layout_idx,
+            z=state.z,
+            round_idx=state.round_idx + 1,
+            episode_layout_seq=state.episode_layout_seq,
         )
 
         # Select which state to return. `intermediate_round` is a scalar bool.

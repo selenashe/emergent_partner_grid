@@ -1,0 +1,40 @@
+{
+  "layout_id": "train_1166",
+  "seed": 396922326,
+  "grid": [
+    [0, 1, 1, 2, 0, 1, 0],
+    [0, 0, 5, 0, 1, 1, 1],
+    [0, 0, 3, 0, 4, 1, 0],
+    [0, 1, 0, 1, 0, 1, 0],
+    [0, 1, 0, 0, 1, 1, 1],
+    [1, 0, 0, 0, 0, 0, 0],
+    [0, 0, 1, 1, 0, 1, 0]
+  ],
+  "ego_start": [2, 4],
+  "partner_start": [1, 2],
+  "red_goal": [0, 3],
+  "blue_goal": [2, 2],
+  "metadata": {
+    "ego_to_red": 3,
+    "ego_to_blue": 2,
+    "partner_to_red": 2,
+    "partner_to_blue": 1,
+    "sampled_wall_probability": 0.2618251636795863,
+    "realized_wall_density": 0.3673469387755102,
+    "num_junctions": 12,
+    "num_dead_ends": 9,
+    "num_shortest_paths_ego_red": 1,
+    "num_shortest_paths_ego_blue": 1,
+    "num_shortest_paths_partner_red": 1,
+    "num_shortest_paths_partner_blue": 1,
+    "shortest_path_overlap_assignment_1": 0.0,
+    "shortest_path_overlap_assignment_2": 0.0,
+    "assignment_cost_1": 4,
+    "assignment_cost_2": 4,
+    "assignment_cost_difference": 0,
+    "switching_cost_mean": 2.5,
+    "switching_cost_min": 2.0,
+    "sym_applied_idx": 3,
+    "sym_applied_name": "rot270_cw"
+  }
+}

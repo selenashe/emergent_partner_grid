@@ -1,0 +1,40 @@
+{
+  "layout_id": "train_0601",
+  "seed": 203391651,
+  "grid": [
+    [1, 0, 0, 0, 0, 0, 0],
+    [1, 1, 1, 0, 0, 4, 0],
+    [0, 0, 3, 5, 0, 0, 1],
+    [0, 0, 0, 1, 0, 0, 0],
+    [0, 1, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 1],
+    [0, 0, 0, 2, 1, 0, 1]
+  ],
+  "ego_start": [1, 5],
+  "partner_start": [2, 3],
+  "red_goal": [6, 3],
+  "blue_goal": [2, 2],
+  "metadata": {
+    "ego_to_red": 7,
+    "ego_to_blue": 4,
+    "partner_to_red": 6,
+    "partner_to_blue": 1,
+    "sampled_wall_probability": 0.2532957263377871,
+    "realized_wall_density": 0.20408163265306123,
+    "num_junctions": 28,
+    "num_dead_ends": 2,
+    "num_shortest_paths_ego_red": 9,
+    "num_shortest_paths_ego_blue": 3,
+    "num_shortest_paths_partner_red": 5,
+    "num_shortest_paths_partner_blue": 1,
+    "shortest_path_overlap_assignment_1": 0.0,
+    "shortest_path_overlap_assignment_2": 0.2,
+    "assignment_cost_1": 8,
+    "assignment_cost_2": 10,
+    "assignment_cost_difference": 2,
+    "switching_cost_mean": 1.0,
+    "switching_cost_min": 0.0,
+    "sym_applied_idx": 4,
+    "sym_applied_name": "flip_lr"
+  }
+}

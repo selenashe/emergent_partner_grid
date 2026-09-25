@@ -1,0 +1,40 @@
+{
+  "layout_id": "test_0114",
+  "seed": 1352804891,
+  "grid": [
+    [0, 1, 0, 0, 0, 0, 1],
+    [0, 0, 0, 0, 0, 3, 0],
+    [5, 1, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 1],
+    [4, 0, 1, 0, 2, 1, 1],
+    [0, 0, 0, 0, 1, 0, 1]
+  ],
+  "ego_start": [5, 0],
+  "partner_start": [2, 0],
+  "red_goal": [5, 4],
+  "blue_goal": [1, 5],
+  "metadata": {
+    "ego_to_red": 6,
+    "ego_to_blue": 9,
+    "partner_to_red": 7,
+    "partner_to_blue": 6,
+    "sampled_wall_probability": 0.20357746833558119,
+    "realized_wall_density": 0.1836734693877551,
+    "num_junctions": 27,
+    "num_dead_ends": 1,
+    "num_shortest_paths_ego_red": 6,
+    "num_shortest_paths_ego_blue": 71,
+    "num_shortest_paths_partner_red": 9,
+    "num_shortest_paths_partner_blue": 1,
+    "shortest_path_overlap_assignment_1": 0.0,
+    "shortest_path_overlap_assignment_2": 0.125,
+    "assignment_cost_1": 12,
+    "assignment_cost_2": 16,
+    "assignment_cost_difference": 4,
+    "switching_cost_mean": 1.5,
+    "switching_cost_min": 0.0,
+    "sym_applied_idx": 0,
+    "sym_applied_name": "identity"
+  }
+}

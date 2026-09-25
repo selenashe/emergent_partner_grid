@@ -1,0 +1,25 @@
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+2026-09-25 00:07:56.157327: E external/xla/xla/stream_executor/cuda/cuda_driver.cc:273] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+CUDA backend failed to initialize: FAILED_PRECONDITION: No visible GPU devices. (Set TF_CPP_MIN_LOG_LEVEL=0 and rerun for more info.)
+[1/6] Generating 2000 base layouts (master_seed=2026) ...
+       generated 2000 envs; 2000 unique fingerprints (100.00%)
+[2/6] Assigning D4 symmetries — balanced, 250 of each of 8 symmetries ...
+       sym counts: {0: 250, 1: 250, 2: 250, 3: 250, 4: 250, 5: 250, 6: 250, 7: 250}
+[3/6] Applying symmetries ...
+       2000 unique transformed envs (100.00%)
+[4/6] Deterministic shuffle (shuffle_seed=2026) ...
+[5/6] Split -> train=1600 val=200 test=200 ...
+       train sym counts: {1: 201, 5: 206, 7: 201, 4: 206, 3: 203, 2: 194, 0: 196, 6: 193}
+       val   sym counts: {7: 18, 0: 34, 6: 28, 3: 24, 1: 24, 5: 22, 4: 23, 2: 27}
+       test  sym counts: {3: 23, 5: 22, 6: 29, 7: 31, 0: 20, 2: 29, 4: 21, 1: 25}
+       uniqueness + disjointness assertions ✓
+[6/6] Saving to /juice6/u/jshe/emergent_partner_grid/dev/grids_final ...
+       [train] wrote 1600 envs
+       [val  ] wrote 200 envs
+       [test ] wrote 200 envs
+
+Done. Corpus at /juice6/u/jshe/emergent_partner_grid/dev/grids_final
+  train/val/test = 1600 / 200 / 200

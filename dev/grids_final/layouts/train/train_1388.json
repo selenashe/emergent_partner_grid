@@ -1,0 +1,40 @@
+{
+  "layout_id": "train_1388",
+  "seed": 543418435,
+  "grid": [
+    [1, 0, 0, 0, 0, 0, 2],
+    [1, 1, 0, 1, 3, 4, 0],
+    [0, 1, 1, 0, 1, 1, 0],
+    [0, 1, 0, 1, 1, 0, 0],
+    [0, 0, 1, 0, 0, 0, 0],
+    [0, 1, 5, 0, 0, 1, 1],
+    [0, 0, 0, 0, 0, 0, 1]
+  ],
+  "ego_start": [1, 5],
+  "partner_start": [5, 2],
+  "red_goal": [0, 6],
+  "blue_goal": [1, 4],
+  "metadata": {
+    "ego_to_red": 2,
+    "ego_to_blue": 1,
+    "partner_to_red": 9,
+    "partner_to_blue": 10,
+    "sampled_wall_probability": 0.3843609689338645,
+    "realized_wall_density": 0.32653061224489793,
+    "num_junctions": 14,
+    "num_dead_ends": 5,
+    "num_shortest_paths_ego_red": 2,
+    "num_shortest_paths_ego_blue": 1,
+    "num_shortest_paths_partner_red": 4,
+    "num_shortest_paths_partner_blue": 4,
+    "shortest_path_overlap_assignment_1": 0.07692307692307693,
+    "shortest_path_overlap_assignment_2": 0.0,
+    "assignment_cost_1": 12,
+    "assignment_cost_2": 10,
+    "assignment_cost_difference": 2,
+    "switching_cost_mean": 1.5,
+    "switching_cost_min": 0.0,
+    "sym_applied_idx": 1,
+    "sym_applied_name": "rot90_cw"
+  }
+}

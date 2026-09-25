@@ -1,0 +1,32 @@
+{
+  "n_base": 2000,
+  "n_train": 1600,
+  "n_val": 200,
+  "n_test": 200,
+  "master_seed": 2026,
+  "shuffle_seed": 2026,
+  "grid_size": 7,
+  "wall_density": [
+    0.15,
+    0.6
+  ],
+  "min_agent_sep": 3,
+  "min_goal_sep": 3,
+  "max_assignment_gap": 5,
+  "min_switching_cost": 1.0,
+  "geometric_pref_threshold": 2,
+  "switching_k": 2,
+  "max_attempts": 500,
+  "d4_symmetries": [
+    "identity",
+    "rot90_cw",
+    "rot180",
+    "rot270_cw",
+    "flip_lr",
+    "flip_ud",
+    "transpose",
+    "anti_transpose"
+  ],
+  "per_sym": 250,
+  "note": "One D4 symmetry applied per base layout (balanced 250 each). Training env MUST use augment_symmetries=false \u2014 the transformations are already baked in."
+}

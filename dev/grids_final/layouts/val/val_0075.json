@@ -1,0 +1,40 @@
+{
+  "layout_id": "val_0075",
+  "seed": 1715626004,
+  "grid": [
+    [0, 0, 1, 1, 0, 0, 1],
+    [1, 1, 0, 0, 0, 2, 0],
+    [3, 0, 1, 4, 1, 0, 0],
+    [0, 0, 0, 0, 1, 0, 0],
+    [1, 0, 0, 1, 0, 0, 0],
+    [0, 1, 0, 1, 5, 1, 0],
+    [0, 0, 0, 0, 0, 0, 1]
+  ],
+  "ego_start": [2, 3],
+  "partner_start": [5, 4],
+  "red_goal": [1, 5],
+  "blue_goal": [2, 0],
+  "metadata": {
+    "ego_to_red": 3,
+    "ego_to_blue": 5,
+    "partner_to_red": 5,
+    "partner_to_blue": 9,
+    "sampled_wall_probability": 0.3213159531057842,
+    "realized_wall_density": 0.2857142857142857,
+    "num_junctions": 14,
+    "num_dead_ends": 6,
+    "num_shortest_paths_ego_red": 1,
+    "num_shortest_paths_ego_blue": 2,
+    "num_shortest_paths_partner_red": 1,
+    "num_shortest_paths_partner_blue": 4,
+    "shortest_path_overlap_assignment_1": 0.0,
+    "shortest_path_overlap_assignment_2": 0.0,
+    "assignment_cost_1": 12,
+    "assignment_cost_2": 10,
+    "assignment_cost_difference": 2,
+    "switching_cost_mean": 4.0,
+    "switching_cost_min": 4.0,
+    "sym_applied_idx": 1,
+    "sym_applied_name": "rot90_cw"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "layout_id": "val_0040",
+  "seed": 435967896,
+  "grid": [
+    [5, 1, 1, 0, 0, 1, 1],
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 1, 0, 0, 0, 0, 0],
+    [0, 3, 0, 0, 0, 1, 0],
+    [1, 0, 0, 2, 1, 0, 0],
+    [1, 0, 4, 0, 0, 0, 0],
+    [1, 0, 0, 0, 0, 0, 1]
+  ],
+  "ego_start": [5, 2],
+  "partner_start": [0, 0],
+  "red_goal": [4, 3],
+  "blue_goal": [3, 1],
+  "metadata": {
+    "ego_to_red": 2,
+    "ego_to_blue": 3,
+    "partner_to_red": 7,
+    "partner_to_blue": 4,
+    "sampled_wall_probability": 0.19776235555227975,
+    "realized_wall_density": 0.22448979591836735,
+    "num_junctions": 25,
+    "num_dead_ends": 1,
+    "num_shortest_paths_ego_red": 2,
+    "num_shortest_paths_ego_blue": 3,
+    "num_shortest_paths_partner_red": 7,
+    "num_shortest_paths_partner_blue": 1,
+    "shortest_path_overlap_assignment_1": 0.0,
+    "shortest_path_overlap_assignment_2": 0.0,
+    "assignment_cost_1": 6,
+    "assignment_cost_2": 10,
+    "assignment_cost_difference": 4,
+    "switching_cost_mean": 1.5,
+    "switching_cost_min": 0.0,
+    "sym_applied_idx": 3,
+    "sym_applied_name": "rot270_cw"
+  }
+}

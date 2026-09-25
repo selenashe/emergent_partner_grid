@@ -1,0 +1,40 @@
+{
+  "layout_id": "train_1586",
+  "seed": 778079805,
+  "grid": [
+    [0, 0, 0, 0, 1, 1, 0],
+    [1, 1, 1, 1, 0, 1, 0],
+    [0, 1, 1, 0, 4, 0, 1],
+    [0, 3, 0, 1, 0, 0, 1],
+    [0, 1, 0, 1, 0, 0, 0],
+    [0, 1, 0, 0, 0, 1, 2],
+    [0, 0, 1, 1, 5, 0, 0]
+  ],
+  "ego_start": [2, 4],
+  "partner_start": [6, 4],
+  "red_goal": [5, 6],
+  "blue_goal": [3, 1],
+  "metadata": {
+    "ego_to_red": 5,
+    "ego_to_blue": 8,
+    "partner_to_red": 3,
+    "partner_to_blue": 6,
+    "sampled_wall_probability": 0.3982952418046375,
+    "realized_wall_density": 0.3673469387755102,
+    "num_junctions": 7,
+    "num_dead_ends": 8,
+    "num_shortest_paths_ego_red": 3,
+    "num_shortest_paths_ego_blue": 1,
+    "num_shortest_paths_partner_red": 1,
+    "num_shortest_paths_partner_blue": 1,
+    "shortest_path_overlap_assignment_1": 0.0,
+    "shortest_path_overlap_assignment_2": 0.0,
+    "assignment_cost_1": 11,
+    "assignment_cost_2": 11,
+    "assignment_cost_difference": 0,
+    "switching_cost_mean": 2.5,
+    "switching_cost_min": 0.0,
+    "sym_applied_idx": 2,
+    "sym_applied_name": "rot180"
+  }
+}

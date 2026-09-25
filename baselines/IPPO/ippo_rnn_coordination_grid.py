@@ -22,8 +22,16 @@ round_done ≠ episode_done + per-partner z sampling.
 
 import functools
 import os
+import sys
 from datetime import datetime
+from pathlib import Path
 from typing import Any, Callable, Dict, List, NamedTuple, Sequence
+
+# Make the containing baselines/IPPO/ dir importable so we can pull
+# sweep_scheduler regardless of the CWD hydra ends up in.
+_HERE = Path(__file__).resolve().parent
+if str(_HERE) not in sys.path:
+    sys.path.insert(0, str(_HERE))
 
 import distrax
 import flax.linen as nn
@@ -47,6 +55,7 @@ from jaxmarl.environments.coordination_grid import (
     COMM_ACTION_ONLY, COMM_UNIVERSAL, COMM_PARTNER_SPECIFIC,
     COMM_CONDITIONS,
 )
+from sweep_scheduler import build_schedule, initial_episode_cursor, sanity_check_schedule
 
 
 # Static mask tensors (bool) for the network. jnp arrays so they broadcast
@@ -276,7 +285,11 @@ def make_train(config):
         config["NUM_ACTORS"] * config["NUM_STEPS"] // config["NUM_MINIBATCHES"]
     )
 
-    env = LogWrapper(env, replace_info=False)
+    # NOTE: LogWrapper is intentionally NOT used here. The final experiment
+    # needs a *scheduled* auto-reset (each partner-episode consumes the next
+    # pre-planned (z, layout_seq) from a balanced sweep), which the trainer
+    # implements manually inside _env_step below. LogWrapper's episode-return
+    # bookkeeping is reimplemented in the trainer directly.
 
     def create_learning_rate_fn():
         base_lr = config["LR"]
@@ -316,6 +329,26 @@ def make_train(config):
     ]
     _n_partner_z: int = len(_z_values_py)
 
+    # --- Build the balanced (z, layout) sweep schedule --------------------
+    # One sweep = every z × every training layout exactly once, chunked into
+    # partner episodes of `rounds_per_episode` rounds. We stitch `n_sweeps`
+    # sweeps back-to-back and hand each vmap slot its own sweep-boundary
+    # starting position — so each worker traverses whole sweeps in order.
+    n_sweeps_cfg = int(config.get("N_SWEEPS", max(int(config["NUM_ENVS"]), 8)))
+    schedule = build_schedule(
+        partner_z_values=_z_values_py,
+        n_layouts_train=int(env.n_layouts),
+        rounds_per_episode=int(env.rounds_per_episode),
+        n_sweeps=n_sweeps_cfg,
+        seed=int(config.get("SCHEDULE_SEED", config.get("SEED", 0))),
+    )
+    sanity_check_schedule(schedule, verbose=True)
+    _SCHEDULE_Z = jnp.asarray(schedule.schedule_z, dtype=jnp.float32)      # (E_total,)
+    _SCHEDULE_LAYOUTS = jnp.asarray(schedule.schedule_layouts,
+                                     dtype=jnp.int32)                      # (E_total, R)
+    _N_EPS_TOTAL = int(schedule.n_eps_total)
+    _EPS_PER_SWEEP = int(schedule.episodes_per_sweep)
+
     def train(rng):
         # INIT NETWORK
         action_dim = env.n_ego_actions
@@ -343,24 +376,39 @@ def make_train(config):
             apply_fn=network.apply, params=network_params, tx=tx
         )
 
-        # INIT ENVS
-        rng, _rng = jax.random.split(rng)
-        reset_rng = jax.random.split(_rng, config["NUM_ENVS"])
-        obsv, env_state = jax.vmap(env.reset, in_axes=(0,))(reset_rng)
+        # INIT ENVS — scheduled reset: each vmap slot starts on its own
+        # sweep-boundary. Cursor increments by 1 per auto-reset per slot
+        # and wraps at _N_EPS_TOTAL.
+        cursor0 = jnp.asarray(
+            initial_episode_cursor(config["NUM_ENVS"], schedule),
+            dtype=jnp.int32,
+        )                                                            # (N,)
+        z0 = _SCHEDULE_Z[cursor0]                                    # (N,)
+        layouts0 = _SCHEDULE_LAYOUTS[cursor0]                        # (N, R)
+        obsv, env_state = jax.vmap(env.reset_from_schedule)(z0, layouts0)
+
+        # Per-slot episode-return / -length accumulators (LogWrapper-free).
+        ep_return_acc0 = jnp.zeros((config["NUM_ENVS"],), dtype=jnp.float32)
+        ep_length_acc0 = jnp.zeros((config["NUM_ENVS"],), dtype=jnp.int32)
+
+        def _select_per_slot(a, b, mask_1d):
+            """Per-slot `jnp.where(mask, b, a)` broadcasting `mask_1d`
+            (shape (N,)) to whatever leading-N shape a/b have."""
+            ndim_extra = a.ndim - 1
+            m = mask_1d.reshape((-1,) + (1,) * ndim_extra)
+            return jnp.where(m, b, a)
 
         # TRAIN LOOP
         def _update_step(runner_state, unused):
             # --------- collect trajectories ---------
             def _env_step(runner_state, unused):
                 (train_state, env_state, last_obs, last_done,
-                 update_step, hstate, rng) = runner_state
+                 update_step, hstate, rng,
+                 episode_cursor, ep_return_acc, ep_length_acc) = runner_state
 
-                # Grab the ENV's pre-step time. LogWrapper wraps the env so the
-                # underlying CoordinationGrid state (with .time) lives at
-                # env_state.env_state. This is 0 on the free-comm step of every
-                # episode — which is exactly the mask we need to condition the
-                # t=0 message distribution on.
-                pre_step_time = env_state.env_state.time
+                # Pre-step round-local time. Straight off state.time now that
+                # we're not wrapping the env with LogWrapper.
+                pre_step_time = env_state.time
 
                 obs_agent0 = last_obs["agent_0"]
                 obs_in = jax.tree_util.tree_map(
@@ -379,8 +427,9 @@ def make_train(config):
 
                 rng, _rng = jax.random.split(rng)
                 rng_step = jax.random.split(_rng, config["NUM_ENVS"])
-                obsv, env_state, reward, done, info = jax.vmap(
-                    env.step, in_axes=(0, 0, 0)
+                # env.step_env only — no autoreset. We handle reset manually.
+                obsv, env_state_stepped, reward, done, info = jax.vmap(
+                    env.step_env, in_axes=(0, 0, {"agent_0": 0})
                 )(rng_step, env_state, env_act)
 
                 reward_ego = reward["agent_0"]
@@ -390,6 +439,48 @@ def make_train(config):
                 info = dict(info)
                 if "success" in info:
                     info["success"] = info["success"].astype(jnp.float32)
+
+                # Episode-return / -length trackers.
+                new_ret_acc = ep_return_acc + reward_ego
+                new_len_acc = ep_length_acc + jnp.int32(1)
+                # On terminal steps, log the finished-episode values (for
+                # returned_episode_* info fields) BEFORE resetting the acc.
+                returned_return = jnp.where(done_all, new_ret_acc,
+                                             jnp.float32(0.0))
+                returned_length = jnp.where(done_all, new_len_acc.astype(jnp.float32),
+                                             jnp.float32(0.0))
+
+                # Scheduled auto-reset: advance cursor, look up next (z, layouts).
+                new_cursor = jnp.where(
+                    done_all,
+                    (episode_cursor + 1) % jnp.int32(_N_EPS_TOTAL),
+                    episode_cursor,
+                )
+                next_z = _SCHEDULE_Z[new_cursor]                # (N,)
+                next_layouts = _SCHEDULE_LAYOUTS[new_cursor]    # (N, R)
+                reset_obs, reset_state = jax.vmap(env.reset_from_schedule)(
+                    next_z, next_layouts
+                )
+                # Per-slot select: for slots where done_all=True, use the
+                # scheduled reset; else keep the stepped state.
+                env_state_next = jax.tree_util.tree_map(
+                    lambda a, b: _select_per_slot(a, b, done_all),
+                    env_state_stepped, reset_state,
+                )
+                obsv_next = jax.tree_util.tree_map(
+                    lambda a, b: _select_per_slot(a, b, done_all),
+                    obsv, reset_obs,
+                )
+                # Reset accs on terminal slots.
+                ep_return_acc_next = jnp.where(done_all,
+                                                jnp.float32(0.0), new_ret_acc)
+                ep_length_acc_next = jnp.where(done_all,
+                                                jnp.int32(0), new_len_acc)
+
+                # Add LogWrapper-compatible-ish info fields for the metric callback.
+                info["returned_episode"] = done_all
+                info["returned_episode_return"] = returned_return
+                info["returned_episode_length"] = returned_length
 
                 transition = Transition(
                     done=done_all,
@@ -402,20 +493,33 @@ def make_train(config):
                     pre_step_time=pre_step_time,
                 )
                 runner_state = (
-                    train_state, env_state, obsv, done_all,
+                    train_state, env_state_next, obsv_next, done_all,
                     update_step, hstate, rng,
+                    new_cursor, ep_return_acc_next, ep_length_acc_next,
                 )
                 return runner_state, transition
 
             # Snapshot hstate BEFORE the rollout — we replay from here in the loss.
-            initial_hstate = runner_state[-2]
+            # runner_state layout is now:
+            #   0: train_state
+            #   1: env_state
+            #   2: last_obs
+            #   3: last_done
+            #   4: update_step
+            #   5: hstate
+            #   6: rng
+            #   7: episode_cursor
+            #   8: ep_return_acc
+            #   9: ep_length_acc
+            initial_hstate = runner_state[5]
             runner_state, traj_batch = jax.lax.scan(
                 _env_step, runner_state, None, config["NUM_STEPS"]
             )
 
             # --------- bootstrap value + GAE ---------
             (train_state, env_state, last_obs, last_done,
-             update_step, hstate, rng) = runner_state
+             update_step, hstate, rng,
+             episode_cursor, ep_return_acc, ep_length_acc) = runner_state
 
             obs_agent0 = last_obs["agent_0"]
             obs_in = jax.tree_util.tree_map(
@@ -691,13 +795,13 @@ def make_train(config):
                 metric[f"z={z_label}/rounds_seen"] = per_z_rounds[zi]
                 metric[f"z={z_label}/t0_msg_m0"] = per_z_t0_msg_m0[zi]
                 metric[f"z={z_label}/t0_msg_m1"] = per_z_t0_msg_m1[zi]
-            if "returned_episode_returns" in traj_batch.info:
-                # LogWrapper writes returned_episode_* every step; the mask
-                # returned_episode is True only on the step an episode ends.
-                # Ego is at agent index 0.
-                ret_mask = traj_batch.info["returned_episode"][..., 0].astype(jnp.float32)
-                ret_val = traj_batch.info["returned_episode_returns"][..., 0]
-                ret_len = traj_batch.info["returned_episode_lengths"][..., 0]
+            # Episode-return / -length written by the trainer's manual
+            # auto-reset. returned_episode is True only on the step an
+            # episode ends; the return/length payload is 0.0 elsewhere.
+            if "returned_episode_return" in traj_batch.info:
+                ret_mask = traj_batch.info["returned_episode"].astype(jnp.float32)
+                ret_val = traj_batch.info["returned_episode_return"]
+                ret_len = traj_batch.info["returned_episode_length"]
                 n_ret = ret_mask.sum()
                 metric["ep_return_mean"] = jnp.where(
                     n_ret > 0, (ret_val * ret_mask).sum() / jnp.maximum(n_ret, 1), 0.0
@@ -732,6 +836,7 @@ def make_train(config):
             runner_state = (
                 train_state, env_state, last_obs, last_done,
                 new_update_step, hstate, rng,
+                episode_cursor, ep_return_acc, ep_length_acc,
             )
             return runner_state, metric
 
@@ -744,6 +849,9 @@ def make_train(config):
             0,
             init_hstate,
             _rng,
+            cursor0,
+            ep_return_acc0,
+            ep_length_acc0,
         )
         runner_state, metric = jax.lax.scan(
             _update_step, runner_state, None, config["NUM_UPDATES"]

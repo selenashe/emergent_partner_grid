@@ -50,9 +50,15 @@ def make_env(**kw):
 
 def _set_state(env, ego_xy, partner_xy, *, time=0, partner_goal=GOAL_UNSET,
                pending_message=NONE, z=None, terminal=False, layout_idx=0,
-               round_idx=0):
+               round_idx=0, episode_layout_seq=None):
     """Manually construct a State for targeted transition tests."""
     z = env.partner_z if z is None else z
+    if episode_layout_seq is None:
+        episode_layout_seq = jnp.full(
+            (env.rounds_per_episode,), int(layout_idx), dtype=jnp.int32,
+        )
+    else:
+        episode_layout_seq = jnp.asarray(episode_layout_seq, dtype=jnp.int32)
     return State(
         agent_pos=jnp.array([ego_xy, partner_xy], dtype=jnp.int32),
         wall_map=env.wall_map,
@@ -65,6 +71,7 @@ def _set_state(env, ego_xy, partner_xy, *, time=0, partner_goal=GOAL_UNSET,
         pending_message=jnp.int32(pending_message),
         layout_idx=jnp.int32(layout_idx),
         round_idx=jnp.int32(round_idx),
+        episode_layout_seq=episode_layout_seq,
     )
 
 

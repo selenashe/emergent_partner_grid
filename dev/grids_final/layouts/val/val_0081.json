@@ -1,0 +1,40 @@
+{
+  "layout_id": "val_0081",
+  "seed": 1455029142,
+  "grid": [
+    [0, 0, 0, 0, 0, 0, 0],
+    [2, 0, 0, 0, 1, 3, 0],
+    [1, 1, 0, 0, 0, 0, 0],
+    [4, 0, 0, 0, 5, 0, 1],
+    [0, 0, 1, 0, 0, 0, 0],
+    [1, 0, 0, 0, 0, 0, 0],
+    [0, 1, 0, 1, 0, 1, 0]
+  ],
+  "ego_start": [3, 0],
+  "partner_start": [3, 4],
+  "red_goal": [1, 0],
+  "blue_goal": [1, 5],
+  "metadata": {
+    "ego_to_red": 6,
+    "ego_to_blue": 7,
+    "partner_to_red": 6,
+    "partner_to_blue": 3,
+    "sampled_wall_probability": 0.23130918293627595,
+    "realized_wall_density": 0.1836734693877551,
+    "num_junctions": 27,
+    "num_dead_ends": 3,
+    "num_shortest_paths_ego_red": 1,
+    "num_shortest_paths_ego_blue": 4,
+    "num_shortest_paths_partner_red": 5,
+    "num_shortest_paths_partner_blue": 2,
+    "shortest_path_overlap_assignment_1": 0.0,
+    "shortest_path_overlap_assignment_2": 0.15384615384615385,
+    "assignment_cost_1": 9,
+    "assignment_cost_2": 13,
+    "assignment_cost_difference": 4,
+    "switching_cost_mean": 1.0,
+    "switching_cost_min": 0.0,
+    "sym_applied_idx": 6,
+    "sym_applied_name": "transpose"
+  }
+}

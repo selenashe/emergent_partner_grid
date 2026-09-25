@@ -1,0 +1,17 @@
+- ENV_KWARGS.layouts_dir=/juice6/u/jshe/emergent_partner_grid/dev/grids_final/layouts/train
+- ENV_KWARGS.augment_symmetries=false
+- ENV_KWARGS.partner_z_values=[0.1,0.3,0.5,0.7,0.9]
+- ENV_KWARGS.rounds_per_episode=20
+- ENV_KWARGS.hide_partner_until_time=0
+- ENV_KWARGS.communication_condition=partner_specific
+- EVAL_LAYOUTS_DIRS.val=/juice6/u/jshe/emergent_partner_grid/dev/grids_final/layouts/val
+- EVAL_LAYOUTS_DIRS.test=/juice6/u/jshe/emergent_partner_grid/dev/grids_final/layouts/test
+- EVAL_EPISODES_PER_Z=2
+- SAVE_PARAMS_PATH=/tmp/final_smoke.safetensors
+- +N_SWEEPS=8
+- NUM_ENVS=8
+- NUM_STEPS=32
+- NUM_MINIBATCHES=2
+- UPDATE_EPOCHS=2
+- TOTAL_TIMESTEPS=1024
+- +STDOUT_LOG=true
