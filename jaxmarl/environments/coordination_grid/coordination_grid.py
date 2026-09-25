@@ -120,19 +120,22 @@ DEFAULT_LAYOUT_PATH = os.path.join(
 
 @struct.dataclass
 class State:
-    # Geometry (currently per-episode; will be swapped for a stacked layout lookup later).
+    # Round-local geometry (sampled fresh at each round boundary within a partner episode).
     agent_pos: chex.Array       # (2, 2) int32 -- [x, y] per agent
     wall_map: chex.Array        # (H, W) bool
     red_goal: chex.Array        # (2,) int32 [x, y]
     blue_goal: chex.Array       # (2,) int32 [x, y]
-    time: chex.Array            # scalar int32
+    time: chex.Array            # scalar int32   -- round-local time (resets on new round)
     terminal: chex.Array        # scalar bool
 
     # Partner-related state.
-    z: chex.Array               # scalar float32 in [0, 1]
-    partner_goal: chex.Array    # scalar int32 (0=UNSET, 1=RED, 2=BLUE)
-    pending_message: chex.Array # scalar int32 (0=NONE, 1=M0, 2=M1) — ego's msg from LAST step
-    layout_idx: chex.Array      # scalar int32; addresses BFS tables (future multi-layout)
+    z: chex.Array               # scalar float32 in [0, 1]; FIXED across all rounds of a
+                                # partner episode; resampled only on full env reset.
+    partner_goal: chex.Array    # scalar int32 (0=UNSET, 1=RED, 2=BLUE); reset each round.
+    pending_message: chex.Array # scalar int32 (0=NONE, 1=M0, 2=M1) -- ego's msg from LAST step
+    layout_idx: chex.Array      # scalar int32; addresses the stacked layout / BFS tables.
+    round_idx: chex.Array       # scalar int32; which round of the partner episode we're in.
+                                # 0-indexed; ranges over [0, rounds_per_episode).
 
 
 def _load_layout(layout_path: str) -> dict:
@@ -338,8 +341,11 @@ class CoordinationGrid(MultiAgentEnv):
         max_steps: int = 15,
         step_penalty: float = 0.01,
         success_reward: float = 1.0,
-        partner_z: float = 0.5,
+        partner_z: Optional[float] = None,
+        partner_z_values: Optional[Sequence[float]] = None,
+        rounds_per_episode: int = 1,
         augment_symmetries: bool = False,
+        hide_partner_until_time: int = 0,
     ):
         super().__init__(num_agents=2)
 
@@ -438,7 +444,42 @@ class CoordinationGrid(MultiAgentEnv):
         self.max_steps = int(max_steps)
         self.step_penalty = float(step_penalty)
         self.success_reward = float(success_reward)
-        self.partner_z = float(partner_z)
+
+        # ---- Partner-z sampling pool ----
+        # `partner_z_values` (list) is the primary knob for Stage C+D — a
+        # partner-episode reset samples one z uniformly from this pool and
+        # holds it for all `rounds_per_episode` rounds.
+        # Backward compat: if only the old scalar `partner_z` is given, we
+        # treat that as a length-1 pool (matches Stage A/B behaviour).
+        if partner_z_values is not None:
+            zs = [float(v) for v in partner_z_values]
+            if len(zs) == 0:
+                raise ValueError("partner_z_values must be non-empty")
+        elif partner_z is not None:
+            zs = [float(partner_z)]
+        else:
+            zs = [0.5]
+        self.partner_z_values = jnp.asarray(zs, dtype=jnp.float32)   # (Z,)
+        self.n_partner_z: int = len(zs)
+        # Keep .partner_z as a scalar for BC (some callers look at this
+        # directly). Points at the first entry of the pool.
+        self.partner_z = float(zs[0])
+
+        self.rounds_per_episode = int(rounds_per_episode)
+        if self.rounds_per_episode < 1:
+            raise ValueError("rounds_per_episode must be >= 1")
+
+        # Information-structure intervention: zero the partner-position
+        # channel of the grid observation while ``state.time <
+        # hide_partner_until_time`` (round-local time). K=0 (default) is
+        # backward-compatible — partner is always visible. K=3 hides partner
+        # at t=0, 1, 2 (i.e. through the first two movement steps) and
+        # reveals it at t=3 onward. This forces the ego to rely on the
+        # t=0 message (and therefore on knowing z) rather than on cheap
+        # behavioural inference from partner motion.
+        self.hide_partner_until_time = int(hide_partner_until_time)
+        if self.hide_partner_until_time < 0:
+            raise ValueError("hide_partner_until_time must be >= 0")
 
         # Precompute BFS next-action tables per layout. Shape (K, H, W).
         # Partner navigation lookups always index by state.layout_idx, which
@@ -456,7 +497,19 @@ class CoordinationGrid(MultiAgentEnv):
         self.next_action_toward_blue = jnp.asarray(next_blue_np, dtype=jnp.int32)
 
     # ------------------------------------------------------------------- reset
-    def _build_state_for(self, layout_idx: chex.Array) -> "State":
+    def _build_state_for(
+        self,
+        layout_idx: chex.Array,
+        z: Optional[chex.Array] = None,
+        round_idx: Optional[chex.Array] = None,
+    ) -> "State":
+        """Build a fresh round-start State on the given layout.
+
+        z / round_idx default to the pool's first z / 0 respectively — this
+        is what a Stage A/B single-round env wants. For Stage C+D, the caller
+        (``reset``, or the intermediate-round transition inside ``step_env``)
+        threads in the appropriate z and round_idx explicitly.
+        """
         idx = layout_idx.astype(jnp.int32)
         wall_map = self.wall_maps[idx]
         ego_start = self.ego_starts[idx]
@@ -464,6 +517,8 @@ class CoordinationGrid(MultiAgentEnv):
         red_goal = self.red_goals[idx]
         blue_goal = self.blue_goals[idx]
         agent_pos = jnp.stack([ego_start, partner_start], axis=0).astype(jnp.int32)
+        z_val = jnp.float32(self.partner_z) if z is None else jnp.asarray(z, dtype=jnp.float32)
+        round_val = jnp.int32(0) if round_idx is None else jnp.asarray(round_idx, dtype=jnp.int32)
         return State(
             agent_pos=agent_pos,
             wall_map=wall_map,
@@ -471,28 +526,40 @@ class CoordinationGrid(MultiAgentEnv):
             blue_goal=blue_goal,
             time=jnp.int32(0),
             terminal=jnp.bool_(False),
-            z=jnp.float32(self.partner_z),
+            z=z_val,
             partner_goal=jnp.int32(GOAL_UNSET),
             pending_message=jnp.int32(Messages.none),
             layout_idx=idx,
+            round_idx=round_val,
         )
 
     def reset(self, key: chex.PRNGKey) -> Tuple[Dict[str, chex.Array], "State"]:
-        # Sample uniformly over the layout pool.
-        key, subkey = jax.random.split(key)
+        # Full partner-episode reset: sample a fresh partner-type z from the
+        # allowed pool AND a fresh layout, and start at round 0.
+        key, k_layout, k_z = jax.random.split(key, 3)
         layout_idx = jax.random.randint(
-            subkey, shape=(), minval=0, maxval=self.n_layouts, dtype=jnp.int32
+            k_layout, shape=(), minval=0, maxval=self.n_layouts, dtype=jnp.int32
         )
-        state = self._build_state_for(layout_idx)
+        z_idx = jax.random.randint(
+            k_z, shape=(), minval=0, maxval=self.n_partner_z, dtype=jnp.int32
+        )
+        z = self.partner_z_values[z_idx]
+        state = self._build_state_for(layout_idx, z=z, round_idx=jnp.int32(0))
         obs = self.get_obs(state)
         return lax.stop_gradient(obs), lax.stop_gradient(state)
 
     def reset_to_layout(
-        self, key: chex.PRNGKey, layout_idx: chex.Array
+        self, key: chex.PRNGKey, layout_idx: chex.Array,
+        z: Optional[chex.Array] = None,
     ) -> Tuple[Dict[str, chex.Array], "State"]:
         """Deterministic reset to a specific layout — for eval loops that need
-        to visit every val/test layout N times."""
-        state = self._build_state_for(jnp.asarray(layout_idx, dtype=jnp.int32))
+        to visit every val/test layout N times. Also accepts an explicit ``z``
+        so per-z eval loops can force the partner type."""
+        state = self._build_state_for(
+            jnp.asarray(layout_idx, dtype=jnp.int32),
+            z=(None if z is None else jnp.asarray(z, dtype=jnp.float32)),
+            round_idx=jnp.int32(0),
+        )
         obs = self.get_obs(state)
         return lax.stop_gradient(obs), lax.stop_gradient(state)
 
@@ -530,6 +597,11 @@ class CoordinationGrid(MultiAgentEnv):
         is_time0 = state.time == 0
         is_time1 = state.time == 1
 
+        # Split the step key up-front — we need three independent streams:
+        # partner-goal sample, next-round layout sample (used only if this
+        # step ends a non-final round), and one to thread out for future use.
+        key, k_partner, k_next_layout = jax.random.split(key, 3)
+
         # ------- Partner goal commitment (once, at t=1, from t=0's msg) -------
         pending_msg = state.pending_message
         p_red = jnp.where(
@@ -539,8 +611,7 @@ class CoordinationGrid(MultiAgentEnv):
                 jnp.float32(1.0) - state.z,
             ),
         )
-        key, subkey = jax.random.split(key)
-        sample_red = jax.random.bernoulli(subkey, p=p_red)
+        sample_red = jax.random.bernoulli(k_partner, p=p_red)
         sampled_goal = jnp.where(
             sample_red, jnp.int32(GOAL_RED), jnp.int32(GOAL_BLUE)
         )
@@ -612,21 +683,59 @@ class CoordinationGrid(MultiAgentEnv):
             jnp.float32(self.success_reward),
             jnp.float32(-self.step_penalty),
         )
-        done = success | (new_time >= self.max_steps)
+        # A round ends on either success or hitting the per-round horizon.
+        round_done = success | (new_time >= self.max_steps)
 
-        new_state = state.replace(
+        # Stage C+D: a partner episode contains `rounds_per_episode` rounds.
+        # Only the final round triggers done["__all__"] (which in turn triggers
+        # JaxMARL's autoreset and a fresh partner-type z on the next call).
+        # Intermediate round ends produce a fresh in-episode round: new layout,
+        # positions/goals/partner_goal/pending_message reset, time=0, SAME z,
+        # round_idx incremented.
+        is_final_round = state.round_idx >= (self.rounds_per_episode - 1)
+        intermediate_round = round_done & (~is_final_round)
+        partner_episode_done = round_done & is_final_round
+
+        # State if the step is "just another step" (round continues or the
+        # final round just ended — autoreset handles the latter externally).
+        step_state = state.replace(
             agent_pos=agent_pos,
             time=new_time,
-            terminal=done,
+            terminal=partner_episode_done,
             partner_goal=new_partner_goal,
-            pending_message=ego_msg,  # ego's msg THIS step becomes pending for NEXT
+            pending_message=ego_msg,
+            # round_idx and z unchanged by a plain step.
+        )
+
+        # State if an intermediate round just ended: build a fresh next-round
+        # state on a newly-sampled layout, but KEEP z and BUMP round_idx.
+        next_layout_idx = jax.random.randint(
+            k_next_layout, shape=(), minval=0, maxval=self.n_layouts, dtype=jnp.int32
+        )
+        next_round_state = self._build_state_for(
+            next_layout_idx, z=state.z, round_idx=state.round_idx + 1,
+        )
+
+        # Select which state to return. `intermediate_round` is a scalar bool.
+        new_state = jax.tree_util.tree_map(
+            lambda a, b: jnp.where(intermediate_round, b, a),
+            step_state, next_round_state,
         )
 
         obs = self.get_obs(new_state)
+
         rewards = {"agent_0": reward, "agent_1": reward}
-        dones = {"agent_0": done, "agent_1": done, "__all__": done}
+        # done["__all__"] is True ONLY on the terminal step of the final round.
+        dones = {
+            "agent_0": partner_episode_done,
+            "agent_1": partner_episode_done,
+            "__all__": partner_episode_done,
+        }
         info = {
-            "success": success,
+            "success": success,                       # coordination success this step
+            "round_done": round_done,                 # this step ended a round
+            "round_idx": state.round_idx,             # which round just ran (0-indexed)
+            "z": state.z,                             # partner type for this episode
             "partner_goal": new_partner_goal,
             "pending_message": ego_msg,
             "ego_move_effective": ego_effective_move,
@@ -662,6 +771,14 @@ class CoordinationGrid(MultiAgentEnv):
         blue_layer = one_hot(state.blue_goal)
         ego_layer = one_hot(state.agent_pos[0])
         partner_layer = one_hot(state.agent_pos[1])
+
+        # Information-structure intervention: hide the partner-position
+        # channel until state.time >= hide_partner_until_time. When K=0
+        # (default) this is a no-op. This is applied round-locally because
+        # state.time is round-local (resets to 0 at every round boundary),
+        # so the intervention repeats within every round of a partner ep.
+        partner_visible = (state.time >= jnp.int32(self.hide_partner_until_time))
+        partner_layer = partner_layer * partner_visible.astype(jnp.float32)
 
         grid = jnp.stack(
             [walls, red_layer, blue_layer, ego_layer, partner_layer], axis=-1

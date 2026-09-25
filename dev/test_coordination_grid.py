@@ -41,7 +41,8 @@ def make_env(**kw):
 
 
 def _set_state(env, ego_xy, partner_xy, *, time=0, partner_goal=GOAL_UNSET,
-               pending_message=NONE, z=None, terminal=False, layout_idx=0):
+               pending_message=NONE, z=None, terminal=False, layout_idx=0,
+               round_idx=0):
     """Manually construct a State for targeted transition tests."""
     z = env.partner_z if z is None else z
     return State(
@@ -55,6 +56,7 @@ def _set_state(env, ego_xy, partner_xy, *, time=0, partner_goal=GOAL_UNSET,
         partner_goal=jnp.int32(partner_goal),
         pending_message=jnp.int32(pending_message),
         layout_idx=jnp.int32(layout_idx),
+        round_idx=jnp.int32(round_idx),
     )
 
 
@@ -703,6 +705,280 @@ def main():
           ent_t0 <= np.log(3) + 1e-4)
     check(f"t>=1 entropy ≤ ln 5 ({ent_tg1:.3f} ≤ {np.log(5):.3f})",
           ent_tg1 <= np.log(5) + 1e-4)
+
+    # =================== Stage C+D: multi-round partner episodes ===================
+    print("\n[Stage C+D: multi-round partner episodes]")
+    # Use the multi-layout augmented pool + a 4-value z pool + short episodes.
+    ROUNDS = 6                           # keep the test loop short but > 1
+    Z_POOL = [0.2, 0.4, 0.6, 0.8]
+    env_cd = CoordinationGrid(
+        layout_paths=base_paths,          # 5 base × 8 sym = 40 layouts
+        augment_symmetries=True,
+        partner_z_values=Z_POOL,
+        rounds_per_episode=ROUNDS,
+        max_steps=6,                      # small round horizon → rounds end fast
+    )
+    check("env.n_partner_z == 4", env_cd.n_partner_z == 4)
+    check("env.rounds_per_episode == 6", env_cd.rounds_per_episode == 6)
+    check("env.partner_z_values matches pool",
+          np.allclose(np.array(env_cd.partner_z_values), np.array(Z_POOL),
+                      atol=1e-6))
+
+    def _play_round_to_end(env, state, key):
+        """Drive one round to termination with STAY+NONE at t=0 then STAY+NONE.
+        Returns the (obs, state, dones, info) of the *last* step (the one that
+        ended the round). Env now handles the round boundary internally, so on
+        the last step the returned state is either a fresh next-round state
+        (intermediate round) or the same round's final state (final round)."""
+        # First step: t=0 free-comm (STAY + NONE, no msg)
+        # Then keep STAYing until round_done fires.
+        step = 0
+        while True:
+            step += 1
+            if step > env.max_steps + 2:
+                raise RuntimeError("round did not terminate within horizon")
+            obs, state, r, d, info = env.step_env(
+                key, state, {"agent_0": encode_ego(STAY, NONE)}
+            )
+            if bool(info["round_done"]):
+                return obs, state, d, info
+
+    # ---- (1) z is constant across all rounds of a partner episode ----
+    key0 = jax.random.PRNGKey(7)
+    obs, state = env_cd.reset(key0)
+    z_initial = float(state.z)
+    check("initial round_idx == 0 after reset", int(state.round_idx) == 0)
+    check(f"z sampled from pool at reset ({z_initial} ∈ {Z_POOL})",
+          any(abs(z_initial - z) < 1e-6 for z in Z_POOL))
+    layout_at_round = [int(state.layout_idx)]
+    for r_i in range(ROUNDS):
+        obs, state, d, info = _play_round_to_end(env_cd, state, key0)
+        check(f"round {r_i}: z unchanged ({float(state.z)} == {z_initial})",
+              abs(float(state.z) - z_initial) < 1e-6)
+        check(f"round {r_i}: info z matches initial",
+              abs(float(info["z"]) - z_initial) < 1e-6)
+        check(f"round {r_i}: info.round_done True", bool(info["round_done"]))
+        if r_i < ROUNDS - 1:
+            # ---- (3) intermediate round: done['__all__']=False, round_done=True ----
+            check(f"round {r_i}: done['__all__'] == False (intermediate)",
+                  not bool(d["__all__"]))
+            # ---- (4) fresh new-round obs/state ----
+            check(f"round {r_i}: next-round time == 0",
+                  int(state.time) == 0)
+            check(f"round {r_i}: next-round partner_goal == UNSET",
+                  int(state.partner_goal) == GOAL_UNSET)
+            check(f"round {r_i}: next-round pending_message == NONE",
+                  int(state.pending_message) == NONE)
+            check(f"round {r_i}: next-round round_idx bumped",
+                  int(state.round_idx) == r_i + 1)
+            check(f"round {r_i}: next-round obs.is_t0 == 1.0",
+                  float(env_cd.get_obs(state)["agent_0"]["is_t0"]) == 1.0)
+        else:
+            # ---- (5) final round: done['__all__'] == True ----
+            check(f"final round {r_i}: done['__all__'] == True",
+                  bool(d["__all__"]))
+        layout_at_round.append(int(state.layout_idx))
+
+    # ---- (2) layout can change between rounds ----
+    check("layout_idx varies across rounds (at least 2 distinct values)",
+          len(set(layout_at_round)) >= 2)
+
+    # ---- (6) full reset samples a NEW z (across many seeds) ----
+    print("\n[Stage C+D: full reset resamples z]")
+    seen_z = set()
+    for seed in range(64):
+        _, s = env_cd.reset(jax.random.PRNGKey(seed))
+        seen_z.add(round(float(s.z), 6))
+    check("reset() samples ≥ 3 distinct z values over 64 seeds",
+          len(seen_z) >= 3)
+    check("all reset z values come from partner_z_values pool",
+          all(any(abs(v - z) < 1e-6 for z in Z_POOL) for v in seen_z))
+
+    # ---- (7) JIT + vmap: independent envs carry independent z/round_idx/layout ----
+    print("\n[Stage C+D: vmap independence across envs]")
+    B = 16
+    keys_b = jax.random.split(jax.random.PRNGKey(11), B)
+    obs_b, state_b = jax.vmap(env_cd.reset)(keys_b)
+    zs_b = np.array(state_b.z)
+    ris_b = np.array(state_b.round_idx)
+    lidxs_b = np.array(state_b.layout_idx)
+    check("vmap: z shape (B,)", zs_b.shape == (B,))
+    check("vmap: round_idx starts at 0 for all envs",
+          bool(np.all(ris_b == 0)))
+    check("vmap: sampled z's cover ≥ 2 pool values",
+          len(set(round(float(v), 6) for v in zs_b.tolist())) >= 2)
+    check("vmap: sampled layouts vary across envs",
+          len(set(int(v) for v in lidxs_b.tolist())) >= 2)
+    # Step vmapped: each env's z must remain constant AFTER stepping.
+    step_v = jax.jit(jax.vmap(env_cd.step_env,
+                              in_axes=(0, 0, {"agent_0": 0})))
+    act_v = {"agent_0": jnp.array([encode_ego(STAY, M0)] * B, dtype=jnp.int32)}
+    _, state_b2, _, _, _ = step_v(keys_b, state_b, act_v)
+    zs_b2 = np.array(state_b2.z)
+    check("vmap: z unchanged by one step for every env",
+          bool(np.allclose(zs_b, zs_b2)))
+
+    # ---- Backward-compat: scalar partner_z + rounds_per_episode=1 → old behavior ----
+    print("\n[BC: single-round env still terminates on round_done]")
+    env_single = CoordinationGrid(partner_z=1.0, max_steps=6,
+                                    rounds_per_episode=1)
+    _, s_single = env_single.reset(jax.random.PRNGKey(0))
+    check("BC: reset returns round_idx==0", int(s_single.round_idx) == 0)
+    _, s_after, _, d_after, info_after = env_single.step_env(
+        jax.random.PRNGKey(0), s_single, {"agent_0": encode_ego(STAY, NONE)}
+    )
+    # STAY forever eventually hits max_steps → round_done → partner_episode_done
+    # since rounds_per_episode==1. Roll it out to confirm.
+    state_bc = s_after
+    for _ in range(env_single.max_steps + 2):
+        if bool(d_after["__all__"]):
+            break
+        _, state_bc, _, d_after, info_after = env_single.step_env(
+            jax.random.PRNGKey(0), state_bc,
+            {"agent_0": encode_ego(STAY, NONE)},
+        )
+    check("BC single-round env: done['__all__'] fires when round ends",
+          bool(d_after["__all__"]))
+
+    # ------------- (8) GRU hidden state persists across round boundary -----
+    # ScannedRNN resets its carry when `dones` (fed in as the recurrent
+    # reset signal) is True. In the trainer, this comes from
+    # `done["__all__"]`. Env-side we've already verified done['__all__'] is
+    # False at intermediate round boundaries; here we drive the actual
+    # network across a round transition and confirm the GRU carry is NOT
+    # zeroed on the intermediate boundary but IS zeroed on the final one.
+    print("\n[Stage C+D: GRU hidden persists across round boundary]")
+    env_gru = CoordinationGrid(
+        layout_paths=base_paths, augment_symmetries=True,
+        partner_z_values=[0.5], rounds_per_episode=3, max_steps=4,
+    )
+    cfg_gru = {"GRU_HIDDEN_DIM": 16, "FC_DIM_SIZE": 16,
+               "GRID_EMB_DIM": 8, "MSG_EMB_DIM": 4, "ACTIVATION": "relu"}
+    net = ActorCriticCommRNN(action_dim=env_gru.n_ego_actions, config=cfg_gru)
+    hstate = ScannedRNN.initialize_carry(1, cfg_gru["GRU_HIDDEN_DIM"])
+    key_g = jax.random.PRNGKey(3)
+    obs_g, state_g = env_gru.reset(key_g)
+    # Init params on a dummy input
+    def _to_batched(obs_a0):
+        return jax.tree_util.tree_map(lambda x: x[None, None, ...], obs_a0)
+    dummy_done = jnp.zeros((1, 1), dtype=bool)
+    params = net.init(jax.random.PRNGKey(0), hstate,
+                       (_to_batched(obs_g["agent_0"]), dummy_done))
+
+    # Drive the env for enough steps to cross at least one round boundary.
+    prev_done_all = jnp.zeros((1,), dtype=bool)
+    step_i = 0
+    saw_intermediate_boundary = False
+    saw_final_boundary = False
+    while step_i < env_gru.rounds_per_episode * (env_gru.max_steps + 1):
+        step_i += 1
+        obs_in = _to_batched(obs_g["agent_0"])
+        done_in = prev_done_all[None, :]
+        hstate_before = hstate
+        hstate, _, _ = net.apply(params, hstate, (obs_in, done_in))
+        # If the previous step ended a partner episode (prev_done_all True),
+        # ScannedRNN reset the carry to zero BEFORE the GRU step; after the
+        # GRU step it's not exactly zero, but the input to the GRU was zeros.
+        # We can only cleanly check the "no reset" case: if prev_done_all
+        # was False, the carry should have been fed forward (not zeros in).
+        obs_g, state_g, _, dones_g, info_g = env_gru.step_env(
+            key_g, state_g, {"agent_0": encode_ego(STAY, NONE)}
+        )
+        if bool(info_g["round_done"]) and not bool(dones_g["__all__"]):
+            saw_intermediate_boundary = True
+            # At an intermediate round boundary, prev_done_all is False,
+            # so the hidden state came from ScannedRNN's carry (not init).
+            # The strongest check we can do without hooking the internals is:
+            # feeding a subsequent step with done=False keeps a non-zero
+            # hidden. Verify hstate is not all-zero at this point.
+            check(f"intermediate boundary: GRU hidden not all-zero",
+                  not bool(jnp.allclose(hstate, 0.0)))
+        if bool(dones_g["__all__"]):
+            saw_final_boundary = True
+            # Now feed a step with prev_done_all=True — that's what the trainer
+            # does after done["__all__"] fires. The ScannedRNN sees resets=True
+            # and reinitializes the carry to zeros BEFORE running the GRU.
+            reset_step_obs = _to_batched(obs_g["agent_0"])
+            reset_done_in = jnp.ones((1, 1), dtype=bool)
+            # Peek what the carry becomes when we ask for a reset:
+            # ScannedRNN reinitializes carry (zeros) then runs the GRU on the
+            # obs, producing new hidden. So the carry BEFORE GRU is zeros;
+            # confirm by running with `init` hstate and comparing to running
+            # with our current hstate + reset_done=True — outputs should be
+            # identical if reset is being applied.
+            h_reset, _, _ = net.apply(params,
+                                       ScannedRNN.initialize_carry(1, cfg_gru["GRU_HIDDEN_DIM"]),
+                                       (reset_step_obs, jnp.zeros((1, 1), dtype=bool)))
+            h_masked, _, _ = net.apply(params, hstate,
+                                        (reset_step_obs, reset_done_in))
+            check("final boundary: GRU carry reset when done['__all__']=True",
+                  bool(jnp.allclose(h_reset, h_masked, atol=1e-5)))
+            break
+        prev_done_all = dones_g["__all__"][None]
+    check("saw at least one intermediate round boundary", saw_intermediate_boundary)
+    check("saw a final partner-episode boundary", saw_final_boundary)
+
+    # ------------- hide_partner_until_time intervention ----------------
+    print("\n[hide_partner_until_time intervention]")
+    K = 3
+    env_hide = CoordinationGrid(
+        layout_paths=base_paths, augment_symmetries=True,
+        partner_z_values=[0.5], rounds_per_episode=2, max_steps=8,
+        hide_partner_until_time=K,
+    )
+    check("env exposes hide_partner_until_time attr",
+          env_hide.hide_partner_until_time == K)
+    _, s_h = env_hide.reset(jax.random.PRNGKey(1))
+    # At reset, state.time == 0, so partner channel should be all zero.
+    partner_ch_at_reset = np.array(env_hide.get_obs(s_h)["agent_0"]["grid"][:, :, 4])
+    check(f"K={K}: partner channel is zero at t=0 (all-zero grid layer)",
+          float(partner_ch_at_reset.max()) == 0.0)
+    # Step through: partner channel should stay zero for t=0,1,2 and become
+    # nonzero at t=3.
+    state_h = s_h
+    for step_i in range(K + 2):
+        _, state_h, _, _, _ = env_hide.step_env(
+            jax.random.PRNGKey(0), state_h,
+            {"agent_0": encode_ego(STAY, NONE)},
+        )
+        t_after = int(state_h.time)
+        obs_ch = np.array(env_hide.get_obs(state_h)["agent_0"]["grid"][:, :, 4])
+        if t_after < K:
+            check(f"K={K}: partner still hidden at t={t_after}",
+                  float(obs_ch.max()) == 0.0)
+        else:
+            check(f"K={K}: partner visible at t={t_after} (channel sum > 0)",
+                  float(obs_ch.sum()) > 0.0)
+
+    # Round boundary — partner should be hidden again at start of next round.
+    # Roll to end of round 0 (max_steps=8) so that a new round starts.
+    # After enough steps, round 0 ends and a fresh round starts with time=0.
+    key_hh = jax.random.PRNGKey(2)
+    _, s_hh = env_hide.reset(key_hh)
+    seen_new_round_hidden = False
+    for _ in range(env_hide.max_steps + 3):
+        _, s_hh, _, d_hh, info_hh = env_hide.step_env(
+            key_hh, s_hh, {"agent_0": encode_ego(STAY, NONE)}
+        )
+        if bool(info_hh["round_done"]) and not bool(d_hh["__all__"]):
+            # We're now at the fresh next-round state (time=0). Partner hidden.
+            ch_next = np.array(env_hide.get_obs(s_hh)["agent_0"]["grid"][:, :, 4])
+            check(f"K={K}: partner re-hidden at start of new round (t=0)",
+                  float(ch_next.max()) == 0.0)
+            seen_new_round_hidden = True
+            break
+    check("saw a new-round boundary during hide test", seen_new_round_hidden)
+
+    # Backward compat: K=0 should mean the partner channel is always visible
+    # (at least when partner is on the grid, which is always for us).
+    env_no_hide = CoordinationGrid(
+        layout_paths=base_paths, augment_symmetries=True,
+        partner_z_values=[0.5], rounds_per_episode=2, max_steps=8,
+        hide_partner_until_time=0,
+    )
+    _, s_nh = env_no_hide.reset(jax.random.PRNGKey(3))
+    ch_nh = np.array(env_no_hide.get_obs(s_nh)["agent_0"]["grid"][:, :, 4])
+    check("K=0 (BC): partner visible at t=0", float(ch_nh.sum()) > 0.0)
 
     print("\nAll checks passed.")
 

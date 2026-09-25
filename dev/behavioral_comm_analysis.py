@@ -112,12 +112,23 @@ def run_rollouts(
       - agent_pos (T, B, 2, 2)   [(x, y) for [ego, partner]]
       - env: the CoordinationGrid used (for post-hoc geometry lookups)
     """
+    ekw = config["ENV_KWARGS"]
+    if "partner_z" in ekw:
+        pz = float(ekw["partner_z"])
+    elif ekw.get("partner_z_values"):
+        pz = float(list(ekw["partner_z_values"])[0])
+    else:
+        pz = 0.5
     env = CoordinationGrid(
         layouts_dir=layouts_dir,
-        partner_z=config["ENV_KWARGS"]["partner_z"],
-        max_steps=config["ENV_KWARGS"]["max_steps"],
-        step_penalty=config["ENV_KWARGS"].get("step_penalty", 0.01),
-        success_reward=config["ENV_KWARGS"].get("success_reward", 1.0),
+        partner_z=pz,
+        max_steps=ekw["max_steps"],
+        step_penalty=ekw.get("step_penalty", 0.01),
+        success_reward=ekw.get("success_reward", 1.0),
+        # Single-round rollouts for the behavioral-comm analysis (this module
+        # measures per-round intent trajectories; multi-round aggregation is
+        # up to the caller).
+        rounds_per_episode=1,
         augment_symmetries=False,
     )
     network = ActorCriticCommRNN(action_dim=env.n_ego_actions, config=config)

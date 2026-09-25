@@ -1,0 +1,44 @@
+ENV_NAME: coordination_grid
+ENV_KWARGS:
+  layouts_dir: /tmp/cg_stageB_smoke/train
+  augment_symmetries: true
+  partner_z_values:
+  - 0.2
+  - 0.4
+  - 0.6
+  - 0.8
+  rounds_per_episode: 3
+  max_steps: 15
+  step_penalty: 0.01
+  success_reward: 1.0
+EVAL_LAYOUTS_DIRS:
+  val: /tmp/cg_stageB_smoke/val
+  test: /tmp/cg_stageB_smoke/test
+EVAL_EPISODES_PER_Z: 2
+EVAL_SEED: 12345
+SAVE_PARAMS_PATH: /tmp/cg_stageB_smoke/stage_cd_smoke.safetensors
+SEED: 1
+NUM_SEEDS: 1
+LR: 0.0005
+ANNEAL_LR: true
+LR_WARMUP: 0.05
+NUM_ENVS: 8
+NUM_STEPS: 32
+UPDATE_EPOCHS: 2
+NUM_MINIBATCHES: 2
+TOTAL_TIMESTEPS: 512
+CLIP_EPS: 0.2
+ENT_COEF: 0.01
+GAMMA: 0.99
+GAE_LAMBDA: 0.95
+VF_COEF: 1.0
+MAX_GRAD_NORM: 0.25
+FC_DIM_SIZE: 128
+GRU_HIDDEN_DIM: 128
+GRID_EMB_DIM: 64
+MSG_EMB_DIM: 8
+ACTIVATION: relu
+ENTITY: ''
+PROJECT: coordination_grid
+WANDB_MODE: disabled
+STDOUT_LOG: true

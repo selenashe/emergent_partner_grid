@@ -70,12 +70,24 @@ MSG_NAME = {0: "NONE", 1: "M0", 2: "M1"}
 def _run_rollouts(params, config, layouts_dir, key, n_trials):
     """Rollout ``n_trials`` per layout under jitted vmap. Returns numpy arrays
     of shape (T, B) or (T, B, ...) plus per-column layout metadata."""
+    ekw = config["ENV_KWARGS"]
+    # Config schema BC: prefer scalar partner_z if present; else pick the
+    # first entry of partner_z_values (Stage C+D configs); else default 0.5.
+    if "partner_z" in ekw:
+        pz = float(ekw["partner_z"])
+    elif ekw.get("partner_z_values"):
+        pz = float(list(ekw["partner_z_values"])[0])
+    else:
+        pz = 0.5
     env = CoordinationGrid(
         layouts_dir=layouts_dir,
-        partner_z=config["ENV_KWARGS"]["partner_z"],
-        max_steps=config["ENV_KWARGS"]["max_steps"],
-        step_penalty=config["ENV_KWARGS"].get("step_penalty", 0.01),
-        success_reward=config["ENV_KWARGS"].get("success_reward", 1.0),
+        partner_z=pz,
+        max_steps=ekw["max_steps"],
+        step_penalty=ekw.get("step_penalty", 0.01),
+        success_reward=ekw.get("success_reward", 1.0),
+        # Stage-B-style single-round diagnostic — force single-round even if
+        # config was set up for multi-round training.
+        rounds_per_episode=1,
     )
     network = ActorCriticCommRNN(action_dim=env.n_ego_actions, config=config)
     K = env.n_layouts

@@ -1,33 +1,42 @@
-# CoordinationGrid recurrent IPPO — Stage B (learned ego, scripted partner,
-# fixed z=1, layout sampled per-episode from a training pool; eval on held-out
-# val / test pools at the end of training).
+# CoordinationGrid recurrent IPPO — Stage C+D (multi-round partner episodes,
+# z sampled per partner from a discrete pool, layouts vary per round).
 #
 # See ippo_rnn_coordination_grid.py for the trainer + evaluate_policy().
 
 "ENV_NAME": "coordination_grid"
 "ENV_KWARGS":
-  # Provide EITHER layout_path (single) OR layouts_dir (a directory of *.json).
-  # For Stage B we point at the full training pool.
+  # Training pool of layouts. D4-augmented at env-init time.
   "layouts_dir": "/juice6/u/jshe/emergent_partner_grid/dev/grids/layouts/train"
-  "partner_z": 1.0
+  "augment_symmetries": True
+  # Partner-type pool: one z sampled per partner-episode reset, held fixed
+  # for all rounds of that episode. z is never in obs.
+  "partner_z_values": [0.2, 0.4, 0.6, 0.8]
+  # Rounds per partner episode (round_done ≠ episode_done, done['__all__']
+  # only True after the final round). GRU hidden state persists across
+  # intermediate round boundaries; only reset on partner-episode reset.
+  "rounds_per_episode": 20
+  # Per-round horizon.
   "max_steps": 15
   "step_penalty": 0.01
   "success_reward": 1.0
-  # D4 dihedral augmentation of the training pool (identity + 3 rotations
-  # + 2 flips + 2 diagonal reflections). Effective train pool becomes 8x.
-  # Eval env forces this to False regardless of the training setting.
-  "augment_symmetries": True
+  # Info-structure intervention: hide the partner-position channel of the
+  # grid obs while state.time < K (round-local). K=0 keeps the old behaviour
+  # (partner always visible). K=3 hides partner at t=0, 1, 2 and reveals it
+  # at t=3 — forces the ego to commit its t=0 message before it can cheaply
+  # infer the partner's realized goal from motion, so knowing the (msg → z)
+  # convention becomes instrumentally useful.
+  "hide_partner_until_time": 3
 
-# Held-out evaluation after training. Keys become the "eval_<split>/*" wandb
-# metrics; leave empty to skip eval entirely.
+# Held-out eval on val + test layout pools (full partner-episodes, per-z
+# breakdown, per-round-index success curve).
 "EVAL_LAYOUTS_DIRS":
   "val":  "/juice6/u/jshe/emergent_partner_grid/dev/grids/layouts/val"
   "test": "/juice6/u/jshe/emergent_partner_grid/dev/grids/layouts/test"
-"EVAL_TRIALS_PER_LAYOUT": 32
+"EVAL_EPISODES_PER_Z": 64
 "EVAL_SEED": 12345
 
 # Where to dump trained params (safetensors). Empty -> no save.
-"SAVE_PARAMS_PATH": "/juice6/u/jshe/emergent_partner_grid/dev/train_logs/stage_b_z1_params.safetensors"
+"SAVE_PARAMS_PATH": "/juice6/u/jshe/emergent_partner_grid/dev/train_logs/stage_cd_params.safetensors"
 
 "SEED": 1
 "NUM_SEEDS": 1
@@ -39,12 +48,14 @@
 
 # --- PPO rollout & update ---
 "NUM_ENVS": 256
-"NUM_STEPS": 32
+"NUM_STEPS": 128       # 20 rounds × 15 max_steps = up to 300 steps per partner ep,
+                       # so NUM_STEPS=128 covers roughly half an ep per rollout —
+                       # the GRU hidden persists into the next rollout via runner_state.
 "UPDATE_EPOCHS": 4
 "NUM_MINIBATCHES": 8
 
-# Multi-layout is meaningfully harder than single-layout; give it more budget.
-"TOTAL_TIMESTEPS": 20000000
+# Episodes are ~20x longer than Stage B; bump total budget accordingly.
+"TOTAL_TIMESTEPS": 60000000
 
 # --- objective ---
 "CLIP_EPS": 0.2

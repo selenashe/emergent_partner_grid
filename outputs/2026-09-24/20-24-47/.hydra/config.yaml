@@ -1,0 +1,46 @@
+ENV_NAME: coordination_grid
+ENV_KWARGS:
+  layouts_dir: /juice6/u/jshe/emergent_partner_grid/dev/grids/layouts/train
+  augment_symmetries: true
+  partner_z_values:
+  - 0.2
+  - 0.4
+  - 0.6
+  - 0.8
+  rounds_per_episode: 20
+  max_steps: 15
+  step_penalty: 0.01
+  success_reward: 1.0
+  hide_partner_until_time: 3
+EVAL_LAYOUTS_DIRS:
+  val: /juice6/u/jshe/emergent_partner_grid/dev/grids/layouts/val
+  test: /juice6/u/jshe/emergent_partner_grid/dev/grids/layouts/test
+EVAL_EPISODES_PER_Z: 64
+EVAL_SEED: 12345
+SAVE_PARAMS_PATH: /juice6/u/jshe/emergent_partner_grid/dev/train_logs/stage_cd_R20_hideK3_seed1_20260924_202349.safetensors
+SEED: 1
+NUM_SEEDS: 1
+LR: 0.0005
+ANNEAL_LR: true
+LR_WARMUP: 0.05
+NUM_ENVS: 256
+NUM_STEPS: 128
+UPDATE_EPOCHS: 4
+NUM_MINIBATCHES: 8
+TOTAL_TIMESTEPS: 60000000
+CLIP_EPS: 0.2
+ENT_COEF: 0.01
+GAMMA: 0.99
+GAE_LAMBDA: 0.95
+VF_COEF: 1.0
+MAX_GRAD_NORM: 0.25
+FC_DIM_SIZE: 128
+GRU_HIDDEN_DIM: 128
+GRID_EMB_DIM: 64
+MSG_EMB_DIM: 8
+ACTIVATION: relu
+ENTITY: ''
+PROJECT: coordination_grid
+WANDB_MODE: disabled
+STDOUT_LOG: true
+STDOUT_SUMMARY: true
