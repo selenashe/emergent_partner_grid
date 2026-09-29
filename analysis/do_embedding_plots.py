@@ -1,3 +1,8 @@
+# ==========================================================
+# SUPERSEDED — pre-refactor script; NOT part of the current
+# CoordinationGrid partner-modelling experiment.
+# See project_log_revised.md for the active experiment code.
+# ==========================================================
 import json
 import os
 from typing import Dict, Optional, List, Tuple

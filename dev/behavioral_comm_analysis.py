@@ -1,3 +1,8 @@
+# ==========================================================
+# SUPERSEDED — pre-refactor script; NOT part of the current
+# CoordinationGrid partner-modelling experiment.
+# See project_log_revised.md for the active experiment code.
+# ==========================================================
 """Behavioral-communication analysis for CoordinationGrid rollouts.
 
 For any subset of episodes with a well-defined ``correct_goal`` (the goal

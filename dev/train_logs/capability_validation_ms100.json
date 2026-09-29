@@ -1,0 +1,597 @@
+{
+  "layouts_dir": "/juice6/u/jshe/emergent_partner_grid/dev/grids_capability_selected/layouts/train",
+  "n_layouts": 1000,
+  "max_steps": 100,
+  "train_capability_pairs": [
+    [
+      1,
+      4
+    ],
+    [
+      1,
+      7
+    ],
+    [
+      1,
+      8
+    ],
+    [
+      1,
+      9
+    ],
+    [
+      2,
+      4
+    ],
+    [
+      2,
+      7
+    ],
+    [
+      2,
+      8
+    ],
+    [
+      2,
+      9
+    ],
+    [
+      3,
+      4
+    ],
+    [
+      3,
+      7
+    ],
+    [
+      3,
+      8
+    ],
+    [
+      3,
+      9
+    ],
+    [
+      4,
+      1
+    ],
+    [
+      4,
+      2
+    ],
+    [
+      4,
+      3
+    ],
+    [
+      7,
+      1
+    ],
+    [
+      7,
+      2
+    ],
+    [
+      7,
+      3
+    ],
+    [
+      8,
+      1
+    ],
+    [
+      8,
+      2
+    ],
+    [
+      8,
+      3
+    ],
+    [
+      9,
+      1
+    ],
+    [
+      9,
+      2
+    ],
+    [
+      9,
+      3
+    ]
+  ],
+  "test_capability_pairs": [
+    [
+      0,
+      5
+    ],
+    [
+      0,
+      6
+    ],
+    [
+      1,
+      5
+    ],
+    [
+      1,
+      6
+    ],
+    [
+      2,
+      5
+    ],
+    [
+      2,
+      6
+    ],
+    [
+      3,
+      5
+    ],
+    [
+      3,
+      6
+    ],
+    [
+      7,
+      0
+    ],
+    [
+      8,
+      0
+    ],
+    [
+      9,
+      0
+    ],
+    [
+      5,
+      0
+    ],
+    [
+      5,
+      1
+    ],
+    [
+      5,
+      2
+    ],
+    [
+      5,
+      3
+    ],
+    [
+      6,
+      0
+    ],
+    [
+      6,
+      1
+    ],
+    [
+      6,
+      2
+    ],
+    [
+      6,
+      3
+    ],
+    [
+      0,
+      7
+    ],
+    [
+      0,
+      8
+    ],
+    [
+      0,
+      9
+    ]
+  ],
+  "train_pool_analysis": {
+    "n_layouts": 1000,
+    "n_cap_pairs": 24,
+    "cap_pairs": [
+      [
+        1,
+        4
+      ],
+      [
+        1,
+        7
+      ],
+      [
+        1,
+        8
+      ],
+      [
+        1,
+        9
+      ],
+      [
+        2,
+        4
+      ],
+      [
+        2,
+        7
+      ],
+      [
+        2,
+        8
+      ],
+      [
+        2,
+        9
+      ],
+      [
+        3,
+        4
+      ],
+      [
+        3,
+        7
+      ],
+      [
+        3,
+        8
+      ],
+      [
+        3,
+        9
+      ],
+      [
+        4,
+        1
+      ],
+      [
+        4,
+        2
+      ],
+      [
+        4,
+        3
+      ],
+      [
+        7,
+        1
+      ],
+      [
+        7,
+        2
+      ],
+      [
+        7,
+        3
+      ],
+      [
+        8,
+        1
+      ],
+      [
+        8,
+        2
+      ],
+      [
+        8,
+        3
+      ],
+      [
+        9,
+        1
+      ],
+      [
+        9,
+        2
+      ],
+      [
+        9,
+        3
+      ]
+    ],
+    "flip_fraction": 1.0,
+    "regret_when_wrong_mean": 25.656083333333335,
+    "regret_when_wrong_median": 24.0,
+    "regret_fail_frac": 0.0,
+    "oracle_success_rate": 1.0,
+    "partner_blind_success_rate": 0.998625,
+    "oracle_minus_blind": 0.001375000000000015,
+    "oracle_avg_time": 17.480458333333335,
+    "blind_avg_time": 30.180247840781075,
+    "oracle_expected_reward_per_round": 0.8251954166666667,
+    "blind_expected_reward_per_round": 0.6958625,
+    "oracle_minus_blind_reward": 0.1293329166666667,
+    "max_observed_oracle_completion": 50,
+    "step_penalty": 0.01,
+    "success_reward": 1.0
+  },
+  "test_pool_analysis": {
+    "n_layouts": 1000,
+    "n_cap_pairs": 22,
+    "cap_pairs": [
+      [
+        0,
+        5
+      ],
+      [
+        0,
+        6
+      ],
+      [
+        1,
+        5
+      ],
+      [
+        1,
+        6
+      ],
+      [
+        2,
+        5
+      ],
+      [
+        2,
+        6
+      ],
+      [
+        3,
+        5
+      ],
+      [
+        3,
+        6
+      ],
+      [
+        7,
+        0
+      ],
+      [
+        8,
+        0
+      ],
+      [
+        9,
+        0
+      ],
+      [
+        5,
+        0
+      ],
+      [
+        5,
+        1
+      ],
+      [
+        5,
+        2
+      ],
+      [
+        5,
+        3
+      ],
+      [
+        6,
+        0
+      ],
+      [
+        6,
+        1
+      ],
+      [
+        6,
+        2
+      ],
+      [
+        6,
+        3
+      ],
+      [
+        0,
+        7
+      ],
+      [
+        0,
+        8
+      ],
+      [
+        0,
+        9
+      ]
+    ],
+    "flip_fraction": 1.0,
+    "regret_when_wrong_mean": 25.694136363636364,
+    "regret_when_wrong_median": 23.0,
+    "regret_fail_frac": 0.0,
+    "oracle_success_rate": 1.0,
+    "partner_blind_success_rate": 0.9995,
+    "oracle_minus_blind": 0.0004999999999999449,
+    "oracle_avg_time": 13.238772727272726,
+    "blind_avg_time": 26.029969530219656,
+    "oracle_expected_reward_per_round": 0.8676122727272728,
+    "blind_expected_reward_per_round": 0.7388304545454546,
+    "oracle_minus_blind_reward": 0.12878181818181822,
+    "max_observed_oracle_completion": 50,
+    "step_penalty": 0.01,
+    "success_reward": 1.0
+  },
+  "per_cap_test": [
+    {
+      "cap": [
+        0,
+        5
+      ],
+      "oracle_success_rate": 1.0,
+      "oracle_avg_time": 8.121
+    },
+    {
+      "cap": [
+        0,
+        6
+      ],
+      "oracle_success_rate": 1.0,
+      "oracle_avg_time": 8.121
+    },
+    {
+      "cap": [
+        1,
+        5
+      ],
+      "oracle_success_rate": 1.0,
+      "oracle_avg_time": 12.408
+    },
+    {
+      "cap": [
+        1,
+        6
+      ],
+      "oracle_success_rate": 1.0,
+      "oracle_avg_time": 12.408
+    },
+    {
+      "cap": [
+        2,
+        5
+      ],
+      "oracle_success_rate": 1.0,
+      "oracle_avg_time": 17.464
+    },
+    {
+      "cap": [
+        2,
+        6
+      ],
+      "oracle_success_rate": 1.0,
+      "oracle_avg_time": 17.464
+    },
+    {
+      "cap": [
+        3,
+        5
+      ],
+      "oracle_success_rate": 1.0,
+      "oracle_avg_time": 22.589
+    },
+    {
+      "cap": [
+        3,
+        6
+      ],
+      "oracle_success_rate": 1.0,
+      "oracle_avg_time": 22.589
+    },
+    {
+      "cap": [
+        7,
+        0
+      ],
+      "oracle_success_rate": 1.0,
+      "oracle_avg_time": 8.174
+    },
+    {
+      "cap": [
+        8,
+        0
+      ],
+      "oracle_success_rate": 1.0,
+      "oracle_avg_time": 8.174
+    },
+    {
+      "cap": [
+        9,
+        0
+      ],
+      "oracle_success_rate": 1.0,
+      "oracle_avg_time": 8.174
+    },
+    {
+      "cap": [
+        5,
+        0
+      ],
+      "oracle_success_rate": 1.0,
+      "oracle_avg_time": 8.174
+    },
+    {
+      "cap": [
+        5,
+        1
+      ],
+      "oracle_success_rate": 1.0,
+      "oracle_avg_time": 12.423
+    },
+    {
+      "cap": [
+        5,
+        2
+      ],
+      "oracle_success_rate": 1.0,
+      "oracle_avg_time": 17.44
+    },
+    {
+      "cap": [
+        5,
+        3
+      ],
+      "oracle_success_rate": 1.0,
+      "oracle_avg_time": 22.565
+    },
+    {
+      "cap": [
+        6,
+        0
+      ],
+      "oracle_success_rate": 1.0,
+      "oracle_avg_time": 8.174
+    },
+    {
+      "cap": [
+        6,
+        1
+      ],
+      "oracle_success_rate": 1.0,
+      "oracle_avg_time": 12.423
+    },
+    {
+      "cap": [
+        6,
+        2
+      ],
+      "oracle_success_rate": 1.0,
+      "oracle_avg_time": 17.44
+    },
+    {
+      "cap": [
+        6,
+        3
+      ],
+      "oracle_success_rate": 1.0,
+      "oracle_avg_time": 22.565
+    },
+    {
+      "cap": [
+        0,
+        7
+      ],
+      "oracle_success_rate": 1.0,
+      "oracle_avg_time": 8.121
+    },
+    {
+      "cap": [
+        0,
+        8
+      ],
+      "oracle_success_rate": 1.0,
+      "oracle_avg_time": 8.121
+    },
+    {
+      "cap": [
+        0,
+        9
+      ],
+      "oracle_success_rate": 1.0,
+      "oracle_avg_time": 8.121
+    }
+  ]
+}

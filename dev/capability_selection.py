@@ -60,16 +60,17 @@ import numpy as np
 INFEASIBLE = 10 ** 9  # sentinel value returned by completion_time on timeout
 
 
-def completion_time(ego_path: int, partner_path: int, partner_cool: int,
+def completion_time(ego_path: int, partner_path: int, partner_delay: int,
                     max_steps: int) -> int:
-    """Analytical joint-completion time in env steps.
+    """Analytical joint-completion time in env steps under delay semantics.
 
     Assumes shortest-path navigation with no agent collisions. Ego moves
-    once every step starting at t=1 (total = 1 + ego_path). Partner
-    moves at t=2, 2+c, 2+2c, ..., so the k-th move happens at step
-    ``2 + (k-1)*c`` and reaching a goal requires ``partner_path`` moves.
-    Both must occupy their assigned goal on the SAME env step, so the
-    joint completion time is the max of the two.
+    once every step starting at t=1 (total = 1 + ego_path). Partner acts
+    every ``(partner_delay + 1)`` steps starting at t=2 (t=1 is spent
+    receiving the allocation), so the k-th partner move happens at step
+    ``2 + (k-1) * (partner_delay + 1)`` and reaching a goal requires
+    ``partner_path`` moves. Both must occupy their assigned goal on the
+    SAME env step, so the joint completion time is the max of the two.
 
     Returns :data:`INFEASIBLE` if either path is unreachable (``< 0``)
     or if the joint completion exceeds ``max_steps``.
@@ -77,7 +78,7 @@ def completion_time(ego_path: int, partner_path: int, partner_cool: int,
     if ego_path < 0 or partner_path < 0:
         return INFEASIBLE
     ego_step = 1 + ego_path
-    partner_step = 2 + (partner_path - 1) * partner_cool
+    partner_step = 2 + (partner_path - 1) * (partner_delay + 1)
     completed = max(ego_step, partner_step)
     if completed > max_steps:
         return INFEASIBLE
@@ -224,11 +225,11 @@ def evaluate_layout(ego_to_red: int, ego_to_blue: int,
 
     times_A = np.empty(n_C, dtype=np.int64)
     times_B = np.empty(n_C, dtype=np.int64)
-    for j, (c_r, c_b) in enumerate(cap_pairs):
-        # Allocation A: ego->RED, partner->BLUE. Partner uses c_B.
-        times_A[j] = completion_time(ego_to_red, partner_to_blue, int(c_b), max_steps)
-        # Allocation B: ego->BLUE, partner->RED. Partner uses c_R.
-        times_B[j] = completion_time(ego_to_blue, partner_to_red, int(c_r), max_steps)
+    for j, (d_r, d_b) in enumerate(cap_pairs):
+        # Allocation A: ego->RED, partner->BLUE. Partner uses d_B (delay).
+        times_A[j] = completion_time(ego_to_red, partner_to_blue, int(d_b), max_steps)
+        # Allocation B: ego->BLUE, partner->RED. Partner uses d_R (delay).
+        times_B[j] = completion_time(ego_to_blue, partner_to_red, int(d_r), max_steps)
 
     # Reward per (cap, alloc). We pass max_steps into _reward_from_time so
     # infeasible allocations pay -step_penalty * max_steps (matches env).

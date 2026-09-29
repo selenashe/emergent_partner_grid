@@ -1,3 +1,8 @@
+# ==========================================================
+# SUPERSEDED — pre-refactor script; NOT part of the current
+# CoordinationGrid partner-modelling experiment.
+# See project_log_revised.md for the active experiment code.
+# ==========================================================
 from collections import Counter, defaultdict
 import functools
 import json

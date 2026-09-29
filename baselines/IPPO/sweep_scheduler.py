@@ -1,32 +1,27 @@
-"""Balanced (capability_pair, layout) sweep schedule for the coordination-
-grid final experiment.
+"""Simple capability/layout schedule for the CoordinationGrid experiment.
 
-One *sweep* contains:
-    * ``n_cap * n_layouts_train = pairings_per_sweep`` (capability, layout)
-      pairs.
-    * grouped into partner episodes of ``rounds_per_episode`` rounds each,
-      where every episode carries a fixed capability profile (c_R, c_B)
-      and 20 distinct layouts.
-    * each capability profile sees every training layout exactly once.
+The scientific unit that must remain stable is:
 
-For the default final experiment:
-    n_cap=30 (training capability pairs), n_layouts_train=1600, R=20
-        pairings_per_sweep         = 30 * 1600 = 48000
-        episodes_per_cap_per_sweep = 1600 / 20 = 80
-        episodes_per_sweep         = 80 * 30 = 2400
+    one capability profile per 20-round partner episode
 
-The trainer stitches ``n_sweeps`` such sweeps back-to-back to build the
-full training schedule. Each vmap slot starts on its own sweep boundary
-(via ``initial_episode_cursor``) and advances one episode at a time.
+Layouts within a partner episode are sampled uniformly with replacement
+from the same 1000-layout training corpus. Capability pairs are sampled
+uniformly with replacement from the training pool (one per partner
+episode). Basic balancing across the schedule falls out of large-N
+uniform sampling; we do NOT enforce an exhaustive capability × layout
+cross-product any more.
 
-This module is standalone — it is imported by both the trainer and the
-sanity-check script.
+This module still returns a materialized ``(capability, layout_seq)``
+schedule so the trainer can advance a per-slot cursor inside
+``jax.lax.scan`` (deterministic + JIT-friendly). The schedule is
+long enough that a training run never wraps in practice; it wraps
+harmlessly if it does.
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Sequence, Tuple
+from typing import Sequence
 
 import numpy as np
 
@@ -35,74 +30,31 @@ import numpy as np
 class SweepSchedule:
     """A flat schedule of scheduled partner episodes.
 
-    ``schedule_capability[i]`` = the (c_R, c_B) pair for the i-th episode.
-    ``schedule_layouts[i]``    = the (rounds_per_episode,) layout indices
-                                 that episode will visit, in order.
+    ``schedule_capability[i]``  = the (d_R, d_B) pair for the i-th ep.
+    ``schedule_layouts[i]``     = the (rounds_per_episode,) layout ids.
     """
-    schedule_capability: np.ndarray  # (n_eps_total, 2) int32
-    schedule_layouts: np.ndarray     # (n_eps_total, R) int32
-    n_sweeps: int
+    schedule_capability: np.ndarray   # (n_eps_total, 2) int32
+    schedule_layouts: np.ndarray      # (n_eps_total, R) int32
     n_cap: int
     n_layouts: int
     rounds_per_episode: int
-    pairings_per_sweep: int
-    episodes_per_sweep: int
-    episodes_per_cap_per_sweep: int
+    n_eps_total: int
     partner_capability_pairs: np.ndarray  # (n_cap, 2) int32
     seed: int
-
-    @property
-    def n_eps_total(self) -> int:
-        return int(self.schedule_capability.shape[0])
-
-
-def _one_sweep(
-    capability_pairs: np.ndarray,     # (n_cap, 2) int32
-    n_layouts: int,
-    rounds_per_episode: int,
-    rng: np.random.Generator,
-) -> Tuple[np.ndarray, np.ndarray]:
-    """Build one balanced sweep. Returns
-        cap_arr:     (episodes_per_sweep, 2) int32
-        layouts_arr: (episodes_per_sweep, R) int32
-    Structure: for each capability pair, shuffle the ``n_layouts`` layouts,
-    chunk into ``n_layouts / R`` episodes of length R. Aggregate across
-    capabilities, then shuffle the *episode order*.
-    """
-    n_cap = capability_pairs.shape[0]
-    if n_layouts % rounds_per_episode != 0:
-        raise ValueError(
-            f"n_layouts ({n_layouts}) must be divisible by rounds_per_episode "
-            f"({rounds_per_episode}) so every layout fits exactly once."
-        )
-    eps_per_cap = n_layouts // rounds_per_episode
-    eps_per_sweep = n_cap * eps_per_cap
-
-    cap_list = []
-    layout_list = []
-    for ci in range(n_cap):
-        layout_perm = rng.permutation(n_layouts).astype(np.int32)
-        chunks = layout_perm.reshape(eps_per_cap, rounds_per_episode)
-        cap_list.append(
-            np.broadcast_to(capability_pairs[ci], (eps_per_cap, 2)).astype(np.int32).copy()
-        )
-        layout_list.append(chunks)
-
-    cap_arr = np.concatenate(cap_list, axis=0)          # (eps_per_sweep, 2)
-    layouts_arr = np.concatenate(layout_list, axis=0)   # (eps_per_sweep, R)
-    ep_perm = rng.permutation(eps_per_sweep)
-    return cap_arr[ep_perm], layouts_arr[ep_perm]
 
 
 def build_schedule(
     partner_capability_pairs: Sequence[Sequence[int]],
     n_layouts_train: int,
     rounds_per_episode: int,
-    n_sweeps: int,
+    n_eps_total: int,
     seed: int = 0,
 ) -> SweepSchedule:
-    """Concatenate ``n_sweeps`` independent balanced sweeps into one flat
-    schedule.
+    """Materialize a schedule of ``n_eps_total`` partner episodes.
+
+    Each episode gets one capability pair sampled uniformly from the
+    training pool and ``rounds_per_episode`` layouts sampled uniformly
+    with replacement from ``[0, n_layouts_train)``.
     """
     cap_pairs = np.asarray(
         [[int(a), int(b)] for a, b in partner_capability_pairs],
@@ -112,130 +64,85 @@ def build_schedule(
         raise ValueError(
             f"partner_capability_pairs must be shape (K, 2); got {cap_pairs.shape}"
         )
+    if n_layouts_train < 1:
+        raise ValueError("n_layouts_train must be >= 1")
+    if rounds_per_episode < 1:
+        raise ValueError("rounds_per_episode must be >= 1")
+    if n_eps_total < 1:
+        raise ValueError("n_eps_total must be >= 1")
+
     rng = np.random.default_rng(seed)
-    cap_chunks = []
-    layout_chunks = []
-    for s in range(n_sweeps):
-        cap_arr, layouts_arr = _one_sweep(
-            cap_pairs, n_layouts_train, rounds_per_episode, rng,
-        )
-        cap_chunks.append(cap_arr)
-        layout_chunks.append(layouts_arr)
-    schedule_capability = np.concatenate(cap_chunks, axis=0)      # (S*eps, 2)
-    schedule_layouts = np.concatenate(layout_chunks, axis=0)      # (S*eps, R)
-    eps_per_cap = n_layouts_train // rounds_per_episode
+    cap_idx = rng.integers(0, cap_pairs.shape[0], size=n_eps_total)
+    schedule_capability = cap_pairs[cap_idx]                              # (E, 2)
+    schedule_layouts = rng.integers(
+        0, n_layouts_train, size=(n_eps_total, rounds_per_episode), dtype=np.int32,
+    )
     return SweepSchedule(
-        schedule_capability=schedule_capability,
+        schedule_capability=schedule_capability.astype(np.int32),
         schedule_layouts=schedule_layouts,
-        n_sweeps=n_sweeps,
         n_cap=int(cap_pairs.shape[0]),
         n_layouts=int(n_layouts_train),
         rounds_per_episode=int(rounds_per_episode),
-        pairings_per_sweep=int(cap_pairs.shape[0]) * int(n_layouts_train),
-        episodes_per_sweep=int(cap_pairs.shape[0]) * eps_per_cap,
-        episodes_per_cap_per_sweep=int(eps_per_cap),
+        n_eps_total=int(n_eps_total),
         partner_capability_pairs=cap_pairs,
         seed=int(seed),
     )
 
 
-def initial_episode_cursor(
-    num_envs: int, schedule: SweepSchedule,
-) -> np.ndarray:
-    """Sweep-aligned starting cursor for each vmap slot. Worker w starts
-    at sweep ``w % n_sweeps``, within-sweep episode index 0. This preserves
-    the per-worker sweep-boundary alignment (so a worker never crosses a
-    sweep boundary mid-episode by construction).
+def initial_episode_cursor(num_envs: int, schedule: SweepSchedule) -> np.ndarray:
+    """Give each vmap slot its own starting cursor, evenly spaced along
+    the schedule so slots don't co-visit the same (capability, layout).
     """
-    starts = (np.arange(num_envs) % schedule.n_sweeps) * schedule.episodes_per_sweep
-    return starts.astype(np.int32)
+    starts = (np.arange(num_envs) * (schedule.n_eps_total // max(num_envs, 1)))
+    return (starts % schedule.n_eps_total).astype(np.int32)
 
 
-# --------------------------------------------------------------------------- #
-# Sanity check                                                                #
-# --------------------------------------------------------------------------- #
-
-def sanity_check_schedule(schedule: SweepSchedule, *, verbose: bool = True) -> dict:
-    """Verify each sweep's structural properties. Returns a summary dict.
-    Raises AssertionError on violations.
+def summarize_schedule(schedule: SweepSchedule, *, verbose: bool = True) -> dict:
+    """Non-strict summary; unlike the old sanity_check_schedule this does
+    NOT enforce per-sweep balance. It reports coverage stats.
     """
-    R = schedule.rounds_per_episode
-    C = schedule.n_cap
-    K = schedule.n_layouts
-    E = schedule.episodes_per_sweep
-    P = schedule.pairings_per_sweep
-    assert schedule.schedule_capability.shape == (E * schedule.n_sweeps, 2)
-    assert schedule.schedule_layouts.shape == (E * schedule.n_sweeps, R)
-
-    cap_pool = schedule.partner_capability_pairs  # (n_cap, 2)
-
-    for s in range(schedule.n_sweeps):
-        cap_slice = schedule.schedule_capability[s * E:(s + 1) * E]
-        L_slice = schedule.schedule_layouts[s * E:(s + 1) * E]
-
-        # (a) total pairings in this sweep.
-        n_pairings = int(L_slice.size)
-        assert n_pairings == P, (
-            f"sweep {s}: got {n_pairings} pairings, expected {P}"
-        )
-        # (b) each capability pair appears exactly episodes_per_cap_per_sweep times.
-        for ci, cap in enumerate(cap_pool):
-            row_mask = np.all(cap_slice == cap[None, :], axis=1)
-            n_eps_this_cap = int(row_mask.sum())
-            assert n_eps_this_cap == schedule.episodes_per_cap_per_sweep, (
-                f"sweep {s} cap={tuple(cap.tolist())}: got {n_eps_this_cap} "
-                f"episodes, expected {schedule.episodes_per_cap_per_sweep}"
-            )
-            # (c) within this cap, each layout appears exactly once.
-            layouts_seen = L_slice[row_mask].reshape(-1)
-            unique, counts = np.unique(layouts_seen, return_counts=True)
-            assert unique.shape[0] == K, (
-                f"sweep {s} cap={tuple(cap.tolist())}: saw {unique.shape[0]} "
-                f"unique layouts, expected {K}"
-            )
-            assert int(counts.min()) == 1 and int(counts.max()) == 1, (
-                f"sweep {s} cap={tuple(cap.tolist())}: layout counts "
-                f"min={counts.min()} max={counts.max()}, expected all 1"
-            )
-
+    cap_pool = schedule.partner_capability_pairs
+    counts = np.zeros(cap_pool.shape[0], dtype=np.int64)
+    for ci, cap in enumerate(cap_pool):
+        counts[ci] = int(np.all(schedule.schedule_capability == cap[None, :], axis=1).sum())
     summary = {
-        "n_sweeps":                       schedule.n_sweeps,
-        "n_cap":                          C,
-        "n_layouts":                      K,
-        "rounds_per_episode":             R,
-        "pairings_per_sweep":             P,
-        "episodes_per_sweep":             E,
-        "episodes_per_cap_per_sweep":     schedule.episodes_per_cap_per_sweep,
-        "n_eps_total":                    schedule.n_eps_total,
-        "seed":                           schedule.seed,
+        "n_cap":              int(cap_pool.shape[0]),
+        "n_layouts":          int(schedule.n_layouts),
+        "rounds_per_episode": int(schedule.rounds_per_episode),
+        "n_eps_total":        int(schedule.n_eps_total),
+        "eps_per_cap_min":    int(counts.min()),
+        "eps_per_cap_mean":   float(counts.mean()),
+        "eps_per_cap_max":    int(counts.max()),
+        "seed":               int(schedule.seed),
     }
     if verbose:
-        print("[sweep schedule sanity check]")
+        print("[capability/layout schedule summary]")
         for k, v in summary.items():
-            print(f"    {k:>28s}: {v}")
-        print(f"    ✓ per sweep: {P} total pairings ({C} cap × {K} layouts), "
-              "each cap×layout exactly once")
-        print(f"    ✓ per sweep: {schedule.episodes_per_cap_per_sweep} partner "
-              f"episodes per cap, {schedule.episodes_per_sweep} total")
+            print(f"    {k:>22s}: {v}")
     return summary
+
+
+# Kept as an alias so any pre-refactor caller that still says
+# `sanity_check_schedule` gets the summarize behaviour.
+sanity_check_schedule = summarize_schedule
 
 
 if __name__ == "__main__":
     import argparse
-    from jaxmarl.environments.coordination_grid import TRAINING_CAPABILITY_PAIRS
+    from jaxmarl.environments.coordination_grid import TRAIN_CAPABILITY_PAIRS
 
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("--n_layouts_train", type=int, default=1600)
+    p.add_argument("--n_layouts_train", type=int, default=1000)
     p.add_argument("--rounds_per_episode", type=int, default=20)
-    p.add_argument("--n_sweeps", type=int, default=1)
+    p.add_argument("--n_eps_total", type=int, default=100_000)
     p.add_argument("--seed", type=int, default=0)
     args = p.parse_args()
 
     sched = build_schedule(
-        partner_capability_pairs=TRAINING_CAPABILITY_PAIRS,
+        partner_capability_pairs=TRAIN_CAPABILITY_PAIRS,
         n_layouts_train=args.n_layouts_train,
         rounds_per_episode=args.rounds_per_episode,
-        n_sweeps=args.n_sweeps,
+        n_eps_total=args.n_eps_total,
         seed=args.seed,
     )
-    sanity_check_schedule(sched)
+    summarize_schedule(sched)

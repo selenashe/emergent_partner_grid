@@ -1,3 +1,8 @@
+# ==========================================================
+# SUPERSEDED — pre-refactor script; NOT part of the current
+# CoordinationGrid partner-modelling experiment.
+# See project_log_revised.md for the active experiment code.
+# ==========================================================
 """Behavior × z × round analysis for the Stage C+D policy.
 
 For every (z, round_idx) pair we measure:

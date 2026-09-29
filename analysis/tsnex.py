@@ -1,3 +1,8 @@
+# ==========================================================
+# SUPERSEDED — pre-refactor script; NOT part of the current
+# CoordinationGrid partner-modelling experiment.
+# See project_log_revised.md for the active experiment code.
+# ==========================================================
 # COPIED FROM https://github.com/alonfnt/tsnex WITH MINOR CHANGES TO WORK WITH OUR JAX VERSIONING REQUIREMENTS
 
 from functools import partial

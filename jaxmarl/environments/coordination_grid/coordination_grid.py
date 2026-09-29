@@ -1,26 +1,31 @@
 """
 CoordinationGrid: 20-round 7×7 grid coordination task with a scripted
-partner whose *latent capability profile* (c_R, c_B) controls per-goal
-movement cooldowns.  Ego (agent_0) is the only learned agent; partner
-(agent_1) is scripted.
+partner whose *latent capability profile* ``(d_R, d_B)`` controls
+per-goal movement delay. Ego (agent_0) is the only learned agent;
+partner (agent_1) is scripted.
 
-Motivation for this rewrite
----------------------------
-Previously the env carried a scalar latent ``z`` that had no causal
-effect on partner behavior in the ``action_only`` regime.  This version
-introduces a 2-D **capability vector**
+Capability semantics (matches the Overcooked reference)
+-------------------------------------------------------
+Each partner has a pair of per-goal delays
 
-    (c_R, c_B)  with each entry ∈ CAPABILITY_VALUES = (1, 2, 3, 4, 7, 9)
+    (d_R, d_B)   with d_X ∈ {0, 1, ...}
 
-which is fixed across the 20-round partner episode, never appears in
-the ego's observation, and does affect the partner:
+where d_X is the number of wait steps inserted after a partner move
+while pursuing goal X. So
 
-    * c_R = # env steps per partner move when the partner is pursuing RED.
-    * c_B = # env steps per partner move when the partner is pursuing BLUE.
-    * lower = faster / more competent.
+    d = 0  -> partner moves every step   (fastest)
+    d = 1  -> partner moves every 2 steps
+    d = k  -> partner moves every (k + 1) steps
 
-The ego must infer (c_R, c_B) from **partner movement timing** and use
-it to choose the better of two possible role allocations for this round.
+The training and test capability populations live in
+``capability_populations.py`` — the training pool is a specialist set
+(fast on one task, slow on the other), and the test pool includes
+scalar delay values never seen at training (0, 5, 6).
+
+The capability is fixed across the 20-round partner episode, never
+appears in the ego's observation, and only affects the partner. The
+ego must infer ``(d_R, d_B)`` from partner movement timing and use it
+to choose the better of two possible role allocations for this round.
 
 Action encoding
 ---------------
@@ -51,19 +56,28 @@ ego's t=0 allocation:
     ego alloc = ALLOC_BLUE → partner_goal = RED
 There is no other stochastic goal-commit rule.
 
-Partner movement + cooldown
----------------------------
+Partner movement + delay
+------------------------
 Partner navigation still uses the precomputed BFS shortest-path tables
 toward its committed goal.  On each round-local step t>=1:
     * if ``partner_move_ctr == 0`` and the partner has a committed goal,
       the partner takes one BFS step and ``partner_move_ctr`` resets to
-      ``c - 1``, where ``c = c_R`` if goal == RED else ``c_B``.
+      ``d``, where ``d = d_R`` if goal == RED else ``d_B``.
     * otherwise the partner STAYs and ``partner_move_ctr`` decrements
       (floored at 0).
-So c=1 → partner moves every step (fastest); c=9 → partner moves at
-t = 1, 10, 19, ... within a round (slowest given the 15-step horizon).
-``partner_move_ctr`` resets to 0 at every round boundary; nothing else
-about partner navigation depends on the capability.
+So d=0 → partner moves every step (fastest); d=k → partner moves once
+every k+1 steps. ``partner_move_ctr`` resets to 0 at every round
+boundary; nothing else about partner navigation depends on capability.
+
+Allocation influence
+--------------------
+When ``influence=True`` (default), the partner's assigned goal at t=1
+is the complement of the ego's t=0 alloc — so the ego's allocation
+choice controls the partner. When ``influence=False``, the partner's
+goal at t=1 is instead determined by a partner-independent balanced
+rule (round_idx parity), regardless of the ego's t=0 action; the ego
+still selects an alloc from the legal t=0 set, but that alloc is
+ignored for partner assignment. This is the no-influence control.
 
 Reward and termination are unchanged:
     success (agents on distinct goals) → +1.0
@@ -166,26 +180,15 @@ GOAL_BLUE = 2
 
 
 # ---------------------------------------------------------------------------
-# Capability profile constants + train / held-out split
+# Capability profile constants — reference-style specialist populations.
+# Authoritative source: capability_populations.py
 # ---------------------------------------------------------------------------
-# Individual per-goal cooldown values (env steps per partner move).
-CAPABILITY_VALUES: Tuple[int, ...] = (1, 2, 3, 4, 7, 9)
-
-# Held-out combinations: each individual capability value appears exactly
-# once as c_R and once as c_B in the held-out set.  Since every value is
-# also present in the (36 - 6 = 30) training pairs, the held-out set tests
-# "unseen combinations of already-seen capability values" — never
-# "unseen individual capability values".
-HELDOUT_CAPABILITY_PAIRS: Tuple[Tuple[int, int], ...] = (
-    (1, 4), (2, 7), (3, 9), (4, 1), (7, 3), (9, 2),
-)
-_HELDOUT_SET = frozenset(HELDOUT_CAPABILITY_PAIRS)
-TRAINING_CAPABILITY_PAIRS: Tuple[Tuple[int, int], ...] = tuple(
-    (cr, cb) for cr in CAPABILITY_VALUES for cb in CAPABILITY_VALUES
-    if (cr, cb) not in _HELDOUT_SET
-)
-ALL_CAPABILITY_PAIRS: Tuple[Tuple[int, int], ...] = tuple(
-    (cr, cb) for cr in CAPABILITY_VALUES for cb in CAPABILITY_VALUES
+from .capability_populations import (  # noqa: E402
+    TRAIN_CAPABILITY_PAIRS,
+    TEST_CAPABILITY_PAIRS,
+    DEFAULT_SINGLE_PARTNER,
+    FAST_DELAYS,
+    SLOW_DELAYS,
 )
 
 
@@ -434,9 +437,13 @@ def _resolve_layout_paths(
 
 def _canonicalize_capability_pairs(
     pairs: Optional[Sequence[Sequence[int]]],
-    fallback: Sequence[Sequence[int]] = ((3, 3),),
+    fallback: Sequence[Sequence[int]] = ((1, 1),),
 ) -> np.ndarray:
-    """Return an (K, 2) int32 numpy array of capability pairs."""
+    """Return an (K, 2) int32 numpy array of capability *delay* pairs.
+
+    Delay semantics: entry ``d_X >= 0`` = number of wait steps between
+    consecutive partner moves while pursuing goal X (d=0 = every step).
+    """
     if pairs is None or len(list(pairs)) == 0:
         pairs = fallback
     arr = np.asarray([[int(a), int(b)] for a, b in pairs], dtype=np.int32)
@@ -444,8 +451,10 @@ def _canonicalize_capability_pairs(
         raise ValueError(
             f"capability pairs must be shape (K, 2); got {arr.shape}"
         )
-    if (arr < 1).any():
-        raise ValueError("capability values must be >= 1 (0 would mean 'never move')")
+    if (arr < 0).any():
+        raise ValueError(
+            "capability delays must be >= 0 (d=0 means 'move every step')"
+        )
     return arr
 
 
@@ -470,6 +479,7 @@ class CoordinationGrid(MultiAgentEnv):
         augment_symmetries: bool = False,
         hide_partner_until_time: int = 0,
         communication_condition: str = COMM_ACTION_ONLY,
+        influence: bool = True,
         # legacy kwargs (accepted for backward compat, ignored otherwise):
         partner_z: Optional[float] = None,
         partner_z_values: Optional[Sequence[float]] = None,
@@ -575,7 +585,7 @@ class CoordinationGrid(MultiAgentEnv):
         # ---- Partner capability pool ----
         cap_np = _canonicalize_capability_pairs(
             partner_capability_pairs,
-            fallback=TRAINING_CAPABILITY_PAIRS,
+            fallback=TRAIN_CAPABILITY_PAIRS,
         )
         self.partner_capability_pairs = jnp.asarray(cap_np, dtype=jnp.int32)  # (K, 2)
         self.partner_capability_pairs_np = cap_np
@@ -600,6 +610,7 @@ class CoordinationGrid(MultiAgentEnv):
                 f"got {communication_condition!r}"
             )
         self.communication_condition: str = communication_condition
+        self.influence: bool = bool(influence)
         self.t0_action_mask = jnp.asarray(ACTION_MASK_T0, dtype=jnp.bool_)
         self.t0_action_mask_np = np.asarray(ACTION_MASK_T0, dtype=np.bool_)
 
@@ -764,19 +775,19 @@ class CoordinationGrid(MultiAgentEnv):
         should_commit = is_time1 & (state.partner_goal == GOAL_UNSET)
         new_partner_goal = jnp.where(should_commit, alloc_derived_goal, state.partner_goal)
 
-        # ------- Cooldown mechanic -------
+        # ------- Delay mechanic (reference-style) -------
         # At t>=1, if partner has a committed goal AND move counter == 0,
-        # partner takes one BFS step and counter resets to (c - 1) where
-        # c is the cooldown for the committed goal color. Otherwise partner
-        # STAYs and the counter decrements (floored at 0).
-        # At t=0 the partner always STAYs regardless of counter state.
-        c_for_goal = jnp.where(
+        # partner takes one BFS step and counter resets to d (the delay for
+        # the committed goal color). Otherwise partner STAYs and the counter
+        # decrements (floored at 0). At t=0 the partner always STAYs.
+        # d=0 -> moves every step; d=k -> moves once every (k+1) steps.
+        d_for_goal = jnp.where(
             new_partner_goal == GOAL_RED,
             state.capability[0],
             jnp.where(
                 new_partner_goal == GOAL_BLUE,
                 state.capability[1],
-                jnp.int32(1),          # UNSET: c doesn't matter
+                jnp.int32(0),          # UNSET: d doesn't matter
             ),
         )
         partner_has_goal = new_partner_goal != GOAL_UNSET
@@ -789,7 +800,7 @@ class CoordinationGrid(MultiAgentEnv):
         )
         next_partner_move_ctr = jnp.where(
             can_move_now,
-            jnp.maximum(c_for_goal - jnp.int32(1), jnp.int32(0)),
+            d_for_goal,
             jnp.maximum(state.partner_move_ctr - jnp.int32(1), jnp.int32(0)),
         )
 
@@ -858,13 +869,31 @@ class CoordinationGrid(MultiAgentEnv):
         intermediate_round = round_done & (~is_final_round)
         partner_episode_done = round_done & is_final_round
 
+        # ------- Allocation write -------
+        # influence=True  : ego's alloc drives partner assignment (the
+        #                   partner reads pending_allocation at t=1).
+        # influence=False : allocation is decoupled from ego and instead
+        #                   follows a partner-independent, balanced rule
+        #                   keyed on the round index. The ego still emits
+        #                   a legal t=0 alloc, but it is discarded.
+        forced_alloc = jnp.where(
+            (state.round_idx % jnp.int32(2)) == jnp.int32(0),
+            jnp.int32(Allocations.red),
+            jnp.int32(Allocations.blue),
+        )
+        pending_alloc_written = jnp.where(
+            jnp.bool_(self.influence),
+            ego_alloc,
+            jnp.where(is_time0, forced_alloc, state.pending_allocation),
+        )
+
         step_state = state.replace(
             agent_pos=agent_pos,
             time=new_time,
             terminal=partner_episode_done,
             partner_goal=new_partner_goal,
             partner_move_ctr=next_partner_move_ctr,
-            pending_allocation=ego_alloc,
+            pending_allocation=pending_alloc_written,
             # round_idx and capability unchanged by a plain step.
         )
 
@@ -898,11 +927,15 @@ class CoordinationGrid(MultiAgentEnv):
             "success": success,
             "round_done": round_done,
             "round_idx": state.round_idx,
-            "capability": state.capability,           # (2,) int32 per env
-            "capability_c_r": state.capability[0],
-            "capability_c_b": state.capability[1],
+            "capability": state.capability,           # (2,) int32 per env, (d_R, d_B)
+            "capability_d_r": state.capability[0],
+            "capability_d_b": state.capability[1],
             "partner_goal": new_partner_goal,
-            "pending_allocation": ego_alloc,
+            # allocation actually driving the partner this step (equals
+            # ego_alloc under influence=True; under influence=False, equals
+            # the round-parity forced alloc at t=0)
+            "pending_allocation": pending_alloc_written,
+            "ego_alloc_action": ego_alloc,            # what the ego picked (kept for eval)
             "ego_move_effective": ego_effective_move,
             "partner_move_effective": partner_effective_move,
         }

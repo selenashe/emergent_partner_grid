@@ -1,14 +1,28 @@
-"""Recurrent IPPO for CoordinationGrid — capability-vector partner build.
+"""Unified IPPO trainer for CoordinationGrid — the four experimental
+conditions supported by config switches.
 
-Only agent_0 is a learned actor; the scripted partner runs inside the env.
-Obs is a dict {"grid": (H, W, 5), "last_allocation": (3,), "is_t0": ()}:
-the grid goes through a CNN, the allocation one-hot through a small dense
-embedding, and both are concatenated before the GRU. Actor head is a flat
-15-way Categorical over the factored (move, alloc) ego action.
+Switches:
+    MODEL_TYPE      : "rnn" | "mlp"
+    PARTNER_REGIME  : "diverse" | "single"
+    INFLUENCE       : true | false
 
-Each partner episode has a fixed 2-D capability vector (c_R, c_B); the
-trainer sweeps balanced (capability_pair, layout) pairings using
-``sweep_scheduler.build_schedule``.
+The four core conditions used in the replication:
+
+    (rnn,  diverse, true)   -- main condition (multi-partner RNN)
+    (mlp,  diverse, true)   -- memory control
+    (rnn,  single,  true)   -- partner-diversity control
+    (rnn,  diverse, false)  -- influence-pressure control
+
+Only agent_0 is learned; the scripted partner runs inside the env. Obs
+is a dict {"grid": (H, W, 5), "last_allocation": (3,), "is_t0": ()}:
+the grid goes through a CNN, the allocation one-hot through a small
+dense embedding, and both are concatenated before either a GRU (rnn)
+or a plain MLP (mlp). Actor head is a flat 15-way Categorical over the
+factored (move, alloc) ego action.
+
+Each partner episode has a fixed 2-D capability vector (d_R, d_B); the
+trainer materializes a long (capability_pair, layout_seq) schedule via
+``sweep_scheduler.build_schedule`` and advances a per-slot cursor.
 """
 
 import functools
@@ -43,10 +57,11 @@ from jaxmarl.environments.coordination_grid import (
     ACTION_MASK_T0,
     ACTION_MASK_TGEQ1,
     COMM_ACTION_ONLY,
-    TRAINING_CAPABILITY_PAIRS,
-    HELDOUT_CAPABILITY_PAIRS,
+    TRAIN_CAPABILITY_PAIRS,
+    TEST_CAPABILITY_PAIRS,
+    DEFAULT_SINGLE_PARTNER,
 )
-from sweep_scheduler import build_schedule, initial_episode_cursor, sanity_check_schedule
+from sweep_scheduler import build_schedule, initial_episode_cursor, summarize_schedule
 
 
 # Static mask tensors (bool) for the network. jnp arrays so they broadcast
@@ -232,6 +247,120 @@ class ActorCriticCommRNN(nn.Module):
         return hidden, pi, jnp.squeeze(critic, axis=-1)
 
 
+class ActorCriticCommMLP(nn.Module):
+    """Feed-forward MLP variant. Same call interface as the RNN model so
+    the trainer can swap them via config: takes ``(hidden, (obs, dones))``
+    and returns ``(hidden, pi, value)`` — but ``hidden`` is a dummy that
+    is passed through unchanged. No cross-step memory.
+    """
+
+    action_dim: int
+    config: Dict
+
+    @nn.compact
+    def __call__(self, hidden, x):
+        obs, dones = x  # dones unused; kept for interface parity
+        activation = nn.relu if self.config["ACTIVATION"] == "relu" else nn.tanh
+
+        encoder = CommObsEncoder(
+            out_dim=self.config["GRU_HIDDEN_DIM"],
+            grid_dim=self.config.get("GRID_EMB_DIM", 64),
+            msg_dim=self.config.get("MSG_EMB_DIM", 8),
+            activation=activation,
+        )
+        embedding = jax.vmap(encoder)(obs)
+        embedding = nn.LayerNorm()(embedding)
+
+        # One extra dense in place of the RNN cell so parameter counts
+        # are broadly comparable.
+        embedding = nn.Dense(
+            self.config["GRU_HIDDEN_DIM"],
+            kernel_init=orthogonal(jnp.sqrt(2)),
+            bias_init=constant(0.0),
+        )(embedding)
+        embedding = activation(embedding)
+
+        actor_mean = nn.Dense(
+            self.config["FC_DIM_SIZE"],
+            kernel_init=orthogonal(2),
+            bias_init=constant(0.0),
+        )(embedding)
+        actor_mean = nn.relu(actor_mean)
+        logits = nn.Dense(
+            self.action_dim,
+            kernel_init=orthogonal(0.01),
+            bias_init=constant(0.0),
+        )(actor_mean)
+
+        is_t0 = obs["is_t0"]
+        is_t0_bool = (is_t0 > 0.5)[..., None]
+        legal = jnp.where(
+            is_t0_bool,
+            _ACTION_MASK_T0_J[None, None, :],
+            _ACTION_MASK_TGEQ1_J[None, None, :],
+        )
+        logits = jnp.where(legal, logits, jnp.full_like(logits, -jnp.inf))
+        pi = distrax.Categorical(logits=logits)
+
+        critic = nn.Dense(
+            self.config["FC_DIM_SIZE"],
+            kernel_init=orthogonal(2),
+            bias_init=constant(0.0),
+        )(embedding)
+        critic = nn.relu(critic)
+        critic = nn.Dense(
+            1,
+            kernel_init=orthogonal(1.0),
+            bias_init=constant(0.0),
+        )(critic)
+
+        return hidden, pi, jnp.squeeze(critic, axis=-1)
+
+
+def build_network(config, action_dim):
+    """Return the (network, initial-hstate factory) pair per MODEL_TYPE."""
+    model_type = str(config.get("MODEL_TYPE", "rnn")).lower()
+    if model_type == "rnn":
+        network = ActorCriticCommRNN(action_dim=action_dim, config=config)
+
+        def init_hstate(batch_size):
+            return ScannedRNN.initialize_carry(
+                batch_size, config["GRU_HIDDEN_DIM"]
+            )
+        return network, init_hstate, model_type
+    if model_type == "mlp":
+        network = ActorCriticCommMLP(action_dim=action_dim, config=config)
+
+        def init_hstate(batch_size):
+            # Dummy carry — must have leading batch dim so vmap/scan don't
+            # complain, but the MLP model ignores its value.
+            return jnp.zeros((batch_size, config["GRU_HIDDEN_DIM"]),
+                             dtype=jnp.float32)
+        return network, init_hstate, model_type
+    raise ValueError(
+        f"MODEL_TYPE must be 'rnn' or 'mlp'; got {model_type!r}"
+    )
+
+
+def resolve_training_capability_pool(config):
+    """Return the (K, 2) list-of-lists of training capability pairs
+    determined by PARTNER_REGIME.
+    """
+    regime = str(config.get("PARTNER_REGIME", "diverse")).lower()
+    if regime == "diverse":
+        return [list(p) for p in TRAIN_CAPABILITY_PAIRS]
+    if regime == "single":
+        single = tuple(config.get("SINGLE_PARTNER", DEFAULT_SINGLE_PARTNER))
+        if len(single) != 2:
+            raise ValueError(
+                f"SINGLE_PARTNER must be a length-2 pair; got {single!r}"
+            )
+        return [[int(single[0]), int(single[1])]]
+    raise ValueError(
+        f"PARTNER_REGIME must be 'diverse' or 'single'; got {regime!r}"
+    )
+
+
 class Transition(NamedTuple):
     done: jnp.ndarray
     action: jnp.ndarray
@@ -249,7 +378,17 @@ class Transition(NamedTuple):
 # ---------------------------------------------------------------------------
 
 def make_train(config):
-    env = jaxmarl.make(config["ENV_NAME"], **config["ENV_KWARGS"])
+    # Resolve capability pool from PARTNER_REGIME, then override the pool
+    # in the env kwargs so the env sees exactly what we sampled from.
+    env_kwargs = dict(config["ENV_KWARGS"])
+    training_cap_pool = resolve_training_capability_pool(config)
+    env_kwargs["partner_capability_pairs"] = training_cap_pool
+    # Route INFLUENCE from top-level into the env (defaults true).
+    if "INFLUENCE" in config:
+        env_kwargs["influence"] = bool(config["INFLUENCE"])
+    config["ENV_KWARGS"] = env_kwargs
+
+    env = jaxmarl.make(config["ENV_NAME"], **env_kwargs)
 
     # Only action_only is supported in this build.
     if env.communication_condition != COMM_ACTION_ONLY:
@@ -311,37 +450,37 @@ def make_train(config):
     ]
     _n_partner_cap: int = len(_cap_pairs_py)
 
-    # --- Build the balanced (capability, layout) sweep schedule -----------
-    # One sweep = every capability pair × every training layout exactly once,
-    # chunked into partner episodes of `rounds_per_episode` rounds. We stitch
-    # `n_sweeps` sweeps back-to-back and hand each vmap slot its own
-    # sweep-boundary starting position.
-    n_sweeps_cfg = int(config.get("N_SWEEPS", max(int(config["NUM_ENVS"]), 8)))
+    # --- Build the (capability, layout) sample schedule -----------
+    # Each entry = one 20-round partner episode with (a) a fixed
+    # capability pair uniformly sampled from the training pool and
+    # (b) an independent uniform layout for every round. See
+    # sweep_scheduler.build_schedule.
+    n_eps_total = int(config.get(
+        "N_EPS_TOTAL",
+        max(int(config["NUM_ENVS"]) * 512, 8192),
+    ))
     schedule = build_schedule(
         partner_capability_pairs=_cap_pairs_py,
         n_layouts_train=int(env.n_layouts),
         rounds_per_episode=int(env.rounds_per_episode),
-        n_sweeps=n_sweeps_cfg,
+        n_eps_total=n_eps_total,
         seed=int(config.get("SCHEDULE_SEED", config.get("SEED", 0))),
     )
-    sanity_check_schedule(schedule, verbose=True)
+    summarize_schedule(schedule, verbose=True)
     _SCHEDULE_CAP = jnp.asarray(schedule.schedule_capability, dtype=jnp.int32)  # (E_total, 2)
     _SCHEDULE_LAYOUTS = jnp.asarray(schedule.schedule_layouts,
                                      dtype=jnp.int32)                       # (E_total, R)
     _N_EPS_TOTAL = int(schedule.n_eps_total)
-    _EPS_PER_SWEEP = int(schedule.episodes_per_sweep)
 
     def train(rng):
         # INIT NETWORK
         action_dim = env.n_ego_actions
-        network = ActorCriticCommRNN(action_dim=action_dim, config=config)
+        network, init_hstate_fn, _mtype = build_network(config, action_dim)
 
         rng, _rng = jax.random.split(rng)
         init_obs = _dummy_obs()
         init_dones = jnp.zeros((1, config["NUM_ENVS"]), dtype=bool)
-        init_hstate = ScannedRNN.initialize_carry(
-            config["NUM_ENVS"], config["GRU_HIDDEN_DIM"]
-        )
+        init_hstate = init_hstate_fn(config["NUM_ENVS"])
         network_params = network.init(_rng, init_hstate, (init_obs, init_dones))
 
         if config["ANNEAL_LR"]:
@@ -837,15 +976,15 @@ def make_train(config):
 # ---------------------------------------------------------------------------
 
 def evaluate_policy(params, config, layouts_dir, key,
-                    n_episodes_per_capability: int = 64,
+                    n_episodes_per_capability: int = 20,
                     capability_pairs_override: Optional[Sequence[Sequence[int]]] = None):
     """Run ``n_episodes_per_capability`` full partner-episodes per capability
-    pair, on held-out layouts. Reports round-level success plus per-capability
+    pair, on the given layout pool (this experiment uses the SAME 1000
+    layouts as training). Reports round-level success plus per-capability
     and per-round-index breakdowns.
 
     ``capability_pairs_override`` — evaluate against this explicit pool
-    (e.g. training pairs, or held-out pairs) instead of whatever was in
-    the training env kwargs.
+    (e.g. training or novel test pairs).
     """
     env_kwargs = dict(config["ENV_KWARGS"])
     env_kwargs["layouts_dir"] = layouts_dir
@@ -863,9 +1002,7 @@ def evaluate_policy(params, config, layouts_dir, key,
             f"eval env communication_condition must be 'action_only', "
             f"got {env_eval.communication_condition!r}"
         )
-    network = ActorCriticCommRNN(
-        action_dim=env_eval.n_ego_actions, config=config
-    )
+    network, init_hstate_fn, _ = build_network(config, env_eval.n_ego_actions)
     C = int(env_eval.n_partner_capability)
     N = int(n_episodes_per_capability)
     B = C * N
@@ -883,7 +1020,7 @@ def evaluate_policy(params, config, layouts_dir, key,
     states = states.replace(capability=cap_per_ep)
     obs = jax.vmap(env_eval.get_obs)(states)
 
-    hstate0 = ScannedRNN.initialize_carry(B, config["GRU_HIDDEN_DIM"])
+    hstate0 = init_hstate_fn(B)
     done_prev0 = jnp.zeros((B,), dtype=bool)
 
     @jax.jit
@@ -988,24 +1125,28 @@ def evaluate_policy(params, config, layouts_dir, key,
 @hydra.main(
     version_base=None,
     config_path="config",
-    config_name="ippo_rnn_coordination_grid",
+    config_name="ippo_coordination_grid",
 )
 def main(config):
     config = OmegaConf.to_container(config)
     num_seeds = config["NUM_SEEDS"]
     start_time = datetime.now()
 
+    model_type = str(config.get("MODEL_TYPE", "rnn")).lower()
+    regime = str(config.get("PARTNER_REGIME", "diverse")).lower()
+    influence = bool(config.get("INFLUENCE", True))
     wandb.init(
         entity=config.get("ENTITY", ""),
         project=config.get("PROJECT", "coordination_grid"),
-        tags=["IPPO", "RNN", "CoordinationGrid"],
+        tags=["IPPO", model_type.upper(), "CoordinationGrid",
+              f"regime={regime}", f"influence={influence}"],
         config=config,
         mode=config.get("WANDB_MODE", "disabled"),
         name=(
-            f"ippo_rnn_coordination_grid_action_only"
+            f"ippo_{model_type}_{regime}"
+            f"_{'inf' if influence else 'noinf'}"
             f"_R{config['ENV_KWARGS'].get('rounds_per_episode', 1)}"
-            f"_hideK{config['ENV_KWARGS'].get('hide_partner_until_time', 0)}"
-            f"_ncap={len(config['ENV_KWARGS'].get('partner_capability_pairs', []))}"
+            f"_seed{config['SEED']}"
         ),
     )
 
@@ -1058,69 +1199,65 @@ def main(config):
             print(f"[main] saved {num_seeds} per-seed dumps beside {save_path}",
                   flush=True)
 
-    # -------------- Held-out eval on val / test layout pools --------------
-    # For each split (val / test) we evaluate under BOTH the training
-    # capability pool (familiar profiles) and the held-out capability pool
-    # (unseen combinations of already-seen values).
-    eval_dirs: Dict[str, str] = config.get("EVAL_LAYOUTS_DIRS", {}) or {}
-    n_eps = int(
-        config.get("EVAL_EPISODES_PER_CAPABILITY",
-                   config.get("EVAL_EPISODES_PER_Z", 64))
-    )
-    train_cap_pool = list(config["ENV_KWARGS"].get(
-        "partner_capability_pairs", TRAINING_CAPABILITY_PAIRS,
-    ))
-    heldout_cap_pool = list(config.get(
-        "EVAL_HELDOUT_CAPABILITY_PAIRS", HELDOUT_CAPABILITY_PAIRS,
-    ))
-    if eval_dirs:
+    # -------------- Eval on the SAME 1000-layout corpus as training --------------
+    # Two capability slices are reported:
+    #   train : the exact training pool (familiar profiles)
+    #   test  : the novel-partner test population from
+    #           capability_populations.TEST_CAPABILITY_PAIRS — includes
+    #           scalar delay values (0, 5, 6) never seen at training.
+    # The primary scientific result is the test slice. This runs a
+    # lightweight in-process eval; the full evaluation lives in
+    # analysis/evaluate_partner_modelling.py.
+    layouts_dir = config["ENV_KWARGS"].get("layouts_dir", None)
+    n_eps = int(config.get("EVAL_EPISODES_PER_CAPABILITY", 20))
+    train_cap_pool = [list(p) for p in TRAIN_CAPABILITY_PAIRS]
+    test_cap_pool = [list(p) for p in TEST_CAPABILITY_PAIRS]
+    if layouts_dir:
         params_seed0 = jax.tree_util.tree_map(
             lambda x: x[0], out["runner_state"][0].params
         )
         rng_eval = jax.random.PRNGKey(int(config.get("EVAL_SEED", 12345)))
         eval_summary: Dict[str, dict] = {}
-        for split, ldir in eval_dirs.items():
-            eval_summary[split] = {}
-            for cap_slice_name, cap_pool in (
-                ("familiar", train_cap_pool),
-                ("heldout",  heldout_cap_pool),
+        for cap_slice_name, cap_pool in (
+            ("train", train_cap_pool),
+            ("test",  test_cap_pool),
+        ):
+            rng_eval, sub = jax.random.split(rng_eval)
+            print(
+                f"[eval] {cap_slice_name}: layouts_dir={layouts_dir}, "
+                f"{n_eps} episodes/cap × {len(cap_pool)} capability pairs...",
+                flush=True,
+            )
+            r = evaluate_policy(
+                params_seed0, config, layouts_dir, sub,
+                n_episodes_per_capability=n_eps,
+                capability_pairs_override=cap_pool,
+            )
+            eval_summary[cap_slice_name] = r
+            print(
+                f"[eval] {cap_slice_name}: "
+                f"round_success_overall={r['round_success_overall']:.3f}"
+                f"  (n_rounds={r['n_rounds_total']})",
+                flush=True,
+            )
+            for cap, sv, nrv in zip(
+                r["partner_capability_pairs"],
+                r["per_capability_success"],
+                r["per_capability_rounds"],
             ):
-                rng_eval, sub = jax.random.split(rng_eval)
                 print(
-                    f"[eval] {split}/{cap_slice_name}: layouts_dir={ldir}, "
-                    f"{n_eps} episodes/cap × {len(cap_pool)} capability pairs...",
-                    flush=True,
+                    f"    cap=({cap[0]},{cap[1]})  succ={sv:.3f}  "
+                    f"n_rounds={nrv}", flush=True,
                 )
-                r = evaluate_policy(
-                    params_seed0, config, ldir, sub,
-                    n_episodes_per_capability=n_eps,
-                    capability_pairs_override=cap_pool,
-                )
-                eval_summary[split][cap_slice_name] = r
-                print(
-                    f"[eval] {split}/{cap_slice_name}: "
-                    f"round_success_overall={r['round_success_overall']:.3f}"
-                    f"  (n_rounds={r['n_rounds_total']})",
-                    flush=True,
-                )
-                for cap, sv, nrv in zip(
-                    r["partner_capability_pairs"],
-                    r["per_capability_success"],
-                    r["per_capability_rounds"],
-                ):
-                    print(
-                        f"    cap=({cap[0]},{cap[1]})  succ={sv:.3f}  "
-                        f"n_rounds={nrv}", flush=True,
-                    )
-                wandb.log({
-                    f"eval_{split}_{cap_slice_name}/round_success_overall":
-                        r["round_success_overall"],
-                    **{f"eval_{split}_{cap_slice_name}/per_cap_success/cap={cap[0]}-{cap[1]}": sv
-                       for cap, sv in zip(
-                           r["partner_capability_pairs"],
-                           r["per_capability_success"],
-                       )},
-                })
+            wandb.log({
+                f"eval_{cap_slice_name}/round_success_overall":
+                    r["round_success_overall"],
+                **{f"eval_{cap_slice_name}/per_cap_success/cap={cap[0]}-{cap[1]}": sv
+                   for cap, sv in zip(
+                       r["partner_capability_pairs"],
+                       r["per_capability_success"],
+                   )},
+            })
         if save_path:
             eval_json_path = os.path.splitext(save_path)[0] + "_eval.json"
             import json as _json

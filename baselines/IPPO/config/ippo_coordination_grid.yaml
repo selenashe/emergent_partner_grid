@@ -1,0 +1,85 @@
+# CoordinationGrid IPPO — unified config for the four experimental conditions.
+#
+# Switches:
+#   MODEL_TYPE      : "rnn" | "mlp"
+#   PARTNER_REGIME  : "diverse" | "single"
+#   INFLUENCE       : true | false
+#
+# Same 1000-layout corpus for training AND evaluation (there is no
+# layout-generalization experiment). Same reference-style train/test
+# capability populations for every model.
+
+"ENV_NAME": "coordination_grid"
+"ENV_KWARGS":
+  # The sole layout corpus. See dev/grids_capability_selected/manifest.json.
+  "layouts_dir": "/juice6/u/jshe/emergent_partner_grid/dev/grids_capability_selected/layouts/train"
+  "augment_symmetries": False
+  # partner_capability_pairs is filled in by the trainer from PARTNER_REGIME
+  # (do NOT set here — leaving it unset keeps the "one source of truth"
+  # invariant in capability_populations.py).
+  "rounds_per_episode": 20
+  # Round horizon large enough that no valid capability profile makes a
+  # round physically infeasible. See dev/capability_validation.py.
+  "max_steps": 100
+  "step_penalty": 0.01               # validated setting; do NOT bump.
+  "success_reward": 1.0
+  "hide_partner_until_time": 0
+  "communication_condition": "action_only"
+  # No-influence variant sets INFLUENCE=false at the top level; the
+  # trainer routes it into the env. Default true.
+  "influence": True
+
+# --- Experimental-condition switches ---
+"MODEL_TYPE": "rnn"                   # "rnn" | "mlp"
+"PARTNER_REGIME": "diverse"           # "diverse" | "single"
+"INFLUENCE": True                     # true | false
+"SINGLE_PARTNER": [1, 4]              # used only when PARTNER_REGIME=single
+
+# --- Eval ---
+# The same 1000 training layouts are reused for eval. Two capability slices
+# are auto-run: TRAIN_CAPABILITY_PAIRS (familiar) and TEST_CAPABILITY_PAIRS
+# (novel, includes scalar delay values {0, 5, 6} unseen at training).
+"EVAL_EPISODES_PER_CAPABILITY": 20
+"EVAL_SEED": 12345
+
+"SAVE_PARAMS_PATH": "/juice6/u/jshe/emergent_partner_grid/dev/train_logs/capability_params.safetensors"
+
+"SEED": 1
+"NUM_SEEDS": 1
+
+# --- optimizer / schedule ---
+"LR": 5e-4
+"ANNEAL_LR": True
+"LR_WARMUP": 0.05
+
+# --- PPO rollout & update (matches reference recurrent config) ---
+"NUM_ENVS": 256
+"NUM_STEPS": 256
+"UPDATE_EPOCHS": 4
+"NUM_MINIBATCHES": 64                 # reference value; was 8 previously.
+
+"TOTAL_TIMESTEPS": 60000000
+
+# --- objective ---
+"CLIP_EPS": 0.2
+"ENT_COEF": 0.01
+"GAMMA": 0.99
+"GAE_LAMBDA": 0.95
+"VF_COEF": 1.0
+"MAX_GRAD_NORM": 0.25
+
+# --- network ---
+"FC_DIM_SIZE": 128
+"GRU_HIDDEN_DIM": 128
+"GRID_EMB_DIM": 64
+"MSG_EMB_DIM": 8
+"ACTIVATION": "relu"
+
+# --- schedule length (episodes total materialized; wraps if exceeded) ---
+"N_EPS_TOTAL": 131072
+"SCHEDULE_SEED": 2026
+
+# --- W&B (defaults to disabled) ---
+"ENTITY": ""
+"PROJECT": "coordination_grid"
+"WANDB_MODE": "disabled"

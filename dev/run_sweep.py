@@ -1,3 +1,8 @@
+# ==========================================================
+# SUPERSEDED — pre-refactor script; NOT part of the current
+# CoordinationGrid partner-modelling experiment.
+# See project_log_revised.md for the active experiment code.
+# ==========================================================
 """Run a full-factorial sensitivity sweep over layout-generator parameters.
 
 Fixed: `--grid_size 7`, `--n 100`, single train-only split

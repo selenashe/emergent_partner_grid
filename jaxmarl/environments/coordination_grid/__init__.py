@@ -19,9 +19,12 @@ from .coordination_grid import (
     ACTION_MASK_TGEQ1,
     COMM_ACTION_ONLY,
     COMM_CONDITIONS,
-    CAPABILITY_VALUES,
-    TRAINING_CAPABILITY_PAIRS,
-    HELDOUT_CAPABILITY_PAIRS,
-    ALL_CAPABILITY_PAIRS,
     bfs_distance_map,
+)
+from .capability_populations import (
+    TRAIN_CAPABILITY_PAIRS,
+    TEST_CAPABILITY_PAIRS,
+    DEFAULT_SINGLE_PARTNER,
+    FAST_DELAYS,
+    SLOW_DELAYS,
 )

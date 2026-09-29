@@ -1,3 +1,8 @@
+# ==========================================================
+# SUPERSEDED — pre-refactor script; NOT part of the current
+# CoordinationGrid partner-modelling experiment.
+# See project_log_revised.md for the active experiment code.
+# ==========================================================
 """Per-rollout diagnostic for held-out CoordinationGrid evaluation.
 
 Loads a trained policy, runs it over the val + test layout pools, and
