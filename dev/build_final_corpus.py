@@ -49,7 +49,9 @@ from typing import Dict, List, Optional, Sequence, Tuple
 
 import numpy as np
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+_THIS_DIR = Path(__file__).resolve().parent
+sys.path.insert(0, str(_THIS_DIR))              # dev/
+sys.path.insert(0, str(_THIS_DIR.parent))       # repo root, for `baselines.*`
 from env_generator import (
     GridEnv,
     _dumps_compact_arrays,

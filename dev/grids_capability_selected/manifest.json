@@ -1,0 +1,365 @@
+{
+  "n_candidates_generated": 20000,
+  "n_after_basic_validity": 20000,
+  "n_after_observability": 12587,
+  "n_after_allocation_balance": 7374,
+  "n_after_feasibility": 7374,
+  "n_after_delta_filter": 5549,
+  "n_after_horizon_filter": 5485,
+  "n_final": 1600,
+  "n_train": 1280,
+  "n_val": 160,
+  "n_test": 160,
+  "seeds": {
+    "master_seed": 2026,
+    "shuffle_seed": 2026,
+    "stratify_seed": 2026
+  },
+  "thresholds": {
+    "min_partner_goal_distance": 3,
+    "min_optimal_alloc_fraction": 0.25,
+    "max_optimal_alloc_fraction": 0.75,
+    "max_tie_fraction": 0.5,
+    "min_oracle_success": 0.99,
+    "delta_reward_threshold": 0.03066666666666673,
+    "delta_reward_threshold_source": "quantile=0.25",
+    "horizon_n_sigma": 3.0,
+    "horizon_safety_margin": 0
+  },
+  "eval_reward_config": {
+    "eval_max_steps": 500,
+    "step_penalty": 0.01,
+    "success_reward": 1.0
+  },
+  "horizon_pre_prune": {
+    "mean": 48.89277347269778,
+    "std": 15.789690527199092,
+    "n_sigma": 3.0,
+    "upper_bound": 96.26184505429507,
+    "n_kept": 5485,
+    "n_rejected": 64,
+    "n_input": 5549
+  },
+  "delta_reward_distribution_survivors_pre_delta_filter": {
+    "n": 7374,
+    "min": 0.006666666666666599,
+    "max": 0.21366666666666673,
+    "mean": 0.04828849109483763,
+    "std": 0.02546467368660702,
+    "p10": 0.020666666666666722,
+    "p25": 0.03066666666666673,
+    "p50": 0.044333333333333225,
+    "p75": 0.059999999999999915,
+    "p90": 0.08399999999999974,
+    "p95": 0.09799999999999975
+  },
+  "post_horizon_completion": {
+    "n": 5485,
+    "min": 20.0,
+    "max": 92.0,
+    "mean": 48.17319963536919,
+    "std": 14.342556474541581,
+    "p10": 29.0,
+    "p25": 38.0,
+    "p50": 47.0,
+    "p75": 56.0,
+    "p90": 65.0,
+    "p95": 74.0
+  },
+  "recommended_max_steps": 92,
+  "max_observed_retained_oracle_completion": 92,
+  "selected_layout_stats": {
+    "p_opt_red": {
+      "n": 1600,
+      "min": 0.26666666666666666,
+      "max": 0.7333333333333333,
+      "mean": 0.49411405550468046,
+      "std": 0.14751982562158372,
+      "p10": 0.3,
+      "p25": 0.3448275862068966,
+      "p50": 0.5,
+      "p75": 0.6,
+      "p90": 0.7,
+      "p95": 0.7241379310344828
+    },
+    "fraction_ties": {
+      "n": 1600,
+      "min": 0.0,
+      "max": 0.4,
+      "mean": 0.04158333333333333,
+      "std": 0.0652558532921675,
+      "p10": 0.0,
+      "p25": 0.0,
+      "p50": 0.0,
+      "p75": 0.03333333333333333,
+      "p90": 0.16666666666666666,
+      "p95": 0.2
+    },
+    "delta_reward": {
+      "n": 1600,
+      "min": 0.03066666666666673,
+      "max": 0.14000000000000012,
+      "mean": 0.05353458333333325,
+      "std": 0.019691722699701604,
+      "p10": 0.03200000000000003,
+      "p25": 0.03833333333333344,
+      "p50": 0.04866666666666658,
+      "p75": 0.06333333333333324,
+      "p90": 0.08266666666666633,
+      "p95": 0.09133333333333328
+    },
+    "oracle_expected_reward": {
+      "n": 1600,
+      "min": 0.6416666666666665,
+      "max": 0.892,
+      "mean": 0.8136054166666667,
+      "std": 0.0467827484655728,
+      "p10": 0.7540000000000001,
+      "p25": 0.7906666666666666,
+      "p50": 0.8203333333333334,
+      "p75": 0.8446666666666668,
+      "p90": 0.8723333333333334,
+      "p95": 0.882
+    },
+    "best_fixed_expected_reward": {
+      "n": 1600,
+      "min": 0.535,
+      "max": 0.8599999999999999,
+      "mean": 0.7600708333333336,
+      "std": 0.06286036539978464,
+      "p10": 0.6766666666666669,
+      "p25": 0.7200000000000003,
+      "p50": 0.7633333333333334,
+      "p75": 0.8066666666666668,
+      "p90": 0.8383333333333333,
+      "p95": 0.85
+    },
+    "oracle_mean_completion": {
+      "n": 1600,
+      "min": 10.8,
+      "max": 35.833333333333336,
+      "mean": 18.639458333333334,
+      "std": 4.678274846557282,
+      "p10": 12.766666666666667,
+      "p25": 15.533333333333333,
+      "p50": 17.966666666666665,
+      "p75": 20.933333333333334,
+      "p90": 24.6,
+      "p95": 28.366666666666667
+    },
+    "oracle_max_completion": {
+      "n": 1600,
+      "min": 20.0,
+      "max": 92.0,
+      "mean": 47.18,
+      "std": 13.317567345427618,
+      "p10": 29.0,
+      "p25": 38.0,
+      "p50": 47.0,
+      "p75": 56.0,
+      "p90": 65.0,
+      "p95": 74.0
+    },
+    "oracle_p95_completion": {
+      "n": 1600,
+      "min": 18.19999999999999,
+      "max": 82.99999999999994,
+      "mean": 41.404124999999986,
+      "std": 11.682883788233744,
+      "p10": 26.299999999999983,
+      "p25": 33.84999999999998,
+      "p50": 40.84999999999998,
+      "p75": 47.84999999999998,
+      "p90": 58.69999999999996,
+      "p95": 65.69999999999996
+    },
+    "oracle_success_fraction": {
+      "n": 1600,
+      "min": 1.0,
+      "max": 1.0,
+      "mean": 1.0,
+      "std": 0.0,
+      "p10": 1.0,
+      "p25": 1.0,
+      "p50": 1.0,
+      "p75": 1.0,
+      "p90": 1.0,
+      "p95": 1.0
+    },
+    "partner_to_red": {
+      "n": 1600,
+      "min": 3.0,
+      "max": 16.0,
+      "mean": 6.86625,
+      "std": 2.022587683513375,
+      "p10": 5.0,
+      "p25": 5.0,
+      "p50": 6.0,
+      "p75": 8.0,
+      "p90": 10.0,
+      "p95": 11.0
+    },
+    "partner_to_blue": {
+      "n": 1600,
+      "min": 3.0,
+      "max": 17.0,
+      "mean": 6.9825,
+      "std": 2.203053278974433,
+      "p10": 5.0,
+      "p25": 5.0,
+      "p50": 7.0,
+      "p75": 8.0,
+      "p90": 10.0,
+      "p95": 11.0
+    }
+  },
+  "d4_symmetries": [
+    "identity",
+    "rot90_cw",
+    "rot180",
+    "rot270_cw",
+    "flip_lr",
+    "flip_ud",
+    "transpose",
+    "anti_transpose"
+  ],
+  "per_sym": 200,
+  "d4_invariance_flagged": 0,
+  "capability_pool": [
+    [
+      1,
+      1
+    ],
+    [
+      1,
+      2
+    ],
+    [
+      1,
+      3
+    ],
+    [
+      1,
+      7
+    ],
+    [
+      1,
+      9
+    ],
+    [
+      2,
+      1
+    ],
+    [
+      2,
+      2
+    ],
+    [
+      2,
+      3
+    ],
+    [
+      2,
+      4
+    ],
+    [
+      2,
+      9
+    ],
+    [
+      3,
+      1
+    ],
+    [
+      3,
+      2
+    ],
+    [
+      3,
+      3
+    ],
+    [
+      3,
+      4
+    ],
+    [
+      3,
+      7
+    ],
+    [
+      4,
+      2
+    ],
+    [
+      4,
+      3
+    ],
+    [
+      4,
+      4
+    ],
+    [
+      4,
+      7
+    ],
+    [
+      4,
+      9
+    ],
+    [
+      7,
+      1
+    ],
+    [
+      7,
+      2
+    ],
+    [
+      7,
+      4
+    ],
+    [
+      7,
+      7
+    ],
+    [
+      7,
+      9
+    ],
+    [
+      9,
+      1
+    ],
+    [
+      9,
+      3
+    ],
+    [
+      9,
+      4
+    ],
+    [
+      9,
+      7
+    ],
+    [
+      9,
+      9
+    ]
+  ],
+  "env_generator": {
+    "grid_size": 7,
+    "wall_density": [
+      0.15,
+      0.6
+    ],
+    "min_agent_sep": 3,
+    "min_goal_sep": 3,
+    "max_assignment_gap": 20,
+    "min_switching_cost": 0.0,
+    "geometric_pref_threshold": 99,
+    "switching_k": 2,
+    "max_attempts": 500
+  },
+  "reproduce_command": "python dev/build_final_corpus.py \\\n    --n_candidates 20000 \\\n    --n_final 1600 \\\n    --n_train 1280 \\\n    --n_val 160 \\\n    --n_test 160 \\\n    --train_val_test_ratio 0.8 0.1 0.1 \\\n    --master_seed 2026 \\\n    --shuffle_seed 2026 \\\n    --stratify_seed 2026 \\\n    --grid_size 7 \\\n    --wall_density 0.15 0.6 \\\n    --min_agent_sep 3 \\\n    --min_goal_sep 3 \\\n    --max_assignment_gap 20 \\\n    --min_switching_cost 0.0 \\\n    --geometric_pref_threshold 99 \\\n    --switching_k 2 \\\n    --max_attempts 500 \\\n    --eval_max_steps 500 \\\n    --step_penalty 0.01 \\\n    --success_reward 1.0 \\\n    --min_partner_goal_distance 3 \\\n    --min_optimal_alloc_fraction 0.25 \\\n    --max_optimal_alloc_fraction 0.75 \\\n    --max_tie_fraction 0.5 \\\n    --min_oracle_success 0.99 \\\n    --delta_reward_quantile 0.25 \\\n    --horizon_n_sigma 3.0 \\\n    --horizon_safety_margin 0 \\\n    --n_bins_per_feature 3 \\\n    --out_dir dev/grids_capability_selected \\\n    --skip_render"
+}
