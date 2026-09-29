@@ -46,7 +46,10 @@
   "rounds_per_episode": 20
   "max_steps": 64                    # widened from 15 so (9,9) etc. are
                                      # feasible on ~91% of layouts.
-  "step_penalty": 0.01
+  "step_penalty": 0.02             # bumped from 0.01 to sharpen the
+                                   # completion-time gradient under the
+                                   # widened max_steps=64 horizon. See
+                                   # project_log_revised.md §14.
   "success_reward": 1.0
   "hide_partner_until_time": 0
   "communication_condition": "action_only"

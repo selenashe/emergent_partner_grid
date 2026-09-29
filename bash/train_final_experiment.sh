@@ -40,6 +40,7 @@ NUM_MINIBATCHES="${NUM_MINIBATCHES:-8}"
 TOTAL_TIMESTEPS="${TOTAL_TIMESTEPS:-60000000}"
 LR="${LR:-5e-4}"
 MAX_STEPS="${MAX_STEPS:-64}"
+STEP_PENALTY="${STEP_PENALTY:-0.02}"
 ROUNDS_PER_EPISODE="${ROUNDS_PER_EPISODE:-20}"
 AUGMENT_SYMMETRIES="${AUGMENT_SYMMETRIES:-false}"
 HIDE_PARTNER_UNTIL_TIME="${HIDE_PARTNER_UNTIL_TIME:-0}"
@@ -84,6 +85,7 @@ python -u baselines/IPPO/ippo_rnn_coordination_grid.py \
     ENV_KWARGS.layouts_dir="${TRAIN_LAYOUTS}" \
     ENV_KWARGS.rounds_per_episode="${ROUNDS_PER_EPISODE}" \
     ENV_KWARGS.max_steps="${MAX_STEPS}" \
+    ENV_KWARGS.step_penalty="${STEP_PENALTY}" \
     ENV_KWARGS.augment_symmetries="${AUGMENT_SYMMETRIES}" \
     ENV_KWARGS.hide_partner_until_time="${HIDE_PARTNER_UNTIL_TIME}" \
     ENV_KWARGS.communication_condition="action_only" \
