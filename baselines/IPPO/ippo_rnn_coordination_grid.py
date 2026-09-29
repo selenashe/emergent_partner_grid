@@ -65,9 +65,9 @@ from sweep_scheduler import build_schedule, initial_episode_cursor, summarize_sc
 
 
 # Static mask tensors (bool) for the network. jnp arrays so they broadcast
-# cleanly with logit tensors of arbitrary leading shape. Only the
-# action_only regime is supported: t=0 legal is {STAY+NONE}, t>=1 legal is
-# {UP,DOWN,RIGHT,LEFT,STAY}+NONE.
+# cleanly with logit tensors of arbitrary leading shape.
+# t=0    legal ego actions: {STAY+ALLOC_RED, STAY+ALLOC_BLUE}    (ids 13, 14)
+# t>=1   legal ego actions: {UP,DOWN,RIGHT,LEFT,STAY} + NONE     (ids 0,3,6,9,12)
 _ACTION_MASK_T0_J = jnp.asarray(ACTION_MASK_T0, dtype=jnp.bool_)         # (15,)
 _ACTION_MASK_TGEQ1_J = jnp.asarray(ACTION_MASK_TGEQ1, dtype=jnp.bool_)   # (15,)
 
@@ -217,7 +217,7 @@ class ActorCriticCommRNN(nn.Module):
             bias_init=constant(0.0),
         )(actor_mean)   # (T, N, action_dim=15)
 
-        # Legality mask (action_only only). t=0 -> {STAY+NONE};
+        # Legality mask. t=0 -> {STAY+ALLOC_RED, STAY+ALLOC_BLUE};
         # t>=1 -> {UP,DOWN,RIGHT,LEFT,STAY}+NONE. is_t0 has leading (T, N)
         # shape (scalar per env-step); broadcast against the (15,) masks
         # and set illegal logits to -inf so distrax Categorical excludes
@@ -407,10 +407,10 @@ def make_train(config):
     )
 
     # NOTE: LogWrapper is intentionally NOT used here. The final experiment
-    # needs a *scheduled* auto-reset (each partner-episode consumes the next
-    # pre-planned (z, layout_seq) from a balanced sweep), which the trainer
-    # implements manually inside _env_step below. LogWrapper's episode-return
-    # bookkeeping is reimplemented in the trainer directly.
+    # needs a scheduled auto-reset (each partner-episode consumes the next
+    # pre-planned (capability, layout_seq) from the scheduler), which the
+    # trainer implements manually inside _env_step below. LogWrapper's
+    # episode-return bookkeeping is reimplemented in the trainer directly.
 
     def create_learning_rate_fn():
         base_lr = config["LR"]
@@ -716,7 +716,8 @@ def make_train(config):
 
                         # Split entropy by t=0 vs t>=1 for logging. Uses the
                         # SAME is_t0 the mask was derived from, so t=0 entropy
-                        # is capped at ln(3) and t>=1 at ln(5).
+                        # is capped at ln(2) (2 alloc options) and t>=1 at
+                        # ln(5) (5 move options).
                         is_t0_mask = (traj_batch.obs["is_t0"] > 0.5)       # (T, N)
                         n_t0 = is_t0_mask.sum()
                         n_tge1 = (~is_t0_mask).sum()
@@ -805,7 +806,7 @@ def make_train(config):
             new_update_step = update_step + 1
 
             # ---- Round-level success rate ----
-            # Under Stage C+D, a *partner episode* contains many rounds and
+            # A partner episode contains rounds_per_episode rounds and
             # `traj_batch.done` (== done["__all__"]) only fires at the end of
             # the final round. Round-level success is the right per-round
             # metric: mask successes by info["round_done"] and average.
@@ -823,9 +824,8 @@ def make_train(config):
             )
 
             # Partner-episode-level: whole-episode success counts only end-of-
-            # -episode steps. In Stage A/B (rounds_per_episode=1) this equals
-            # round_success_rate; in Stage C+D it's the fraction of *partner
-            # episodes* whose final round succeeded (a much noisier number).
+            # -episode steps — the fraction of partner episodes whose final
+            # round succeeded (noisier than the per-round rate above).
             episode_done = traj_batch.done.astype(jnp.float32)
             n_completed = episode_done.sum()
             partner_ep_success_rate = jnp.where(
@@ -1198,6 +1198,20 @@ def main(config):
                 save_params(ps, path_s)
             print(f"[main] saved {num_seeds} per-seed dumps beside {save_path}",
                   flush=True)
+
+        # Save the fully resolved training config next to the checkpoint so
+        # the standalone evaluator can reconstruct the environment exactly
+        # (MODEL_TYPE, PARTNER_REGIME, INFLUENCE, SINGLE_PARTNER, ENV_KWARGS,
+        # PPO hyperparameters, network sizes, schedule params, etc.).
+        # The evaluator loads this JSON with --config.
+        import json as _json_cfg
+        config_out_path = os.path.splitext(save_path)[0] + "_config.json"
+        cfg_serializable = _json_cfg.loads(
+            _json_cfg.dumps(config, default=str)
+        )
+        with open(config_out_path, "w") as f:
+            _json_cfg.dump(cfg_serializable, f, indent=2)
+        print(f"[main] saved resolved config -> {config_out_path}", flush=True)
 
     # -------------- Eval on the SAME 1000-layout corpus as training --------------
     # Two capability slices are reported:

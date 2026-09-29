@@ -223,14 +223,24 @@ class State:
     terminal: chex.Array        # scalar bool
 
     # Partner-related state.
-    capability: chex.Array          # (2,) int32   -- [c_R, c_B]; FIXED across
+    capability: chex.Array          # (2,) int32   -- [d_R, d_B]; FIXED across
                                     #    all rounds of a partner episode.
     partner_goal: chex.Array        # scalar int32 (0=UNSET, 1=RED, 2=BLUE)
-    partner_move_ctr: chex.Array    # scalar int32 -- cooldown counter for
+    partner_move_ctr: chex.Array    # scalar int32 -- delay counter for
                                     #    partner navigation; reset per round.
-    pending_allocation: chex.Array  # scalar int32 (0=NONE, 1=ALLOC_RED,
-                                    #    2=ALLOC_BLUE) — ego's alloc from LAST
-                                    #    step (i.e. what it chose at t=0).
+    # ----- Split allocation fields -----
+    # OBSERVATION-ONLY: what the ego picked on the most recent step. In both
+    # influence and no-influence conditions this reflects the ego's action
+    # channel exactly (NONE at t>=1 by legality mask). Never used to drive
+    # the partner. This is what obs["last_allocation"] reports.
+    last_ego_allocation: chex.Array  # scalar int32 (Allocations.*)
+    # INTERNAL: the allocation that actually determines the partner's goal.
+    # Written once per round (at t=0) and preserved until the round resets.
+    #   influence=True  : partner_assignment = ego's t=0 alloc.
+    #   influence=False : partner_assignment = round-parity forced alloc
+    #                     (independent of ego action).
+    # Not exposed in the observation under either condition.
+    partner_assignment: chex.Array   # scalar int32 (Allocations.*)
     layout_idx: chex.Array          # scalar int32; addresses stacked layouts.
     round_idx: chex.Array           # scalar int32; which round (0-indexed).
     episode_layout_seq: chex.Array  # (rounds_per_episode,) int32
@@ -660,7 +670,8 @@ class CoordinationGrid(MultiAgentEnv):
             capability=cap_val,
             partner_goal=jnp.int32(GOAL_UNSET),
             partner_move_ctr=jnp.int32(0),
-            pending_allocation=jnp.int32(Allocations.none),
+            last_ego_allocation=jnp.int32(Allocations.none),
+            partner_assignment=jnp.int32(Allocations.none),
             layout_idx=idx,
             round_idx=round_val,
             episode_layout_seq=eps_seq,
@@ -758,16 +769,18 @@ class CoordinationGrid(MultiAgentEnv):
         # RNG kept for API stability; commit / cooldown are deterministic.
         key, _k_unused = jax.random.split(key, 2)
 
-        # ------- Partner goal commitment (once, at t=1, from ego's t=0 alloc) -------
-        # ego alloc ALLOC_RED → partner takes BLUE; ALLOC_BLUE → RED.
-        # NONE (which is never legal at t=0 in this build) → partner stays
-        # UNSET; keeps this branch safe if the mask is bypassed in tests.
-        pending_alloc = state.pending_allocation
+        # ------- Partner goal commitment (once, at t=1, from partner_assignment) -------
+        # partner_assignment was written at t=0 (see block below): under
+        # influence=True it holds the ego's t=0 alloc; under influence=False
+        # it holds the round-parity forced alloc. Same commit rule applies:
+        # ALLOC_RED → partner takes BLUE; ALLOC_BLUE → RED. NONE (never
+        # legal at t=0) → UNSET.
+        partner_assignment = state.partner_assignment
         alloc_derived_goal = jnp.where(
-            pending_alloc == int(Allocations.red),
+            partner_assignment == int(Allocations.red),
             jnp.int32(GOAL_BLUE),
             jnp.where(
-                pending_alloc == int(Allocations.blue),
+                partner_assignment == int(Allocations.blue),
                 jnp.int32(GOAL_RED),
                 jnp.int32(GOAL_UNSET),
             ),
@@ -870,22 +883,26 @@ class CoordinationGrid(MultiAgentEnv):
         partner_episode_done = round_done & is_final_round
 
         # ------- Allocation write -------
-        # influence=True  : ego's alloc drives partner assignment (the
-        #                   partner reads pending_allocation at t=1).
-        # influence=False : allocation is decoupled from ego and instead
-        #                   follows a partner-independent, balanced rule
-        #                   keyed on the round index. The ego still emits
-        #                   a legal t=0 alloc, but it is discarded.
+        # partner_assignment (internal, drives the partner):
+        #   influence=True  : written at t=0 from ego's alloc; preserved after.
+        #   influence=False : written at t=0 from round-parity forced alloc,
+        #                     independent of ego action; preserved after.
+        # last_ego_allocation (observation only, identical schema in both
+        # conditions): mirrors the ego's action channel every step, so the
+        # ego always sees its own t=0 alloc at t=1 and NONE thereafter
+        # (NONE is enforced by the legality mask at t>=1).
         forced_alloc = jnp.where(
             (state.round_idx % jnp.int32(2)) == jnp.int32(0),
             jnp.int32(Allocations.red),
             jnp.int32(Allocations.blue),
         )
-        pending_alloc_written = jnp.where(
-            jnp.bool_(self.influence),
-            ego_alloc,
-            jnp.where(is_time0, forced_alloc, state.pending_allocation),
+        assignment_source_at_t0 = jnp.where(
+            jnp.bool_(self.influence), ego_alloc, forced_alloc,
         )
+        partner_assignment_written = jnp.where(
+            is_time0, assignment_source_at_t0, state.partner_assignment,
+        )
+        last_ego_allocation_written = ego_alloc
 
         step_state = state.replace(
             agent_pos=agent_pos,
@@ -893,7 +910,8 @@ class CoordinationGrid(MultiAgentEnv):
             terminal=partner_episode_done,
             partner_goal=new_partner_goal,
             partner_move_ctr=next_partner_move_ctr,
-            pending_allocation=pending_alloc_written,
+            last_ego_allocation=last_ego_allocation_written,
+            partner_assignment=partner_assignment_written,
             # round_idx and capability unchanged by a plain step.
         )
 
@@ -927,15 +945,19 @@ class CoordinationGrid(MultiAgentEnv):
             "success": success,
             "round_done": round_done,
             "round_idx": state.round_idx,
+            "layout_idx": state.layout_idx,
             "capability": state.capability,           # (2,) int32 per env, (d_R, d_B)
             "capability_d_r": state.capability[0],
             "capability_d_b": state.capability[1],
             "partner_goal": new_partner_goal,
-            # allocation actually driving the partner this step (equals
-            # ego_alloc under influence=True; under influence=False, equals
-            # the round-parity forced alloc at t=0)
-            "pending_allocation": pending_alloc_written,
-            "ego_alloc_action": ego_alloc,            # what the ego picked (kept for eval)
+            # what actually drives the partner this step (equals ego alloc
+            # under influence=True; equals the round-parity forced alloc
+            # under influence=False). Persists across the round.
+            "partner_assignment": partner_assignment_written,
+            # what the ego selected this step. NONE at t>=1 by legality mask.
+            "ego_alloc_action": ego_alloc,
+            # Alias kept for callers written against the pre-split API.
+            "pending_allocation": partner_assignment_written,
             "ego_move_effective": ego_effective_move,
             "partner_move_effective": partner_effective_move,
         }
@@ -975,8 +997,11 @@ class CoordinationGrid(MultiAgentEnv):
             [walls, red_layer, blue_layer, ego_layer, partner_layer], axis=-1
         )
 
+        # Observation carries the EGO'S action channel only, never the
+        # internal partner_assignment, so the schema is identical under
+        # influence=True and influence=False.
         last_allocation = jax.nn.one_hot(
-            state.pending_allocation, N_ALLOCATIONS
+            state.last_ego_allocation, N_ALLOCATIONS
         ).astype(jnp.float32)
 
         is_t0 = (state.time == 0).astype(jnp.float32)

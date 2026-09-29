@@ -65,6 +65,16 @@ familiar values.
   parity (round_idx & 1), independent of ego's action. This is the
   no-influence control.
 
+The env keeps two separate fields to prevent an observation confound:
+
+    state.last_ego_allocation  -> ego action channel; drives obs["last_allocation"]
+    state.partner_assignment   -> internal; drives the partner's goal commit
+
+`obs["last_allocation"]` has **identical semantics** under influence=true
+and influence=false (the ego always sees its own alloc at t=1 and NONE
+thereafter). Only `partner_assignment` differs across the two
+conditions. Verified in `test_observation_schema_matches_across_influence`.
+
 Capability is **never** in the ego's observation.
 
 ### Layouts
@@ -190,9 +200,40 @@ with a `SUPERSEDED` banner at the top.
         --save_hidden               # only meaningful for MODEL_TYPE=rnn
 
 Outputs a per-checkpoint HDF5 rollout record for both the train and test
-capability slices, plus a `{prefix}_summary.json` with headline metrics
-(round success, mean reward, mean completion time, per-round success,
-partner-assigned-RED as a function of relative capability).
+capability slices, plus a `{prefix}_summary.json` with headline metrics.
+
+The primary behavioral metric is **fraction_optimal_allocation** —
+computed per t=0 sample using the same analytical
+`completion_time`/`_reward_from_time` primitive as
+`capability_validation.py`. For each (layout_idx, capability) the
+optimal alloc is `argmax(reward_A, reward_B)`; ties (equal analytical
+rewards) are excluded from the optimal-fraction accuracy but count with
+regret = 0 in `allocation_regret_mean`. Metrics reported per slice:
+
+    round_success_rate
+    mean_reward_per_round
+    mean_successful_completion_time
+    fraction_optimal_allocation_overall
+    fraction_optimal_allocation_by_round        # main adaptation curve
+    allocation_regret_mean
+    allocation_regret_by_round
+    partner_assigned_red_given_relative_cap     # secondary/qualitative
+
+`fraction_optimal_allocation_by_round` is the main adaptation signal:
+the diverse-partner RNN should improve with round index; the MLP should
+not; the single-partner RNN may learn a fixed prior with no adaptation.
+
+**Hidden-state convention (`--save_hidden`):** the saved `hidden_state`
+is the POST-observation state h_t = RNN(h_{t-1}, o_t) — the state used
+to produce this step's action. Downstream probes decode from the
+representation the policy was actually acting from.
+
+Every trainer run also drops `<tag>_config.json` beside `<tag>.safetensors`
+so the standalone evaluator can restore MODEL_TYPE / PARTNER_REGIME /
+INFLUENCE / SINGLE_PARTNER / ENV_KWARGS exactly. The evaluator
+explicitly re-injects `INFLUENCE` into `env_kwargs["influence"]` so a
+no-influence checkpoint cannot be accidentally evaluated under an
+influence-enabled env.
 
 ## Analytical validation on the current corpus
 
@@ -203,14 +244,18 @@ Run once after any capability-population or `max_steps` change:
         --max_steps 100 --step_penalty 0.01 \
         --out dev/train_logs/capability_validation_ms100.json
 
-At the currently frozen `max_steps=100`, on the 1000-layout corpus:
+At the currently frozen `max_steps=100`, on the 1000-layout corpus, with
+the partner-blind baseline chosen by expected REWARD per layout
+(matching `capability_selection.evaluate_layout`; the earlier
+success-rate-based blind was misleading at max_steps=100 where nearly
+every alloc succeeds):
 
     train pool  : oracle round_succ = 1.000, blind = 0.999
-                  oracle reward/round = +0.825, blind = +0.696
-                  oracle - blind reward = +0.129
+                  oracle reward/round = +0.8252, blind = +0.6988
+                  oracle - blind reward = +0.1264
     test  pool  : oracle round_succ = 1.000, blind = 1.000
-                  oracle reward/round = +0.868, blind = +0.739
-                  oracle - blind reward = +0.128
+                  oracle reward/round = +0.8676, blind = +0.7418
+                  oracle - blind reward = +0.1258
     max observed oracle completion = 50 steps  (safety margin ~2x)
 
 Both slices have `flip_fraction = 1.0` — every layout's optimal

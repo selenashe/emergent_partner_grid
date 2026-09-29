@@ -56,6 +56,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from capability_selection import (  # noqa: E402
     INFEASIBLE,
     completion_time,
+    _reward_from_time,
 )
 
 from jaxmarl.environments.coordination_grid import (  # noqa: E402
@@ -172,9 +173,26 @@ def _cap_pool_analysis(layouts: List[dict],
     )
 
     # Partner-blind policy (best fixed alloc per layout, no cap info).
-    blind_success_A = success[:, :, 0].mean(axis=1)
-    blind_success_B = success[:, :, 1].mean(axis=1)
-    blind_choice = np.where(blind_success_A >= blind_success_B, 0, 1)
+    # Choose the fixed allocation per layout by EXPECTED REWARD across the
+    # capability pool (matching capability_selection.evaluate_layout). Using
+    # success rate is wrong at max_steps=100 where nearly every (layout,cap)
+    # succeeds under either allocation — success-rate ties trivially, and
+    # the reported "blind reward" ends up equal to fixed-A instead of
+    # max(fixed-A, fixed-B).
+    rewards = np.full((n_L, n_C, 2), 0.0, dtype=np.float64)
+    for i in range(n_L):
+        for j in range(n_C):
+            rewards[i, j, 0] = _reward_from_time(
+                int(times[i, j, 0]), max_steps, step_penalty, success_reward,
+            )
+            rewards[i, j, 1] = _reward_from_time(
+                int(times[i, j, 1]), max_steps, step_penalty, success_reward,
+            )
+    fixed_A_reward_per_layout = rewards[:, :, 0].mean(axis=1)   # (L,)
+    fixed_B_reward_per_layout = rewards[:, :, 1].mean(axis=1)
+    blind_choice = np.where(
+        fixed_A_reward_per_layout >= fixed_B_reward_per_layout, 0, 1,
+    )                                                            # (L,)
     blind_success = np.zeros((n_L, n_C), dtype=bool)
     blind_time = np.full((n_L, n_C), np.nan, dtype=np.float64)
     for i in range(n_L):
@@ -189,17 +207,15 @@ def _cap_pool_analysis(layouts: List[dict],
         if blind_success.any() else float("nan")
     )
 
-    def _reward_from(succ_mask, time_arr):
-        succ_reward = np.where(succ_mask, success_reward, 0.0)
-        step_cost = np.where(
-            succ_mask,
-            step_penalty * np.nan_to_num(time_arr, nan=0.0),
-            step_penalty * max_steps,
-        )
-        return float((succ_reward - step_cost).mean())
-
-    oracle_reward = _reward_from(oracle_success, oracle_time)
-    blind_reward = _reward_from(blind_success, blind_time)
+    # Oracle reward from per-(layout,cap) reward-max allocation, matching
+    # what capability_selection.evaluate_layout returns.
+    oracle_reward_per_cell = np.maximum(rewards[:, :, 0], rewards[:, :, 1])
+    oracle_reward = float(oracle_reward_per_cell.mean())
+    # Blind reward using the per-layout best fixed allocation.
+    blind_reward_per_cell = np.take_along_axis(
+        rewards, blind_choice[:, None, None].repeat(n_C, axis=1), axis=2,
+    ).squeeze(-1)
+    blind_reward = float(blind_reward_per_cell.mean())
 
     # Worst-case successful completion time (for max_steps guidance).
     max_completed = int(
