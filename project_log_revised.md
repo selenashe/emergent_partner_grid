@@ -1,41 +1,45 @@
 # Project log — CoordinationGrid & emergent partner modeling
 
 **Status:** 2026-09-25
-**Purpose:** minimal but complete record of the task, data, training setup, major design iterations, final experiment, and what results are currently trustworthy.
+**Purpose:** minimal but complete record of the task, data, training setup, major design iterations, and what results are currently trustworthy.
 
-**Scope change (2026-09-25):** the project has been pared back to the
-**action_only** condition only. The prior three-condition design
-(action_only / universal / partner_specific) has been retired from the
-codebase and from this log. All references below to a three-condition
-experiment describe the earlier scope of the project; the current experiment,
-training pipeline, and evaluation cover **action_only** exclusively.
+**Scope note (2026-09-25):** the project pivoted in three steps this
+session:
+
+1. Retired the earlier three-condition design (action_only / universal /
+   partner_specific).
+2. Ran a single-condition `action_only` experiment with a scalar latent
+   `z` that had no effect on partner behavior. Held-out success was ~0.17
+   / 0.14 (val / test) — clear evidence that with a `z`-independent
+   partner and no communication, there is no reason for the ego to model
+   the partner. This served as a null-control.
+3. **Current pivot:** replaced the scalar `z` with a graded **2-D
+   capability vector** `(c_R, c_B)` that controls per-goal partner
+   movement cooldowns, and introduced an explicit role-allocation action
+   at t=0. This creates real pressure to infer the partner's capability
+   from motion timing. This log documents the current design and the
+   pre-PPO validation showing that inferring the capability profile is
+   genuinely useful.
 
 ---
 
-## 1. Research question (revised scope)
+## 1. Research question (current scope)
 
-The project asks whether a recurrent learning agent, coordinating with a
-scripted partner over multiple rounds of a small gridworld task, develops
-useful **cross-round memory** about that partner when the *only* signal it
-can rely on is the partner's realized behavior — i.e. no symbolic
-communication channel is available.
+Does a recurrent ego agent, coordinating over 20 rounds with a scripted
+partner whose latent **capability profile** `(c_R, c_B)` is fixed but
+never observed, learn to infer that profile from the partner's movement
+timing and use it to choose the better of two possible role
+allocations?
 
 There are two agents:
 
 - **ego:** the only learned agent;
-- **partner:** scripted and controlled by a latent parameter `z`.
+- **partner:** scripted, deterministic BFS navigation, but with a
+  per-goal movement cooldown controlled by the capability vector.
 
-The single supported communication condition is:
-
-1. **`action_only`** — no symbolic communication. The partner commits to
-   a goal uniformly at random at t=1 and then navigates greedily toward
-   it. `z` is still carried in state (for schedule parity with the
-   historical multi-condition experiment) but the partner's commit
-   probability does not depend on `z`.
-
-The retired conditions (`universal`, `partner_specific`) previously
-produced z-independent and z-conditional message decoders; they have been
-removed from the environment, trainer, config, shell scripts, and tests.
+The capability vector is fixed for one 20-round partner episode, never
+appears in the observation, and only affects the partner's move
+cadence.
 
 ---
 
@@ -49,7 +53,8 @@ Each round is a 7×7 gridworld containing:
 - RED goal;
 - BLUE goal.
 
-A round succeeds when the agents occupy **different goals simultaneously**:
+A round succeeds when the agents occupy **different goals
+simultaneously**:
 
 ```text
 ego=RED  + partner=BLUE
@@ -57,40 +62,22 @@ or
 ego=BLUE + partner=RED
 ```
 
-They are therefore coordinating on a **complementary assignment**, not choosing the same color.
-
 ### Round timing
 
 At round-local `t=0`:
 
-- both agents must stay still;
-- the ego's only legal action is `STAY+NONE` (no symbolic message channel
-  is available in `action_only`).
-
-At `t=1`:
-
-- the partner commits once to RED or BLUE uniformly at random (P=0.5
-  each), independent of any prior ego message and independent of `z`;
-- it starts navigating toward that goal.
+- both agents STAY;
+- the ego MUST commit to a role via its t=0 action: **ALLOC_RED** or
+  **ALLOC_BLUE** (see §3);
+- the partner deterministically takes the **complementary** goal at
+  t=1.
 
 For `t>=1`:
 
-- ego moves;
-- the partner follows a deterministic shortest-path policy toward its
-  committed goal;
-- the partner's goal is fixed for the rest of that round.
-
-### Movement and collisions
-
-Movement actions are:
-
-```text
-UP, DOWN, RIGHT, LEFT, STAY
-```
-
-Walls and boundaries block movement. If both agents would occupy the same cell, or swap cells in one step, the move is blocked.
-
-Partner navigation uses precomputed BFS next-action tables. Navigation itself never depends on `z`.
+- ego moves as its policy chooses;
+- the partner follows the precomputed shortest-path table toward its
+  committed goal, subject to a movement cooldown (§4);
+- the partner's goal is fixed for the rest of the round.
 
 ### Reward and termination
 
@@ -106,7 +93,9 @@ A round ends on:
 - coordination success, or
 - `max_steps=15`.
 
-The primary outcome throughout the final experiment is **round-level success**.
+Twenty rounds per partner episode; `done['__all__']` only fires on the
+last round's terminal step; the GRU hidden state carries across
+intermediate rounds and only resets between partner episodes.
 
 ---
 
@@ -118,58 +107,98 @@ Each agent receives the same dict:
 
 ```python
 {
-    "grid": (H, W, 5),
-    "last_message": (3,),
+    "grid": (H, W, 5),        # walls, RED, BLUE, ego pos, partner pos
+    "last_allocation": (3,),  # one-hot over {NONE, ALLOC_RED, ALLOC_BLUE}
     "is_t0": scalar,
 }
 ```
 
-Grid channels are:
-
-1. walls;
-2. RED goal;
-3. BLUE goal;
-4. ego position;
-5. partner position.
-
-`last_message` is a one-hot encoding of **ego's own message on the
-previous step**. Under `action_only` the only legal ego message is
-`NONE`, so this field is `[1, 0, 0]` on every step; it remains in the
-observation for parity with earlier stages of the project.
-
-`z` is **never included in the observation**.
+The 2-D capability vector `(c_R, c_B)` is **deliberately absent** from
+the observation. The only channel through which capability can influence
+the ego's behavior is the *timing* of the partner's realized movements.
 
 ### Ego action space
 
-The network keeps the flat 15-way action head (5 moves × 3 messages) for
-API stability, but under `action_only` the legal set is:
+The network keeps the flat 15-way action head:
 
 ```text
-t=0    :  {STAY+NONE}                                  (1 legal action)
-t>=1   :  {UP,DOWN,RIGHT,LEFT,STAY} × NONE             (5 legal actions)
+a = 3 * move + alloc
+move  ∈ {UP, DOWN, RIGHT, LEFT, STAY}
+alloc ∈ {NONE, ALLOC_RED, ALLOC_BLUE}
 ```
 
-Illegal logits are set to `-inf`, so the same mask is respected during action sampling, PPO log-probability recomputation, and entropy calculation.
+with legal masks:
 
-At t=0 the policy has entropy 0 by construction (single legal action);
-this is a deliberate consequence of removing the message channel.
+```text
+t=0    :  {STAY+ALLOC_RED, STAY+ALLOC_BLUE}     (ids 13, 14)
+t>=1   :  {UP,DOWN,RIGHT,LEFT,STAY} + NONE      (ids 0, 3, 6, 9, 12)
+```
+
+At t=0 the ego is **forced** to commit to RED or BLUE (a 2-way
+allocation, not 3-way). This is not a symbolic message with
+partner-dependent meaning; it is a fixed-semantics role commitment. The
+partner takes the complementary goal deterministically:
+
+```text
+ego ALLOC_RED  -> partner_goal = BLUE
+ego ALLOC_BLUE -> partner_goal = RED
+```
+
+At `t>=1` no allocation is legal.
 
 ---
 
-## 4. Partner type `z`
+## 4. Partner capability vector `(c_R, c_B)` and cooldown mechanic
 
-The final partner pool is:
+### Capability pool
+
+Individual per-goal cooldown values:
 
 ```text
-z ∈ {0.1, 0.3, 0.5, 0.7, 0.9}
+CAPABILITY_VALUES = {1, 2, 3, 4, 7, 9}
 ```
 
-`z` is fixed for one 20-round partner episode.
+`(c_R, c_B)` is drawn from a discrete pool of 30 training pairs and is
+**fixed for one 20-round partner episode**. Lower cooldown = faster
+partner on that goal.
 
-Under `action_only`, `z` has no causal effect on the partner's goal
-commit or navigation. It is still sampled and stored on state to keep
-the balanced (z × layout) schedule structurally identical to the
-retired three-condition experiment.
+### Movement cooldown
+
+At each round-local step `t>=1`, if the partner has a committed goal:
+
+- if `partner_move_ctr == 0`, the partner takes one BFS step and
+  `partner_move_ctr` resets to `c - 1`, where `c = c_R` if
+  `partner_goal == RED` else `c_B`;
+- otherwise the partner STAYs and the counter decrements (floored at
+  0).
+
+So `c=1` → partner moves every step (fastest); `c=9` → partner moves
+at round-local steps `t=1, 10, 19, ...` (slowest given a 15-step
+horizon). `partner_move_ctr` resets to 0 at every round boundary.
+
+BFS navigation itself is unchanged — the shortest-path table depends
+only on layout, not on capability.
+
+### Training / held-out capability split
+
+The full grid is `{1,2,3,4,7,9} × {1,2,3,4,7,9}` = 36 pairs. Six are
+held out and the remaining 30 are used at training:
+
+```text
+HELDOUT_CAPABILITY_PAIRS =
+    (1, 4), (2, 7), (3, 9), (4, 1), (7, 3), (9, 2)
+```
+
+Each of the six individual capability values appears once as `c_R` and
+once as `c_B` in the held-out set, and every value also occurs in the
+training set at both positions. So the held-out pool tests **unseen
+combinations of already-seen individual capability values**, not new
+values.
+
+Capability sampling is independent of layout identity by construction —
+the scheduler builds balanced `(capability_pair, layout)` sweeps
+(§10). This is verified by
+`dev/test_capability_env.py::test_capability_independent_of_layout`.
 
 ---
 
@@ -183,23 +212,19 @@ A **partner episode** contains:
 
 Within one partner episode:
 
-- `z` stays fixed;
+- capability `(c_R, c_B)` stays fixed;
 - each round uses a new layout;
 - partner goal resets each round;
 - round-local time resets to 0;
-- ego's GRU hidden state **does not reset**.
+- ego's GRU hidden state **does not reset**;
+- `partner_move_ctr` resets to 0 at each round boundary (it is
+  round-local state, not episode-scoped).
 
-Only after round 19 does:
+Only after round 19 does `done['__all__'] = True` fire and the
+recurrent state reset.
 
-```python
-done["__all__"] = True
-```
-
-and only this terminal signal resets recurrent state.
-
-This was an intentional departure from treating every maze round as an independent RL episode. The whole point is to give the recurrent policy a place to carry information across different task instances with the same partner — but in `action_only` any such information must come from *behavioral* observation, not messages.
-
-GAE and value bootstrapping also use this partner-episode `done`, so intermediate round boundaries are not treated as RL terminals.
+GAE and value bootstrapping use this partner-episode `done`, so
+intermediate round boundaries are not RL terminals.
 
 ---
 
@@ -207,82 +232,58 @@ GAE and value bootstrapping also use this partner-episode `done`, so intermediat
 
 Only ego is learned. The partner remains scripted.
 
-The recurrent actor-critic is adapted from the JaxMARL / Overcooked recurrent PPO code.
+The recurrent actor-critic is adapted from the JaxMARL / Overcooked
+recurrent PPO code and is unchanged from the previous build except
+that the message-embedding path now consumes `last_allocation`
+(same 3-slot one-hot).
 
 ### Encoder
 
 Grid:
 
 ```text
-(H,W,5)
- -> CNN
- -> 64-d grid embedding
+(H,W,5) -> CNN -> 64-d
 ```
 
-The CNN uses the existing Overcooked-style convolution stack:
+CNN stack:
 
 ```text
-128@1×1
-128@1×1
-8@1×1
-16@3×3
-32@3×3
-32@3×3
+128@1×1, 128@1×1, 8@1×1, 16@3×3, 32@3×3, 32@3×3
+-> flatten -> Dense(64) -> ReLU
 ```
 
-followed by flattening and a dense projection.
-
-Message:
+Allocation:
 
 ```text
-last_message (3)
- -> Dense
- -> 8-d message embedding
+last_allocation (3) -> Dense(8) -> ReLU
 ```
 
-Grid and message embeddings are concatenated and projected to:
-
-```text
-GRU_HIDDEN_DIM = 128
-```
-
-The resulting embedding is layer-normalized before the GRU.
-
-### Recurrent core
-
-```text
-GRU hidden size = 128
-```
-
-The carry persists across rounds and resets only at the end of a 20-round partner episode.
+Concatenate and project to `GRU_HIDDEN_DIM = 128`, layer-norm, then
+GRU.
 
 ### Heads
 
 Actor:
 
 ```text
-GRU output
- -> Dense(128), ReLU
- -> Dense(15 logits)
- -> legality mask (t=0: {12}; t>=1: {0,3,6,9,12})
- -> Categorical
+GRU -> Dense(128), ReLU -> Dense(15 logits) -> legality mask -> Categorical
 ```
+
+- t=0 legal ids: `{13, 14}` (STAY+ALLOC_RED, STAY+ALLOC_BLUE).
+- t>=1 legal ids: `{0, 3, 6, 9, 12}` (movement, NONE).
 
 Critic:
 
 ```text
-GRU output
- -> Dense(128), ReLU
- -> scalar value
+GRU -> Dense(128), ReLU -> scalar value
 ```
 
 ---
 
 ## 7. PPO learning rule
 
-Training uses recurrent PPO with GAE.
-
-Final matched hyperparameters:
+Recurrent PPO with GAE. Final hyperparameters (unchanged from previous
+build):
 
 ```text
 NUM_ENVS            = 256
@@ -303,187 +304,44 @@ ENT_COEF            = 0.01
 MAX_GRAD_NORM       = 0.25
 ```
 
-The learning-rate schedule is:
-
-1. linear warm-up;
-2. cosine decay.
-
-Training is JAX/JIT-based and vectorized across 256 parallel environments.
-
-The final experiment uses **one training seed** (`SEED=1`). This is enough for the current pilot-level result but is not a multi-seed robustness estimate.
+Training is JAX/JIT-based and vectorized across 256 parallel
+environments. First PPO run under the new design has now been launched
+and its held-out numbers are reported in §14b.
 
 ---
 
-## 8. Layout generation
+## 8. Layout generation (unchanged)
 
-### Generator
-
-Base generator:
+Layouts come from the balanced `dev/grids_final` corpus built earlier:
 
 ```text
-dev/env_generator.py
-```
-
-The 7×7 layouts are rejection-sampled with:
-
-```text
-wall-density parameter        ~ Uniform[0.15, 0.60]
-min agent-start separation    = 3 shortest-path steps
-min goal separation           = 3 shortest-path steps
-max assignment-cost gap       = 5
-min mean switching cost       = 1.0
-switching-cost prefix k       = 2
-geometric preference threshold= 2
-```
-
-Every accepted layout must have all four agent→goal paths reachable.
-
-The generator also rejects layouts where geometry makes the complementary assignment too obvious: if the two agents strongly prefer opposite goals by geometry alone, with both advantages at least the threshold, the layout is rejected.
-
-Stored metadata includes:
-
-- four agent→goal shortest-path lengths;
-- number of shortest paths;
-- junctions and dead ends;
-- canonical path overlap;
-- two assignment costs and their difference;
-- switching-cost summaries;
-- sampled and realized wall density.
-
-The goal was to make coordination matter while avoiding layouts whose answer is visually trivial.
-
-### Coordinate footgun
-
-`env_generator.py` stores coordinates as:
-
-```text
-(row, col)
-```
-
-while `CoordinationGrid` uses:
-
-```text
-(x, y)
-```
-
-D4 helpers use `(x,y)`, so corpus construction explicitly converts at this boundary.
-
----
-
-## 9. D4 symmetry: two different uses during development
-
-D4 consists of the 8 square symmetries:
-
-```text
-identity
-90° rotation
-180° rotation
-270° rotation
-left-right reflection
-up-down reflection
-main-diagonal reflection
-anti-diagonal reflection
-```
-
-Walls, starts, and both goals are transformed together. RED and BLUE labels are preserved.
-
-BFS tables are recomputed after transformation instead of trying to remap action IDs.
-
-### Pilot use: 8× online augmentation
-
-During the first multi-layout pilots, every training layout was expanded to all 8 D4 versions inside the environment.
-
-For 210 base training layouts:
-
-```text
-210 × 8 = 1680 effective training geometries
-```
-
-Validation and test were not augmented.
-
-### Final use: one symmetry per base layout
-
-For the final corpus we changed the design.
-
-We generated exactly 2000 base layouts and applied **one** D4 transform to each:
-
-```text
-8 transforms × 250 base layouts each = 2000 transformed layouts
-```
-
-Then we deterministically shuffled and split them.
-
-Therefore the final experiment uses:
-
-```text
+2000 base layouts × 1 D4 transform each
+= 2000 transformed layouts
+train = 1600, val = 200, test = 200
 augment_symmetries = false
 ```
 
-The environment must not expand them another 8×.
+Details of the generator, D4 handling, and coordinate footguns are as
+before and unchanged by this pivot.
 
 ---
 
-## 10. Final layout corpus
-
-Builder:
+## 9. Held-out layout corpus (unchanged)
 
 ```text
-dev/build_final_corpus.py
+dev/grids_final/layouts/train  (1600)
+dev/grids_final/layouts/val    (200)
+dev/grids_final/layouts/test   (200)
 ```
 
-Actual build used:
-
-```text
-master_seed  = 2026
-shuffle_seed = 2026
-```
-
-The build log confirmed:
-
-```text
-2000 / 2000 unique base layouts
-2000 / 2000 unique transformed layouts
-```
-
-and disjoint splits:
-
-```text
-train = 1600
-val   = 200
-test  = 200
-```
-
-Corpus:
-
-```text
-dev/grids_final/layouts/train
-dev/grids_final/layouts/val
-dev/grids_final/layouts/test
-```
-
-Each JSON records the applied symmetry for traceability.
-
-The 250-per-symmetry balance is exact over the full 2000-layout corpus. Because the corpus was shuffled before splitting, each individual split is only approximately balanced over D4 transforms.
-
-One implementation note: the builder currently **warns** rather than resamples if a future seed produces duplicate *base* layouts. The actual final seed produced 2000 unique bases, so this did not affect the reported experiment.
+Each split is disjoint. Splits are approximately balanced across D4
+transforms (exact balance only holds over the full 2000).
 
 ---
 
-## 11. Balanced `z × layout` training schedule
+## 10. Balanced `(capability_pair, layout)` training schedule
 
-We explicitly decided **not** to partition layouts by partner type.
-
-The bad design would have been:
-
-```text
-z=.1 -> 320 layouts
-z=.3 -> another 320 layouts
-...
-```
-
-because maze geometry would then be predictive of partner identity.
-
-Instead, every `z` sees the complete 1600-layout training set.
+Every capability pair sees every training layout exactly once per sweep.
 
 Scheduler:
 
@@ -494,28 +352,21 @@ baselines/IPPO/sweep_scheduler.py
 One balanced sweep contains:
 
 ```text
-5 z values × 1600 layouts = 8000 (z, layout) pairings
+30 capability pairs × 1600 layouts = 48000 (cap, layout) pairings
 ```
 
-For each `z`:
+For each capability pair:
 
 1. independently shuffle all 1600 layout indices;
-2. chunk them into groups of 20;
-3. each group becomes one 20-round partner episode.
+2. chunk them into groups of 20 (one partner episode);
+3. aggregate across capability pairs, then shuffle episode order.
 
 Therefore:
 
 ```text
-1600 / 20 = 80 partner episodes per z
-80 × 5    = 400 partner episodes per sweep
+1600 / 20 = 80 partner episodes per cap
+80 × 30    = 2400 partner episodes per sweep
 ```
-
-Within one complete sweep:
-
-- each `z` appears in exactly 80 episodes;
-- each `z` sees each training layout exactly once;
-- no `(z, layout)` pair is missing or duplicated;
-- episode order is shuffled across z values.
 
 Final scheduler settings:
 
@@ -524,672 +375,303 @@ N_SWEEPS      = 256
 SCHEDULE_SEED = 2026
 ```
 
-The 256 vectorized workers start at different sweep boundaries. At the end of a partner episode, the trainer advances that worker's schedule cursor and injects the next scheduled `(z, 20-layout sequence)`.
+The 256 vectorized workers start at different sweep boundaries. At the
+end of a partner episode, the trainer advances that worker's cursor and
+`env.reset_from_schedule(capability, layout_seq)` injects the next
+planned episode.
 
-The schedule wraps if training runs past its end.
-
-Under the current single-condition scope, `z` is only a scheduling coordinate — the partner is `z`-independent — so the schedule's balance across `z` is preserved solely for symmetry with the historical multi-condition setup.
-
----
-
-## 12. Manual scheduled reset
-
-The original JaxMARL wrappers automatically reset an environment when it terminates.
-
-That was incompatible with a precomputed balanced `(z, layout-sequence)` schedule.
-
-For the final trainer:
-
-- `LogWrapper` / automatic reset behavior is not used for training resets;
-- `_env_step` calls `env.step_env` directly;
-- when a partner episode ends, the trainer advances that slot's schedule cursor;
-- `env.reset_from_schedule(z, layout_seq)` injects the next planned episode.
-
-Episode return and length bookkeeping were reimplemented in the trainer.
-
-This was one of the more invasive changes relative to the original Overcooked pipeline.
+Capability sampling is independent of layout identity by construction.
+This is checked by `dev/test_capability_env.py`.
 
 ---
 
-## 13. Development chronology and pilot lessons
+## 11. Manual scheduled reset (unchanged)
 
-### Stage A — prove the basic RL loop works
-
-Setup:
-
-```text
-1 fixed layout
-z = 1
-1 round per episode
-```
-
-The recurrent PPO agent learned the task rapidly. In the logged run, success reached about:
-
-```text
-0.98
-```
-
-by roughly 180k environment transitions.
-
-This established that reward, movement, partner scripting, recurrent PPO, and message-conditioned goal selection could be learned at all.
+`LogWrapper` autoreset is bypassed; the trainer calls `env.step_env`
+directly and, on `done['__all__']`, advances the per-slot schedule
+cursor and calls `reset_from_schedule`. Episode return / length
+bookkeeping lives in the trainer.
 
 ---
 
-### Stage B — many layouts exposed severe memorization
+## 12. Chronology (very compressed)
 
-First multi-layout corpus:
+The lengthy Stage A / B / C+D / three-condition / K=3 history from the
+previous log is superseded by the current design. The one takeaway
+worth carrying forward:
 
-```text
-210 train
-45 val
-45 test
-```
+> The previous `action_only` result (val 0.17, test 0.14) with a
+> `z`-independent partner and no communication is what motivated the
+> capability-vector pivot. It is a null control: nothing to infer,
+> nothing to allocate, and no communication → the ego cannot benefit
+> from being recurrent.
 
-Single-round training with `z=1`.
-
-The model fit training extremely well but generalized poorly:
-
-```text
-held-out val  ≈ 0.16
-held-out test ≈ 0.14
-```
-
-Diagnostics showed that the dominant held-out failure was navigation, not simply communication.
-
-This was the first major surprise: the CNN+GRU could memorize a few hundred layouts instead of learning a transferable navigation/coordination rule.
+The full pilot history is preserved in git (see `git log
+project_log_revised.md`) but not repeated here.
 
 ---
 
-### Stage B + D4 — geometry augmentation fixed much of the overfit
-
-We then expanded each training layout to all 8 D4 symmetries.
-
-Diagnostic held-out success rose to approximately:
+## 13. Current experiment specification
 
 ```text
-val  = 0.639
-test = 0.622
+communication_condition : "action_only" (task-level allocation only; no
+                          partner-dependent symbolic channel)
+rounds_per_episode      : 20
+max_steps (per round)   : 64      # widened from 15 so (9,9), (7,7) etc.
+                                  # are feasible on ~91% of layouts.
+partner_capability_pairs: 30 training pairs (§4)
+augment_symmetries      : false
+hide_partner_until_time : 0
+layouts (train/val/test): dev/grids_final/layouts/{train,val,test}
+step_penalty            : 0.01
+success_reward          : 1.0
 ```
 
-The error breakdown changed substantially:
+PPO also bumped: `NUM_STEPS = 256` (from 128) so a single rollout still
+spans a few full 64-step rounds under the new horizon.
+
+Held-out capability pool for evaluation:
 
 ```text
-val:
-  success          .639
-  navigation fail  .178
-  assignment error .180
-
-test:
-  success          .622
-  navigation fail  .246
-  assignment error .116
+HELDOUT_CAPABILITY_PAIRS = (1,4), (2,7), (3,9), (4,1), (7,3), (9,2)
 ```
 
-This showed that orientation/location memorization had been a major part of the problem.
+Every evaluation is run twice per layout split:
+
+1. **familiar capabilities**: the 30 training pairs;
+2. **held-out capabilities**: the 6 unseen combinations above.
 
 ---
 
-### Phase-specific action masking
+## 14. Pre-PPO validation (headline results)
 
-We then enforced the task timing directly in the policy:
+Analytical script: `dev/capability_validation.py`.
 
-```text
-t=0   -> message only (retired; now: STAY+NONE only)
-t>=1  -> movement only
-```
-
-With masking, a later Stage-B diagnostic reached roughly:
+For each `(layout, capability_pair)` we compute the completion time of
+each of the two allocations (ego→RED or ego→BLUE), assuming
+shortest-path ego navigation and BFS + cooldown partner navigation:
 
 ```text
-val  success = .645
-test success = .677
+call_success(alloc) = max(
+    1 + BFS(ego,     ego_goal),
+    2 + (BFS(partner, partner_goal) - 1) * partner_cooldown
+)
+success(alloc)      = (call_success <= max_steps)
 ```
 
-and assignment errors fell to about 1%.
-
-The remaining failures were mostly navigation:
-
-```text
-val  nav fail ≈ .342
-test nav fail ≈ .309
-```
-
-This is why the final implementation keeps the 15-way head but masks illegal phase combinations rather than learning to ignore them. Under the current `action_only` scope, that mask degenerates to a single legal action at t=0.
-
----
-
-### Stage C+D — introduce partner episodes and latent z
-
-Next we moved from single rounds to:
-
-```text
-20 rounds per partner episode
-z fixed across rounds
-layout changes every round
-GRU persists across rounds
-```
-
-The pilot z pool was:
-
-```text
-{0.2, 0.4, 0.6, 0.8}
-```
-
-with D4-augmented training layouts.
-
-Partner visible throughout (`hide_partner_until_time=0`):
-
-```text
-val  overall ≈ .515
-test overall ≈ .485
-```
-
-The striking result was the round trajectory:
-
-```text
-val r0 ≈ .066
-val r1 ≈ .492
-```
-
-with later rounds around the .5-.6 range.
-
-Something useful was clearly being carried across rounds.
-
-(These pilots ran under a partner-specific decoder that has since been
-removed from the codebase; the numbers are recorded here only as
-development history.)
-
----
-
-### Causal memory pilot: memory mattered, but not in the expected partner-specific way
-
-We compared:
-
-```text
-normal      -> carry hidden state normally
-round_reset -> zero hidden state at each round boundary
-shuffle     -> transplant hidden state across parallel partner episodes
-```
-
-Results:
-
-```text
-VAL:
-normal      .511
-round_reset .095
-shuffle     .504
-
-TEST:
-normal      .488
-round_reset .069
-shuffle     .481
-```
-
-So recurrence was essential, but shuffling the recurrent state between episodes barely hurt.
-
-That means:
-
-> "memory helps" did **not** imply "the hidden state contains a unique belief about this partner's z."
-
-This was an important change in interpretation, and one of the motivations for eventually paring the study back to the single `action_only` regime while the causal-memory question is separated from the message-semantics question.
-
----
-
-### The behavioral bypass
-
-The Stage C+D policy (partner_specific decoder, retired) also learned to
-avoid the intended partner-specific communication problem.
-
-Its t=0 message distribution was dominated by `NONE`:
-
-```text
-val  NONE ≈ .758
-test NONE ≈ .736
-```
-
-The partner was visible, so ego could often:
-
-1. send no useful message;
-2. watch which way the partner began moving;
-3. infer its realized goal;
-4. navigate toward the other goal.
-
-Thus the task did not strictly force the agent to infer `z`.
-
-Under the current `action_only` scope this bypass path *is* the only
-available strategy: there is no message channel at all, so any
-round-level success beyond chance must come from either navigation
-skill, cross-round layout familiarity, or observing partner motion.
-
----
-
-### K=3 partner-hiding intervention
-
-To suppress the movement-observation bypass, we added:
-
-```text
-hide_partner_until_time = 3
-```
-
-which hides the partner-position channel at round-local t=0,1,2.
-
-Unexpectedly, performance **improved** on the retired partner_specific
-condition:
-
-```text
-val  ≈ .704
-test ≈ .629
-```
-
-and the agent became even more likely to use `NONE`:
-
-```text
-NONE ≈ .988
-```
-
-The causal pattern remained similar:
-
-```text
-VAL:
-normal      .700
-round_reset .299
-shuffle     .690
-
-TEST:
-normal      .638
-round_reset .267
-shuffle     .614
-```
-
-So K=3 did not produce the clean "must infer z from the message convention" regime we expected.
-
-We therefore did **not** adopt K=3 in the final `action_only` experiment.
-
-Final setting:
-
-```text
-hide_partner_until_time = 0
-```
-
----
-
-## 14. Why the scope collapsed to `action_only`
-
-The earlier three-condition design tried to compare, in one experiment:
-
-- how much explicit communication helps;
-- how much easier a universal convention is;
-- what additional burden comes from partner-dependent semantics.
-
-Two things pushed us back to a single, narrower question:
-
-1. In the previous three-condition run, the universal / partner-specific
-   comparison was confounded with channel reliability (universal is
-   deterministic; partner-specific caps at min(z, 1-z)-adjusted reliability),
-   so the gap between them was not a clean estimate of the cost of
-   inferring `z`.
-2. The causal-memory diagnostic on the same models suggested that even
-   under partner-specific communication, the recurrent state did not
-   look partner-specific in the way we needed to make a strong claim.
-
-Rather than layer more analysis on a confounded design, we pared the
-codebase back to a single, well-defined condition (`action_only`) and
-plan to re-introduce message-based conditions later, with a design that
-avoids the reliability confound.
-
-The current final experiment therefore runs one condition:
-
-```text
-action_only
-```
-
-on the same balanced (z × layout) schedule as before, with the same
-architecture, PPO settings, layouts, z pool, and episode structure.
-
----
-
-## 15. Final experiment launcher
-
-Launcher:
-
-```text
-bash/train_final_experiment.sh
-```
-
-Single-job (no Slurm array):
-
-```text
-COMM_CONDITION = action_only
-```
-
-Final overrides:
-
-```text
-partner_z_values        = [0.1, 0.3, 0.5, 0.7, 0.9]
-rounds_per_episode      = 20
-hide_partner_until_time = 0
-augment_symmetries      = false
-
-train layouts = dev/grids_final/layouts/train
-val layouts   = dev/grids_final/layouts/val
-test layouts  = dev/grids_final/layouts/test
-```
-
-The generic YAML
-
-```text
-baselines/IPPO/config/ippo_rnn_coordination_grid.yaml
-```
-
-now targets `action_only` directly (previously it carried older
-Stage-C+D defaults referencing the retired conditions and the wrong z
-pool). The launcher still overrides all environment kwargs for
-clarity.
-
----
-
-## 16. Final evaluation procedure
-
-For each split:
-
-```text
-5 z values
-× 64 partner episodes per z
-× 20 rounds per episode
-= 6400 evaluated rounds
-```
-
-Each z therefore contributes exactly:
-
-```text
-1280 rounds
-```
-
-The held-out pool contains:
-
-```text
-200 validation layouts
-200 test layouts
-```
-
-During evaluation, z is forced per parallel slot so each z gets exactly 64 partner episodes.
-
-Layouts are sampled from the held-out pool within the episode; evaluation is **not** an exhaustive 5×200 z-layout Cartesian sweep.
-
-All five final z values were used during training.
-
-Therefore the final result tests:
-
-> **generalization to held-out layouts, not generalization to unseen z values.**
-
-Note again that under `action_only` the partner is z-independent, so
-per-z eval numbers are expected to differ only through the layout /
-schedule randomness in each z-conditional slot, not through any real
-sensitivity of the policy to `z`.
-
----
-
-## 17. Trusted final held-out results (action_only)
-
-These values come from the current final evaluation file:
-
-```text
-final_action_only_seed1_20260925_142734_eval.json
-```
-
-Produced by rerunning the full training + eval pipeline (`sbatch
-bash/train_final_experiment.sh`, Slurm job 17607287) under the pared-down
-single-condition codebase, with `SEED=1`, `SCHEDULE_SEED=2026`, and all
-other hyperparameters at the launcher defaults documented in §7 and §15.
-Wall-clock training + eval was ~20 minutes on one 80G GPU.
-
-### Overall round success
-
-| split | round success | mean episode return |
+### At the original max_steps = 15 (retired)
+
+The initial run at the smaller horizon showed a large **success-rate**
+gap between oracle and partner-blind:
+
+| metric | val (familiar) | val (held-out) | test (familiar) | test (held-out) |
+|---|---:|---:|---:|---:|
+| flip fraction | 0.925 | 0.870 | 0.930 | 0.845 |
+| oracle success | 0.782 | 0.843 | 0.793 | 0.865 |
+| partner-blind success | 0.705 | 0.705 | 0.710 | 0.710 |
+| oracle − blind (success) | +0.077 | +0.138 | +0.083 | +0.155 |
+
+The downside: (7,7), (9,9), (7,9), (9,7) etc. were near-infeasible in
+15 steps (oracle rate 0.10–0.13). Those extreme profiles dragged the
+familiar-pool mean down, and made the pool composition confound
+success comparisons across slices.
+
+### At the current max_steps = 64
+
+Widening the horizon to 64 makes every capability pair feasible on
+≥ 91% of layouts, so **success saturates near 1.0** for both oracle
+and partner-blind. The discriminative signal shifts from *whether*
+the round succeeds to *how fast* it succeeds — i.e. from success rate
+to completion time and per-round reward.
+
+| metric | val (familiar) | val (held-out) | test (familiar) | test (held-out) |
+|---|---:|---:|---:|---:|
+| flip fraction | 0.925 | 0.870 | 0.930 | 0.850 |
+| oracle success | 0.997 | 1.000 | 0.998 | 1.000 |
+| partner-blind success | 0.992 | 0.992 | 0.993 | 0.993 |
+| oracle avg completion time | 12.04 | 10.34 | 11.80 | 10.22 |
+| partner-blind avg completion time | 17.23 | 17.23 | 16.65 | 16.65 |
+| **oracle expected reward / round** | 0.875 | 0.897 | 0.878 | 0.898 |
+| **partner-blind expected reward / round** | 0.815 | 0.815 | 0.824 | 0.824 |
+| **oracle − blind reward / round** | **+0.060** | **+0.081** | **+0.055** | **+0.074** |
+
+Reward here uses the training reward model
+(`success_reward=1.0`, `step_penalty=0.01`).
+
+Per-capability oracle timing on the held-out pool (val):
+
+| cap (c_R, c_B) | oracle success | oracle avg time |
 |---|---:|---:|
-| val  | **0.165** |  0.51 |
-| test | **0.135** | -0.12 |
+| (1, 4) | 1.000 | 7.28 |
+| (2, 7) | 1.000 | 10.20 |
+| (3, 9) | 1.000 | 13.26 |
+| (4, 1) | 1.000 | 7.41 |
+| (7, 3) | 1.000 | 13.33 |
+| (9, 2) | 1.000 | 10.54 |
 
-### Per-z round success
+### Interpretation
 
-Because `action_only`'s partner does not depend on `z`, per-z differences
-are effectively schedule / layout noise.
+1. **Optimal allocation remains capability-dependent** on ~87–93% of
+   layouts. The median regret for the wrong allocation is now 9 steps
+   (familiar) / 13 steps (held-out) — larger than at max_steps=15
+   because slow-partner profiles that previously *failed* under the
+   wrong allocation now merely *take much longer*.
+2. **Success is no longer the right discriminator** at this horizon
+   (both oracle and blind ≥ 0.99). Expected per-round reward is the
+   right one to track. On held-out capabilities the reward gap is
+   **+0.07–0.08 per round**, i.e. **~+1.5 per 20-round partner
+   episode**. That's smaller than the max_steps=15 gap (~+3/episode
+   under the retired horizon) but still a real gradient.
+3. The oracle-vs-blind reward gap is smaller on the training pool
+   (+0.055 to +0.060) than on held-out (+0.074 to +0.081) for the
+   same pool-composition reason as before: the training pool contains
+   symmetric diagonals like `(1,1), (2,2), (3,3), (7,7), (9,9)` where
+   allocation is a no-op.
+4. **No more infeasibility cliff**: every held-out pair now has
+   oracle success = 1.0, and even `(3, 9)` and `(7, 3)` complete in
+   ~13 steps under the correct allocation — well within the 64-step
+   budget.
 
-| z | val | test |
-|---:|---:|---:|
-| .10 | .166 | .147 |
-| .30 | .173 | .127 |
-| .50 | .170 | .143 |
-| .70 | .151 | .144 |
-| .90 | .168 | .117 |
-
-### Selected per-round-index success (val / test)
-
-| round | val | test |
-|---:|---:|---:|
-| r0  | .134 | .088 |
-| r1  | .166 | .134 |
-| r2  | .106 | .094 |
-| r5  | .134 | .147 |
-| r10 | .178 | .156 |
-| r15 | .153 | .094 |
-| r19 | .194 | .150 |
-
-Round-level success rises from roughly r0 ≈ .09–.13 to r19 ≈ .15–.19.
-Since there is no message channel, this modest upward drift is not
-driven by learning any message convention; it reflects some
-combination of navigation improvement across the episode,
-layout-agnostic coordination heuristics, and observation of the
-partner's realized motion after t=1.
-
-### Training vs held-out gap
-
-At the end of training, on-policy training round-success sat around
-**0.55** while held-out val / test dropped to **0.17 / 0.14**. That
-train/eval gap is large — clear evidence of overfitting to the
-training layouts under this single seed. An earlier `action_only`
-checkpoint on the previous (multi-condition-branched) codebase, run
-with the same nominal seed, generalized much better (val ≈ .36, test ≈
-.34). Because JIT-level trace changes shift the RNG stream even at the
-same numeric seed, the two runs sampled different training trajectories
-and landed on different solutions; the new run is what the current
-codebase actually produces and is what we now report. A multi-seed
-sweep is needed before treating either number as a stable characteristic
-of the task.
-
----
-
-## 18. What the final behavioral result supports (action_only)
-
-### Above-chance coordination without communication
-
-Round-level success of ~0.17 on val / ~0.14 on test is above the
-"never coordinate" floor for a stationary ego and clearly above the
-purely-random baseline, but far below the training-time round-success
-of ~0.55 — the current single-seed model does not generalize well
-without messages.
-
-### Cross-round improvement is present but small
-
-The r0 → r19 gain (~0.13 → ~0.19 on val) is real but modest: the
-recurrent policy uses some cross-round experience to coordinate better
-later in a partner episode, even with the partner scripted,
-message-less, and z-independent. Under the earlier multi-condition
-codebase a different action_only seed showed a much larger within-
-episode ramp (r0 ≈ .17 → r19 ≈ .43), so this quantity is highly seed-
-dependent and should be re-measured across multiple seeds before being
-used as a headline result.
-
-### Cross-round improvement is not partner-specific here
-
-Because the partner's commit does not depend on `z`, any cross-round
-memory that helps must be about *layout / behavioral* structure, not
-about "who this partner is." So the action_only result serves as a
-useful **floor for the emergent-partner-modeling story**: whatever
-benefit we later attribute to modeling `z` needs to exceed this
-baseline.
-
----
-
-## 19. Retired analysis scripts
-
-Post-hoc analyses that only make sense in the retired multi-condition
-setup have been removed from the "trusted" set of outputs:
-
-- `final_universal_*_eval.json`, `final_universal_*_causal.json`,
-  `final_universal_*_bhz.json`
-- `final_partner_specific_*_eval.json`,
-  `final_partner_specific_*_causal.json`,
-  `final_partner_specific_*_bhz.json`
-- `final_action_only_causal.json`, `final_action_only_bhz.json`
-  (these were the previously-flagged mis-configured runs)
-
-The corresponding safetensors checkpoints for the retired conditions
-have also been removed from `dev/train_logs/`.
-
-The following historical analysis scripts remain in the tree:
+Outputs:
 
 ```text
-dev/behavior_by_z_by_round.py
-dev/causal_memory_control.py
+dev/train_logs/capability_validation_{train,val,test}_ms64.json
 ```
 
-They can still be pointed at the current `action_only` checkpoint if we
-later want:
-
-- a hidden-state → `z` probe (chance = 1/5 = .20 for the five-z pool);
-- normal vs round_reset vs same-z / cross-z hidden-state shuffle;
-- per-`z`-per-round behavioral summaries.
-
-Under `action_only` these serve as **floor** measurements: any
-predictive information about `z` in the hidden state would be
-suspicious (the training partner is `z`-independent), and any drop from
-round-reset would be a pure recurrent-adaptation signal, not
-partner-specific memory.
+**Conclusion:** the design still passes the pre-PPO gate, but the
+benchmark to compare a trained policy against has moved from
+success-rate ceiling to expected-reward ceiling:
+- Oracle expected reward per round: ~0.88 (familiar), ~0.90 (held-out).
+- Blind expected reward per round: ~0.82.
+- A well-trained policy should approach ~0.88–0.90 per round.
+- A "partner-blind" learned policy will top out near ~0.82.
 
 ---
 
-## 20. Relationship to the reference Overcooked project
+## 14b. First PPO run under the new design (max_steps = 15, retired)
 
-Reference repository:
+Slurm job 17608947 (tag `capability_seed1_20260925_163928`), single
+seed, 60M timesteps, wall-clock ~15 min on one 80G GPU. Config exactly
+as §13 **except** max_steps=15 and NUM_STEPS=128 (the retired settings).
+
+Held-out numbers (round-level success on 320 rounds per capability
+pair; 16 partner episodes × 20 rounds):
+
+| split | slice | round success | mean ep return |
+|---|---|---:|---:|
+| val  | familiar (30 caps) | 0.372 | 4.90 |
+| val  | held-out (6 caps)  | **0.406** | 5.61 |
+| test | familiar (30 caps) | 0.367 | 4.81 |
+| test | held-out (6 caps)  | **0.407** | 5.65 |
+
+For reference, the analytical ceilings from §14:
+
+| split | slice | oracle | partner-blind | PPO |
+|---|---|---:|---:|---:|
+| val  | familiar | 0.782 | 0.705 | 0.372 |
+| val  | held-out | 0.843 | 0.705 | 0.406 |
+| test | familiar | 0.793 | 0.710 | 0.367 |
+| test | held-out | 0.865 | 0.710 | 0.407 |
+
+Selected per-capability round-success on the held-out pool (test
+split):
+
+| cap (c_R, c_B) | oracle | PPO |
+|---|---:|---:|
+| (1, 4) | 1.000 | 0.572 |
+| (2, 7) | 0.900 | 0.356 |
+| (3, 9) | 0.700 | 0.262 |
+| (4, 1) | 1.000 | 0.575 |
+| (7, 3) | 0.695 | 0.266 |
+| (9, 2) | 0.895 | 0.412 |
+
+Per-round-index success (test/held-out):
 
 ```text
-ruaridhmon/emergent_partner_modelling
+r0=0.29 r1=0.42 r2=0.35 r3=0.42 r4=0.33 ... r19=0.51
 ```
 
-The conceptual inspiration is the same:
+Cross-round improvement is real but modest.
 
-- recurrent ego agent;
-- latent partner traits;
-- traits fixed within an episode;
-- PPO;
-- 256 parallel environments;
-- ask whether useful partner representations emerge from task pressure.
+### Interpretation of the first PPO run
 
-But several implementation details differ substantially.
+1. **PPO is well below both the analytical oracle and the analytical
+   partner-blind ceiling** on all four (split, slice) cells (roughly
+   35–45 pp below oracle, 30–35 pp below blind). Those ceilings
+   assume perfect shortest-path ego navigation on the held-out
+   layouts; PPO must learn both allocation *and* navigation, so
+   direct comparison to the ceilings is loose. Still, the fact that
+   PPO underperforms even the blind ceiling means the current policy
+   is leaving substantial value on the table — likely mostly in
+   navigation, not allocation.
+2. **Held-out ≥ familiar** on both splits (0.406 vs 0.372 on val;
+   0.407 vs 0.367 on test). Not a mistake: the analytical held-out
+   oracle is also higher than the training oracle (0.84 vs 0.78 on
+   val) because the held-out pool by construction contains more
+   asymmetric profiles like `(1,4)` and `(4,1)`, on which the correct
+   allocation is easier to identify from partner motion.
+3. **Per-capability spread matches the physics.** Fast-partner-both-
+   ways profiles like `(1,1)` reach 0.62; extreme-slow profiles like
+   `(9,9)`, `(9,7)`, `(7,7)` are 0.10–0.13 because even the correct
+   allocation often can't complete within 15 steps.
+4. **Not yet a real capability-inference result.** With PPO well below
+   the partner-blind ceiling, we cannot yet distinguish "the policy
+   uses capability information" from "the policy has learned a
+   partner-agnostic reasonable-navigation prior". A hidden-state →
+   capability probe or a capability-shuffle intervention (§18) is
+   required to make claims about internal partner modeling.
+5. **Concrete next steps before drawing conclusions:** (a) rerun with
+   several seeds to see the noise band on these numbers; (b) run the
+   validation-style ORACLE and PARTNER-BLIND baselines against the
+   trained ego (i.e. force the ego to pick the analytical optimum vs
+   a fixed alloc, and measure end-to-end success under the SAME
+   navigation) to isolate allocation quality from navigation quality;
+   (c) add the hidden-state probe.
 
-### Reference Overcooked
+Files:
 
-- partner traits are task-specific action cooldowns / competence;
-- partner type is sampled at episode boundaries;
-- ego can influence which subtask the partner performs;
-- partner traits alter observable behavior over the episode;
-- each training run uses a fixed named Overcooked layout;
-- the paper evaluates across several separate named layouts;
-- training and evaluation partner configurations are disjoint in the main partner-generalization analysis.
+```text
+dev/train_logs/capability_seed1_20260925_163928.safetensors
+dev/train_logs/capability_seed1_20260925_163928_eval.json
+```
 
-### CoordinationGrid (current scope)
+## 14c. Second PPO run under max_steps = 64 (in flight)
 
-- layouts are procedural and change every round;
-- there is no symbolic message channel; the only ego action at t=0 is
-  `STAY+NONE`;
-- the partner commits to a single goal uniformly at random at t=1
-  and does not use `z`;
-- final z values are the same at train and eval; held-out
-  generalization is over layouts.
-
-The balanced 8000-pair sweep is our addition. The reference code stochastically samples partner properties rather than building an exact partner×layout Cartesian schedule.
-
----
-
-## 21. Evaluation / implementation bugs and fixes encountered
-
-Key issues that changed the implementation or interpretation:
-
-1. **Task generalization failure.**
-   210 layouts were easy to memorize. D4 augmentation was needed.
-
-2. **Phase/action ambiguity.**
-   A 15-way unmasked head allowed redundant actions. Phase masks made the policy/action semantics explicit. Under the current `action_only` scope the t=0 mask reduces to a single legal action.
-
-3. **Round boundary vs partner-episode boundary.**
-   GRU reset must happen only after the final round, not every maze.
-
-4. **Auto-reset wrappers.**
-   Standard reset behavior conflicted with the balanced schedule, so reset and return bookkeeping moved into the trainer.
-
-5. **Evaluation after terminal.**
-   Multi-round evaluation uses `step_env` without autoreset and an alive mask so repeated post-terminal `round_done` states are not counted.
-
-6. **D4 strategy changed.**
-   Pilot: all 8 variants per training layout.
-   Final: one balanced transform per independently generated base layout.
-
-7. **Random z/layout sampling changed.**
-   Pilot: independent uniform samples.
-   Final: exact without-replacement z×layout sweep.
-
-8. **K=3 intervention failed to do what was intended.**
-   It improved task performance while messages collapsed toward NONE (partner_specific pilot), so it was excluded from the final design.
-
-9. **"Memory helps" was overinterpreted initially.**
-   Pilot hidden-state shuffling showed that useful recurrence need not mean z-specific memory.
-
-10. **Retired analyses.** The previous `final_*_causal` / `final_*_bhz`
-    files were generated with mismatched configuration and, for the
-    universal / partner_specific conditions, with a decoder that no
-    longer exists in the codebase. They have been removed rather than
-    rerun.
-
-11. **Scope reduction (2026-09-25).** The `universal` and
-    `partner_specific` decoders, together with their trainer/network
-    branches, config knobs, tests, and shell-script arms, were removed
-    from the codebase. `communication_condition` still exists as an env
-    kwarg but only accepts `action_only`; anything else raises.
+Slurm job 17611364 (tag `capability_ms64_seed1_20260925_214638`),
+single seed, 60M timesteps, config as §13 (max_steps=64, NUM_STEPS=256).
+Results to be filled in when the run completes.
 
 ---
 
-## 22. Current trusted conclusions (action_only)
+## 15. Tests
 
-1. **The task is learnable at training time without any symbolic
-   communication.** On-policy training round-success reaches ~0.55.
+Focused test file: `dev/test_capability_env.py`.
 
-2. **The current single-seed policy generalizes poorly to held-out
-   layouts.** Held-out round success is ~0.17 (val) / ~0.14 (test) —
-   well below training performance. A multi-seed sweep is required
-   before treating this as a stable estimate.
+It verifies specifically:
 
-3. **The recurrent policy uses some cross-round experience.**
-   Round-level success climbs modestly from ~.09–.13 at r0 to
-   ~.15–.19 at r19 on held-out layouts.
+- capability split constants: 30 training / 6 held-out, disjoint, and
+  every individual value in `{1,2,3,4,7,9}` appears in both;
+- t=0 legal-mask = `{STAY+ALLOC_RED, STAY+ALLOC_BLUE}`;
+- t>=1 legal-mask = `{move+NONE}`;
+- `state.capability` is `(2,)` int32 and matches a pool member;
+- `obs['agent_0']` has no `capability` key, and get_obs output is
+  bit-identical for two envs differing only in capability;
+- capability stays fixed across all 20 rounds of an episode;
+- partner cadence when pursuing RED matches `c_R` exactly (verified
+  via `partner_move_ctr` sequence, layout-independent);
+- symmetric check for `c_B` on BLUE;
+- both cadences co-exist within one capability profile;
+- capability sampling is roughly independent of layout (marginals
+  balanced within ~15%);
+- `ALLOC_RED → partner_goal = BLUE`, `ALLOC_BLUE → partner_goal = RED`;
+- jit + vmap don't crash, and info dict carries capability;
+- capability with value 0 raises.
 
-4. **This improvement is not evidence of a partner-specific belief.**
-   The partner ignores `z`, so any within-episode gain must come from
-   layout/behavioral generalization, not from a model of the partner.
-
-5. **`z` is a scheduling coordinate, not a task signal, under
-   action_only.** Per-z eval differences are within schedule / seed
-   noise.
-
-6. **The current `action_only` numbers set the floor for any future
-   partner-modeling experiment.** Additional benefit from
-   partner-specific communication or partner-conditioned behavior
-   needs to clear this baseline — but the baseline itself should be
-   re-established across seeds before it can be used quantitatively.
+All checks currently pass.
 
 ---
 
-## 23. Files that matter now
+## 16. Files that matter now
 
 ### Environment
 
@@ -1198,7 +680,11 @@ jaxmarl/environments/coordination_grid/coordination_grid.py
 jaxmarl/environments/coordination_grid/__init__.py
 ```
 
-### Layout generation
+Exports include `CAPABILITY_VALUES`, `TRAINING_CAPABILITY_PAIRS`,
+`HELDOUT_CAPABILITY_PAIRS`, `ALL_CAPABILITY_PAIRS`, `Allocations`,
+`bfs_distance_map`.
+
+### Layout generation (unchanged)
 
 ```text
 dev/env_generator.py
@@ -1218,77 +704,73 @@ bash/train_final_experiment.sh
 ### Tests
 
 ```text
-dev/test_coordination_grid.py
+dev/test_capability_env.py
 ```
 
-These tests cover, among other things:
+### Pre-PPO validation
 
-- t=0 legality (single legal action under action_only);
-- p_red is 0.5 for every (msg, z) combination;
-- D4 transforms;
-- z persistence across rounds;
-- layout changes;
-- GRU reset semantics;
-- JIT/vmap behavior;
-- partner hiding.
+```text
+dev/capability_validation.py
+dev/train_logs/capability_validation_{train,val,test}.json
+```
 
-### Final trained checkpoint
+### Trained checkpoint under the new design
+
+```text
+dev/train_logs/capability_seed1_20260925_163928.safetensors
+dev/train_logs/capability_seed1_20260925_163928_eval.json
+```
+
+### Previous-build artifacts (retained but stale)
 
 ```text
 dev/train_logs/final_action_only_seed1_20260925_142734.safetensors
-```
-
-### Trusted final evaluation
-
-```text
 dev/train_logs/final_action_only_seed1_20260925_142734_eval.json
 ```
 
-### Historical / diagnostic analysis scripts
-
-Retained but not currently pointed at fresh runs:
-
-```text
-dev/behavior_by_z_by_round.py
-dev/causal_memory_control.py
-```
-
-### Pilot records
-
-Useful historical files include:
-
-```text
-dev/train_logs/stageA1_20260924_122632.log
-dev/train_logs/stage_b_diagnostic.json
-dev/train_logs/stage_b_aug_diagnostic.json
-dev/train_logs/stage_b_masked_diagnostic.json
-dev/train_logs/stage_cd_R20_seed1_20260924_165732_eval_fixed.json
-dev/train_logs/stage_cd_causal_memory.json
-dev/train_logs/stage_cd_R20_hideK3_seed1_20260924_202349_eval.json
-dev/train_logs/stage_cd_hideK3_causal.json
-```
+These come from the retired scalar-`z` `action_only` build; they are
+NOT compatible with the current env (`state` schema changed).
 
 ---
 
-## 24. Reproduction checklist for a new coding agent
+## 17. Reproduction checklist for a new coding agent
 
-Before rerunning the final experiment, verify:
+Before rerunning:
 
 ```text
 [ ] final corpus has 1600/200/200 layouts
 [ ] augment_symmetries=false
-[ ] z pool = [.1,.3,.5,.7,.9]
+[ ] partner_capability_pairs is the 30 training pairs
+[ ] EVAL_HELDOUT_CAPABILITY_PAIRS is the 6 held-out pairs
 [ ] rounds_per_episode=20
 [ ] hide_partner_until_time=0
-[ ] communication_condition=action_only (the only supported value)
-[ ] schedule sanity check says 8000 pairings/sweep
-[ ] every z sees all 1600 train layouts once/sweep
+[ ] communication_condition="action_only"
+[ ] scheduler sanity check passes with 48000 pairings/sweep
+[ ] every capability pair sees all 1600 train layouts once/sweep
 [ ] GRU resets only after round 19
-[ ] z is absent from observation
+[ ] capability is absent from observation
 [ ] final held-out evaluation uses dev/grids_final
+[ ] pre-PPO validation report shows oracle ≫ partner-blind on held-out cap pool
 ```
 
-For stronger scientific conclusions, rerun training with multiple
-independent seeds and — when re-introducing partner-specific
-communication — do so with a design that decouples channel reliability
-from the "must infer z" pressure.
+For stronger scientific conclusions, run multiple independent seeds
+per condition and add a hidden-state-to-capability probe once a
+trained policy exists.
+
+---
+
+## 18. Open questions / next steps
+
+1. **PPO run.** Now that the validation gate is passed, launch a full
+   60M-timestep PPO run under the new capability env. Compare the
+   learned policy's held-out success to the oracle ceiling on both
+   familiar and held-out capability pools.
+2. **Movement inference test.** After training, hold out the
+   partner-position observation channel after the first few steps and
+   check whether the policy can still commit correctly at t=0 based on
+   *later* rounds' observations (via GRU memory).
+3. **Hidden-state probe.** Train a small MLP from GRU hidden state
+   (post round 5, say) to predict the capability pair. Compare to
+   chance (1/30 for the training pool, 1/6 for held-out).
+4. **Larger capability grid.** If the current pool is too easy, extend
+   `CAPABILITY_VALUES` and re-generate the split.

@@ -2,11 +2,13 @@ from .coordination_grid import (
     CoordinationGrid,
     State,
     Actions,
-    Messages,
+    Allocations,
+    Messages,           # backward-compat alias for Allocations
     encode_ego,
     decode_ego,
     N_MOVES,
-    N_MESSAGES,
+    N_ALLOCATIONS,
+    N_MESSAGES,         # backward-compat alias for N_ALLOCATIONS
     N_EGO_ACTIONS,
     GOAL_UNSET,
     GOAL_RED,
@@ -17,4 +19,9 @@ from .coordination_grid import (
     ACTION_MASK_TGEQ1,
     COMM_ACTION_ONLY,
     COMM_CONDITIONS,
+    CAPABILITY_VALUES,
+    TRAINING_CAPABILITY_PAIRS,
+    HELDOUT_CAPABILITY_PAIRS,
+    ALL_CAPABILITY_PAIRS,
+    bfs_distance_map,
 )

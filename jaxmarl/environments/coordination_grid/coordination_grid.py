@@ -1,35 +1,79 @@
 """
-CoordinationGrid: single-round 7x7 grid coordination task with a scripted
-partner in the ``action_only`` (no-communication) regime.
+CoordinationGrid: 20-round 7×7 grid coordination task with a scripted
+partner whose *latent capability profile* (c_R, c_B) controls per-goal
+movement cooldowns.  Ego (agent_0) is the only learned agent; partner
+(agent_1) is scripted.
 
-Ego (agent_0) action is a *joint* (move, message) pair, encoded as a single
-discrete int in [0, 15):
-    a = 3 * move + msg
-    move ∈ {0:UP, 1:DOWN, 2:RIGHT, 3:LEFT, 4:STAY}
-    msg  ∈ {0:NONE, 1:M0, 2:M1}
-Use ``encode_ego(move, msg)`` / ``decode_ego(a)``.
+Motivation for this rewrite
+---------------------------
+Previously the env carried a scalar latent ``z`` that had no causal
+effect on partner behavior in the ``action_only`` regime.  This version
+introduces a 2-D **capability vector**
 
-Only the STAY+NONE action is legal at t=0 in this action-only setup; the
-message channel exists only in the flat action encoding for backward
-compatibility and is otherwise unused (partner ignores it).
+    (c_R, c_B)  with each entry ∈ CAPABILITY_VALUES = (1, 2, 3, 4, 7, 9)
 
-Partner (agent_1) is scripted:
-    * Latent partner type z ∈ [0, 1] is fixed per env (i.e. per partner).
-    * At timestep 0 neither agent moves.
-    * At timestep 1, if partner_goal is UNSET, partner commits to a goal
-      uniformly at random (P(RED)=P(BLUE)=0.5); it does NOT read any
-      message and does NOT use z.
-      This commit happens ONCE.
-    * From t ≥ 1 the partner navigates greedily along a precomputed
-      shortest-path table toward its committed goal. Navigation does NOT
-      depend on z.
+which is fixed across the 20-round partner episode, never appears in
+the ego's observation, and does affect the partner:
+
+    * c_R = # env steps per partner move when the partner is pursuing RED.
+    * c_B = # env steps per partner move when the partner is pursuing BLUE.
+    * lower = faster / more competent.
+
+The ego must infer (c_R, c_B) from **partner movement timing** and use
+it to choose the better of two possible role allocations for this round.
+
+Action encoding
+---------------
+Ego action is a joint (move, alloc) pair, flat-encoded as an int in [0, 15):
+    a = 3 * move + alloc
+    move  ∈ {0:UP, 1:DOWN, 2:RIGHT, 3:LEFT, 4:STAY}
+    alloc ∈ {0:NONE, 1:ALLOC_RED, 2:ALLOC_BLUE}
+
+Use ``encode_ego(move, alloc)`` / ``decode_ego(a)``.
+
+Legal-mask summary
+------------------
+At t=0 the ego MUST commit to a role:
+    legal = { STAY+ALLOC_RED, STAY+ALLOC_BLUE }   (ids 13, 14)
+At t>=1 the ego just navigates:
+    legal = { {UP,DOWN,RIGHT,LEFT,STAY} + NONE }  (ids 0, 3, 6, 9, 12)
+
+Note: this ``alloc`` channel is NOT a partner-dependent symbolic message.
+Its meaning is fixed and universal (RED / BLUE goal), so it functions as
+a task-level role assignment, not as communication about who the partner
+is.  The ego still has to *infer* the partner's capability from motion.
+
+Allocation → partner goal
+-------------------------
+At t=1 the partner deterministically takes the *opposite* goal to the
+ego's t=0 allocation:
+    ego alloc = ALLOC_RED  → partner_goal = BLUE
+    ego alloc = ALLOC_BLUE → partner_goal = RED
+There is no other stochastic goal-commit rule.
+
+Partner movement + cooldown
+---------------------------
+Partner navigation still uses the precomputed BFS shortest-path tables
+toward its committed goal.  On each round-local step t>=1:
+    * if ``partner_move_ctr == 0`` and the partner has a committed goal,
+      the partner takes one BFS step and ``partner_move_ctr`` resets to
+      ``c - 1``, where ``c = c_R`` if goal == RED else ``c_B``.
+    * otherwise the partner STAYs and ``partner_move_ctr`` decrements
+      (floored at 0).
+So c=1 → partner moves every step (fastest); c=9 → partner moves at
+t = 1, 10, 19, ... within a round (slowest given the 15-step horizon).
+``partner_move_ctr`` resets to 0 at every round boundary; nothing else
+about partner navigation depends on the capability.
+
+Reward and termination are unchanged:
+    success (agents on distinct goals) → +1.0
+    otherwise                          → -0.01
+    round ends on success or max_steps
+Twenty rounds per partner episode; done['__all__'] only fires on the
+last round's terminal step; GRU carries across intermediate rounds.
 
 Observation for each agent is a dict:
-    {"grid": (H, W, 5), "last_message": (3,), "is_t0": scalar float32}
-where "last_message" is a one-hot over {NONE, M0, M1}. Under action_only
-it is always NONE (kept in the obs so tensor shapes match earlier stages).
-``is_t0`` is 1.0 when ``state.time == 0`` and 0.0 else; policies use it
-to mask their action space so movement is only sampled at t>=1.
+    {"grid": (H, W, 5), "last_allocation": (3,), "is_t0": scalar float32}
 """
 
 import glob
@@ -70,22 +114,36 @@ class Actions(IntEnum):
     stay = 4
 
 
-class Messages(IntEnum):
+class Allocations(IntEnum):
+    """Ego's t=0 allocation channel.
+
+    ``none`` is used at t>=1 (no allocation happens outside t=0).
+    ``red`` / ``blue`` are the two legal t=0 commitments: the partner
+    takes the *complementary* goal.
+    """
     none = 0
-    m0 = 1
-    m1 = 2
+    red = 1
+    blue = 2
 
 
 N_MOVES = 5
-N_MESSAGES = 3
-N_EGO_ACTIONS = N_MOVES * N_MESSAGES  # 15
+N_ALLOCATIONS = 3
+N_EGO_ACTIONS = N_MOVES * N_ALLOCATIONS  # 15
 
-# Legality of the flat ego actions per environment phase. Flat encoding is
-# ``a = 3 * move + msg``.
-#   t=0    (action_only): STAY+NONE only -> {12}
-#   t>=1  (all phases)  : {UP,DOWN,RIGHT,LEFT,STAY}*3 + NONE -> {0, 3, 6, 9, 12}
-LEGAL_ACTION_IDS_T0 = (3 * int(Actions.stay) + int(Messages.none),)   # {12}
-LEGAL_ACTION_IDS_TGEQ1 = tuple(3 * mv + int(Messages.none) for mv in range(N_MOVES))
+# Backward-compat aliases (older callers still say "messages"; the flat
+# encoding is unchanged).
+N_MESSAGES = N_ALLOCATIONS
+Messages = Allocations
+
+# Legality of the flat ego actions per environment phase.
+#   t=0: STAY + {ALLOC_RED, ALLOC_BLUE}   -> {13, 14}
+#   t>=1: {UP,DOWN,RIGHT,LEFT,STAY} + NONE -> {0, 3, 6, 9, 12}
+LEGAL_ACTION_IDS_T0 = tuple(
+    3 * int(Actions.stay) + int(a) for a in (Allocations.red, Allocations.blue)
+)
+LEGAL_ACTION_IDS_TGEQ1 = tuple(
+    3 * mv + int(Allocations.none) for mv in range(N_MOVES)
+)
 ACTION_MASK_T0 = np.zeros(N_EGO_ACTIONS, dtype=np.bool_)
 ACTION_MASK_T0[list(LEGAL_ACTION_IDS_T0)] = True
 ACTION_MASK_TGEQ1 = np.zeros(N_EGO_ACTIONS, dtype=np.bool_)
@@ -94,10 +152,10 @@ ACTION_MASK_TGEQ1[list(LEGAL_ACTION_IDS_TGEQ1)] = True
 # ---------------------------------------------------------------------------
 # Communication condition
 # ---------------------------------------------------------------------------
-# This build supports ONLY the ``action_only`` regime: no explicit message
-# channel, partner samples RED/BLUE uniformly regardless of ego's t=0 action
-# or z. Only STAY+NONE is legal at t=0. The prior universal /
-# partner_specific decoders have been removed.
+# The only supported condition is ``action_only`` in the sense that the ego
+# has no partner-dependent symbolic message channel.  The t=0 alloc action
+# is a fixed-meaning role commitment (RED vs BLUE), not a token whose
+# meaning depends on the partner's capability.
 COMM_ACTION_ONLY = "action_only"
 COMM_CONDITIONS = (COMM_ACTION_ONLY,)
 
@@ -107,17 +165,41 @@ GOAL_RED = 1
 GOAL_BLUE = 2
 
 
-def encode_ego(move, msg) -> int:
-    """(move, msg) -> flat ego action id in [0, 15). Pure Python; JAX-safe."""
-    return int(3) * int(move) + int(msg)
+# ---------------------------------------------------------------------------
+# Capability profile constants + train / held-out split
+# ---------------------------------------------------------------------------
+# Individual per-goal cooldown values (env steps per partner move).
+CAPABILITY_VALUES: Tuple[int, ...] = (1, 2, 3, 4, 7, 9)
+
+# Held-out combinations: each individual capability value appears exactly
+# once as c_R and once as c_B in the held-out set.  Since every value is
+# also present in the (36 - 6 = 30) training pairs, the held-out set tests
+# "unseen combinations of already-seen capability values" — never
+# "unseen individual capability values".
+HELDOUT_CAPABILITY_PAIRS: Tuple[Tuple[int, int], ...] = (
+    (1, 4), (2, 7), (3, 9), (4, 1), (7, 3), (9, 2),
+)
+_HELDOUT_SET = frozenset(HELDOUT_CAPABILITY_PAIRS)
+TRAINING_CAPABILITY_PAIRS: Tuple[Tuple[int, int], ...] = tuple(
+    (cr, cb) for cr in CAPABILITY_VALUES for cb in CAPABILITY_VALUES
+    if (cr, cb) not in _HELDOUT_SET
+)
+ALL_CAPABILITY_PAIRS: Tuple[Tuple[int, int], ...] = tuple(
+    (cr, cb) for cr in CAPABILITY_VALUES for cb in CAPABILITY_VALUES
+)
+
+
+def encode_ego(move, alloc) -> int:
+    """(move, alloc) -> flat ego action id in [0, 15). Pure Python; JAX-safe."""
+    return int(3) * int(move) + int(alloc)
 
 
 def decode_ego(action):
-    """Flat action -> (move, msg). JAX-compatible; accepts scalar or array."""
+    """Flat action -> (move, alloc). JAX-compatible; accepts scalar or array."""
     a = jnp.asarray(action, dtype=jnp.int32)
     move = a // 3
-    msg = a % 3
-    return move, msg
+    alloc = a % 3
+    return move, alloc
 
 
 DEFAULT_LAYOUT_PATH = os.path.join(
@@ -128,31 +210,27 @@ DEFAULT_LAYOUT_PATH = os.path.join(
 
 @struct.dataclass
 class State:
-    # Round-local geometry (sampled fresh at each round boundary within a partner episode).
+    # Round-local geometry (sampled fresh at each round boundary within a
+    # partner episode).
     agent_pos: chex.Array       # (2, 2) int32 -- [x, y] per agent
     wall_map: chex.Array        # (H, W) bool
     red_goal: chex.Array        # (2,) int32 [x, y]
     blue_goal: chex.Array       # (2,) int32 [x, y]
-    time: chex.Array            # scalar int32   -- round-local time (resets on new round)
+    time: chex.Array            # scalar int32 -- round-local time
     terminal: chex.Array        # scalar bool
 
     # Partner-related state.
-    z: chex.Array               # scalar float32 in [0, 1]; FIXED across all rounds of a
-                                # partner episode; resampled only on full env reset.
-    partner_goal: chex.Array    # scalar int32 (0=UNSET, 1=RED, 2=BLUE); reset each round.
-    pending_message: chex.Array # scalar int32 (0=NONE, 1=M0, 2=M1) -- ego's msg from LAST step
-    layout_idx: chex.Array      # scalar int32; addresses the stacked layout / BFS tables.
-    round_idx: chex.Array       # scalar int32; which round of the partner episode we're in.
-                                # 0-indexed; ranges over [0, rounds_per_episode).
-    episode_layout_seq: chex.Array   # (rounds_per_episode,) int32 — sequence of
-                                # layout_idx values the partner episode will visit
-                                # across its rounds. On the intermediate-round
-                                # transition inside step_env, the next layout is
-                                # ``episode_layout_seq[round_idx + 1]`` instead of
-                                # a fresh random sample. reset(key) fills this
-                                # with a random draw for BC; the trainer's
-                                # scheduler uses reset_from_schedule to fill it
-                                # with a pre-scheduled sequence.
+    capability: chex.Array          # (2,) int32   -- [c_R, c_B]; FIXED across
+                                    #    all rounds of a partner episode.
+    partner_goal: chex.Array        # scalar int32 (0=UNSET, 1=RED, 2=BLUE)
+    partner_move_ctr: chex.Array    # scalar int32 -- cooldown counter for
+                                    #    partner navigation; reset per round.
+    pending_allocation: chex.Array  # scalar int32 (0=NONE, 1=ALLOC_RED,
+                                    #    2=ALLOC_BLUE) — ego's alloc from LAST
+                                    #    step (i.e. what it chose at t=0).
+    layout_idx: chex.Array          # scalar int32; addresses stacked layouts.
+    round_idx: chex.Array           # scalar int32; which round (0-indexed).
+    episode_layout_seq: chex.Array  # (rounds_per_episode,) int32
 
 
 def _load_layout(layout_path: str) -> dict:
@@ -189,7 +267,7 @@ def _bfs_next_actions(wall_map_np: np.ndarray, goal_xy_np: np.ndarray) -> np.nda
     """Numpy multi-source BFS from goal. Returns (H, W) int array of the move
     to take from each cell to reduce distance to goal by 1. Walls and
     unreachable cells get STAY. Tie-break in the fixed order
-    UP, DOWN, RIGHT, LEFT so partner navigation is deterministic across z.
+    UP, DOWN, RIGHT, LEFT so partner navigation is deterministic.
     """
     h, w = wall_map_np.shape
     dist = np.full((h, w), -1, dtype=np.int32)
@@ -230,6 +308,29 @@ def _bfs_next_actions(wall_map_np: np.ndarray, goal_xy_np: np.ndarray) -> np.nda
     return next_action
 
 
+def bfs_distance_map(wall_map_np: np.ndarray, goal_xy_np: np.ndarray) -> np.ndarray:
+    """Numpy multi-source BFS from goal. Returns (H, W) int distance-to-goal
+    (-1 for wall/unreachable). Used by the pre-PPO validation script to
+    compute per-cell shortest-path lengths.
+    """
+    h, w = wall_map_np.shape
+    dist = np.full((h, w), -1, dtype=np.int32)
+    gx, gy = int(goal_xy_np[0]), int(goal_xy_np[1])
+    if not (0 <= gx < w and 0 <= gy < h) or wall_map_np[gy, gx]:
+        return dist
+    dist[gy, gx] = 0
+    q = deque([(gx, gy)])
+    NEIGHBORS = [(0, -1), (0, 1), (1, 0), (-1, 0)]
+    while q:
+        cx, cy = q.popleft()
+        for dx, dy in NEIGHBORS:
+            nx, ny = cx + dx, cy + dy
+            if 0 <= nx < w and 0 <= ny < h and not wall_map_np[ny, nx] and dist[ny, nx] < 0:
+                dist[ny, nx] = dist[cy, cx] + 1
+                q.append((nx, ny))
+    return dist
+
+
 SYMMETRY_NAMES = (
     "identity",         # 0
     "rot90_cw",         # 1
@@ -244,25 +345,23 @@ N_SYMMETRIES = len(SYMMETRY_NAMES)
 
 
 def _sym_position(g: int, xy: np.ndarray, n: int) -> np.ndarray:
-    """Apply D4 symmetry ``g`` to a single (x, y) position on an n×n grid.
-    Returns a new np.int32 array of shape (2,).
-    """
+    """Apply D4 symmetry ``g`` to a single (x, y) position on an n×n grid."""
     x = int(xy[0]); y = int(xy[1])
-    if g == 0:                                     # identity
+    if g == 0:
         nx, ny = x, y
-    elif g == 1:                                   # rot 90 CW
+    elif g == 1:
         nx, ny = n - 1 - y, x
-    elif g == 2:                                   # rot 180
+    elif g == 2:
         nx, ny = n - 1 - x, n - 1 - y
-    elif g == 3:                                   # rot 270 CW (= 90 CCW)
+    elif g == 3:
         nx, ny = y, n - 1 - x
-    elif g == 4:                                   # flip left <-> right
+    elif g == 4:
         nx, ny = n - 1 - x, y
-    elif g == 5:                                   # flip top <-> bottom
+    elif g == 5:
         nx, ny = x, n - 1 - y
-    elif g == 6:                                   # transpose (main diag)
+    elif g == 6:
         nx, ny = y, x
-    elif g == 7:                                   # anti-transpose
+    elif g == 7:
         nx, ny = n - 1 - y, n - 1 - x
     else:
         raise ValueError(f"unknown symmetry idx {g}")
@@ -274,11 +373,11 @@ def _sym_wall(g: int, wall_np: np.ndarray) -> np.ndarray:
     if g == 0:
         return wall_np.copy()
     if g == 1:
-        return np.rot90(wall_np, k=-1).copy()       # CW 90
+        return np.rot90(wall_np, k=-1).copy()
     if g == 2:
         return np.rot90(wall_np, k=2).copy()
     if g == 3:
-        return np.rot90(wall_np, k=1).copy()        # CCW 90
+        return np.rot90(wall_np, k=1).copy()
     if g == 4:
         return np.fliplr(wall_np).copy()
     if g == 5:
@@ -291,11 +390,6 @@ def _sym_wall(g: int, wall_np: np.ndarray) -> np.ndarray:
 
 
 def _augment_layout(base: dict, g: int, n: int) -> dict:
-    """Return a new layout dict obtained by applying D4 symmetry ``g`` to
-    ``base``. Positions and walls are transformed; BFS tables are NOT copied
-    from ``base`` — the caller re-runs BFS on the transformed geometry so
-    action-direction remaps can't get out of sync.
-    """
     wall_np = _sym_wall(g, base["wall_map_np"])
     ego = _sym_position(g, np.asarray(base["ego_start"], dtype=np.int32), n)
     partner = _sym_position(g, np.asarray(base["partner_start"], dtype=np.int32), n)
@@ -338,16 +432,29 @@ def _resolve_layout_paths(
     )
 
 
-class CoordinationGrid(MultiAgentEnv):
-    """CoordinationGrid with scripted, message-conditioned partner.
+def _canonicalize_capability_pairs(
+    pairs: Optional[Sequence[Sequence[int]]],
+    fallback: Sequence[Sequence[int]] = ((3, 3),),
+) -> np.ndarray:
+    """Return an (K, 2) int32 numpy array of capability pairs."""
+    if pairs is None or len(list(pairs)) == 0:
+        pairs = fallback
+    arr = np.asarray([[int(a), int(b)] for a, b in pairs], dtype=np.int32)
+    if arr.ndim != 2 or arr.shape[1] != 2:
+        raise ValueError(
+            f"capability pairs must be shape (K, 2); got {arr.shape}"
+        )
+    if (arr < 1).any():
+        raise ValueError("capability values must be >= 1 (0 would mean 'never move')")
+    return arr
 
-    Supports a *pool* of layouts. On each ``reset`` a layout is sampled
-    uniformly from the pool (or the pool has size 1 for the single-layout
-    case, which is fully backward compatible). All per-layout geometry
-    (wall_map, starts, goals) plus precomputed BFS next-action tables are
-    stacked along a leading ``K`` axis; ``state.layout_idx`` records which
-    slice the current episode uses, and ``_partner_next_move`` indexes into
-    the stacked BFS tables using it. Layouts must all be the same H×W.
+
+class CoordinationGrid(MultiAgentEnv):
+    """CoordinationGrid with capability-vector scripted partner.
+
+    The env still supports a pool of layouts; per-layout geometry and BFS
+    tables are stacked along a leading K axis and indexed by
+    ``state.layout_idx``. Layouts must all be the same H×W.
     """
 
     def __init__(
@@ -358,14 +465,26 @@ class CoordinationGrid(MultiAgentEnv):
         max_steps: int = 15,
         step_penalty: float = 0.01,
         success_reward: float = 1.0,
-        partner_z: Optional[float] = None,
-        partner_z_values: Optional[Sequence[float]] = None,
+        partner_capability_pairs: Optional[Sequence[Sequence[int]]] = None,
         rounds_per_episode: int = 1,
         augment_symmetries: bool = False,
         hide_partner_until_time: int = 0,
         communication_condition: str = COMM_ACTION_ONLY,
+        # legacy kwargs (accepted for backward compat, ignored otherwise):
+        partner_z: Optional[float] = None,
+        partner_z_values: Optional[Sequence[float]] = None,
     ):
         super().__init__(num_agents=2)
+
+        if partner_z is not None or partner_z_values is not None:
+            # These were the pre-capability scalar knobs; they are ignored now
+            # but accepted to avoid crashing existing configs that still pass
+            # them.  Warn loudly the first time.
+            print(
+                "[CoordinationGrid] Ignoring legacy partner_z / partner_z_values "
+                "kwargs; use partner_capability_pairs instead.",
+                flush=True,
+            )
 
         if layout_path is None and layout_paths is None and layouts_dir is None:
             layout_path = DEFAULT_LAYOUT_PATH
@@ -374,9 +493,6 @@ class CoordinationGrid(MultiAgentEnv):
         self.layout_paths: List[str] = list(paths)
         self.n_base_layouts: int = len(loaded_base)
 
-        # H×W must match across all base layouts (network / obs shape depends
-        # on it). Grids must also be *square* to admit the D4 group without
-        # changing shape.
         h0, w0 = loaded_base[0]["height"], loaded_base[0]["width"]
         for i, ld in enumerate(loaded_base):
             if (ld["height"], ld["width"]) != (h0, w0):
@@ -391,10 +507,6 @@ class CoordinationGrid(MultiAgentEnv):
         self.height = h0
         self.width = w0
 
-        # Expand the base layouts through the D4 group, or not. When augmented,
-        # the effective pool is 8x larger; ``reset`` samples uniformly from it.
-        # We recompute BFS on each transformed geometry rather than remapping
-        # action IDs — same result, half the failure modes.
         self.augment_symmetries: bool = bool(augment_symmetries)
         self.symmetries_per_layout: int = (
             N_SYMMETRIES if self.augment_symmetries else 1
@@ -415,19 +527,16 @@ class CoordinationGrid(MultiAgentEnv):
 
         self.n_layouts: int = len(loaded)
 
-        # Stack per-layout geometry along a leading axis (K, ...). Cast/stack
-        # via numpy first so we do everything in one shot and hand JAX a
-        # concrete dtype.
         wall_maps_np = np.stack([np.asarray(ld["wall_map_np"], dtype=np.bool_)
-                                  for ld in loaded], axis=0)  # (K, H, W)
+                                  for ld in loaded], axis=0)
         ego_starts_np = np.stack([np.asarray(ld["ego_start"], dtype=np.int32)
-                                   for ld in loaded], axis=0)                       # (K, 2)
+                                   for ld in loaded], axis=0)
         partner_starts_np = np.stack([np.asarray(ld["partner_start"], dtype=np.int32)
-                                       for ld in loaded], axis=0)                    # (K, 2)
+                                       for ld in loaded], axis=0)
         red_goals_np = np.stack([np.asarray(ld["red_goal"], dtype=np.int32)
-                                  for ld in loaded], axis=0)                         # (K, 2)
+                                  for ld in loaded], axis=0)
         blue_goals_np = np.stack([np.asarray(ld["blue_goal"], dtype=np.int32)
-                                   for ld in loaded], axis=0)                        # (K, 2)
+                                   for ld in loaded], axis=0)
 
         self.wall_maps = jnp.asarray(wall_maps_np, dtype=jnp.bool_)
         self.ego_starts = jnp.asarray(ego_starts_np, dtype=jnp.int32)
@@ -435,19 +544,18 @@ class CoordinationGrid(MultiAgentEnv):
         self.red_goals = jnp.asarray(red_goals_np, dtype=jnp.int32)
         self.blue_goals = jnp.asarray(blue_goals_np, dtype=jnp.int32)
 
-        # For single-layout callers who reach in directly for these fields.
         self.wall_map = self.wall_maps[0]
         self.ego_start = self.ego_starts[0]
         self.partner_start = self.partner_starts[0]
         self.red_goal = self.red_goals[0]
         self.blue_goal = self.blue_goals[0]
 
-        # Observation shapes for downstream code that inspects .obs_shape /
-        # .msg_shape (e.g. policy heads). obs_shape stays the grid shape for
-        # backward compat with any consumer that reads it.
         self.grid_shape = (self.height, self.width, 5)
         self.obs_shape = self.grid_shape
-        self.msg_shape = (N_MESSAGES,)
+        # kept as ``msg_shape`` for backward compat with older code that
+        # inspects that attribute; the payload is now the allocation one-hot.
+        self.msg_shape = (N_ALLOCATIONS,)
+        self.allocation_shape = (N_ALLOCATIONS,)
 
         self.agents = ["agent_0", "agent_1"]
 
@@ -457,65 +565,45 @@ class CoordinationGrid(MultiAgentEnv):
         )
         self.n_ego_actions = N_EGO_ACTIONS
         self.n_moves = N_MOVES
-        self.n_messages = N_MESSAGES
+        self.n_allocations = N_ALLOCATIONS
+        self.n_messages = N_ALLOCATIONS  # backward-compat alias
 
         self.max_steps = int(max_steps)
         self.step_penalty = float(step_penalty)
         self.success_reward = float(success_reward)
 
-        # ---- Partner-z sampling pool ----
-        # `partner_z_values` (list) is the primary knob for Stage C+D — a
-        # partner-episode reset samples one z uniformly from this pool and
-        # holds it for all `rounds_per_episode` rounds.
-        # Backward compat: if only the old scalar `partner_z` is given, we
-        # treat that as a length-1 pool (matches Stage A/B behaviour).
-        if partner_z_values is not None:
-            zs = [float(v) for v in partner_z_values]
-            if len(zs) == 0:
-                raise ValueError("partner_z_values must be non-empty")
-        elif partner_z is not None:
-            zs = [float(partner_z)]
-        else:
-            zs = [0.5]
-        self.partner_z_values = jnp.asarray(zs, dtype=jnp.float32)   # (Z,)
-        self.n_partner_z: int = len(zs)
-        # Keep .partner_z as a scalar for BC (some callers look at this
-        # directly). Points at the first entry of the pool.
-        self.partner_z = float(zs[0])
+        # ---- Partner capability pool ----
+        cap_np = _canonicalize_capability_pairs(
+            partner_capability_pairs,
+            fallback=TRAINING_CAPABILITY_PAIRS,
+        )
+        self.partner_capability_pairs = jnp.asarray(cap_np, dtype=jnp.int32)  # (K, 2)
+        self.partner_capability_pairs_np = cap_np
+        self.n_partner_capability: int = int(cap_np.shape[0])
+        # Convenience scalar handle (first pair) for BC.
+        self.partner_capability_default = tuple(int(v) for v in cap_np[0].tolist())
 
         self.rounds_per_episode = int(rounds_per_episode)
         if self.rounds_per_episode < 1:
             raise ValueError("rounds_per_episode must be >= 1")
 
-        # Information-structure intervention: zero the partner-position
-        # channel of the grid observation while ``state.time <
-        # hide_partner_until_time`` (round-local time). K=0 (default) is
-        # backward-compatible — partner is always visible. K=3 hides partner
-        # at t=0, 1, 2 (i.e. through the first two movement steps) and
-        # reveals it at t=3 onward. This forces the ego to rely on the
-        # t=0 message (and therefore on knowing z) rather than on cheap
-        # behavioural inference from partner motion.
+        # Info-structure knob preserved for compatibility. K=0 (default) —
+        # partner always visible. K>0 hides the partner-position channel
+        # at round-local time < K.
         self.hide_partner_until_time = int(hide_partner_until_time)
         if self.hide_partner_until_time < 0:
             raise ValueError("hide_partner_until_time must be >= 0")
 
-        # Only ``action_only`` is supported in this build. The kwarg is kept
-        # for API stability with earlier configs / trainers.
         if communication_condition not in COMM_CONDITIONS:
             raise ValueError(
                 f"communication_condition must be one of {COMM_CONDITIONS}, "
                 f"got {communication_condition!r}"
             )
         self.communication_condition: str = communication_condition
-        # t=0 legality mask (STAY+NONE only). Downstream code (network, tests)
-        # reads this rather than re-deriving it.
         self.t0_action_mask = jnp.asarray(ACTION_MASK_T0, dtype=jnp.bool_)
         self.t0_action_mask_np = np.asarray(ACTION_MASK_T0, dtype=np.bool_)
 
-        # Precompute BFS next-action tables per layout. Shape (K, H, W).
-        # Partner navigation lookups always index by state.layout_idx, which
-        # means later stages (layout×z sampling wrappers) only need to point
-        # at these tables with a different idx; no other code path changes.
+        # Precompute BFS next-action tables per layout, per goal color.
         next_red_np = np.stack(
             [_bfs_next_actions(ld["wall_map_np"], ld["red_goal_np"])
              for ld in loaded], axis=0,
@@ -531,17 +619,10 @@ class CoordinationGrid(MultiAgentEnv):
     def _build_state_for(
         self,
         layout_idx: chex.Array,
-        z: Optional[chex.Array] = None,
+        capability: Optional[chex.Array] = None,
         round_idx: Optional[chex.Array] = None,
         episode_layout_seq: Optional[chex.Array] = None,
     ) -> "State":
-        """Build a fresh round-start State on the given layout.
-
-        z / round_idx default to the pool's first z / 0 respectively — this
-        is what a Stage A/B single-round env wants. For Stage C+D, the caller
-        (``reset``, or the intermediate-round transition inside ``step_env``)
-        threads in the appropriate z and round_idx explicitly.
-        """
         idx = layout_idx.astype(jnp.int32)
         wall_map = self.wall_maps[idx]
         ego_start = self.ego_starts[idx]
@@ -549,12 +630,12 @@ class CoordinationGrid(MultiAgentEnv):
         red_goal = self.red_goals[idx]
         blue_goal = self.blue_goals[idx]
         agent_pos = jnp.stack([ego_start, partner_start], axis=0).astype(jnp.int32)
-        z_val = jnp.float32(self.partner_z) if z is None else jnp.asarray(z, dtype=jnp.float32)
+        if capability is None:
+            cap_val = jnp.asarray(self.partner_capability_default, dtype=jnp.int32)
+        else:
+            cap_val = jnp.asarray(capability, dtype=jnp.int32)
         round_val = jnp.int32(0) if round_idx is None else jnp.asarray(round_idx, dtype=jnp.int32)
         if episode_layout_seq is None:
-            # Fill remaining rounds with the current layout as a benign
-            # default. Random-reset callers (`reset(key)`) override this
-            # further down with a proper random sequence.
             eps_seq = jnp.full((self.rounds_per_episode,), idx, dtype=jnp.int32)
         else:
             eps_seq = jnp.asarray(episode_layout_seq, dtype=jnp.int32)
@@ -565,49 +646,48 @@ class CoordinationGrid(MultiAgentEnv):
             blue_goal=blue_goal,
             time=jnp.int32(0),
             terminal=jnp.bool_(False),
-            z=z_val,
+            capability=cap_val,
             partner_goal=jnp.int32(GOAL_UNSET),
-            pending_message=jnp.int32(Messages.none),
+            partner_move_ctr=jnp.int32(0),
+            pending_allocation=jnp.int32(Allocations.none),
             layout_idx=idx,
             round_idx=round_val,
             episode_layout_seq=eps_seq,
         )
 
     def reset(self, key: chex.PRNGKey) -> Tuple[Dict[str, chex.Array], "State"]:
-        # Full partner-episode reset: sample a fresh partner-type z from the
-        # allowed pool AND a fresh sequence of ``rounds_per_episode`` random
-        # layouts, and start at round 0.
-        key, k_layout, k_z = jax.random.split(key, 3)
-        # Uniform random layout for each round of the partner episode.
+        """Full partner-episode reset: sample capability from the pool AND a
+        fresh 20-layout sequence, and start at round 0.
+        """
+        key, k_layout, k_cap = jax.random.split(key, 3)
         layout_seq = jax.random.randint(
             k_layout, shape=(self.rounds_per_episode,),
             minval=0, maxval=self.n_layouts, dtype=jnp.int32,
         )
-        z_idx = jax.random.randint(
-            k_z, shape=(), minval=0, maxval=self.n_partner_z, dtype=jnp.int32
+        cap_idx = jax.random.randint(
+            k_cap, shape=(), minval=0,
+            maxval=self.n_partner_capability, dtype=jnp.int32,
         )
-        z = self.partner_z_values[z_idx]
+        capability = self.partner_capability_pairs[cap_idx]  # (2,)
         state = self._build_state_for(
-            layout_seq[0], z=z, round_idx=jnp.int32(0),
+            layout_seq[0], capability=capability, round_idx=jnp.int32(0),
             episode_layout_seq=layout_seq,
         )
         obs = self.get_obs(state)
         return lax.stop_gradient(obs), lax.stop_gradient(state)
 
     def reset_from_schedule(
-        self, z: chex.Array, layout_seq: chex.Array,
+        self, capability: chex.Array, layout_seq: chex.Array,
     ) -> Tuple[Dict[str, chex.Array], "State"]:
-        """Deterministic reset from a pre-scheduled (z, layout_seq).
+        """Deterministic reset from a pre-scheduled (capability, layout_seq).
 
         Used by the training scheduler to enforce a balanced sweep: every
-        z sees every training layout exactly once per sweep. Bypasses
-        random sampling entirely; layout_seq must have length exactly
-        ``rounds_per_episode``.
+        capability profile sees every training layout exactly once per sweep.
         """
         layout_seq = jnp.asarray(layout_seq, dtype=jnp.int32)
         state = self._build_state_for(
             layout_seq[0],
-            z=jnp.asarray(z, dtype=jnp.float32),
+            capability=jnp.asarray(capability, dtype=jnp.int32),
             round_idx=jnp.int32(0),
             episode_layout_seq=layout_seq,
         )
@@ -616,14 +696,16 @@ class CoordinationGrid(MultiAgentEnv):
 
     def reset_to_layout(
         self, key: chex.PRNGKey, layout_idx: chex.Array,
-        z: Optional[chex.Array] = None,
+        capability: Optional[chex.Array] = None,
     ) -> Tuple[Dict[str, chex.Array], "State"]:
         """Deterministic reset to a specific layout — for eval loops that need
-        to visit every val/test layout N times. Also accepts an explicit ``z``
-        so per-z eval loops can force the partner type."""
+        to visit every val/test layout N times. Also accepts an explicit
+        ``capability`` so per-profile eval loops can force it.
+        """
         state = self._build_state_for(
             jnp.asarray(layout_idx, dtype=jnp.int32),
-            z=(None if z is None else jnp.asarray(z, dtype=jnp.float32)),
+            capability=(None if capability is None
+                        else jnp.asarray(capability, dtype=jnp.int32)),
             round_idx=jnp.int32(0),
         )
         obs = self.get_obs(state)
@@ -634,10 +716,9 @@ class CoordinationGrid(MultiAgentEnv):
         self, partner_xy: chex.Array, goal: chex.Array, layout_idx: chex.Array
     ) -> chex.Array:
         """goal ∈ {UNSET, RED, BLUE}. Returns int32 move ∈ {0..4}.
-        UNSET (no commit yet) → STAY. This is the *single* point where the
-        BFS tables are consulted; extending to multiple layouts later only
-        requires stacking self.next_action_toward_* along axis 0 and passing
-        the appropriate layout_idx.
+
+        UNSET → STAY. This is the *single* point where the BFS tables are
+        consulted; the cooldown mechanic wraps this in step_env.
         """
         x = partner_xy[0]
         y = partner_xy[1]
@@ -658,40 +739,65 @@ class CoordinationGrid(MultiAgentEnv):
         actions: Dict[str, chex.Array],
     ) -> Tuple[Dict[str, chex.Array], State, Dict[str, float], Dict[str, bool], Dict]:
         ego_action = jnp.asarray(actions["agent_0"], dtype=jnp.int32)
-        ego_move, ego_msg = decode_ego(ego_action)  # scalars
+        ego_move, ego_alloc = decode_ego(ego_action)  # scalars
 
         is_time0 = state.time == 0
         is_time1 = state.time == 1
 
-        # Split the step key up-front — we need three independent streams:
-        # partner-goal sample, next-round layout sample (used only if this
-        # step ends a non-final round), and one to thread out for future use.
-        key, k_partner, k_next_layout = jax.random.split(key, 3)
+        # RNG kept for API stability; commit / cooldown are deterministic.
+        key, _k_unused = jax.random.split(key, 2)
 
-        # ------- Partner goal commitment (once, at t=1) -------
-        # action_only: no message channel; partner samples RED/BLUE
-        # uniformly regardless of the ego's t=0 action or z. If the ego
-        # somehow sends an M0/M1 anyway (e.g. hand-written test with the
-        # mask bypassed) the message is ignored.
-        p_red = jnp.float32(0.5)
-        sample_red = jax.random.bernoulli(k_partner, p=p_red)
-        sampled_goal = jnp.where(
-            sample_red, jnp.int32(GOAL_RED), jnp.int32(GOAL_BLUE)
+        # ------- Partner goal commitment (once, at t=1, from ego's t=0 alloc) -------
+        # ego alloc ALLOC_RED → partner takes BLUE; ALLOC_BLUE → RED.
+        # NONE (which is never legal at t=0 in this build) → partner stays
+        # UNSET; keeps this branch safe if the mask is bypassed in tests.
+        pending_alloc = state.pending_allocation
+        alloc_derived_goal = jnp.where(
+            pending_alloc == int(Allocations.red),
+            jnp.int32(GOAL_BLUE),
+            jnp.where(
+                pending_alloc == int(Allocations.blue),
+                jnp.int32(GOAL_RED),
+                jnp.int32(GOAL_UNSET),
+            ),
         )
         should_commit = is_time1 & (state.partner_goal == GOAL_UNSET)
-        new_partner_goal = jnp.where(should_commit, sampled_goal, state.partner_goal)
+        new_partner_goal = jnp.where(should_commit, alloc_derived_goal, state.partner_goal)
 
-        # ------- Effective moves this step -------
-        # t=0: both agents STAY; ego msg is recorded for next step.
-        # t>=1: ego moves as requested; partner navigates toward committed goal.
-        ego_effective_move = jnp.where(
-            is_time0, jnp.int32(Actions.stay), ego_move
+        # ------- Cooldown mechanic -------
+        # At t>=1, if partner has a committed goal AND move counter == 0,
+        # partner takes one BFS step and counter resets to (c - 1) where
+        # c is the cooldown for the committed goal color. Otherwise partner
+        # STAYs and the counter decrements (floored at 0).
+        # At t=0 the partner always STAYs regardless of counter state.
+        c_for_goal = jnp.where(
+            new_partner_goal == GOAL_RED,
+            state.capability[0],
+            jnp.where(
+                new_partner_goal == GOAL_BLUE,
+                state.capability[1],
+                jnp.int32(1),          # UNSET: c doesn't matter
+            ),
         )
+        partner_has_goal = new_partner_goal != GOAL_UNSET
+        can_move_now = (state.partner_move_ctr == 0) & partner_has_goal & (~is_time0)
         partner_greedy = self._partner_next_move(
             state.agent_pos[1], new_partner_goal, state.layout_idx
         )
         partner_effective_move = jnp.where(
-            is_time0, jnp.int32(Actions.stay), partner_greedy
+            can_move_now, partner_greedy, jnp.int32(Actions.stay)
+        )
+        next_partner_move_ctr = jnp.where(
+            can_move_now,
+            jnp.maximum(c_for_goal - jnp.int32(1), jnp.int32(0)),
+            jnp.maximum(state.partner_move_ctr - jnp.int32(1), jnp.int32(0)),
+        )
+
+        # ------- Ego effective move -------
+        # t=0: ego STAYs (mask enforces this at policy level; enforce here
+        # too so hand-crafted tests can't sneak movement at t=0).
+        ego_effective_move = jnp.where(
+            is_time0, jnp.int32(Actions.stay), ego_move
         )
 
         # ------- Movement transition (walls, boundary, collision, swap) -------
@@ -746,48 +852,35 @@ class CoordinationGrid(MultiAgentEnv):
             jnp.float32(self.success_reward),
             jnp.float32(-self.step_penalty),
         )
-        # A round ends on either success or hitting the per-round horizon.
         round_done = success | (new_time >= self.max_steps)
 
-        # Stage C+D: a partner episode contains `rounds_per_episode` rounds.
-        # Only the final round triggers done["__all__"] (which in turn triggers
-        # JaxMARL's autoreset and a fresh partner-type z on the next call).
-        # Intermediate round ends produce a fresh in-episode round: new layout,
-        # positions/goals/partner_goal/pending_message reset, time=0, SAME z,
-        # round_idx incremented.
         is_final_round = state.round_idx >= (self.rounds_per_episode - 1)
         intermediate_round = round_done & (~is_final_round)
         partner_episode_done = round_done & is_final_round
 
-        # State if the step is "just another step" (round continues or the
-        # final round just ended — autoreset handles the latter externally).
         step_state = state.replace(
             agent_pos=agent_pos,
             time=new_time,
             terminal=partner_episode_done,
             partner_goal=new_partner_goal,
-            pending_message=ego_msg,
-            # round_idx and z unchanged by a plain step.
+            partner_move_ctr=next_partner_move_ctr,
+            pending_allocation=ego_alloc,
+            # round_idx and capability unchanged by a plain step.
         )
 
-        # State if an intermediate round just ended: pull the pre-scheduled
-        # layout for the NEXT round from state.episode_layout_seq, keep z,
-        # keep the full sequence, bump round_idx by 1. If the sequence was
-        # populated by ``reset(key)`` (random) the effect is a fresh random
-        # layout; if it came from ``reset_from_schedule`` the effect is the
-        # trainer's pre-planned sweep.
+        # Intermediate-round transition: next layout from the episode's
+        # pre-scheduled sequence, KEEP capability, reset per-round fields.
         next_round_local = jnp.minimum(
             state.round_idx + 1, jnp.int32(self.rounds_per_episode - 1)
         )
         next_layout_idx = state.episode_layout_seq[next_round_local]
         next_round_state = self._build_state_for(
             next_layout_idx,
-            z=state.z,
+            capability=state.capability,
             round_idx=state.round_idx + 1,
             episode_layout_seq=state.episode_layout_seq,
         )
 
-        # Select which state to return. `intermediate_round` is a scalar bool.
         new_state = jax.tree_util.tree_map(
             lambda a, b: jnp.where(intermediate_round, b, a),
             step_state, next_round_state,
@@ -796,19 +889,20 @@ class CoordinationGrid(MultiAgentEnv):
         obs = self.get_obs(new_state)
 
         rewards = {"agent_0": reward, "agent_1": reward}
-        # done["__all__"] is True ONLY on the terminal step of the final round.
         dones = {
             "agent_0": partner_episode_done,
             "agent_1": partner_episode_done,
             "__all__": partner_episode_done,
         }
         info = {
-            "success": success,                       # coordination success this step
-            "round_done": round_done,                 # this step ended a round
-            "round_idx": state.round_idx,             # which round just ran (0-indexed)
-            "z": state.z,                             # partner type for this episode
+            "success": success,
+            "round_done": round_done,
+            "round_idx": state.round_idx,
+            "capability": state.capability,           # (2,) int32 per env
+            "capability_c_r": state.capability[0],
+            "capability_c_b": state.capability[1],
             "partner_goal": new_partner_goal,
-            "pending_message": ego_msg,
+            "pending_allocation": ego_alloc,
             "ego_move_effective": ego_effective_move,
             "partner_move_effective": partner_effective_move,
         }
@@ -823,15 +917,13 @@ class CoordinationGrid(MultiAgentEnv):
     # ---------------------------------------------------------------- get_obs
     def get_obs(self, state: State) -> Dict[str, Dict[str, chex.Array]]:
         """Per-agent obs is a dict:
-            {"grid": (H, W, 5), "last_message": (3,), "is_t0": ()}
-        "last_message" is a one-hot over {NONE, M0, M1} for the message ego
-        sent on the immediately preceding step (== state.pending_message).
-        "is_t0" is 1.0 iff state.time == 0 (the free-comm step) and 0.0
-        otherwise; a masked-action policy uses it to disable movement at
-        t=0 and messaging at t>=1.
+            {"grid": (H, W, 5), "last_allocation": (3,), "is_t0": ()}
+        "last_allocation" is a one-hot over {NONE, RED, BLUE} for the
+        allocation ego sent on the immediately preceding step
+        (== state.pending_allocation).
+        Capability is deliberately absent.
         """
         h, w = self.height, self.width
-
         walls = state.wall_map.astype(jnp.float32)
 
         def one_hot(pos):
@@ -843,23 +935,18 @@ class CoordinationGrid(MultiAgentEnv):
         ego_layer = one_hot(state.agent_pos[0])
         partner_layer = one_hot(state.agent_pos[1])
 
-        # Information-structure intervention: hide the partner-position
-        # channel until state.time >= hide_partner_until_time. When K=0
-        # (default) this is a no-op. This is applied round-locally because
-        # state.time is round-local (resets to 0 at every round boundary),
-        # so the intervention repeats within every round of a partner ep.
         partner_visible = (state.time >= jnp.int32(self.hide_partner_until_time))
         partner_layer = partner_layer * partner_visible.astype(jnp.float32)
 
         grid = jnp.stack(
             [walls, red_layer, blue_layer, ego_layer, partner_layer], axis=-1
-        )  # (H, W, 5)
+        )
 
-        last_message = jax.nn.one_hot(
-            state.pending_message, N_MESSAGES
-        ).astype(jnp.float32)  # (3,)
+        last_allocation = jax.nn.one_hot(
+            state.pending_allocation, N_ALLOCATIONS
+        ).astype(jnp.float32)
 
-        is_t0 = (state.time == 0).astype(jnp.float32)                 # scalar
+        is_t0 = (state.time == 0).astype(jnp.float32)
 
-        obs_i = {"grid": grid, "last_message": last_message, "is_t0": is_t0}
+        obs_i = {"grid": grid, "last_allocation": last_allocation, "is_t0": is_t0}
         return {"agent_0": obs_i, "agent_1": obs_i}

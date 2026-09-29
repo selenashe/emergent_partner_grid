@@ -1,23 +1,14 @@
-"""Recurrent IPPO for CoordinationGrid — Stage A.
+"""Recurrent IPPO for CoordinationGrid — capability-vector partner build.
 
 Only agent_0 is a learned actor; the scripted partner runs inside the env.
-Obs is a dict {"grid": (H, W, 5), "last_message": (3,)}: the grid goes through
-a CNN, the last_message through a small dense embedding, and both are
-concatenated before the GRU. Actor head is a flat 15-way Categorical over the
-factored (move, message) ego action.
+Obs is a dict {"grid": (H, W, 5), "last_allocation": (3,), "is_t0": ()}:
+the grid goes through a CNN, the allocation one-hot through a small dense
+embedding, and both are concatenated before the GRU. Actor head is a flat
+15-way Categorical over the factored (move, alloc) ego action.
 
-Forked from ``ippo_rnn_overcooked_v2.py`` with all Overcooked-specific
-scaffolding removed: reward shaping, wait-buffer, multi-network experiments,
-checkpoint loading, second-agent stacking, batchify/unbatchify. W&B stays
-wired but defaults to disabled.
-
-Stage A scope:
-    * one fixed layout
-    * fixed partner_z (typically 1.0)
-    * one round per episode (`done["__all__"]` from the env is terminal)
-
-Deferred to later stages (per plan): factored action head, layout variation,
-round_done ≠ episode_done + per-partner z sampling.
+Each partner episode has a fixed 2-D capability vector (c_R, c_B); the
+trainer sweeps balanced (capability_pair, layout) pairings using
+``sweep_scheduler.build_schedule``.
 """
 
 import functools
@@ -25,7 +16,7 @@ import os
 import sys
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Callable, Dict, List, NamedTuple, Sequence
+from typing import Any, Callable, Dict, List, NamedTuple, Optional, Sequence
 
 # Make the containing baselines/IPPO/ dir importable so we can pull
 # sweep_scheduler regardless of the CWD hydra ends up in.
@@ -52,6 +43,8 @@ from jaxmarl.environments.coordination_grid import (
     ACTION_MASK_T0,
     ACTION_MASK_TGEQ1,
     COMM_ACTION_ONLY,
+    TRAINING_CAPABILITY_PAIRS,
+    HELDOUT_CAPABILITY_PAIRS,
 )
 from sweep_scheduler import build_schedule, initial_episode_cursor, sanity_check_schedule
 
@@ -131,7 +124,7 @@ class CommObsEncoder(nn.Module):
     """Encode the CoordinationGrid dict obs.
 
     grid: (N, H, W, 5) -> CNN -> (N, grid_dim)
-    last_message: (N, 3) -> Dense -> (N, msg_dim)
+    last_allocation: (N, 3) -> Dense -> (N, msg_dim)
     concatenate -> Dense(out_dim) -> (N, out_dim)
 
     The final projection to ``out_dim`` matters because the downstream
@@ -149,7 +142,7 @@ class CommObsEncoder(nn.Module):
     @nn.compact
     def __call__(self, obs):
         grid = obs["grid"].astype(jnp.float32)
-        msg = obs["last_message"].astype(jnp.float32)
+        msg = obs["last_allocation"].astype(jnp.float32)
 
         grid_emb = CNN(
             output_size=self.grid_dim, activation=self.activation
@@ -245,7 +238,7 @@ class Transition(NamedTuple):
     value: jnp.ndarray
     reward: jnp.ndarray
     log_prob: jnp.ndarray
-    obs: Any  # dict pytree {"grid": ..., "last_message": ...}
+    obs: Any  # dict pytree {"grid": ..., "last_allocation": ...}
     info: Dict
     # env-state fields captured for logging (BEFORE step_env ran on this step)
     pre_step_time: jnp.ndarray  # (N,) int32
@@ -304,37 +297,37 @@ def make_train(config):
         m = env.msg_shape[0]
         return {
             "grid": jnp.zeros((1, config["NUM_ENVS"], h, w, c), dtype=jnp.float32),
-            "last_message": jnp.zeros((1, config["NUM_ENVS"], m), dtype=jnp.float32),
+            "last_allocation": jnp.zeros((1, config["NUM_ENVS"], m), dtype=jnp.float32),
             # is_t0 is a scalar-per-env obs; leading (T=1, N) mirrors the
             # trajectory layout the network consumes.
             "is_t0": jnp.zeros((1, config["NUM_ENVS"]), dtype=jnp.float32),
         }
 
-    # Precompute Python-float labels for the z pool. Used inside the jitted
-    # trainer to build per-z metric KEY names — those keys can't come from
-    # `float(env.partner_z_values[zi])` under trace (traced concretization).
-    _z_values_py: List[float] = [
-        float(v) for v in np.asarray(env.partner_z_values).tolist()
+    # Precompute Python labels for the capability pool. Used inside the jitted
+    # trainer to build per-capability metric KEY names.
+    _cap_pairs_py: List[tuple] = [
+        (int(a), int(b)) for a, b in
+        np.asarray(env.partner_capability_pairs).tolist()
     ]
-    _n_partner_z: int = len(_z_values_py)
+    _n_partner_cap: int = len(_cap_pairs_py)
 
-    # --- Build the balanced (z, layout) sweep schedule --------------------
-    # One sweep = every z × every training layout exactly once, chunked into
-    # partner episodes of `rounds_per_episode` rounds. We stitch `n_sweeps`
-    # sweeps back-to-back and hand each vmap slot its own sweep-boundary
-    # starting position — so each worker traverses whole sweeps in order.
+    # --- Build the balanced (capability, layout) sweep schedule -----------
+    # One sweep = every capability pair × every training layout exactly once,
+    # chunked into partner episodes of `rounds_per_episode` rounds. We stitch
+    # `n_sweeps` sweeps back-to-back and hand each vmap slot its own
+    # sweep-boundary starting position.
     n_sweeps_cfg = int(config.get("N_SWEEPS", max(int(config["NUM_ENVS"]), 8)))
     schedule = build_schedule(
-        partner_z_values=_z_values_py,
+        partner_capability_pairs=_cap_pairs_py,
         n_layouts_train=int(env.n_layouts),
         rounds_per_episode=int(env.rounds_per_episode),
         n_sweeps=n_sweeps_cfg,
         seed=int(config.get("SCHEDULE_SEED", config.get("SEED", 0))),
     )
     sanity_check_schedule(schedule, verbose=True)
-    _SCHEDULE_Z = jnp.asarray(schedule.schedule_z, dtype=jnp.float32)      # (E_total,)
+    _SCHEDULE_CAP = jnp.asarray(schedule.schedule_capability, dtype=jnp.int32)  # (E_total, 2)
     _SCHEDULE_LAYOUTS = jnp.asarray(schedule.schedule_layouts,
-                                     dtype=jnp.int32)                      # (E_total, R)
+                                     dtype=jnp.int32)                       # (E_total, R)
     _N_EPS_TOTAL = int(schedule.n_eps_total)
     _EPS_PER_SWEEP = int(schedule.episodes_per_sweep)
 
@@ -372,9 +365,9 @@ def make_train(config):
             initial_episode_cursor(config["NUM_ENVS"], schedule),
             dtype=jnp.int32,
         )                                                            # (N,)
-        z0 = _SCHEDULE_Z[cursor0]                                    # (N,)
+        cap0 = _SCHEDULE_CAP[cursor0]                                # (N, 2)
         layouts0 = _SCHEDULE_LAYOUTS[cursor0]                        # (N, R)
-        obsv, env_state = jax.vmap(env.reset_from_schedule)(z0, layouts0)
+        obsv, env_state = jax.vmap(env.reset_from_schedule)(cap0, layouts0)
 
         # Per-slot episode-return / -length accumulators (LogWrapper-free).
         ep_return_acc0 = jnp.zeros((config["NUM_ENVS"],), dtype=jnp.float32)
@@ -445,10 +438,10 @@ def make_train(config):
                     (episode_cursor + 1) % jnp.int32(_N_EPS_TOTAL),
                     episode_cursor,
                 )
-                next_z = _SCHEDULE_Z[new_cursor]                # (N,)
+                next_cap = _SCHEDULE_CAP[new_cursor]             # (N, 2)
                 next_layouts = _SCHEDULE_LAYOUTS[new_cursor]    # (N, R)
                 reset_obs, reset_state = jax.vmap(env.reset_from_schedule)(
-                    next_z, next_layouts
+                    next_cap, next_layouts
                 )
                 # Per-slot select: for slots where done_all=True, use the
                 # scheduled reset; else keep the stepped state.
@@ -702,88 +695,77 @@ def make_train(config):
                 0.0,
             )
 
-            # t=0 message distribution: decode msg from stored flat action
-            # (a = 3*move + msg), mask to steps where pre_step_time == 0.
-            ego_msg_all = traj_batch.action % 3                              # (T, N) int
+            # t=0 allocation distribution: decode alloc from stored flat action
+            # (a = 3*move + alloc), mask to steps where pre_step_time == 0.
+            # alloc ids: 0=NONE (never legal at t=0), 1=ALLOC_RED, 2=ALLOC_BLUE.
+            ego_alloc_all = traj_batch.action % 3                            # (T, N) int
             is_t0 = (traj_batch.pre_step_time == 0).astype(jnp.float32)      # (T, N)
             n_t0 = is_t0.sum()
-            frac_msg_none = jnp.where(
-                n_t0 > 0, ((ego_msg_all == 0) * is_t0).sum() / jnp.maximum(n_t0, 1), 0.0)
-            frac_msg_m0 = jnp.where(
-                n_t0 > 0, ((ego_msg_all == 1) * is_t0).sum() / jnp.maximum(n_t0, 1), 0.0)
-            frac_msg_m1 = jnp.where(
-                n_t0 > 0, ((ego_msg_all == 2) * is_t0).sum() / jnp.maximum(n_t0, 1), 0.0)
+            frac_alloc_red = jnp.where(
+                n_t0 > 0, ((ego_alloc_all == 1) * is_t0).sum() / jnp.maximum(n_t0, 1), 0.0)
+            frac_alloc_blue = jnp.where(
+                n_t0 > 0, ((ego_alloc_all == 2) * is_t0).sum() / jnp.maximum(n_t0, 1), 0.0)
 
-            # ---- Per-z aggregates (rolls up round-success and t0 msg by z) ----
-            # traj_batch.info["z"] has shape (T, N) — z is broadcast over time
-            # within a partner episode. Group round_done rows by z value.
-            # `_z_values_py` are concrete Python floats known at trace time so
-            # we can index and format them into metric keys under jit.
-            z_traj = traj_batch.info.get("z", jnp.zeros_like(traj_batch.reward))  # (T, N)
-            per_z_success = []
-            per_z_rounds = []
-            per_z_t0_msg_m0 = []
-            per_z_t0_msg_m1 = []
-            for zi, z_py in enumerate(_z_values_py):
-                # Steps whose partner-episode has this z.
-                z_mask = jnp.isclose(z_traj, jnp.float32(z_py), atol=1e-6).astype(jnp.float32)
-                rd_z = round_done * z_mask                                     # round-done AND this z
-                n_rd_z = rd_z.sum()
-                succ_z = jnp.where(
-                    n_rd_z > 0,
-                    (successes * rd_z).sum() / jnp.maximum(n_rd_z, 1),
+            # ---- Per-capability aggregates ----
+            # traj_batch.info["capability"] has shape (T, N, 2) — capability is
+            # broadcast over time within a partner episode. Group round_done
+            # rows by capability pair.
+            cap_traj = traj_batch.info.get(
+                "capability", jnp.zeros(traj_batch.reward.shape + (2,), dtype=jnp.int32)
+            )                                                    # (T, N, 2)
+            per_cap_success = []
+            per_cap_rounds = []
+            per_cap_t0_alloc_red = []
+            for ci, cap_py in enumerate(_cap_pairs_py):
+                cr = jnp.int32(cap_py[0]); cb = jnp.int32(cap_py[1])
+                cap_mask = (
+                    (cap_traj[..., 0] == cr) & (cap_traj[..., 1] == cb)
+                ).astype(jnp.float32)                            # (T, N)
+                rd_c = round_done * cap_mask
+                n_rd_c = rd_c.sum()
+                succ_c = jnp.where(
+                    n_rd_c > 0,
+                    (successes * rd_c).sum() / jnp.maximum(n_rd_c, 1),
                     0.0,
                 )
-                per_z_success.append(succ_z)
-                per_z_rounds.append(n_rd_z)
-                # t0 msg dist within this z's partner episodes
-                t0_z = is_t0 * z_mask
-                n_t0_z = t0_z.sum()
-                fm0 = jnp.where(
-                    n_t0_z > 0,
-                    ((ego_msg_all == 1) * t0_z).sum() / jnp.maximum(n_t0_z, 1),
+                per_cap_success.append(succ_c)
+                per_cap_rounds.append(n_rd_c)
+                t0_c = is_t0 * cap_mask
+                n_t0_c = t0_c.sum()
+                fred = jnp.where(
+                    n_t0_c > 0,
+                    ((ego_alloc_all == 1) * t0_c).sum() / jnp.maximum(n_t0_c, 1),
                     0.0,
                 )
-                fm1 = jnp.where(
-                    n_t0_z > 0,
-                    ((ego_msg_all == 2) * t0_z).sum() / jnp.maximum(n_t0_z, 1),
-                    0.0,
-                )
-                per_z_t0_msg_m0.append(fm0)
-                per_z_t0_msg_m1.append(fm1)
+                per_cap_t0_alloc_red.append(fred)
 
             metric = {
-                # Round-level (primary Stage C+D metric)
                 "round_success_rate": round_success_rate,
                 "rounds_completed": n_rounds,
-                # Partner-episode-level (final round only)
                 "partner_ep_success_rate": partner_ep_success_rate,
                 "partner_eps_completed": n_completed,
-                # Back-compat alias — some earlier logging / plotting reads this;
-                # under Stage A/B (rounds_per_episode=1) it equals round success.
                 "success_rate": round_success_rate,
                 "reward_mean": traj_batch.reward.mean(),
                 "value_loss": value_loss.mean(),
                 "actor_loss": actor_loss.mean(),
-                "entropy": entropy.mean(),           # combined masked entropy
-                "entropy_t0": entropy_t0.mean(),      # over 3 msg options, max=ln 3
+                "entropy": entropy.mean(),
+                "entropy_t0": entropy_t0.mean(),      # over 2 alloc options, max=ln 2
                 "entropy_tge1": entropy_tge1.mean(),  # over 5 move options, max=ln 5
                 "total_loss": total_loss.mean(),
-                "t0_msg_none": frac_msg_none,
-                "t0_msg_m0": frac_msg_m0,
-                "t0_msg_m1": frac_msg_m1,
+                "t0_alloc_red": frac_alloc_red,
+                "t0_alloc_blue": frac_alloc_blue,
                 "t0_steps_seen": n_t0,
                 "update_step": new_update_step,
                 "env_step": new_update_step
                             * config["NUM_STEPS"] * config["NUM_ENVS"],
             }
-            # Per-z metrics (one key per z value, so W&B can chart them).
-            for zi, z_py in enumerate(_z_values_py):
-                z_label = f"{z_py:.2f}"
-                metric[f"z={z_label}/round_success"] = per_z_success[zi]
-                metric[f"z={z_label}/rounds_seen"] = per_z_rounds[zi]
-                metric[f"z={z_label}/t0_msg_m0"] = per_z_t0_msg_m0[zi]
-                metric[f"z={z_label}/t0_msg_m1"] = per_z_t0_msg_m1[zi]
+            # Per-capability metrics (one key per pair). Small enough set that
+            # keying every pair is fine for W&B.
+            for ci, cap_py in enumerate(_cap_pairs_py):
+                cap_label = f"{cap_py[0]}-{cap_py[1]}"
+                metric[f"cap={cap_label}/round_success"] = per_cap_success[ci]
+                metric[f"cap={cap_label}/rounds_seen"] = per_cap_rounds[ci]
+                metric[f"cap={cap_label}/t0_alloc_red"] = per_cap_t0_alloc_red[ci]
             # Episode-return / -length written by the trainer's manual
             # auto-reset. returned_episode is True only on the step an
             # episode ends; the return/length payload is 0.0 elsewhere.
@@ -816,8 +798,8 @@ def make_train(config):
                         f"ent(t0,t>=1)=({flat['entropy_t0']:.3f},"
                         f"{flat['entropy_tge1']:.3f}) "
                         f"aL={flat['actor_loss']:+.4f} vL={flat['value_loss']:.4f} "
-                        f"t0=[none={flat['t0_msg_none']:.2f} "
-                        f"m0={flat['t0_msg_m0']:.2f} m1={flat['t0_msg_m1']:.2f}]",
+                        f"t0=[red={flat['t0_alloc_red']:.2f} "
+                        f"blue={flat['t0_alloc_blue']:.2f}]",
                         flush=True,
                     )
             jax.debug.callback(_log_cb, metric)
@@ -855,29 +837,27 @@ def make_train(config):
 # ---------------------------------------------------------------------------
 
 def evaluate_policy(params, config, layouts_dir, key,
-                    n_episodes_per_z: int = 64):
-    """Run ``n_episodes_per_z`` full partner-episodes per z value in the pool,
-    on held-out layouts. Reports round-level success (primary Stage C+D
-    metric), plus per-z and per-round-index breakdowns.
+                    n_episodes_per_capability: int = 64,
+                    capability_pairs_override: Optional[Sequence[Sequence[int]]] = None):
+    """Run ``n_episodes_per_capability`` full partner-episodes per capability
+    pair, on held-out layouts. Reports round-level success plus per-capability
+    and per-round-index breakdowns.
 
-    Structure of the rollout:
-      * Build an eval env with the training pool's ``partner_z_values`` and
-        ``rounds_per_episode`` (default 20). Layout sampling per round is
-        internal to the env; we do NOT ``reset_to_layout`` here because a
-        partner episode spans MULTIPLE layouts (one per round).
-      * Force each vmap slot to a specific z by manually setting state.z after
-        reset — so we can group results by z without relying on random draws.
-      * Rollout for ``rounds_per_episode * max_steps`` steps (exact horizon).
+    ``capability_pairs_override`` — evaluate against this explicit pool
+    (e.g. training pairs, or held-out pairs) instead of whatever was in
+    the training env kwargs.
     """
     env_kwargs = dict(config["ENV_KWARGS"])
-    # Eval always uses the raw val/test layouts.
     env_kwargs["layouts_dir"] = layouts_dir
     env_kwargs["augment_symmetries"] = False
     env_kwargs.pop("layout_path", None)
     env_kwargs.pop("layout_paths", None)
+    if capability_pairs_override is not None:
+        env_kwargs["partner_capability_pairs"] = [
+            [int(a), int(b)] for a, b in capability_pairs_override
+        ]
     env_eval = CoordinationGrid(**env_kwargs)
 
-    # action_only only.
     if env_eval.communication_condition != COMM_ACTION_ONLY:
         raise ValueError(
             f"eval env communication_condition must be 'action_only', "
@@ -886,23 +866,21 @@ def evaluate_policy(params, config, layouts_dir, key,
     network = ActorCriticCommRNN(
         action_dim=env_eval.n_ego_actions, config=config
     )
-    Z = int(env_eval.n_partner_z)
-    N = int(n_episodes_per_z)
-    B = Z * N
+    C = int(env_eval.n_partner_capability)
+    N = int(n_episodes_per_capability)
+    B = C * N
     R = int(env_eval.rounds_per_episode)
-    T = R * env_eval.max_steps  # rollout horizon that always contains 1 partner episode
+    T = R * env_eval.max_steps
 
-    # (B,) z assignment: N episodes per z.
-    z_index_per_ep = jnp.repeat(jnp.arange(Z, dtype=jnp.int32), N)
-    z_per_ep = env_eval.partner_z_values[z_index_per_ep]           # (B,)
+    # (B,) capability assignment: N episodes per capability pair.
+    cap_index_per_ep = jnp.repeat(jnp.arange(C, dtype=jnp.int32), N)
+    cap_per_ep = env_eval.partner_capability_pairs[cap_index_per_ep]  # (B, 2)
 
     key_reset, key_step = jax.random.split(key)
     reset_keys = jax.random.split(key_reset, B)
     obs, states = jax.vmap(env_eval.reset)(reset_keys)
-    # Override the randomly-sampled z with our per-slot z, keep everything
-    # else. layout_idx (sampled at reset) is fine to keep — layout will vary
-    # across rounds anyway.
-    states = states.replace(z=z_per_ep)
+    # Override the randomly-sampled capability with our per-slot pair.
+    states = states.replace(capability=cap_per_ep)
     obs = jax.vmap(env_eval.get_obs)(states)
 
     hstate0 = ScannedRNN.initialize_carry(B, config["GRU_HIDDEN_DIM"])
@@ -921,10 +899,6 @@ def evaluate_policy(params, config, layouts_dir, key,
             key, ka, ks = jax.random.split(key, 3)
             action = pi.sample(seed=ka).squeeze(0)                 # (B,)
             step_keys = jax.random.split(ks, B)
-            # NOTE: use env.step_env (not env.step). We want a single partner
-            # episode with round transitions handled internally, but NO auto
-            # reset — otherwise our per-slot z override gets clobbered when
-            # the final round ends. The horizon is set to exactly one episode.
             obs, states, reward, done, info = jax.vmap(
                 env_eval.step_env, in_axes=(0, 0, {"agent_0": 0})
             )(step_keys, states, {"agent_0": action})
@@ -945,52 +919,40 @@ def evaluate_policy(params, config, layouts_dir, key,
      round_dones, round_idxs) = rollout(
         params, obs, states, hstate0, done_prev0, key_step
     )
-    # shapes: (T, B) each. NOTE: this scan uses env.step_env (not env.step),
-    # so once done["__all__"] fires there is NO autoreset. The env's stuck
-    # state continues to report round_done=True on each subsequent call
-    # because state.time keeps advancing past max_steps. Mask those out.
-    dones_np = np.asarray(dones)                                    # (T, B) bool
-    first_done_idx = np.argmax(dones_np.astype(np.int32), axis=0)   # (B,)
-    # If done never fires within the horizon (shouldn't happen: T = R*max_steps
-    # guarantees the episode ends), argmax returns 0 by default; guard by
-    # taking all steps as alive in that case.
-    never_done = ~dones_np.any(axis=0)                              # (B,)
-    T_ax = np.arange(dones_np.shape[0])[:, None]                    # (T, 1)
+    dones_np = np.asarray(dones)
+    first_done_idx = np.argmax(dones_np.astype(np.int32), axis=0)
+    never_done = ~dones_np.any(axis=0)
+    T_ax = np.arange(dones_np.shape[0])[:, None]
     alive_mask_np = (
         (T_ax <= first_done_idx[None, :]) | never_done[None, :]
-    ).astype(np.float32)                                            # (T, B)
+    ).astype(np.float32)
     alive_mask = jnp.asarray(alive_mask_np)
 
-    # ---- Round-level aggregation (masked to alive steps only) ----
     round_dones_alive = round_dones * alive_mask
     n_rounds_total = round_dones_alive.sum()
     round_success_overall = float(
         (successes * round_dones_alive).sum() / jnp.maximum(n_rounds_total, 1)
     )
-    # Per-episode return: sum of masked rewards over the (alive) horizon.
-    ep_return = (rewards * alive_mask).sum(axis=0)                  # (B,)
+    ep_return = (rewards * alive_mask).sum(axis=0)
 
-    # Per z (each z has N episodes; each ep contributes R rounds if not
-    # short-circuited by autoreset — with step_env only, always R rounds).
-    per_z_success = np.zeros(Z, dtype=np.float32)
-    per_z_return  = np.zeros(Z, dtype=np.float32)
-    per_z_rounds  = np.zeros(Z, dtype=np.int64)
-    z_idx_np = np.asarray(z_index_per_ep)
-    rd_alive_np = np.asarray(round_dones_alive)                      # (T, B)
-    s_np        = np.asarray(successes)                              # (T, B)
-    for zi in range(Z):
-        cols = (z_idx_np == zi)
-        rd_z = rd_alive_np[:, cols]                                  # (T, N)
-        s_z  = s_np[:, cols]
-        nrd  = int(rd_z.sum())
-        per_z_success[zi] = float((s_z * rd_z).sum() / max(nrd, 1))
-        per_z_return[zi]  = float(np.asarray(ep_return)[cols].mean())
-        per_z_rounds[zi]  = nrd
+    per_cap_success = np.zeros(C, dtype=np.float32)
+    per_cap_return  = np.zeros(C, dtype=np.float32)
+    per_cap_rounds  = np.zeros(C, dtype=np.int64)
+    cap_idx_np = np.asarray(cap_index_per_ep)
+    rd_alive_np = np.asarray(round_dones_alive)
+    s_np        = np.asarray(successes)
+    for ci in range(C):
+        cols = (cap_idx_np == ci)
+        rd_c = rd_alive_np[:, cols]
+        s_c  = s_np[:, cols]
+        nrd  = int(rd_c.sum())
+        per_cap_success[ci] = float((s_c * rd_c).sum() / max(nrd, 1))
+        per_cap_return[ci]  = float(np.asarray(ep_return)[cols].mean())
+        per_cap_rounds[ci]  = nrd
 
-    # Per round-index within episode (does success rise across rounds?).
     per_round_success = np.zeros(R, dtype=np.float32)
     per_round_n       = np.zeros(R, dtype=np.int64)
-    r_idx_np = np.asarray(round_idxs)                                # (T, B)
+    r_idx_np = np.asarray(round_idxs)
     for r in range(R):
         mask = (r_idx_np == r) & (rd_alive_np > 0.5)
         n = int(mask.sum())
@@ -998,21 +960,24 @@ def evaluate_policy(params, config, layouts_dir, key,
             per_round_success[r] = float(s_np[mask].sum() / n)
         per_round_n[r] = n
 
+    cap_pairs_out = [
+        [int(a), int(b)] for a, b in np.asarray(env_eval.partner_capability_pairs)
+    ]
     return {
-        "n_episodes":         int(B),
-        "n_episodes_per_z":   int(N),
-        "n_partner_z":        int(Z),
-        "rounds_per_episode": int(R),
-        "n_layouts_pool":     int(env_eval.n_layouts),
-        "partner_z_values":   [float(v) for v in np.asarray(env_eval.partner_z_values)],
-        "round_success_overall": round_success_overall,
-        "n_rounds_total":     int(n_rounds_total),
-        "per_z_success":      per_z_success.tolist(),
-        "per_z_return":       per_z_return.tolist(),
-        "per_z_rounds":       per_z_rounds.tolist(),
-        "per_round_idx_success": per_round_success.tolist(),
-        "per_round_idx_n":       per_round_n.tolist(),
-        "mean_ep_return":     float(np.asarray(ep_return).mean()),
+        "n_episodes":                      int(B),
+        "n_episodes_per_capability":       int(N),
+        "n_partner_capability":            int(C),
+        "rounds_per_episode":              int(R),
+        "n_layouts_pool":                  int(env_eval.n_layouts),
+        "partner_capability_pairs":        cap_pairs_out,
+        "round_success_overall":           round_success_overall,
+        "n_rounds_total":                  int(n_rounds_total),
+        "per_capability_success":          per_cap_success.tolist(),
+        "per_capability_return":           per_cap_return.tolist(),
+        "per_capability_rounds":           per_cap_rounds.tolist(),
+        "per_round_idx_success":           per_round_success.tolist(),
+        "per_round_idx_n":                 per_round_n.tolist(),
+        "mean_ep_return":                  float(np.asarray(ep_return).mean()),
     }
 
 
@@ -1040,7 +1005,7 @@ def main(config):
             f"ippo_rnn_coordination_grid_action_only"
             f"_R{config['ENV_KWARGS'].get('rounds_per_episode', 1)}"
             f"_hideK{config['ENV_KWARGS'].get('hide_partner_until_time', 0)}"
-            f"_zpool={config['ENV_KWARGS'].get('partner_z_values', [config['ENV_KWARGS'].get('partner_z', 0.5)])}"
+            f"_ncap={len(config['ENV_KWARGS'].get('partner_capability_pairs', []))}"
         ),
     )
 
@@ -1062,15 +1027,14 @@ def main(config):
     # Print a summary if requested (smoke tests / no W&B).
     if config.get("STDOUT_SUMMARY", False):
         m = out["metrics"]
-        # Vmapped over seeds so shape is (num_seeds, num_updates).
         for k in ("round_success_rate", "partner_ep_success_rate",
                   "ep_return_mean", "ep_length_mean",
                   "reward_mean", "actor_loss", "value_loss",
                   "entropy", "entropy_t0", "entropy_tge1",
-                  "t0_msg_none", "t0_msg_m0", "t0_msg_m1"):
+                  "t0_alloc_red", "t0_alloc_blue"):
             if k in m:
-                v = np.asarray(m[k])  # (S, U)
-                seq = v.mean(axis=0)  # avg over seeds
+                v = np.asarray(m[k])
+                seq = v.mean(axis=0)
                 nice = ", ".join(f"{x:+.4f}" for x in seq.tolist())
                 print(f"    {k:>22s}: [{nice}]", flush=True)
 
@@ -1095,11 +1059,20 @@ def main(config):
                   flush=True)
 
     # -------------- Held-out eval on val / test layout pools --------------
+    # For each split (val / test) we evaluate under BOTH the training
+    # capability pool (familiar profiles) and the held-out capability pool
+    # (unseen combinations of already-seen values).
     eval_dirs: Dict[str, str] = config.get("EVAL_LAYOUTS_DIRS", {}) or {}
     n_eps = int(
-        config.get("EVAL_EPISODES_PER_Z",
-                   config.get("EVAL_TRIALS_PER_LAYOUT", 64))
+        config.get("EVAL_EPISODES_PER_CAPABILITY",
+                   config.get("EVAL_EPISODES_PER_Z", 64))
     )
+    train_cap_pool = list(config["ENV_KWARGS"].get(
+        "partner_capability_pairs", TRAINING_CAPABILITY_PAIRS,
+    ))
+    heldout_cap_pool = list(config.get(
+        "EVAL_HELDOUT_CAPABILITY_PAIRS", HELDOUT_CAPABILITY_PAIRS,
+    ))
     if eval_dirs:
         params_seed0 = jax.tree_util.tree_map(
             lambda x: x[0], out["runner_state"][0].params
@@ -1107,49 +1080,53 @@ def main(config):
         rng_eval = jax.random.PRNGKey(int(config.get("EVAL_SEED", 12345)))
         eval_summary: Dict[str, dict] = {}
         for split, ldir in eval_dirs.items():
-            rng_eval, sub = jax.random.split(rng_eval)
-            print(
-                f"[eval] {split}: layouts_dir={ldir}, "
-                f"{n_eps} episodes/z × {len(config['ENV_KWARGS'].get('partner_z_values', [config['ENV_KWARGS'].get('partner_z', 0.5)]))} z-values...",
-                flush=True,
-            )
-            r = evaluate_policy(
-                params_seed0, config, ldir, sub,
-                n_episodes_per_z=n_eps,
-            )
-            eval_summary[split] = r
-            print(
-                f"[eval] {split}: round_success_overall={r['round_success_overall']:.3f}"
-                f"  (n_rounds={r['n_rounds_total']})",
-                flush=True,
-            )
-            print(f"[eval] {split}: per-z round-success:", flush=True)
-            for zv, sv, nrv in zip(
-                r["partner_z_values"], r["per_z_success"], r["per_z_rounds"]
+            eval_summary[split] = {}
+            for cap_slice_name, cap_pool in (
+                ("familiar", train_cap_pool),
+                ("heldout",  heldout_cap_pool),
             ):
-                print(f"    z={zv:.2f}  succ={sv:.3f}  n_rounds={nrv}", flush=True)
-            print(f"[eval] {split}: per-round-index success (across rounds):", flush=True)
-            for ri, (sv, nv) in enumerate(
-                zip(r["per_round_idx_success"], r["per_round_idx_n"])
-            ):
-                print(f"    round={ri:>2d}  succ={sv:.3f}  n={nv}", flush=True)
-            wandb.log({
-                f"eval_{split}/round_success_overall": r["round_success_overall"],
-                **{f"eval_{split}/per_z_success/z={zv:.2f}": sv
-                   for zv, sv in zip(r["partner_z_values"], r["per_z_success"])},
-                **{f"eval_{split}/per_round/{ri}": sv
-                   for ri, sv in enumerate(r["per_round_idx_success"])},
-            })
-        # Persist the full per-slot numbers if a save path was given.
+                rng_eval, sub = jax.random.split(rng_eval)
+                print(
+                    f"[eval] {split}/{cap_slice_name}: layouts_dir={ldir}, "
+                    f"{n_eps} episodes/cap × {len(cap_pool)} capability pairs...",
+                    flush=True,
+                )
+                r = evaluate_policy(
+                    params_seed0, config, ldir, sub,
+                    n_episodes_per_capability=n_eps,
+                    capability_pairs_override=cap_pool,
+                )
+                eval_summary[split][cap_slice_name] = r
+                print(
+                    f"[eval] {split}/{cap_slice_name}: "
+                    f"round_success_overall={r['round_success_overall']:.3f}"
+                    f"  (n_rounds={r['n_rounds_total']})",
+                    flush=True,
+                )
+                for cap, sv, nrv in zip(
+                    r["partner_capability_pairs"],
+                    r["per_capability_success"],
+                    r["per_capability_rounds"],
+                ):
+                    print(
+                        f"    cap=({cap[0]},{cap[1]})  succ={sv:.3f}  "
+                        f"n_rounds={nrv}", flush=True,
+                    )
+                wandb.log({
+                    f"eval_{split}_{cap_slice_name}/round_success_overall":
+                        r["round_success_overall"],
+                    **{f"eval_{split}_{cap_slice_name}/per_cap_success/cap={cap[0]}-{cap[1]}": sv
+                       for cap, sv in zip(
+                           r["partner_capability_pairs"],
+                           r["per_capability_success"],
+                       )},
+                })
         if save_path:
             eval_json_path = os.path.splitext(save_path)[0] + "_eval.json"
             import json as _json
             with open(eval_json_path, "w") as f:
-                _json.dump({
-                    k: {**v}
-                    for k, v in eval_summary.items()
-                }, f, indent=2)
-            print(f"[eval] wrote per-z / per-round-index numbers -> "
+                _json.dump(eval_summary, f, indent=2)
+            print(f"[eval] wrote per-capability / per-round numbers -> "
                   f"{eval_json_path}", flush=True)
 
     return out
