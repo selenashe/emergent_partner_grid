@@ -51,41 +51,23 @@ import os
 from collections import Counter
 from typing import Dict, List, Sequence, Tuple
 
+import sys
+from pathlib import Path
+
 import numpy as np
 
-from jaxmarl.environments.coordination_grid import (
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from capability_selection import (  # noqa: E402
+    INFEASIBLE,
+    completion_time,
+)
+
+from jaxmarl.environments.coordination_grid import (  # noqa: E402
     CAPABILITY_VALUES,
     TRAINING_CAPABILITY_PAIRS,
     HELDOUT_CAPABILITY_PAIRS,
     bfs_distance_map,
 )
-
-
-# ---------------------------------------------------------------------------
-# Analytic completion-time model
-# ---------------------------------------------------------------------------
-INFEASIBLE = 10**9   # sentinel: alloc cannot complete within max_steps
-
-
-def completion_time(ego_path: int, partner_path: int, partner_cool: int,
-                    max_steps: int) -> int:
-    """Number of env steps to reach the joint-goal configuration under
-    shortest-path navigation with partner cooldown.
-
-    Ego moves once every step starting at t=1; total = 1 + ego_path.
-    Partner moves at step 2, 2+c, 2+2c, ...; k-th move at step 2+(k-1)*c;
-    reaches goal after `partner_path` moves at step 2 + (partner_path-1)*c.
-    Success requires BOTH to be on their goal on the same env step, which
-    happens on max(...) of the two.
-    """
-    if ego_path < 0 or partner_path < 0:
-        return INFEASIBLE
-    ego_step = 1 + ego_path
-    partner_step = 2 + (partner_path - 1) * partner_cool
-    completed = max(ego_step, partner_step)
-    if completed > max_steps:
-        return INFEASIBLE
-    return completed
 
 
 def load_layouts(layouts_dir: str) -> List[dict]:
