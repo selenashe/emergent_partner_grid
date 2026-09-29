@@ -235,6 +235,12 @@ def main() -> None:
     p.add_argument("--n_bins_per_feature", type=int, default=3,
                    help="Number of quantile bins per stratification feature.")
 
+    # ----- optional centroid balance filter -----
+    p.add_argument("--centroid_p_opt_red_target", type=float, default=None,
+                   help="If set, after all other filters keep only the n_final "
+                        "layouts whose p_opt_red is closest to this target. "
+                        "Bypasses stratified sampling. Typical value: 0.5.")
+
     # ----- I/O -----
     p.add_argument("--out_dir", type=Path,
                    default=Path("/juice6/u/jshe/emergent_partner_grid/dev/grids_capability_selected"))
@@ -430,38 +436,68 @@ def main() -> None:
           f"{recommended_max_steps}")
 
     # ================================================================
-    # Step 10: stratified sample -> n_final
+    # Step 10: select n_final layouts (centroid filter OR stratified sample)
     # ================================================================
-    print(f"[10/13] Stratified sampling {args.n_final} from "
-          f"{n_after_horizon} survivors ...")
     survivor_indices = np.flatnonzero(survive_all)
-    # Feature matrix for stratification. Include a mix of geometry and
-    # scientific descriptors.
-    feats = []
-    for i in survivor_indices:
-        env = unique_candidates[i]
-        m = env.metadata
-        s = all_stats[i]
-        # Mean shortest path length across ego and partner to both goals.
-        mean_sp = float(np.mean([m["ego_to_red"], m["ego_to_blue"],
-                                 m["partner_to_red"], m["partner_to_blue"]]))
-        mean_overlap = float(np.mean([m["shortest_path_overlap_assignment_1"],
-                                      m["shortest_path_overlap_assignment_2"]]))
-        feats.append([
-            float(m["realized_wall_density"]),
-            mean_sp,
-            float(m["num_junctions"]),
-            mean_overlap,
-            float(s.delta_reward),
-            float(s.p_opt_red),
-        ])
-    feat_mat = np.asarray(feats, dtype=np.float64)
-    picked_local = stratified_sample(feat_mat, args.n_final,
-                                     args.n_bins_per_feature, args.stratify_seed)
-    picked_global = survivor_indices[picked_local]
+    centroid_diag: Optional[Dict[str, float]] = None
+    if args.centroid_p_opt_red_target is not None:
+        target = float(args.centroid_p_opt_red_target)
+        print(f"[10/13] Centroid filter: keeping the {args.n_final} survivors "
+              f"whose p_opt_red is closest to {target} ...")
+        survivor_p = np.array([all_stats[i].p_opt_red for i in survivor_indices],
+                              dtype=np.float64)
+        # Ascending distance to target. Ties broken by (delta_reward desc, index asc)
+        # for full determinism.
+        survivor_delta = np.array([all_stats[i].delta_reward for i in survivor_indices],
+                                  dtype=np.float64)
+        order_local = np.lexsort((survivor_indices,
+                                  -survivor_delta,
+                                  np.abs(survivor_p - target)))
+        picked_local = order_local[:args.n_final]
+        picked_global = survivor_indices[picked_local]
+        picked_p = survivor_p[picked_local]
+        centroid_diag = {
+            "target": target,
+            "n_input": int(survivor_indices.size),
+            "n_selected": int(args.n_final),
+            "p_opt_red_min": float(picked_p.min()),
+            "p_opt_red_max": float(picked_p.max()),
+            "p_opt_red_mean": float(picked_p.mean()),
+            "p_opt_red_std": float(picked_p.std()),
+            "max_abs_deviation": float(np.abs(picked_p - target).max()),
+        }
+        print(f"       selected {len(picked_global)} layouts; "
+              f"p_opt_red in [{centroid_diag['p_opt_red_min']:.4f}, "
+              f"{centroid_diag['p_opt_red_max']:.4f}] "
+              f"(mean={centroid_diag['p_opt_red_mean']:.4f}, "
+              f"std={centroid_diag['p_opt_red_std']:.4f})")
+    else:
+        print(f"[10/13] Stratified sampling {args.n_final} from "
+              f"{n_after_horizon} survivors ...")
+        feats = []
+        for i in survivor_indices:
+            env = unique_candidates[i]
+            m = env.metadata
+            s = all_stats[i]
+            mean_sp = float(np.mean([m["ego_to_red"], m["ego_to_blue"],
+                                     m["partner_to_red"], m["partner_to_blue"]]))
+            mean_overlap = float(np.mean([m["shortest_path_overlap_assignment_1"],
+                                          m["shortest_path_overlap_assignment_2"]]))
+            feats.append([
+                float(m["realized_wall_density"]),
+                mean_sp,
+                float(m["num_junctions"]),
+                mean_overlap,
+                float(s.delta_reward),
+                float(s.p_opt_red),
+            ])
+        feat_mat = np.asarray(feats, dtype=np.float64)
+        picked_local = stratified_sample(feat_mat, args.n_final,
+                                         args.n_bins_per_feature, args.stratify_seed)
+        picked_global = survivor_indices[picked_local]
+        print(f"       selected {len(picked_global)} layouts")
     selected_envs = [unique_candidates[i] for i in picked_global]
     selected_stats = [all_stats[i] for i in picked_global]
-    print(f"       selected {len(selected_envs)} layouts")
 
     # ================================================================
     # Step 11: apply balanced D4 symmetries
@@ -537,10 +573,12 @@ def main() -> None:
     idx_train = range(0, args.n_train)
     idx_val   = range(args.n_train, args.n_train + args.n_val)
     idx_test  = range(args.n_train + args.n_val, args.n_final)
-    split_ranges = {"train": idx_train, "val": idx_val, "test": idx_test}
-    print(f"       train sym counts: {dict(Counter(shuffled_syms[i] for i in idx_train))}")
-    print(f"       val   sym counts: {dict(Counter(shuffled_syms[i] for i in idx_val))}")
-    print(f"       test  sym counts: {dict(Counter(shuffled_syms[i] for i in idx_test))}")
+    split_ranges = {name: rng_ for name, rng_ in
+                    (("train", idx_train), ("val", idx_val), ("test", idx_test))
+                    if len(rng_) > 0}
+    for name, rng_ in split_ranges.items():
+        print(f"       {name:5s} sym counts: "
+              f"{dict(Counter(shuffled_syms[i] for i in rng_))}")
     fps = [_env_fingerprint(e) for e in shuffled_envs]
     fps_train = set(fps[i] for i in idx_train)
     fps_val   = set(fps[i] for i in idx_val)
@@ -562,6 +600,8 @@ def main() -> None:
     diag_dir.mkdir(parents=True, exist_ok=True)
 
     for split, indices in split_ranges.items():
+        if len(indices) == 0:
+            continue
         layouts_dir = args.out_dir / "layouts" / split
         renders_dir = args.out_dir / "renders" / split
         layouts_dir.mkdir(parents=True, exist_ok=True)
@@ -707,6 +747,7 @@ def main() -> None:
             "step_penalty":    args.step_penalty,
             "success_reward":  args.success_reward,
         },
+        "centroid_p_opt_red":       centroid_diag,
         "horizon_pre_prune":        horizon_diag,
         "delta_reward_distribution_survivors_pre_delta_filter": delta_dist_pre,
         "post_horizon_completion":  summarize_distribution(retained_wc.tolist()),
@@ -734,15 +775,19 @@ def main() -> None:
         json.dump(manifest, f, indent=2)
 
     # ---- sweep-schedule sanity check on the new corpus ----
-    print("\n=== sweep-schedule sanity check ===")
-    sched = build_schedule(
-        partner_capability_pairs=cap_pairs,
-        n_layouts_train=args.n_train,
-        rounds_per_episode=20 if args.n_train % 20 == 0 else 1,
-        n_sweeps=1,
-        seed=args.master_seed,
-    )
-    sanity_check_schedule(sched)
+    if args.n_train > 0:
+        print("\n=== sweep-schedule sanity check ===")
+        # Pick the largest divisor of n_train that is <= 20 so we get a
+        # reasonable rounds_per_episode without failing on odd sizes.
+        rpe = next((k for k in (20, 10, 8, 5, 4, 2, 1) if args.n_train % k == 0), 1)
+        sched = build_schedule(
+            partner_capability_pairs=cap_pairs,
+            n_layouts_train=args.n_train,
+            rounds_per_episode=rpe,
+            n_sweeps=1,
+            seed=args.master_seed,
+        )
+        sanity_check_schedule(sched)
 
     print(f"\nDone. Corpus at {args.out_dir}")
     print(f"  train/val/test = {args.n_train} / {args.n_val} / {args.n_test}")
