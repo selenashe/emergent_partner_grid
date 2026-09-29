@@ -946,6 +946,11 @@ class CoordinationGrid(MultiAgentEnv):
             "round_done": round_done,
             "round_idx": state.round_idx,
             "layout_idx": state.layout_idx,
+            # POST-transition round-local time. Use this — not state.time
+            # (which is the pre-step time) — when recording the step at
+            # which a round completes, so empirical completion times align
+            # with the analytical convention in capability_selection.completion_time.
+            "round_time": new_time,
             "capability": state.capability,           # (2,) int32 per env, (d_R, d_B)
             "capability_d_r": state.capability[0],
             "capability_d_b": state.capability[1],

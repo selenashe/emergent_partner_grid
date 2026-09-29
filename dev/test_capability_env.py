@@ -523,6 +523,27 @@ def test_gru_reset_only_at_full_episode_end():
 # Analytical optimal-allocation primitive                                     #
 # --------------------------------------------------------------------------- #
 
+def test_info_round_time_is_post_transition():
+    """Regression: info["round_time"] must be the POST-transition round-
+    local time, not the pre-step time. The pre-step time is state.time
+    entering the step; round_time must equal state.time + 1 = new_time.
+    """
+    env = _make_env()
+    obs, state = env.reset(jax.random.PRNGKey(0))
+    for i in range(5):
+        pre_step_time = int(state.time)
+        act = (jnp.int32(encode_ego(4, 1)) if state.time == 0
+               else jnp.int32(encode_ego(4, 0)))
+        obs, state, r, d, info = env.step_env(
+            jax.random.PRNGKey(i), state, {"agent_0": act}
+        )
+        check(int(info["round_time"]) == pre_step_time + 1,
+              f"info_round_time_step{i}",
+              f"got {int(info['round_time'])} expected {pre_step_time + 1}")
+        if bool(info["round_done"]):
+            break
+
+
 def test_analytical_optimal_allocation_hand_crafted():
     """Sanity check the analytical primitive used by the evaluator.
 
@@ -586,6 +607,7 @@ TESTS = [
     test_influence_false_partner_goal_invariant_to_ego_alloc,
     test_influence_true_partner_goal_flips_with_ego_alloc,
     test_observation_schema_matches_across_influence,
+    test_info_round_time_is_post_transition,
     test_analytical_optimal_allocation_hand_crafted,
     test_jit_vmap_smoke,
     test_gru_reset_only_at_full_episode_end,

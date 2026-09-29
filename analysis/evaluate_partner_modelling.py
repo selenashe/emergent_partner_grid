@@ -20,7 +20,11 @@ Per-step records saved to a per-slice HDF5:
                                             POST-OBSERVATION hstate — the
                                             state that produced this step's
                                             action, i.e. h_t = RNN(h_{t-1}, o_t).
-    time                (E, T)     int32
+    round_time          (E, T)     int32   -- POST-transition round-local
+                                            time (from info["round_time"]).
+                                            Use this for completion-time
+                                            metrics; matches the analytical
+                                            convention.
     is_t0               (E, T)     bool
 
 Where E = n_capability * n_episodes_per_capability, T = R * max_steps.
@@ -238,7 +242,7 @@ def rollout_condition(
             info["partner_assignment"].astype(jnp.int32),
             info["ego_alloc_action"].astype(jnp.int32),
             info["partner_goal"].astype(jnp.int32),
-            states.time.astype(jnp.int32),
+            info["round_time"].astype(jnp.int32),
             (obs_a["is_t0"] > 0.5),
             (new_hstate if save_hidden else jnp.zeros((B, 1), dtype=jnp.float32)),
         )
@@ -248,7 +252,7 @@ def rollout_condition(
     )
 
     (rewards, dones, succs, round_dones, r_idx, layout_idx, caps,
-     partner_assignment, ego_alloc, partner_goal, times, is_t0, hidden) = [
+     partner_assignment, ego_alloc, partner_goal, round_times, is_t0, hidden) = [
         np.asarray(x) for x in traj
     ]
 
@@ -264,7 +268,7 @@ def rollout_condition(
         "partner_assignment": partner_assignment.T,
         "ego_alloc_action":   ego_alloc.T,
         "partner_goal":       partner_goal.T,
-        "time":               times.T,
+        "round_time":         round_times.T,
         "is_t0":              is_t0.T,
         "hidden_state":       hidden.transpose(1, 0, 2),
         "capability_index_per_ep": np.asarray(cap_index_per_ep),
@@ -301,7 +305,7 @@ def summarize(
     n_rounds = int(rd.sum())
     round_success_rate = float(succ.sum() / max(n_rounds, 1))
     ep_return = reward_env.sum(axis=1)
-    completion_times = record["time"][succ]
+    completion_times = record["round_time"][succ]
     mean_completion = float(completion_times.mean()) if completion_times.size else float("nan")
 
     R = int(r_idx.max()) + 1 if r_idx.size else 0
