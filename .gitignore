@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# Hydra per-run output
+outputs/
+multirun/
+
+# Large rollout data (regenerable: bash/eval_all_checkpoints.sh)
+*.h5
+
+# Model weights (regenerable: bash/train_final_experiment.sh)
+*.safetensors
+
+# Slurm stdout/stderr — noisy, big; the sbatch_*.txt launch manifests ARE kept.
+logs/cg_*.out
+logs/cg_*.err
+logs/slurm-*.out
+logs/slurm-*.err
+slurm-*.out
+slurm-*.err
+
+# Capability-corpus derived views (JSON layouts + manifest ARE kept)
+dev/grids_capability_selected/renders/
+dev/grids_capability_selected/diagnostics/
+dev/grids/
+
+# W&B
+wandb/
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
