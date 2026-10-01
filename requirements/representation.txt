@@ -1,0 +1,8 @@
+# Standalone analysis dependencies; no trainer/environment imports are needed.
+numpy>=1.26
+h5py>=3.10
+torch>=2.2
+pandas>=2.1
+matplotlib>=3.8
+umap-learn==0.5.7
+pytest>=8

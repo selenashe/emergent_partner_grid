@@ -1,0 +1,53 @@
+{
+  "analysis_seed": 0,
+  "rng": "numpy.default_rng (PCG64)",
+  "permutation": [
+    4,
+    19,
+    6,
+    2,
+    13,
+    16,
+    3,
+    11,
+    10,
+    8,
+    0,
+    12,
+    7,
+    5,
+    18,
+    17,
+    14,
+    9,
+    1,
+    15
+  ],
+  "train_reps": [
+    4,
+    19,
+    6,
+    2,
+    13,
+    16,
+    3,
+    11,
+    10,
+    8,
+    0,
+    12,
+    7,
+    5,
+    18,
+    17
+  ],
+  "test_reps": [
+    14,
+    9,
+    1,
+    15
+  ],
+  "rep_definition": "zero-based occurrence in source episode order within each capability profile",
+  "n_train_per_profile": 16,
+  "n_test_per_profile": 4
+}
