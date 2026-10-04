@@ -1,178 +1,159 @@
-# Emergent Partner Modelling
+# CoordinationGrid partner experiments
 
-This repository accompanies the paper:  
-**_Partner Modelling Emerges in Recurrent Agents (But Only When It Matters)_**
+This repository runs the four CoordinationGrid conditions for two allocation designs:
 
-It is **forked from [JaxMARL](https://github.com/FLAIROx/JaxMARL)** and extends it to study how collaborative agents develop internal models of their partners — even without explicit modelling objectives.
+- **v1:** choose an assignment at round start and retain it for the round.
+- **v2:** random initial assignment, followed by allocation decisions during movement.
 
-We implement a series of controlled experiments using Overcooked-AI to investigate when and how structured partner representations emerge in recurrent neural agents.
+The conditions are diverse-partner RNN + influence, diverse-partner MLP + influence,
+single-partner RNN + influence, and diverse-partner RNN without influence. Each
+partner episode contains 20 rounds. The diverse training pool has 24 capability
+profiles; evaluation includes 22 novel profiles on familiar layouts.
 
-## Overview
+## Repository layout
 
-- Builds on JaxMARL with updated Overcooked dynamics and layouts for task-allocation scenarios
-- Introduces agents trained against diverse partners with varying subtask skills
-- Includes several baselines: memoryless (MLP), single-partner specialists, and non-influential RNNs
-- Contains scripts to reproduce experiments and analyse hidden state representations
-- Includes variants for agents without visual input and with online partner switching
+| Directory | Contents |
+| --- | --- |
+| `data_prep/` | Grid generation, analytical filtering, distance-distribution plots, balancing, rendering, and the 1000/2000/1096-layout corpora with their preparation audits. |
+| `train/` | PPO trainer and config, random and counterbalanced samplers, preflight validation, training curves, empirical sampling audits, checkpoints, and frozen experiment sources. |
+| `eval/` | Checkpoint evaluation, performance comparisons and representation analysis, saved rollouts, summaries, figures, and evaluation Slurm logs. |
+| `bash/` | Slurm training/evaluation entry points and batch submission scripts. |
+| `jaxmarl/` | JaxMARL framework and the CoordinationGrid environment; capability populations are defined in `jaxmarl/environments/coordination_grid/capability_populations.py`. |
+| `tests/` | Environment, sampler, preparation, and analysis tests. |
+| `archive/` | Previously retired development artifacts, outside the active experiment pipeline. |
 
+There is no active `dev/`, `baselines/`, `analysis/`, or `notebooks/` directory.
+The relevant former IPPO baseline is now `train/ippo_rnn_coordination_grid.py`.
+The unrelated MAPPO/QLearning algorithms and other IPPO configurations were removed.
 
-<h1 align="center">JaxMARL</h1>
+## Preparation
 
-<p align="center">
-       <a href="https://pypi.python.org/pypi/jaxmarl">
-        <img src="https://img.shields.io/pypi/pyversions/jaxmarl.svg" /></a>
-       <a href="https://badge.fury.io/py/jaxmarl">
-        <img src="https://badge.fury.io/py/jaxmarl.svg" /></a>
-       <a href= "https://github.com/FLAIROx/JaxMARL/blob/main/LICENSE">
-        <img src="https://img.shields.io/badge/license-Apache2.0-blue.svg" /></a>
-       <a href= "https://colab.research.google.com/github/FLAIROx/JaxMARL/blob/main/jaxmarl/tutorials/JaxMARL_Walkthrough.ipynb">
-        <img src="https://colab.research.google.com/assets/colab-badge.svg" /></a>
-       <a href= "https://arxiv.org/abs/2311.10090">
-        <img src="https://img.shields.io/badge/arXiv-2311.10090-b31b1b.svg" /></a>
-       
-</p>
+The provenance chain is:
 
-[**Installation**](#install) | [**Quick Start**](#start) | [**Environments**](#environments) | [**Algorithms**](#algorithms) | [**Citation**](#cite)
----
+1. `data_prep/env_generator.py` generates geometrically valid candidate grids.
+2. `data_prep/build_final_corpus.py` applies capability-sensitive filters and saves
+   layouts, manifests, per-candidate filter audits, and diagnostic plots.
+3. `data_prep/plot_layout_distributions.py` examines shortest-path distances and wall density.
+4. `data_prep/balance_ego_distances.py` samples a subset with simultaneous red/blue
+   ego-distance quotas. The retained 1096 layouts have exactly 137 examples at
+   each distance 1–8 for each goal.
+5. `data_prep/capability_validation.py` checks analytical feasibility and allocation rewards;
+   `data_prep/render_layout_corpus.py` renders saved grids and contact sheets.
 
-<div class="collage">
-    <div class="column" align="centre">
-        <div class="row" align="centre">
-            <img src="https://github.com/FLAIROx/JaxMARL/blob/main/docs/imgs/cramped_room.gif?raw=true" alt="Overcooked" width="20%">
-            <img src="https://github.com/FLAIROx/JaxMARL/blob/main/docs/imgs/mabrax.png?raw=true" alt="mabrax" width="20%">
-            <img src="https://github.com/FLAIROx/JaxMARL/blob/main/docs/imgs/storm.gif?raw=true" alt="STORM" width="20%">
-            <img src="https://github.com/FLAIROx/JaxMARL/blob/main/docs/imgs/hanabi.png?raw=true" alt="hanabi" width="20%">
-        </div>
-        <div class="row" align="centre">
-            <img src="https://github.com/FLAIROx/JaxMARL/blob/main/docs/imgs/coin_game.png?raw=true" alt="coin_game" width="20%">
-            <img src="https://github.com/FLAIROx/JaxMARL/blob/main/docs/imgs/qmix_MPE_simple_tag_v3.gif?raw=true" alt="MPE" width="20%">
-            <img src="https://github.com/FLAIROx/JaxMARL/blob/main/docs/imgs/jaxnav-ma.gif?raw=true" alt="jaxnav" width="20%">
-            <img src="https://github.com/FLAIROx/JaxMARL/blob/main/docs/imgs/smax.gif?raw=true" alt="SMAX" width="20%">
-        </div>
-    </div>
-</div>
+The retained corpora are `data_prep/grids_capability_selected` (original v1, 1000),
+`data_prep/grids_capability_selected_2000` (selection before balancing), and
+`data_prep/grids_capability_selected_balanced_1096` (v2 and counterbalanced v1/v2).
+Their `manifest.json` files preserve the original generation parameters and filter
+survival counts. Historical paths inside those records are preserved.
 
-## Multi-Agent Reinforcement Learning in JAX
+For example:
 
-JaxMARL combines ease-of-use with GPU-enabled efficiency, and supports a wide range of commonly used MARL environments as well as popular baseline algorithms. Our aim is for one library that enables thorough evaluation of MARL methods across a wide range of tasks and against relevant baselines. We also introduce SMAX, a vectorised, simplified version of the popular StarCraft Multi-Agent Challenge, which removes the need to run the StarCraft II game engine. 
-
-For more details, take a look at our [blog post](https://blog.foersterlab.com/jaxmarl/) or our [Colab notebook](https://colab.research.google.com/github/FLAIROx/JaxMARL/blob/main/jaxmarl/tutorials/JaxMARL_Walkthrough.ipynb), which walks through the basic usage.
-
-<h2 name="environments" id="environments">Environments 🌍 </h2>
-
-| Environment | Reference | README | Summary |
-| --- | --- | --- | --- |
-| 🔴 MPE | [Paper](https://arxiv.org/abs/1706.02275) | [Source](https://github.com/FLAIROx/JaxMARL/tree/main/jaxmarl/environments/mpe) | Communication orientated tasks in a multi-agent particle world
-| 🍲 Overcooked | [Paper](https://arxiv.org/abs/1910.05789) | [Source](https://github.com/FLAIROx/JaxMARL/tree/main/jaxmarl/environments/overcooked) | Fully-cooperative human-AI coordination tasks based on the homonyms video game | 
-| 🦾 Multi-Agent Brax | [Paper](https://arxiv.org/abs/2003.06709) | [Source](https://github.com/FLAIROx/JaxMARL/tree/main/jaxmarl/environments/mabrax) | Continuous multi-agent robotic control based on Brax, analogous to Multi-Agent MuJoCo |
-| 🎆 Hanabi | [Paper](https://arxiv.org/abs/1902.00506) | [Source](https://github.com/FLAIROx/JaxMARL/tree/main/jaxmarl/environments/hanabi) | Fully-cooperative partially-observable multiplayer card game |
-| 👾 SMAX | Novel | [Source](https://github.com/FLAIROx/JaxMARL/tree/main/jaxmarl/environments/smax) | Simplified cooperative StarCraft micro-management environment |
-| 🧮 STORM: Spatial-Temporal Representations of Matrix Games | [Paper](https://openreview.net/forum?id=54F8woU8vhq) | [Source](https://github.com/FLAIROx/JaxMARL/tree/main/jaxmarl/environments/storm) | Matrix games represented as grid world scenarios
-| 🧭 JaxNav | Paper coming | [Source](https://github.com/FLAIROx/JaxMARL/tree/main/jaxmarl/environments/jaxnav) | 2D geometric navigation for differential drive robots
-| 🪙 Coin Game | [Paper](https://arxiv.org/abs/1802.09640) | [Source](https://github.com/FLAIROx/JaxMARL/tree/main/jaxmarl/environments/coin_game) | Two-player grid world environment which emulates social dilemmas
-| 💡 Switch Riddle | [Paper](https://proceedings.neurips.cc/paper_files/paper/2016/hash/c7635bfd99248a2cdef8249ef7bfbef4-Abstract.html) | [Source](https://github.com/FLAIROx/JaxMARL/tree/main/jaxmarl/environments/switch_riddle) | Simple cooperative communication game included for debugging
-
- 
-<h2 name="algorithms" id="algorithms">Baseline Algorithms 🦉 </h2>
-
-We follow CleanRL's philosophy of providing single file implementations which can be found within the `baselines` directory. We use Hydra to manage our config files, with specifics explained in each algorithm's README. Most files include `wandb` logging code, this is disabled by default but can be enabled within the file's config.
-
-| Algorithm | Reference | README | 
-| --- | --- | --- | 
-| IPPO | [Paper](https://arxiv.org/pdf/2011.09533.pdf) | [Source](https://github.com/FLAIROx/JaxMARL/tree/main/baselines/IPPO) | 
-| MAPPO | [Paper](https://arxiv.org/abs/2103.01955) | [Source](https://github.com/FLAIROx/JaxMARL/tree/main/baselines/MAPPO) | 
-| IQL | [Paper](https://arxiv.org/abs/1312.5602v1) | [Source](https://github.com/FLAIROx/JaxMARL/tree/main/baselines/QLearning) | 
-| VDN | [Paper](https://arxiv.org/abs/1706.05296)  | [Source](https://github.com/FLAIROx/JaxMARL/tree/main/baselines/QLearning) |
-| QMIX | [Paper](https://arxiv.org/abs/1803.11485) | [Source](https://github.com/FLAIROx/JaxMARL/tree/main/baselines/QLearning) |
-| TransfQMIX | [Paper](https://www.southampton.ac.uk/~eg/AAMAS2023/pdfs/p1679.pdf) | [Source](https://github.com/FLAIROx/JaxMARL/tree/main/baselines/QLearning) |
-| SHAQ | [Paper](https://arxiv.org/abs/2105.15013) | [Source](https://github.com/FLAIROx/JaxMARL/tree/main/baselines/QLearning) |
-| PQN-VDN | [Paper](https://arxiv.org/abs/2407.04811) | [Source](https://github.com/mttga/purejaxql) |
-
-<h2 name="install" id="install">Installation 🧗 </h2>
-
-**Environments** - Before installing, ensure you have the correct [JAX version](https://github.com/google/jax#installation) for your hardware accelerator. The JaxMARL environments can be installed directly from PyPi:
-
-```
-pip install jaxmarl 
+```bash
+python data_prep/plot_layout_distributions.py \
+  --corpus_dir data_prep/grids_capability_selected_balanced_1096
+python data_prep/render_layout_corpus.py --help
+python data_prep/build_final_corpus.py --help
 ```
 
-**Algorithms** - If you would like to also run the algorithms, install the source code as follows:
+## Training and queued evaluation
 
-1. Clone the repository:
-    ```
-    git clone https://github.com/FLAIROx/JaxMARL.git && cd JaxMARL
-    ```
-2. The requirements for IPPO & MAPPO can be installed with:
-    ``` 
-    pip install -e .
-    export PYTHONPATH=./JaxMARL:$PYTHONPATH
-    ```
+Use the existing `emergent_partner_model` Conda environment. The Slurm scripts
+activate it themselves. The nominal budget remains 60M steps (915 PPO updates,
+59,965,440 actual environment transitions).
 
-<h2 name="start" id="start">Quick Start 🚀 </h2>
+For counterbalanced v1/v2, preparation freezes both protocols, the common corpus,
+and the paired layout schedules. Preparation and validation do not submit jobs:
 
-We take inspiration from the [PettingZoo](https://github.com/Farama-Foundation/PettingZoo) and [Gymnax](https://github.com/RobertTLange/gymnax) interfaces. You can try out training an agent in our [Colab notebook](https://colab.research.google.com/github/FLAIROx/JaxMARL/blob/main/jaxmarl/tutorials/JaxMARL_Walkthrough.ipynb). Further introduction scripts can be found [here](https://github.com/FLAIROx/JaxMARL/tree/main/jaxmarl/tutorials).
-
-### Basic JaxMARL API  Usage 🖥️
-
-Actions, observations, rewards and done values are passed as dictionaries keyed by agent name, allowing for differing action and observation spaces. The done dictionary contains an additional `"__all__"` key, specifying whether the episode has ended. We follow a parallel structure, with each agent passing an action at each timestep. For asynchronous games, such as Hanabi, a dummy action is passed for agents not acting at a given timestep.
-
-```python 
-import jax
-from jaxmarl import make
-
-key = jax.random.PRNGKey(0)
-key, key_reset, key_act, key_step = jax.random.split(key, 4)
-
-# Initialise environment.
-env = make('MPE_simple_world_comm_v3')
-
-# Reset the environment.
-obs, state = env.reset(key_reset)
-
-# Sample random actions.
-key_act = jax.random.split(key_act, env.num_agents)
-actions = {agent: env.action_space(agent).sample(key_act[i]) for i, agent in enumerate(env.agents)}
-
-# Perform the step transition.
-obs, state, reward, done, infos = env.step(key_step, state, actions)
+```bash
+python bash/submit_counterbalanced_training.py --prepare
+python train/validate_counterbalanced_training.py --manifest train/manifests/<manifest>.json
+python bash/submit_counterbalanced_training.py --submit-manifest train/manifests/<manifest>.json
 ```
 
-### Dockerfile 🐋
-To help get experiments up and running we include a [Dockerfile](https://github.com/FLAIROx/JaxMARL/blob/main/Dockerfile) and its corresponding [Makefile](https://github.com/FLAIROx/JaxMARL/blob/main/Makefile). With Docker and the [Nvidia Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/index.html) installed, the container can be built with:
-```
-make build
-```
-The built container can then be run:
-```
-make run
-```
+The final command submits four conditions × five learner seeds × two protocols
+and queues one evaluation job per protocol with `afterok` dependencies. Submission
+is resumable from the manifest. Completed manifests are not resubmitted.
 
-## Contributing 🔨
-Please contribute! Please take a look at our [contributing guide](https://github.com/FLAIROx/JaxMARL/blob/main/CONTRIBUTING.md) for how to add an environment/algorithm or submit a bug report. Our roadmap also lives there.
+`bash/submit_balanced_training.py` retains the original v2 batch workflow: the
+**layout corpus** is balanced, while profiles/layouts are sampled randomly by
+`train/episode_scheduler.py`. `train/counterbalanced_scheduler.py` supplies the
+new paired profile/layout allocation. Neither is a hyperparameter sweep.
 
-<h2 name="cite" id="cite">Citing JaxMARL 📜 </h2>
-If you use JaxMARL in your work, please cite us as follows:
+For an individual current v2 policy:
 
-```
-@article{flair2023jaxmarl,
-      title={JaxMARL: Multi-Agent RL Environments in JAX},
-      author={Alexander Rutherford and Benjamin Ellis and Matteo Gallici and Jonathan Cook and Andrei Lupu and Gardar Ingvarsson and Timon Willi and Akbir Khan and Christian Schroeder de Witt and Alexandra Souly and Saptarashmi Bandyopadhyay and Mikayel Samvelyan and Minqi Jiang and Robert Tjarko Lange and Shimon Whiteson and Bruno Lacerda and Nick Hawes and Tim Rocktaschel and Chris Lu and Jakob Nicolaus Foerster},
-      journal={arXiv preprint arXiv:2311.10090},
-      year={2023}
-    }
+```bash
+CONDITION=rnn_diverse_influence SEED=1 sbatch bash/train_final_experiment.sh
 ```
 
-## See Also 🙌
-There are a number of other libraries which inspired this work, we encourage you to take a look!
+`bash/eval_all_checkpoints.sh` evaluates a checkpoint directory. For v1, use its
+frozen source through `REPO_ROOT` and supply its actual relocated layouts with
+`LAYOUTS_DIR`; the batch submitter sets these explicitly. Original completed
+snapshots remain unchanged, including their internal historical directory names.
 
-JAX-native algorithms:
-- [Mava](https://github.com/instadeepai/Mava): JAX implementations of IPPO and MAPPO, two popular MARL algorithms.
-- [PureJaxRL](https://github.com/luchris429/purejaxrl): JAX implementation of PPO, and demonstration of end-to-end JAX-based RL training.
-- [Minimax](https://github.com/facebookresearch/minimax/): JAX implementations of autocurricula baselines for RL.
+## Results and logs
 
-JAX-native environments:
-- [Gymnax](https://github.com/RobertTLange/gymnax): Implementations of classic RL tasks including classic control, bsuite and MinAtar.
-- [Jumanji](https://github.com/instadeepai/jumanji): A diverse set of environments ranging from simple games to NP-hard combinatorial problems.
-- [Pgx](https://github.com/sotetsuk/pgx): JAX implementations of classic board games, such as Chess, Go and Shogi.
-- [Brax](https://github.com/google/brax): A fully differentiable physics engine written in JAX, features continuous control tasks.
-- [XLand-MiniGrid](https://github.com/corl-team/xland-minigrid): Meta-RL gridworld environments inspired by XLand and MiniGrid.
+- `train/train_logs/`: weights, resolved training configs, built-in evaluation
+  summaries, and empirical sampling-audit JSON/NPZ files.
+- `train/manifests/`: Slurm submission manifests, job IDs, dependencies, resources,
+  source hashes, schedules, and completion records.
+- `train/slurm_logs/`: training Slurm stdout/stderr, including PPO learning curves.
+- `eval/slurm_logs/`: standalone evaluation Slurm stdout/stderr.
+- `train/hydra_outputs/`: Hydra's resolved YAML configs, overrides, and Python
+  logger output. This was the former root `outputs/`, separate from Slurm logs.
+- `train/run_snapshots/`: immutable sources and frozen input data used by completed
+  training batches. For the counterbalanced batch it also contains the shared schedules.
+- `train/sampling_audits/`: independent verification and CSVs of actual training exposure.
+- `train/training_curves/`: saved learning-curve figures and numerical summaries.
+- `eval/eval_out/`: per-policy familiar/novel rollout HDF5s and evaluation summaries.
+- `eval/protocol_comparison/`: v1/v2 performance and round-by-round comparisons.
+- `eval/representation_results/`: hidden-state decoding and representation analysis.
+
+Generated schedule NPZs are ignored by Git because the single-profile array
+exceeds GitHub's file limit. Schedule JSON parameters, checksums, frozen sampler
+source, and actual exposure audits remain tracked. On a fresh clone, restore
+the arrays with:
+
+```bash
+python train/rebuild_counterbalanced_schedules.py \
+  --manifest train/manifests/sbatch_counterbalanced1096_20261002_235609.json
+```
+
+The script uses the frozen sampler and capability population and requires the
+regenerated arrays to match the original SHA-256 checksums.
+
+The completed counterbalanced batch is `counterbalanced1096_20261002_235609`.
+Inspect its actual exposure with:
+
+```bash
+python train/audit_counterbalanced_results.py counterbalanced1096_20261002_235609
+python eval/compare_allocation_protocols.py \
+  --counterbalanced-batch counterbalanced1096_20261002_235609
+```
+
+The audit matrices count rounds started, rounds completed, and environment steps
+for every profile × layout pair. Allocation is balanced within one episode;
+unfinished episodes at the fixed-step cutoff cause small actual-round differences.
+Environment steps differ with partner speed. Full training observation/action
+trajectories were not saved.
+
+`repo_paths.py` resolves old paths from immutable records to their current
+locations. It does not rewrite original configs, source snapshots, rollout
+attributes, or historical submission commands. `train/repo_reorganization/manifest.json`
+records the moves and removals. `project_log_revised.md` retains the detailed
+experiment history.
+
+## Tests
+
+```bash
+JAX_PLATFORMS=cpu python -m pytest \
+  tests/coordination_grid/test_counterbalanced_scheduler.py \
+  tests/coordination_grid/test_evaluation_layouts.py \
+  tests/coordination_grid/test_online_allocation.py \
+  tests/data_prep/test_capability_selection.py \
+  tests/analysis/test_representation_analysis.py
+python tests/coordination_grid/test_capability_env.py
+```
+
+The former stage A/B/C/D and generator-sensitivity `run_sweep.py` pipeline was
+retired before the final experiments. Those stages are not required to prepare,
+train, or evaluate the current v1/v2 designs.

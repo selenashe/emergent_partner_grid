@@ -1,0 +1,62 @@
+{
+  "n_layouts": 2000,
+  "n_partner_equidistant": 971,
+  "percent_partner_equidistant": 48.55,
+  "wall_density_percent_all_layouts": {
+    "n": 2000,
+    "min": 4.081632653061225,
+    "max": 61.224489795918366,
+    "mean": 25.1,
+    "median": 24.489795918367346
+  },
+  "partner_distance_equidistant_layouts": {
+    "n": 971,
+    "min": 4.0,
+    "max": 15.0,
+    "mean": 5.991761071060762,
+    "median": 6.0
+  },
+  "ego_red_distance_partner_equidistant_layouts": {
+    "n": 971,
+    "min": 1.0,
+    "max": 17.0,
+    "mean": 5.008238928939238,
+    "median": 5.0
+  },
+  "ego_blue_distance_partner_equidistant_layouts": {
+    "n": 971,
+    "min": 1.0,
+    "max": 19.0,
+    "mean": 5.014418125643666,
+    "median": 5.0
+  },
+  "partner_distance_delta_red_minus_blue_all_layouts": {
+    "n": 2000,
+    "min": -2.0,
+    "max": 2.0,
+    "mean": -0.008,
+    "median": 0.0
+  },
+  "partner_distance_delta_counts": {
+    "negative_red_closer": 519,
+    "zero_equidistant": 971,
+    "positive_blue_closer": 510
+  },
+  "ego_red_distance_all_layouts": {
+    "n": 2000,
+    "min": 1.0,
+    "max": 17.0,
+    "mean": 4.9865,
+    "median": 5.0
+  },
+  "ego_blue_distance_all_layouts": {
+    "n": 2000,
+    "min": 1.0,
+    "max": 19.0,
+    "mean": 5.0785,
+    "median": 5.0
+  },
+  "density_subplot_bins": "[lower, upper), in percentage points, width 10",
+  "wall_histogram_bins": "Five wall cells per bin, starting at 0\u20134 walls",
+  "reproduce_command": "python dev/plot_layout_distributions.py --corpus_dir /juice6/u/jshe/emergent_partner_grid/dev/grids_capability_selected_2000 --output_dir /juice6/u/jshe/emergent_partner_grid/dev/grids_capability_selected_2000/diagnostics/layout_distributions"
+}

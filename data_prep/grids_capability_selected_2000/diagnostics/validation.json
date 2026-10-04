@@ -1,0 +1,25 @@
+{
+  "n_layouts": 2000,
+  "npz_shape": [
+    2000,
+    7,
+    7
+  ],
+  "unique_layouts": 2000,
+  "verified_bfs_and_selection_statistics": 2000,
+  "candidate_audit_rows": 20000,
+  "all_cumulative_filter_memberships_verified": true,
+  "centroid_ranking_verified": true,
+  "symmetry_counts": {
+    "1": 250,
+    "5": 250,
+    "7": 250,
+    "4": 250,
+    "3": 250,
+    "2": 250,
+    "0": 250,
+    "6": 250
+  },
+  "source_hashes_verified": true,
+  "selection_checks": "Analytical fixed-allocation checks; no collision or online-reassignment rollout guarantee"
+}

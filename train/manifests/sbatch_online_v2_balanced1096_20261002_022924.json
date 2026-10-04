@@ -1,0 +1,937 @@
+{
+  "prepared_at_utc": "2026-10-02T02:29:24.385283+00:00",
+  "status": "completed",
+  "batch": "balanced1096_20261002_022924",
+  "allocation_protocol": "online_v2",
+  "git_head": "541452613cdc531c98dfc5e0b8f00efe34fae3de",
+  "source_corpus": "/juice6/u/jshe/emergent_partner_grid/dev/grids_capability_selected_balanced_1096",
+  "frozen_source_root": "/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source",
+  "frozen_layouts_dir": "/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source/dev/grids_capability_selected_balanced_1096/layouts/train",
+  "source_sha256": {
+    "jaxmarl/__init__.py": "7e0b31c6d1a3b57edfae5b64e85896694089d9a2bab6e116509fd6135467551c",
+    "jaxmarl/environments/__init__.py": "ba45bcae0eaaa93de8999a3f7741221e56b8ca49bd79266cc6bcbd2fa9a7716f",
+    "jaxmarl/environments/coin_game/__init__.py": "b26e47ff92a777ffd8cc0307565346ee2312595a638ef9a925efea3144b6e31c",
+    "jaxmarl/environments/coin_game/coin_game.py": "7a2f3f191ea33f42779b11701d82e04dab7469619fc31f2af6a234d43905a363",
+    "jaxmarl/environments/coordination_grid/__init__.py": "a33b71a7c3f755e6e93731b3a840b04cc4f337c0a0ba9fed2f680974ae26c4a9",
+    "jaxmarl/environments/coordination_grid/capability_populations.py": "89c05bcf10f3eb53ec2423574d86e9a22fe7b449b5371246607fcbf68a0113dd",
+    "jaxmarl/environments/coordination_grid/coordination_grid.py": "d30dd64479f9bb9c06607e62f142dfbf9d3abb6597ab50eaba527f92765e69eb",
+    "jaxmarl/environments/hanabi/__init__.py": "259727d8560470ff27362301dca362909529f8a5cef87bb052c1faa976ffbc9b",
+    "jaxmarl/environments/hanabi/hanabi.py": "c2ea5adc64f5e68995a0777ba9a0e32cadaa32320ded4a0484ada24b748c64fd",
+    "jaxmarl/environments/hanabi/hanabi_game.py": "fb280333cece9bafc17bffc465cb549ace5340db1630cafd7ebedff8a17dad44",
+    "jaxmarl/environments/hanabi/manual_game.py": "8acf3dd146ee68635fb8596408c3c21403bd2097b1084f14bfab1d7b2ff2810f",
+    "jaxmarl/environments/hanabi/manual_game_human_agents.py": "fc8cba41966c600371bbb60ecfa91966478acfea63ea93127c255b182d04f5f6",
+    "jaxmarl/environments/hanabi/pretrained/__init__.py": "f50b1d6816a9c49b360d1b1f563a4d017c71787f3e331f859ec9ffc530e3d09e",
+    "jaxmarl/environments/hanabi/pretrained/obl_r2d2_agent.py": "bfd91056de331513689ab171fa1b18eee78e108608b29be99e771222dc9d9196",
+    "jaxmarl/environments/hanabi/pretrained/obl_r2d2_agent_test.py": "3119712c4c5b0a776af273b5ecc396f818fc32a4eebfa22e68970426e47f9d5b",
+    "jaxmarl/environments/jaxnav/__init__.py": "f8f62472abed4c9ce106c00a75f47708d25a908c9554d1ec503a7ade5a087c85",
+    "jaxmarl/environments/jaxnav/jaxnav_env.py": "083db89bbab0275c272b710a187c08b456e4d05831bc1f05215bea3d0b45b720",
+    "jaxmarl/environments/jaxnav/jaxnav_graph_utils.py": "5a86a6589bc683a12aeee37a507122807bbd83b73c43061f9b495de975ce3245",
+    "jaxmarl/environments/jaxnav/jaxnav_singletons.py": "561238df998cebe4eb1ab0742560840187f478b5c2022f67650689d9fd7dcfe2",
+    "jaxmarl/environments/jaxnav/jaxnav_ued_utils.py": "20f850d3290d9897a79a60dbafcafc7ec62af806f3a1a48916145dd9a6b02148",
+    "jaxmarl/environments/jaxnav/jaxnav_utils.py": "793a712c95bdd17b461626c2e244ef94848282c49781be11ff98bd8150394abe",
+    "jaxmarl/environments/jaxnav/jaxnav_viz.py": "9f09df32f85a9632c34e5de93b18d7270e7075925d44089ae1ad0f5cb7e8c398",
+    "jaxmarl/environments/jaxnav/maps/__init__.py": "2af5c8093e8652c119f5e370c199e130cb01fc44244fa04788eade55d321d0b7",
+    "jaxmarl/environments/jaxnav/maps/grid_map.py": "d585c5b18ae84716f628b7bb7dbf44247c89851398caca2d011fdc4bbcd15e5e",
+    "jaxmarl/environments/jaxnav/maps/map.py": "04d608332ab37464ab15375c5d6ccd4670b121a033d22b924d5ee1b688460f94",
+    "jaxmarl/environments/jaxnav/maps/map_registration.py": "98b2b9ec49df0906075dc3366764622efe5ad1f3c7bdcf2163f374c446a24e1f",
+    "jaxmarl/environments/jaxnav/maps/polygon_map.py": "36e7596e228f7454456ae06ee4a623d256e45e9caca67feec3c08d0d54a72461",
+    "jaxmarl/environments/mabrax/__init__.py": "8046fe6de1d5c79b09b4a5bde608fc016b373268fd53a06a7fc1de42627ba0aa",
+    "jaxmarl/environments/mabrax/mabrax_env.py": "e1d481476453a85f036c541d8a3ddd8d2432f8b3e1fb78609847906c7e1ef8a3",
+    "jaxmarl/environments/mabrax/mappings.py": "cd6caf265da992be72be4e3f2be8b5c3ad3f73960256b60e44981778ec06248b",
+    "jaxmarl/environments/mpe/__init__.py": "226a20aba35b42ef774b7fab600b1b96cc636c65c213956c79191cee617a7d52",
+    "jaxmarl/environments/mpe/default_params.py": "04365f1418999e1862620569f7d6a6703ad7b98d1c3689c0f121575f7f08712d",
+    "jaxmarl/environments/mpe/mpe_visualizer.py": "9b7259d1e3e94e850b329113557224e73b85a430222f43712e0a69e233d50e72",
+    "jaxmarl/environments/mpe/simple.py": "64c7eb19c904f4bea0d3c5383f0c6699708300e304f7a83602444ce9a9a2934a",
+    "jaxmarl/environments/mpe/simple_adversary.py": "934f63f7e550d6add831dad9945d1a0d84682e0d8dbd8835764aa863bbc16d1a",
+    "jaxmarl/environments/mpe/simple_crypto.py": "836b9e94c2d83b99e5714a6c8fce146cda4e001a7b781811216b556bef583658",
+    "jaxmarl/environments/mpe/simple_facmac.py": "760b16bce5798af44307ea0943f683f490d016b89487af444f97db281e07ce2f",
+    "jaxmarl/environments/mpe/simple_push.py": "4a2a08cec8aa15128fce8d7346a701393a7ecc88ca2c98f89f631cd62baf967c",
+    "jaxmarl/environments/mpe/simple_reference.py": "7401cb2b7b216cccc91ea10eb66c7d509b9a45d2f5cb5f3889f69aab1f2996e8",
+    "jaxmarl/environments/mpe/simple_speaker_listener.py": "d4bd27d5d884436a1513e3a90b1d6ef56823a42fe0d426d5777c015be090bfd5",
+    "jaxmarl/environments/mpe/simple_spread.py": "907455b6290bc0ed86b0e4b004b103b609673430f88e5b5c7c765842043ba121",
+    "jaxmarl/environments/mpe/simple_tag.py": "3696711bd665e217fa940809459ec2b96b95dd43688a9698d72c6869aeff3221",
+    "jaxmarl/environments/mpe/simple_world_comm.py": "8953f90a9c2ca4863f7b4d43a5c5865ceae662378ac25c19311d76ba97952771",
+    "jaxmarl/environments/multi_agent_env.py": "3be0b97cfadf161cf077ab825cc70b301b83a3444a008b70a523e79b4a690430",
+    "jaxmarl/environments/multi_agent_env_.py": "f7582cdf883c69a51839c1190184a0c202621038baaff2d8e1d1211d091171b8",
+    "jaxmarl/environments/smax/__init__.py": "481fe5862f4ea3ae106a168a02b55bc00bcc483123538482895bb6bfb42621bb",
+    "jaxmarl/environments/smax/distributions.py": "ea61360b0eb2ec5805cc0c6e93f62ef25932d7faf9fb235deced1961c4bc9156",
+    "jaxmarl/environments/smax/heuristic_enemy.py": "4432744aadf425580310e78a85e5dfb0e0bdf58f8d79f5d8550f3f053f9833bd",
+    "jaxmarl/environments/smax/heuristic_enemy_smax_env.py": "aee9a9e4c9193170e242330e2eca7ceb7a02ab1b31f2dda7e949248a083841df",
+    "jaxmarl/environments/smax/smax_env.py": "60cc9c9237a7fc81813684b4fe46cb6c31eb61adbb96ab837364284eb2205bcd",
+    "jaxmarl/environments/smax/speed.py": "ddd86e0da54e5d0d53cb6e316f60a028e4e35c47d97885f89ea5c2c0bc0932d1",
+    "jaxmarl/environments/spaces.py": "613bc1f7104eab120e97b3f1b122794b77dc28ba373522ec95efd81b43917c32",
+    "jaxmarl/environments/storm/__init__.py": "eb4b8f0cce9f3a7ddf19e81670e2e31dd31fb6a59889152b4183aa6ba971e2e6",
+    "jaxmarl/environments/storm/rendering.py": "da7b3e947818576f607426530f08216f086d114a17fda188799477fc1944e2ba",
+    "jaxmarl/environments/storm/storm_2p.py": "bd4056fe36682bfcc0d75bec288094b56f747075abba32cb240c0f7fd2b4cb01",
+    "jaxmarl/environments/storm/storm_env.py": "484c2333c4f7c4249f42c869c124f1f4de611acd336fca2d617ac7f75813f91a",
+    "jaxmarl/environments/switch_riddle/__init__.py": "21034477cded380889781be065f1e16f003853040c0c22c48d00cb900b30e78f",
+    "jaxmarl/environments/switch_riddle/switch_riddle.py": "0f5fd7c44991e05aa458eb6516b7c069180a4b4bf5a7de6ed4391a948a0e9d9f",
+    "jaxmarl/registration.py": "dc3a5cdabee5718147075b5b756c77d0fd194c1c6e2fb9d1da85a722122866cf",
+    "jaxmarl/tutorials/mpe_introduction.py": "99882a172cb208a838746915b022fcaf04bbd7378ebe1d4dc1a7c0d887ae97e0",
+    "jaxmarl/tutorials/smax_introduction.py": "2289a72fc7694792696645ef3463300c63f7e831f18cb775bd7f565c5f18ee35",
+    "jaxmarl/tutorials/storm_2p_introduction.py": "8e3ec82535fef0b6ddf276559dc692c4f8da77ce5e82dafa824544fc0777b1b2",
+    "jaxmarl/tutorials/storm_introduction.py": "141a7bfcc59124609bf490469a56cbea9232498499d36e1e59717d4e347c0807",
+    "jaxmarl/viz/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "jaxmarl/viz/grid_rendering.py": "2f25f648542b96645c62a74e1e848f0324f159592cc3482dd7f12d59b80721e1",
+    "jaxmarl/viz/visualizer.py": "cfd93707e9bc75bd4fdd40b2746c69c224264368c661f7141c90128dee5dfeed",
+    "jaxmarl/viz/window.py": "cdfc41455d78acaac8f7b7daff71a2c81288d9007945d914d7958f3c1be3ea31",
+    "jaxmarl/wrappers/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "jaxmarl/wrappers/baselines.py": "789d02c204de8af478ec3992748934f1fbe122fa0d2e3874d4cb1753ac8f5466",
+    "jaxmarl/wrappers/gymnax.py": "15f7863946803b3238215e74788782cbc3e884728d050a9e24dd5063be6d77b7",
+    "jaxmarl/wrappers/transformers.py": "7bb764062300cbcbc44f0f68ee2e9edca3b7ccfbf8395363df1876f4721d0479",
+    "baselines/IPPO/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "baselines/IPPO/config/ippo_coordination_grid.yaml": "7800b7ddc5fe931ec925b0633f16c8ad4f8f3b68731fdfa3319dbdabcafd54a2",
+    "baselines/IPPO/config/ippo_ff_hanabi.yaml": "f84dea3541053e78503422416cdcac4ebfd28fab3548488ca4203fb0d541bd2e",
+    "baselines/IPPO/config/ippo_ff_mabrax.yaml": "40bd842f7619246e3c43e1666a8c8cdf53c570780d96a8a66bcb2ff243140d3d",
+    "baselines/IPPO/config/ippo_ff_mpe.yaml": "fbccc74538ceb0ad65583d97bd9204700943ab0e3e01176c4bd5c8d0585cd358",
+    "baselines/IPPO/config/ippo_ff_mpe_facmac.yaml": "6f799469fd80dd824688d9ef6a9746470038bea1d8da670b741a3c891bf22878",
+    "baselines/IPPO/config/ippo_ff_switch_riddle.yaml": "e36658f0e53b9e53e64d4b29650c334778cc0e54dc21660d16bdd9ca1f97700b",
+    "baselines/IPPO/config/ippo_rnn_coordination_grid.yaml": "83a1da60c18ed54d8b26c6579ae576afaa58ad4e6a802f50f17ae481057742d5",
+    "baselines/IPPO/config/ippo_rnn_hanabi.yaml": "8d884d3662b039b33cad950d4db0319ac251d8843623bd3560faae39ad02c3fc",
+    "baselines/IPPO/config/ippo_rnn_mpe.yaml": "02c2e3021c1507ef14341e342e0957939a0197e5bc71aa0f4c122fba00d8e7eb",
+    "baselines/IPPO/config/ippo_rnn_smax.yaml": "14a9577d0642cb4d6847141055a8b487688601f0c1c29e41c7a7cfdbd44e8a78",
+    "baselines/IPPO/ippo_rnn_coordination_grid.py": "1b357795389c5a35771e41710ddb9200e553e8bf1b54d05c2a268bdbdb86f97e",
+    "baselines/IPPO/sweep_scheduler.py": "ec95125bc36fd14b48c2ac84f0d92b974ff6d4221133ba2b11bec9799262d43e",
+    "analysis/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "analysis/do_ablation_plots.py": "e66d678ee1f7ac4b7fe71c407d00c7b10071acd0b7ac45fd4d77c833623d1621",
+    "analysis/do_embedding_plots.py": "8e3cd7f168bdfc0a92c4e959bee2340c30ac5868444da87abbe514e615fbd297",
+    "analysis/do_performance_plots.py": "5dca30bc4fc55488a0dec33dcc7040e3a32644410fb6b40b0939b7d18c2b7750",
+    "analysis/do_switching_plots.py": "7a75ca476f225711b5337fbf6e021592b5c5abd1df9e832c67e63f8933c48ab8",
+    "analysis/evaluate_partner_modelling.py": "9028c4b1a8c15db965e1849d08af8da9707985d60721aca2c9c6b806b2629b59",
+    "analysis/representation_analysis.py": "dc6e617e36c96b9759b061dda73e02acdef4c88b835dce36b81b4c23b14ee6d8",
+    "analysis/tsnex.py": "0028d280cf2fa67dcf99eea453554bd4de82db01a2e55fb71cef6b0e913a5da9",
+    "analysis/utils.py": "0a60766e11cc06f28dc683e73bb211db97548e360e8e8ace0ffdb0bc7266f353",
+    "tests/coordination_grid/test_evaluation_layouts.py": "540f482bacfdf8a38614f646b38e0b0fe34c671c73c15dc5b1b191a84423debb",
+    "tests/coordination_grid/test_online_allocation.py": "ad08c2f005baa01f21fd4cba2dc63c1d869c3c46990064e5fed80ae0eeed8105",
+    "dev/capability_selection.py": "d37a4b5c3c722e0872cacf5e9e28553a98eac098919339e634aba1a9bdbe6011",
+    "bash/train_final_experiment.sh": "322945ebd6e3ae6f12725c1d887692fc15682fe7c829b811200af570800c256b",
+    "bash/eval_all_checkpoints.sh": "77127b08ee3f66f5ab1d6342268e9cf5e16a8f9d6b3797d1264278c97655d92f",
+    "bash/submit_balanced_training.py": "da8766ce159139a8c06b3746c592a7c0dac8430cb3cc63422962e7ac10c57e91"
+  },
+  "layout_files_sha256": "a5703edfe289b601df176938ed888b68da3d61c8f7d2c23ad5baaaea9a9f8ecc",
+  "n_layouts": 1096,
+  "red_distance_counts_1_to_8": [
+    137,
+    137,
+    137,
+    137,
+    137,
+    137,
+    137,
+    137
+  ],
+  "blue_distance_counts_1_to_8": [
+    137,
+    137,
+    137,
+    137,
+    137,
+    137,
+    137,
+    137
+  ],
+  "checkpoint_root": "/juice6/u/jshe/emergent_partner_grid/dev/train_logs/online_v2/balanced1096_20261002_022924",
+  "evaluation_root": "/juice6/u/jshe/emergent_partner_grid/dev/eval_out/online_v2/balanced1096_20261002_022924",
+  "training": {
+    "conditions": [
+      "rnn_diverse_influence",
+      "mlp_diverse_influence",
+      "rnn_single_influence",
+      "rnn_diverse_noinfluence"
+    ],
+    "seeds": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "nominal_timesteps_per_policy": 60000000,
+    "effective_timesteps_per_policy": 59965440,
+    "environment": {
+      "REPO_ROOT": "/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source",
+      "CHECKPOINT_DIR": "/juice6/u/jshe/emergent_partner_grid/dev/train_logs/online_v2/balanced1096_20261002_022924",
+      "LAYOUTS_DIR": "/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source/dev/grids_capability_selected_balanced_1096/layouts/train",
+      "NUM_SEEDS": "1",
+      "NUM_ENVS": "256",
+      "NUM_STEPS": "256",
+      "UPDATE_EPOCHS": "4",
+      "NUM_MINIBATCHES": "64",
+      "TOTAL_TIMESTEPS": "60000000",
+      "LR": "5e-4",
+      "MAX_STEPS": "100",
+      "STEP_PENALTY": "0.01",
+      "ROUNDS_PER_EPISODE": "20",
+      "HIDE_PARTNER_UNTIL_TIME": "0",
+      "SCHEDULE_SEED": "2026",
+      "N_EPS_TOTAL": "131072",
+      "EVAL_EPISODES_PER_CAPABILITY": "20",
+      "WANDB_MODE": "disabled",
+      "XLA_FLAGS": "",
+      "JAX_PLATFORMS": "",
+      "PYTHONDONTWRITEBYTECODE": "1"
+    }
+  },
+  "resources_per_training_job": {
+    "account": "nlp",
+    "partition": "sphinx",
+    "gpus": 1,
+    "constraint": "80G",
+    "memory": "32G",
+    "cpus": 4,
+    "time_limit": "08:00:00",
+    "exclude": "sphinx9"
+  },
+  "evaluation": {
+    "episodes_per_capability": 20,
+    "seed": 12345,
+    "familiar_profiles": 24,
+    "novel_profiles": 22,
+    "save_hidden_for_rnn": true,
+    "time_limit": "02:00:00"
+  },
+  "training_jobs": [
+    {
+      "condition": "rnn_diverse_influence",
+      "seed": 1,
+      "tag": "rnn_diverse_influence_seed1",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source",
+        "--job-name=cg_b1096_rnn_diverse_influence_seed1",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/dev/train_logs/online_v2/balanced1096_20261002_022924,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source/dev/grids_capability_selected_balanced_1096/layouts/train,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=131072,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=rnn_diverse_influence,SEED=1,TAG=rnn_diverse_influence_seed1",
+        "/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17688017"
+    },
+    {
+      "condition": "rnn_diverse_influence",
+      "seed": 2,
+      "tag": "rnn_diverse_influence_seed2",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source",
+        "--job-name=cg_b1096_rnn_diverse_influence_seed2",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/dev/train_logs/online_v2/balanced1096_20261002_022924,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source/dev/grids_capability_selected_balanced_1096/layouts/train,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=131072,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=rnn_diverse_influence,SEED=2,TAG=rnn_diverse_influence_seed2",
+        "/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17688018"
+    },
+    {
+      "condition": "rnn_diverse_influence",
+      "seed": 3,
+      "tag": "rnn_diverse_influence_seed3",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source",
+        "--job-name=cg_b1096_rnn_diverse_influence_seed3",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/dev/train_logs/online_v2/balanced1096_20261002_022924,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source/dev/grids_capability_selected_balanced_1096/layouts/train,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=131072,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=rnn_diverse_influence,SEED=3,TAG=rnn_diverse_influence_seed3",
+        "/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17688019"
+    },
+    {
+      "condition": "rnn_diverse_influence",
+      "seed": 4,
+      "tag": "rnn_diverse_influence_seed4",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source",
+        "--job-name=cg_b1096_rnn_diverse_influence_seed4",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/dev/train_logs/online_v2/balanced1096_20261002_022924,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source/dev/grids_capability_selected_balanced_1096/layouts/train,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=131072,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=rnn_diverse_influence,SEED=4,TAG=rnn_diverse_influence_seed4",
+        "/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17688020"
+    },
+    {
+      "condition": "rnn_diverse_influence",
+      "seed": 5,
+      "tag": "rnn_diverse_influence_seed5",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source",
+        "--job-name=cg_b1096_rnn_diverse_influence_seed5",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/dev/train_logs/online_v2/balanced1096_20261002_022924,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source/dev/grids_capability_selected_balanced_1096/layouts/train,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=131072,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=rnn_diverse_influence,SEED=5,TAG=rnn_diverse_influence_seed5",
+        "/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17688021"
+    },
+    {
+      "condition": "mlp_diverse_influence",
+      "seed": 1,
+      "tag": "mlp_diverse_influence_seed1",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source",
+        "--job-name=cg_b1096_mlp_diverse_influence_seed1",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/dev/train_logs/online_v2/balanced1096_20261002_022924,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source/dev/grids_capability_selected_balanced_1096/layouts/train,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=131072,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=mlp_diverse_influence,SEED=1,TAG=mlp_diverse_influence_seed1",
+        "/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17688022"
+    },
+    {
+      "condition": "mlp_diverse_influence",
+      "seed": 2,
+      "tag": "mlp_diverse_influence_seed2",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source",
+        "--job-name=cg_b1096_mlp_diverse_influence_seed2",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/dev/train_logs/online_v2/balanced1096_20261002_022924,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source/dev/grids_capability_selected_balanced_1096/layouts/train,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=131072,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=mlp_diverse_influence,SEED=2,TAG=mlp_diverse_influence_seed2",
+        "/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17688023"
+    },
+    {
+      "condition": "mlp_diverse_influence",
+      "seed": 3,
+      "tag": "mlp_diverse_influence_seed3",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source",
+        "--job-name=cg_b1096_mlp_diverse_influence_seed3",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/dev/train_logs/online_v2/balanced1096_20261002_022924,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source/dev/grids_capability_selected_balanced_1096/layouts/train,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=131072,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=mlp_diverse_influence,SEED=3,TAG=mlp_diverse_influence_seed3",
+        "/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17688024"
+    },
+    {
+      "condition": "mlp_diverse_influence",
+      "seed": 4,
+      "tag": "mlp_diverse_influence_seed4",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source",
+        "--job-name=cg_b1096_mlp_diverse_influence_seed4",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/dev/train_logs/online_v2/balanced1096_20261002_022924,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source/dev/grids_capability_selected_balanced_1096/layouts/train,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=131072,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=mlp_diverse_influence,SEED=4,TAG=mlp_diverse_influence_seed4",
+        "/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17688025"
+    },
+    {
+      "condition": "mlp_diverse_influence",
+      "seed": 5,
+      "tag": "mlp_diverse_influence_seed5",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source",
+        "--job-name=cg_b1096_mlp_diverse_influence_seed5",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/dev/train_logs/online_v2/balanced1096_20261002_022924,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source/dev/grids_capability_selected_balanced_1096/layouts/train,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=131072,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=mlp_diverse_influence,SEED=5,TAG=mlp_diverse_influence_seed5",
+        "/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17688026"
+    },
+    {
+      "condition": "rnn_single_influence",
+      "seed": 1,
+      "tag": "rnn_single_influence_seed1",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source",
+        "--job-name=cg_b1096_rnn_single_influence_seed1",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/dev/train_logs/online_v2/balanced1096_20261002_022924,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source/dev/grids_capability_selected_balanced_1096/layouts/train,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=131072,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=rnn_single_influence,SEED=1,TAG=rnn_single_influence_seed1",
+        "/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17688027"
+    },
+    {
+      "condition": "rnn_single_influence",
+      "seed": 2,
+      "tag": "rnn_single_influence_seed2",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source",
+        "--job-name=cg_b1096_rnn_single_influence_seed2",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/dev/train_logs/online_v2/balanced1096_20261002_022924,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source/dev/grids_capability_selected_balanced_1096/layouts/train,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=131072,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=rnn_single_influence,SEED=2,TAG=rnn_single_influence_seed2",
+        "/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17688028"
+    },
+    {
+      "condition": "rnn_single_influence",
+      "seed": 3,
+      "tag": "rnn_single_influence_seed3",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source",
+        "--job-name=cg_b1096_rnn_single_influence_seed3",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/dev/train_logs/online_v2/balanced1096_20261002_022924,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source/dev/grids_capability_selected_balanced_1096/layouts/train,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=131072,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=rnn_single_influence,SEED=3,TAG=rnn_single_influence_seed3",
+        "/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17688029"
+    },
+    {
+      "condition": "rnn_single_influence",
+      "seed": 4,
+      "tag": "rnn_single_influence_seed4",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source",
+        "--job-name=cg_b1096_rnn_single_influence_seed4",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/dev/train_logs/online_v2/balanced1096_20261002_022924,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source/dev/grids_capability_selected_balanced_1096/layouts/train,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=131072,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=rnn_single_influence,SEED=4,TAG=rnn_single_influence_seed4",
+        "/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17688030"
+    },
+    {
+      "condition": "rnn_single_influence",
+      "seed": 5,
+      "tag": "rnn_single_influence_seed5",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source",
+        "--job-name=cg_b1096_rnn_single_influence_seed5",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/dev/train_logs/online_v2/balanced1096_20261002_022924,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source/dev/grids_capability_selected_balanced_1096/layouts/train,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=131072,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=rnn_single_influence,SEED=5,TAG=rnn_single_influence_seed5",
+        "/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17688031"
+    },
+    {
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 1,
+      "tag": "rnn_diverse_noinfluence_seed1",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source",
+        "--job-name=cg_b1096_rnn_diverse_noinfluence_seed1",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/dev/train_logs/online_v2/balanced1096_20261002_022924,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source/dev/grids_capability_selected_balanced_1096/layouts/train,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=131072,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=rnn_diverse_noinfluence,SEED=1,TAG=rnn_diverse_noinfluence_seed1",
+        "/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17688032"
+    },
+    {
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 2,
+      "tag": "rnn_diverse_noinfluence_seed2",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source",
+        "--job-name=cg_b1096_rnn_diverse_noinfluence_seed2",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/dev/train_logs/online_v2/balanced1096_20261002_022924,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source/dev/grids_capability_selected_balanced_1096/layouts/train,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=131072,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=rnn_diverse_noinfluence,SEED=2,TAG=rnn_diverse_noinfluence_seed2",
+        "/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17688033"
+    },
+    {
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 3,
+      "tag": "rnn_diverse_noinfluence_seed3",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source",
+        "--job-name=cg_b1096_rnn_diverse_noinfluence_seed3",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/dev/train_logs/online_v2/balanced1096_20261002_022924,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source/dev/grids_capability_selected_balanced_1096/layouts/train,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=131072,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=rnn_diverse_noinfluence,SEED=3,TAG=rnn_diverse_noinfluence_seed3",
+        "/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17688034"
+    },
+    {
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 4,
+      "tag": "rnn_diverse_noinfluence_seed4",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source",
+        "--job-name=cg_b1096_rnn_diverse_noinfluence_seed4",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/dev/train_logs/online_v2/balanced1096_20261002_022924,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source/dev/grids_capability_selected_balanced_1096/layouts/train,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=131072,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=rnn_diverse_noinfluence,SEED=4,TAG=rnn_diverse_noinfluence_seed4",
+        "/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17688035"
+    },
+    {
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 5,
+      "tag": "rnn_diverse_noinfluence_seed5",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source",
+        "--job-name=cg_b1096_rnn_diverse_noinfluence_seed5",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/dev/train_logs/online_v2/balanced1096_20261002_022924,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source/dev/grids_capability_selected_balanced_1096/layouts/train,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=131072,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=rnn_diverse_noinfluence,SEED=5,TAG=rnn_diverse_noinfluence_seed5",
+        "/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17688036"
+    }
+  ],
+  "evaluation_jobs": [
+    {
+      "job_id": "17688037",
+      "dependency": "afterok:17688017:17688018:17688019:17688020:17688021:17688022:17688023:17688024:17688025:17688026:17688027:17688028:17688029:17688030:17688031:17688032:17688033:17688034:17688035:17688036",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source",
+        "--job-name=cg_b1096_eval_all",
+        "--dependency=afterok:17688017:17688018:17688019:17688020:17688021:17688022:17688023:17688024:17688025:17688026:17688027:17688028:17688029:17688030:17688031:17688032:17688033:17688034:17688035:17688036",
+        "--kill-on-invalid-dep=yes",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/dev/train_logs/online_v2/balanced1096_20261002_022924,EVAL_OUT_DIR=/juice6/u/jshe/emergent_partner_grid/dev/eval_out/online_v2/balanced1096_20261002_022924,EXPECTED_CHECKPOINTS=20,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1",
+        "/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source/bash/eval_all_checkpoints.sh"
+      ]
+    }
+  ],
+  "preflight": {
+    "allocation_protocol": "online_v2",
+    "n_layouts": 1096,
+    "snapshot_imports_verified": true,
+    "small_ppo_update_finite": true,
+    "t0_entropy_zero": true,
+    "protocol_tests_passed": 11,
+    "evaluation_layout_tests_passed": 2,
+    "shell_syntax_check_passed": true
+  },
+  "submitted_at_utc": "2026-10-02T02:31:32.228116+00:00",
+  "last_scheduler_check": {
+    "at_utc": "2026-10-02T02:32:34.406927+00:00",
+    "jobs": [
+      {
+        "job_id": "17688037",
+        "name": "cg_b1096_eval_all",
+        "state": "PENDING",
+        "reason": "(Dependency)",
+        "dependency": "afterok:17688017(unfulfilled),afterok:17688018(unfulfilled),afterok:17688019(unfulfilled),afterok:17688020(unfulfilled),afterok:17688021(unfulfilled),afterok:17688022(unfulfilled),afterok:17688023(unfulfilled),afterok:17688024(unfulfilled),afterok:17688025(unfulfilled),afterok:17688026(unfulfilled),afterok:17688027(unfulfilled),afterok:17688028(unfulfilled),afterok:17688029(unfulfilled),afterok:17688030(unfulfilled),afterok:17688031(unfulfilled),afterok:17688032(unfulfilled),afterok:17688033(unfulfilled),afterok:17688034(unfulfilled),afterok:17688035(unfulfilled),afterok:17688036(unfulfilled)"
+      },
+      {
+        "job_id": "17688036",
+        "name": "cg_b1096_rnn_diverse_noinfluence_seed5",
+        "state": "PENDING",
+        "reason": "(Priority)",
+        "dependency": "(null)"
+      },
+      {
+        "job_id": "17688035",
+        "name": "cg_b1096_rnn_diverse_noinfluence_seed4",
+        "state": "PENDING",
+        "reason": "(Priority)",
+        "dependency": "(null)"
+      },
+      {
+        "job_id": "17688034",
+        "name": "cg_b1096_rnn_diverse_noinfluence_seed3",
+        "state": "PENDING",
+        "reason": "(Priority)",
+        "dependency": "(null)"
+      },
+      {
+        "job_id": "17688033",
+        "name": "cg_b1096_rnn_diverse_noinfluence_seed2",
+        "state": "PENDING",
+        "reason": "(Priority)",
+        "dependency": "(null)"
+      },
+      {
+        "job_id": "17688032",
+        "name": "cg_b1096_rnn_diverse_noinfluence_seed1",
+        "state": "PENDING",
+        "reason": "(Priority)",
+        "dependency": "(null)"
+      },
+      {
+        "job_id": "17688031",
+        "name": "cg_b1096_rnn_single_influence_seed5",
+        "state": "PENDING",
+        "reason": "(Priority)",
+        "dependency": "(null)"
+      },
+      {
+        "job_id": "17688030",
+        "name": "cg_b1096_rnn_single_influence_seed4",
+        "state": "PENDING",
+        "reason": "(Priority)",
+        "dependency": "(null)"
+      },
+      {
+        "job_id": "17688029",
+        "name": "cg_b1096_rnn_single_influence_seed3",
+        "state": "PENDING",
+        "reason": "(Priority)",
+        "dependency": "(null)"
+      },
+      {
+        "job_id": "17688028",
+        "name": "cg_b1096_rnn_single_influence_seed2",
+        "state": "PENDING",
+        "reason": "(Priority)",
+        "dependency": "(null)"
+      },
+      {
+        "job_id": "17688027",
+        "name": "cg_b1096_rnn_single_influence_seed1",
+        "state": "PENDING",
+        "reason": "(Priority)",
+        "dependency": "(null)"
+      },
+      {
+        "job_id": "17688026",
+        "name": "cg_b1096_mlp_diverse_influence_seed5",
+        "state": "PENDING",
+        "reason": "(Priority)",
+        "dependency": "(null)"
+      },
+      {
+        "job_id": "17688025",
+        "name": "cg_b1096_mlp_diverse_influence_seed4",
+        "state": "PENDING",
+        "reason": "(Priority)",
+        "dependency": "(null)"
+      },
+      {
+        "job_id": "17688024",
+        "name": "cg_b1096_mlp_diverse_influence_seed3",
+        "state": "PENDING",
+        "reason": "(Priority)",
+        "dependency": "(null)"
+      },
+      {
+        "job_id": "17688023",
+        "name": "cg_b1096_mlp_diverse_influence_seed2",
+        "state": "PENDING",
+        "reason": "(Priority)",
+        "dependency": "(null)"
+      },
+      {
+        "job_id": "17688022",
+        "name": "cg_b1096_mlp_diverse_influence_seed1",
+        "state": "PENDING",
+        "reason": "(Priority)",
+        "dependency": "(null)"
+      },
+      {
+        "job_id": "17688021",
+        "name": "cg_b1096_rnn_diverse_influence_seed5",
+        "state": "PENDING",
+        "reason": "(Priority)",
+        "dependency": "(null)"
+      },
+      {
+        "job_id": "17688020",
+        "name": "cg_b1096_rnn_diverse_influence_seed4",
+        "state": "PENDING",
+        "reason": "(Priority)",
+        "dependency": "(null)"
+      },
+      {
+        "job_id": "17688019",
+        "name": "cg_b1096_rnn_diverse_influence_seed3",
+        "state": "PENDING",
+        "reason": "(Priority)",
+        "dependency": "(null)"
+      },
+      {
+        "job_id": "17688018",
+        "name": "cg_b1096_rnn_diverse_influence_seed2",
+        "state": "PENDING",
+        "reason": "(Priority)",
+        "dependency": "(null)"
+      },
+      {
+        "job_id": "17688017",
+        "name": "cg_b1096_rnn_diverse_influence_seed1",
+        "state": "PENDING",
+        "reason": "(Priority)",
+        "dependency": "(null)"
+      }
+    ],
+    "all_21_jobs_present": true,
+    "all_20_eval_dependencies_verified": true,
+    "training_job_resources_verified": true
+  },
+  "completion_check": {
+    "checked_at_utc": "2026-10-02T17:10:20.863222+00:00",
+    "training_jobs_completed": 20,
+    "evaluation_job_completed": "17688037",
+    "last_training_end_pdt": "2026-10-02T05:33:58",
+    "evaluation_start_pdt": "2026-10-02T05:34:30",
+    "evaluation_end_pdt": "2026-10-02T06:16:14",
+    "checkpoint_config_summary_sets_verified": 20,
+    "hdf5_files_verified": 40,
+    "allocation_protocol": "online_v2",
+    "n_layouts": 1096,
+    "round_success_by_condition": {
+      "rnn_diverse_influence": {
+        "train": {
+          "mean_round_success": 0.8766874999999998,
+          "std_across_seeds": 0.04430797461612676,
+          "per_seed": [
+            0.895625,
+            0.9138541666666666,
+            0.8391666666666666,
+            0.8197916666666667,
+            0.915
+          ]
+        },
+        "test": {
+          "mean_round_success": 0.8483636363636364,
+          "std_across_seeds": 0.06527183107450091,
+          "per_seed": [
+            0.8781818181818182,
+            0.90375,
+            0.7901136363636364,
+            0.7665909090909091,
+            0.9031818181818182
+          ]
+        }
+      },
+      "mlp_diverse_influence": {
+        "train": {
+          "mean_round_success": 0.9073541666666667,
+          "std_across_seeds": 0.08290186478015904,
+          "per_seed": [
+            0.841875,
+            0.9855208333333333,
+            0.9047916666666667,
+            0.81,
+            0.9945833333333334
+          ]
+        },
+        "test": {
+          "mean_round_success": 0.8751136363636365,
+          "std_across_seeds": 0.10838052916109826,
+          "per_seed": [
+            0.8046590909090909,
+            0.9769318181818182,
+            0.8682954545454545,
+            0.7377272727272727,
+            0.9879545454545454
+          ]
+        }
+      },
+      "rnn_single_influence": {
+        "train": {
+          "mean_round_success": 0.9404791666666666,
+          "std_across_seeds": 0.04792490871144153,
+          "per_seed": [
+            0.893125,
+            0.9475,
+            0.9875,
+            0.8888541666666666,
+            0.9854166666666667
+          ]
+        },
+        "test": {
+          "mean_round_success": 0.9352272727272728,
+          "std_across_seeds": 0.05131043604479927,
+          "per_seed": [
+            0.8870454545454546,
+            0.9394318181818182,
+            0.98375,
+            0.8789772727272728,
+            0.9869318181818182
+          ]
+        }
+      },
+      "rnn_diverse_noinfluence": {
+        "train": {
+          "mean_round_success": 0.7346250000000001,
+          "std_across_seeds": 0.01690625320907756,
+          "per_seed": [
+            0.7210416666666667,
+            0.7129166666666666,
+            0.7398958333333333,
+            0.7475,
+            0.7517708333333334
+          ]
+        },
+        "test": {
+          "mean_round_success": 0.7489318181818183,
+          "std_across_seeds": 0.014304105634975193,
+          "per_seed": [
+            0.7440909090909091,
+            0.7281818181818182,
+            0.7493181818181818,
+            0.7567045454545455,
+            0.7663636363636364
+          ]
+        }
+      }
+    },
+    "job_accounting": [
+      {
+        "job_id": "17688017",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "01:38:10",
+        "start": "2026-10-01T20:10:05",
+        "end": "2026-10-01T21:48:15"
+      },
+      {
+        "job_id": "17688018",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "01:37:30",
+        "start": "2026-10-01T22:41:06",
+        "end": "2026-10-02T00:18:36"
+      },
+      {
+        "job_id": "17688019",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "01:38:31",
+        "start": "2026-10-01T22:46:09",
+        "end": "2026-10-02T00:24:40"
+      },
+      {
+        "job_id": "17688020",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "01:38:30",
+        "start": "2026-10-01T22:46:09",
+        "end": "2026-10-02T00:24:39"
+      },
+      {
+        "job_id": "17688021",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "01:36:51",
+        "start": "2026-10-01T22:51:11",
+        "end": "2026-10-02T00:28:02"
+      },
+      {
+        "job_id": "17688022",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "00:11:18",
+        "start": "2026-10-02T00:22:05",
+        "end": "2026-10-02T00:33:23"
+      },
+      {
+        "job_id": "17688023",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "00:14:21",
+        "start": "2026-10-02T00:27:08",
+        "end": "2026-10-02T00:41:29"
+      },
+      {
+        "job_id": "17688024",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "00:14:21",
+        "start": "2026-10-02T00:27:08",
+        "end": "2026-10-02T00:41:29"
+      },
+      {
+        "job_id": "17688025",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "00:11:18",
+        "start": "2026-10-02T00:32:11",
+        "end": "2026-10-02T00:43:29"
+      },
+      {
+        "job_id": "17688026",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "00:11:14",
+        "start": "2026-10-02T00:37:14",
+        "end": "2026-10-02T00:48:28"
+      },
+      {
+        "job_id": "17688027",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "01:36:51",
+        "start": "2026-10-02T00:42:17",
+        "end": "2026-10-02T02:19:08"
+      },
+      {
+        "job_id": "17688028",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "01:36:51",
+        "start": "2026-10-02T00:42:17",
+        "end": "2026-10-02T02:19:08"
+      },
+      {
+        "job_id": "17688029",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "01:36:39",
+        "start": "2026-10-02T00:47:21",
+        "end": "2026-10-02T02:24:00"
+      },
+      {
+        "job_id": "17688030",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "01:36:51",
+        "start": "2026-10-02T00:52:24",
+        "end": "2026-10-02T02:29:15"
+      },
+      {
+        "job_id": "17688031",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "01:36:54",
+        "start": "2026-10-02T02:20:08",
+        "end": "2026-10-02T03:57:02"
+      },
+      {
+        "job_id": "17688032",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "01:36:55",
+        "start": "2026-10-02T02:20:08",
+        "end": "2026-10-02T03:57:03"
+      },
+      {
+        "job_id": "17688033",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "01:36:44",
+        "start": "2026-10-02T02:24:08",
+        "end": "2026-10-02T04:00:52"
+      },
+      {
+        "job_id": "17688034",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "01:37:07",
+        "start": "2026-10-02T02:30:08",
+        "end": "2026-10-02T04:07:15"
+      },
+      {
+        "job_id": "17688035",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "01:37:05",
+        "start": "2026-10-02T02:50:09",
+        "end": "2026-10-02T04:27:14"
+      },
+      {
+        "job_id": "17688036",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "01:36:50",
+        "start": "2026-10-02T03:57:08",
+        "end": "2026-10-02T05:33:58"
+      },
+      {
+        "job_id": "17688037",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "00:41:44",
+        "start": "2026-10-02T05:34:30",
+        "end": "2026-10-02T06:16:14"
+      }
+    ]
+  }
+}

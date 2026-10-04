@@ -5,7 +5,7 @@ __pycache__/
 .pytest_cache/
 
 # Hydra per-run output
-outputs/
+train/hydra_outputs/
 multirun/
 
 # Large rollout data (regenerable: bash/eval_all_checkpoints.sh)
@@ -14,18 +14,21 @@ multirun/
 # Model weights (regenerable: bash/train_final_experiment.sh)
 *.safetensors
 
+# Generated preallocated schedules: retain JSON parameters/checksums in Git.
+# Rebuild with train/rebuild_counterbalanced_schedules.py.
+train/run_snapshots/**/schedules/*.npz
+
 # Slurm stdout/stderr — noisy, big; the sbatch_*.txt launch manifests ARE kept.
-logs/cg_*.out
-logs/cg_*.err
-logs/slurm-*.out
-logs/slurm-*.err
+train/slurm_logs/*.out
+train/slurm_logs/*.err
+eval/slurm_logs/*.out
+eval/slurm_logs/*.err
 slurm-*.out
 slurm-*.err
 
 # Capability-corpus derived views (JSON layouts + manifest ARE kept)
-dev/grids_capability_selected/renders/
-dev/grids_capability_selected/diagnostics/
-dev/grids/
+data_prep/grids_capability_selected/renders/
+data_prep/grids_capability_selected/diagnostics/
 
 # W&B
 wandb/

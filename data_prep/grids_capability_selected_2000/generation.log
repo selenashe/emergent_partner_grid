@@ -1,0 +1,106 @@
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+[cfg] capability pool: 24 training pairs; eval_max_steps=500, step_penalty=0.01, success_reward=1.0
+
+[1/13] Generating 20000 candidate layouts (master_seed=2026) ...
+[2/13] Deduplicating on grid fingerprint ...
+       20000/20000 unique after basic validity
+[3/13] Evaluating 20000 candidates over 24 training capabilities ...
+[4/13] Filter C: observability (partner_to_{red,blue} >= 3) ...
+       12587/20000 pass observability
+[5/13] Filter A: allocation balance [0.25, 0.75] (max_tie_fraction=0.5) ...
+       10290/20000 pass observability AND balance
+[6/13] Feasibility filter: oracle_success_fraction >= 0.99 ...
+       10290/20000 pass A + C + feasibility
+[7/13] Delta-reward distribution over 10290 post-A/C/feasibility survivors ...
+       delta_reward distribution:
+              n: 10290
+            min: 0.006250000000000311
+            max: 0.38499999999999995
+           mean: 0.07286483641075475
+            std: 0.04830898233411663
+            p10: 0.023333333333333317
+            p25: 0.03583333333333316
+            p50: 0.06041666666666656
+            p75: 0.09999999999999987
+            p90: 0.135
+            p95: 0.16791666666666666
+       delta_reward threshold = 0.035833 (quantile=0.25)
+       7728/20000 pass Filter B (delta_reward)
+[8/13] Horizon-outlier pass (reject worst_case_steps >= mean + 3.0*std) ...
+       horizon pool: mu=28.23 sd=10.86 upper=60.81 -> kept 7645/7728
+[9/13] max observed retained oracle completion = 58; recommended_max_steps = 58
+[10/13] Centroid filter: keeping the 2000 survivors whose p_opt_red is closest to 0.5 ...
+       selected 2000 layouts; p_opt_red in [0.5000, 0.5000] (mean=0.5000, std=0.0000)
+[11/13] Applying balanced D4 symmetries (250 of each of 8) ...
+       verifying D4 invariance of selection statistics ...
+       ✓ D4 invariance holds for all 2000 layouts
+[12/13] Shuffle (shuffle_seed=2026) and split ...
+       train sym counts: {1: 250, 5: 250, 7: 250, 4: 250, 3: 250, 2: 250, 0: 250, 6: 250}
+       ✓ uniqueness + disjointness
+[13/13] Writing corpus + diagnostics to /juice6/u/jshe/emergent_partner_grid/dev/grids_capability_selected_2000 ...
+       [train] wrote 2000 envs
+
+=== rejection table ===
+  generated                          20000
+  unique (basic validity)            20000
+  pass observability                 12587
+  pass allocation balance            11147
+  pass feasibility                   20000
+  survive A+C+feasibility            10290
+  pass delta_reward filter           7728
+  survive A+C+feas+delta             7728
+  >= mean+3.0SD horizon outliers   83
+  eligible after all filters         7645
+  selected final                     2000
+
+=== sweep-schedule sanity check ===
+[capability/layout schedule summary]
+                     n_cap: 24
+                 n_layouts: 2000
+        rounds_per_episode: 20
+               n_eps_total: 2400
+           eps_per_cap_min: 89
+          eps_per_cap_mean: 100.0
+           eps_per_cap_max: 115
+                      seed: 2026
+
+Done. Corpus at /juice6/u/jshe/emergent_partner_grid/dev/grids_capability_selected_2000
+  train/val/test = 2000 / 0 / 0
+  recommended_max_steps = 58  (max observed retained = 58)
+  reproduce: python dev/build_final_corpus.py \
+    --n_candidates 20000 \
+    --n_final 2000 \
+    --n_train 2000 \
+    --n_val 0 \
+    --n_test 0 \
+    --train_val_test_ratio 0.8 0.1 0.1 \
+    --master_seed 2026 \
+    --shuffle_seed 2026 \
+    --stratify_seed 2026 \
+    --grid_size 7 \
+    --wall_density 0.15 0.6 \
+    --min_agent_sep 3 \
+    --min_goal_sep 3 \
+    --max_assignment_gap 20 \
+    --min_switching_cost 0.0 \
+    --geometric_pref_threshold 99 \
+    --switching_k 2 \
+    --max_attempts 500 \
+    --eval_max_steps 500 \
+    --step_penalty 0.01 \
+    --success_reward 1.0 \
+    --min_partner_goal_distance 3 \
+    --min_optimal_alloc_fraction 0.25 \
+    --max_optimal_alloc_fraction 0.75 \
+    --max_tie_fraction 0.5 \
+    --min_oracle_success 0.99 \
+    --delta_reward_quantile 0.25 \
+    --horizon_n_sigma 3.0 \
+    --horizon_safety_margin 0 \
+    --n_bins_per_feature 3 \
+    --centroid_p_opt_red_target 0.5 \
+    --out_dir /juice6/u/jshe/emergent_partner_grid/dev/grids_capability_selected_2000 \
+    --skip_render

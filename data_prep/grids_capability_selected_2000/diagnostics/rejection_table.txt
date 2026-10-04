@@ -1,0 +1,11 @@
+generated                          20000
+unique (basic validity)            20000
+pass observability                 12587
+pass allocation balance            11147
+pass feasibility                   20000
+survive A+C+feasibility            10290
+pass delta_reward filter           7728
+survive A+C+feas+delta             7728
+>= mean+3.0SD horizon outliers   83
+eligible after all filters         7645
+selected final                     2000

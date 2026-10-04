@@ -1,0 +1,74 @@
+[
+  {
+    "stage": "source_2000",
+    "n_layouts": 2000,
+    "mean_wall_density_percent": 25.1,
+    "median_wall_density_percent": 24.489795918367346,
+    "percent_partner_equidistant": 48.55,
+    "partner_delta_red_minus_blue_counts": {
+      "-2": 27,
+      "-1": 492,
+      "0": 971,
+      "1": 490,
+      "2": 20
+    },
+    "wall_density_counts_10_percent_bins": [
+      43,
+      523,
+      866,
+      430,
+      113,
+      24,
+      1,
+      0
+    ]
+  },
+  {
+    "stage": "after_distance_cutoff_1597",
+    "n_layouts": 1597,
+    "mean_wall_density_percent": 24.925561959285908,
+    "median_wall_density_percent": 24.489795918367346,
+    "percent_partner_equidistant": 49.15466499686913,
+    "partner_delta_red_minus_blue_counts": {
+      "-2": 18,
+      "-1": 374,
+      "0": 785,
+      "1": 407,
+      "2": 13
+    },
+    "wall_density_counts_10_percent_bins": [
+      41,
+      437,
+      674,
+      326,
+      95,
+      23,
+      1,
+      0
+    ]
+  },
+  {
+    "stage": "balanced_1096",
+    "n_layouts": 1096,
+    "mean_wall_density_percent": 24.942276180545207,
+    "median_wall_density_percent": 24.489795918367346,
+    "percent_partner_equidistant": 51.003649635036496,
+    "partner_delta_red_minus_blue_counts": {
+      "-2": 12,
+      "-1": 253,
+      "0": 559,
+      "1": 263,
+      "2": 9
+    },
+    "wall_density_counts_10_percent_bins": [
+      28,
+      308,
+      450,
+      226,
+      69,
+      14,
+      1,
+      0
+    ]
+  }
+]

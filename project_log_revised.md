@@ -1,38 +1,113 @@
-# CoordinationGrid — Final Experiment (Overcooked replication in a gridworld)
+# CoordinationGrid — Online task allocation (protocol `online_v2`)
 
-Last refactor: **2026-09-29**.
-Last documentation update: **2026-10-01** (completed five-seed experiment
-and representation analysis; published-paper/reference-code fidelity audit).
+Last design change: **2026-10-01** (random initialization and within-round allocation).
+Last documentation update: **2026-10-03** (counterbalanced results and repository
+reorganization verified).
+
+## Repository paths after the 2026-10-03 reorganization
+
+The active workflow is now grouped into root-level `data_prep/`, `train/`,
+`eval/`, and `bash/`. Grid generation/filtering/balancing/rendering scripts,
+the original 1000-layout corpus, its 2000-layout successor, and the balanced
+1096-layout corpus are in `data_prep/`. The trainer, config, both samplers,
+preflight validation, checkpoints, learning curves, and sampling audits
+are in `train/`. Evaluation code, rollout HDF5s, performance figures, and
+representation analysis are in `eval/`.
+
+The root `outputs/` used to hold Hydra's resolved YAML configs, overrides,
+and Python logger output; it is now `train/hydra_outputs/`. Root `logs/`
+used to combine Slurm stdout/stderr with launch manifests; those records
+are now split between `train/slurm_logs/`, `eval/slurm_logs/`, and
+`train/manifests/`. Saved weights and resolved training configs are in
+`train/train_logs/`, and saved evaluation rollouts/summaries are in
+`eval/eval_out/`. Frozen completed sources moved to `train/run_snapshots/`
+without rewriting their contents or source hashes. All 10,133 moved files
+retained their inode and byte size.
+
+The current trainer/config/samplers were moved out of `baselines/`; 57
+individually verified unrelated baseline files and tests were deleted.
+The empty root `notebooks/`, `dev/`, `analysis/`, and `baselines/` directories
+were removed. The README and Makefile now describe CoordinationGrid.
+The retired `run_sweep.py` was a generator-parameter sensitivity sweep;
+stage A/B/C/D scripts were earlier development artifacts. Neither is part
+of the current full experiment. The 37 specifically identified archived
+stage/sweep scripts, weights, diagnostics, and logs were subsequently
+deleted; other historical archive contents were retained. The original
+v1/v2 random sampler is still needed and was
+renamed from `sweep_scheduler.py` to `train/episode_scheduler.py`; the new
+balanced sampler is `train/counterbalanced_scheduler.py`.
+
+Historical experiment records and the entries below retain their original
+paths. `repo_paths.py` resolves those paths in memory to current locations.
+Moves/removals are recorded in `train/repo_reorganization/manifest.json`.
+The independent 40-run exposure audit now writes to
+`train/sampling_audits/counterbalanced1096_20261002_235609/`.
+Validation passed 49 regression tests, the full environment test harness,
+all eight version/condition training smoke runs, standalone evaluation
+with hidden-state/HDF5 export for both versions, and regeneration of the
+learning curves and held-out comparison. The original random sampler's
+arrays and initial cursors matched the frozen v2 implementation exactly.
+Checks are recorded in `train/repo_reorganization/validation.json`. No
+Slurm jobs were submitted during the reorganization; the temporary
+validation source/schedule batch was removed after its checks completed.
 
 ## Current status
 
-- All **20 policies** have been trained: four conditions × seeds 1–5.
-  Resolved configs, in-trainer evaluation JSONs, and standalone evaluation
-  summaries were committed in `120f4b2b` (2026-09-30).
-- Standalone evaluation provides 24 training profiles × 20 rollouts and
-  22 novel profiles × 20 rollouts per policy. Existing local HDF5s were
-  reused for the representation analysis; no rollouts were regenerated.
-- Representation analysis is complete for **all 15 recurrent policies**:
-  two linear cooldown probes, absolute-timestep and round curves,
-  random and shuffled-label diagnostics, five-policy-seed uncertainty,
-  behavior-selected checkpoints, and final-50-state UMAPs.
-- The observed result is mixed. Multi-partner RNNs show better mean
-  allocation behavior than the MLP and single-partner controls and
-  stronger decoding than no-influence RNNs. However, single-partner RNNs
-  also encode capabilities strongly: RED decoding is stronger on average
-  than in multi-partner RNNs, and BLUE decoding is comparable. The full
-  predicted diversity-specific representation advantage is **not observed**.
+- **Latest counterbalanced v1/v2 batch:** all 40 training jobs and both queued
+  evaluations completed successfully. Results are in
+  `eval/protocol_comparison/counterbalanced1096_20261002_235609/`; exact
+  empirical exposure verification is in
+  `train/sampling_audits/counterbalanced1096_20261002_235609/`. The older
+  balanced-layout batch below retains its original random profile sampler.
+- The active design is **online_v2**: random assignment at round reset,
+  both agents stationary at t=0, and movement/allocation decisions at
+  every t>=1. NONE is never a legal policy action.
+- **Current balanced-layout batch (2026-10-01, 19:31 PDT):** training jobs
+  **17688017–17688036** use 1,096 layouts with exactly 137 examples at each
+  ego distance 1–8 for both goals. Four conditions × seeds 1–5, 60M nominal
+  timesteps per policy. **All 20 training jobs and evaluation job 17688037
+  completed successfully (exit 0:0).** The last training job ended at
+  05:33:58 PDT on October 2; evaluation ran automatically from 05:34:30
+  to 06:16:14 PDT. Completion verification checked 20 checkpoint/config/
+  summary sets and 40 HDF5 files, all using `online_v2` and the frozen
+  1,096-layout corpus. Code and layouts are copied into
+  a batch snapshot so later workspace edits do not alter these jobs.
+  See [the balanced launch manifest](logs/sbatch_online_v2_balanced1096_20261002_022924.json).
+- Capability stays fixed across 20 rounds and recurrent memory persists
+  across intermediate round boundaries. Only the ego controls assignments;
+  the partner executes BFS navigation with goal-specific delays.
+- The previously completed 20 policies and representation results belong
+  to the **historical fixed-allocation design**. They have not been
+  retrained or re-evaluated and are not results for online_v2.
+- The previous online_v2 batch was submitted on **2026-10-01 at 16:54 PDT**:
+  four conditions × five seeds, jobs **17686978–17686997**. At submission
+  verification all were pending scheduler priority; no new results are
+  available yet. Evaluation job **17686998** waits for all 20 jobs to succeed.
+- **Cancellation update (2026-10-01):** at the user's request, all queued
+  jobs with names starting with `cg` were canceled: training jobs
+  **17686979–17686997** and evaluation job **17686998** (20 jobs total).
+  Job **17686978** was already running and was preserved. Verification
+  found no remaining queued `cg` jobs; the evaluation dependency will no
+  longer run. The launch manifest records this cancellation and status.
+- The user subsequently interrupted **17686978** as well; Slurm confirmed
+  cancellation at **17:21:08 PDT**. All 21 submitted jobs are now canceled.
+  Its stdout/stderr and Hydra directory `outputs/2026-10-01/16-57-39/`
+  were removed, and three tracked bytecode files it regenerated were restored.
+  It saved no checkpoint or evaluation artifacts. The launch manifest
+  retains the administrative cancellation/cleanup record; no online_v2
+  training or evaluation results remain from this batch.
+- New checkpoints/configs are written beneath `dev/train_logs/online_v2/`;
+  the bulk evaluator uses `dev/eval_out/online_v2/`. Saved configs must
+  contain `ALLOCATION_PROTOCOL: online_v2`; old/untagged configs are
+  rejected by current training/evaluation to prevent silent protocol changes.
+- The redesign also fixes the previously audited GRU replay reset
+  mismatch: PPO stores the pre-observation reset separately from the
+  post-transition terminal flag used for GAE.
 
-Detailed methods, validation, numerical results and figures are in
-[the representation report](analysis/representation_results/README.md).
-Completing the implementation and analyses does not imply that every
-scientific replication criterion has been met.
-
-The replication-fidelity audit below distinguishes the **published NeurIPS
-paper**, the **released Overcooked implementation**, and the **current grid
-experiment**. They are not interchangeable specifications. The current
-experiment is an adaptation of Experiment 1, with material protocol
-differences beyond changing the task.
+Historical methods, numerical results and figures remain in
+[the representation report](analysis/representation_results/README.md)
+and in the explicitly historical sections below. Their mixed scientific
+result is preserved rather than relabeled as evidence for the new design.
 
 ## What we are testing
 
@@ -50,14 +125,31 @@ of Mon-Williams et al.'s Overcooked partner-modelling experiment.
 ### Environment — `jaxmarl.environments.coordination_grid.CoordinationGrid`
 
 - 7x7 grid, one ego (learned) and one scripted partner.
-- Each round: ego commits at t=0 to a task allocation, then both agents
-  navigate; round ends on success or `max_steps`.
+- At reset of **each round**, a uniform random RED/BLUE allocation is
+  sampled independently of partner capability and shown to the ego via
+  `last_allocation`. It also sets the partner's complementary goal.
+- At **t=0 both agents stay**. The policy has one forced action:
+  STAY plus the supplied allocation. It cannot choose or override that
+  allocation during initialization, including through direct env calls.
+- At **every t>=1**, the ego jointly chooses movement and RED/BLUE
+  allocation. Under influence=True the request sets the partner's goal
+  before that step's navigation; the ego can reassign it during the round.
+  The partner cannot choose/reassign goals and follows its BFS path.
+- The round ends on success or `max_steps`.
 - **20 rounds per partner episode.** Hidden capability `(d_R, d_B)` is
   **fixed** for all 20 rounds. RNN hidden state persists across rounds;
   physical round state resets; layout may change round-to-round from the
-  same 1000-layout corpus.
+  same 1096-layout corpus.
 - `done['__all__']` fires **only** at the end of the 20th round — that's
   where the GRU hidden state resets and a fresh capability is drawn.
+
+A new partner's capabilities are initially unknown. The initial assignment
+is environmental randomization, not a learned commitment. From t=1 the
+GRU combines current observations with its history to choose movement and
+allocation. It receives no explicit capability profile or supervised
+partner-model objective. It can revise an allocation after seeing behavior
+later in the same round; in later rounds it also retains previous-round
+behavioral evidence. A fresh partner episode resets this memory.
 
 ### Capability semantics (reference-style delays)
 
@@ -92,43 +184,62 @@ familiar values.
 
 ### Action space and allocation influence
 
-- Ego action ∈ {UP, DOWN, LEFT, RIGHT, STAY} × {NONE, ALLOC_RED, ALLOC_BLUE},
-  flat-encoded in [0, 15).
-- **t=0:** only `STAY+ALLOC_RED` (13) and `STAY+ALLOC_BLUE` (14) legal.
-- **t≥1:** only the 5 moves + NONE (ids 0, 3, 6, 9, 12).
-- `ALLOC_RED` ⇒ partner takes BLUE; `ALLOC_BLUE` ⇒ partner takes RED.
-- **INFLUENCE=true:** partner assignment is determined by the ego's t=0
-  alloc (the "main" mechanism).
-- **INFLUENCE=false:** partner assignment is determined by round-index
-  parity (round_idx & 1), independent of ego's action. This is the
-  no-influence control.
+The legal learned action space at t>=1 is:
 
-The env keeps two separate fields to prevent an observation confound:
+    {UP, DOWN, LEFT, RIGHT, STAY} x {ALLOC_RED, ALLOC_BLUE}
 
-    state.last_ego_allocation  -> ego action channel; drives obs["last_allocation"]
-    state.partner_assignment   -> internal; drives the partner's goal commit
+- `ALLOC_RED` means ego RED / partner BLUE; `ALLOC_BLUE` means ego BLUE /
+  partner RED. The ego chooses its movement freely; its path is not fixed.
+- The existing storage encoding `a = 3*move + alloc` and 15 output logits
+  are retained, but NONE codes `(0,3,6,9,12)` are **always masked out**.
+  Keeping reserved storage codes does not make NONE a legal action.
+- At t=0 only id 13 or 14 is legal, whichever encodes the supplied default.
+  There is no learned choice: log probability and entropy are zero.
+- At t>=1 legal ids are `(1,2,4,5,7,8,10,11,13,14)`, giving ten choices.
+  Both the RNN and feedforward policy use the same observation-dependent mask.
+- Under **INFLUENCE=true**, every t>=1 request controls the partner's goal.
+- Under **INFLUENCE=false**, the random initial partner assignment is held
+  fixed throughout the round; subsequent ego requests have no causal effect.
+  Round parity is no longer used. The default is sampled identically in
+  both conditions, so only the ability to reassign differs.
 
-`obs["last_allocation"]` has **identical semantics** under influence=true
-and influence=false (the ego always sees its own alloc at t=1 and NONE
-thereafter). Only `partner_assignment` differs across the two
-conditions. Verified in `test_observation_schema_matches_across_influence`.
+`last_ego_allocation` supplies the random default at reset/t=0 and echoes
+previous ego requests thereafter, with identical semantics in both
+conditions. `partner_assignment` records the actual allocation driving
+navigation and can diverge from the request under no-influence.
+Capability remains absent from observations.
 
-Capability is **never** in the ego's observation.
+**Cooldowns on reassignment:** repeating an allocation preserves the
+counter. When the actual partner goal changes, its counter is loaded with
+that goal's delay before movement; the partner waits/decrements if positive.
+Delay zero permits movement immediately. A switch to delay d>0 therefore
+waits d ticks, then movement follows the usual d+1 cadence. Reloading only
+on a true change prevents requests from granting free moves or repeatedly
+resetting the counter when an assignment is held constant.
 
 ### Layouts
 
-Sole corpus: `dev/grids_capability_selected/` (1000 layouts).
+Current corpus: `dev/grids_capability_selected_balanced_1096/` (1096 layouts).
 
-Same 1000 layouts are used for training AND evaluation. There is no
+Same 1096 layouts are used for training AND evaluation. There is no
 layout-generalization experiment. There are no val/test layout splits.
+
+This is a sampled subset of the 2,000-layout current-capability corpus.
+Requiring both ego distances in 1–8 leaves 1,597 layouts; randomized joint
+distance balancing retains 1,096, with exactly 137 layouts at each distance
+for each goal. Selection uses only ego distances. The subset contains
+559 partner-equidistant layouts (51.0%) and mean wall density 24.94%.
+The source layouts and metadata are preserved. The subset manifest and
+`diagnostics/selection_audit.csv` record seed 2026 and all exclusions.
 
 ### Reward + horizon
 
 - `success_reward = 1.0`, `step_penalty = 0.01` (validated setting).
-- `max_steps = 100` per round. Analytical worst-case oracle completion
+- `max_steps = 100` per round. Historical analytical completion for a fixed allocation
   under the training+test capability populations on the selected corpus
   is 50 steps (see `dev/train_logs/capability_validation_ms100.json`),
-  so this horizon is comfortably above infeasibility.
+  so the unchanged horizon admits a successful constant-allocation strategy.
+  This is not a dynamic-reallocation oracle or a guarantee for arbitrary switching.
 
 ## The four experimental conditions
 
@@ -147,7 +258,8 @@ The single-partner control fixes the training capability to
 `DEFAULT_SINGLE_PARTNER = (1, 4)`. It is still evaluated on the same
 novel test partners as every other model.
 
-Completed: **5 independent training seeds per condition**, seeds 1–5.
+Submitted for online_v2: **5 independent training seeds per condition**, seeds 1–5.
+The previously completed five-seed runs used fixed allocation and remain historical.
 Policy files follow `<condition>_seed<seed>` with condition identifiers
 `rnn_diverse_influence`, `mlp_diverse_influence`,
 `rnn_single_influence`, and `rnn_diverse_noinfluence`.
@@ -179,7 +291,7 @@ width; every other component is shared.
 `baselines/IPPO/sweep_scheduler.build_schedule` samples uniformly:
 one capability pair per 20-round partner episode from
 `TRAIN_CAPABILITY_PAIRS`; independently sampled layout per round from the
-1000-layout corpus. The materialized schedule is long enough
+1096-layout corpus. The materialized schedule is long enough
 (`N_EPS_TOTAL = 131072`) that a training run does not wrap in practice.
 
 There is **no** exhaustive capability × layout balancing. The old
@@ -190,8 +302,15 @@ just reports coverage stats.
 
 The following entry points and supporting files are wired into the
 current experiment. Earlier stage/sweep and Overcooked plotting scripts
-marked `SUPERSEDED` remain retired; the new representation entry point
-does not reactivate them. Generated data and generic supporting modules
+and their historical outputs were moved to
+`archive/2026-10-02-retired-analysis/` on 2026-10-02. Original paths are
+preserved beneath that directory; its `manifest.json` records every
+original path, size, and SHA-256 checksum. The archive contains 19 retired
+code/config/notebook files and their outputs (21,459 files, 111.03 MiB).
+These files are preserved for history and are not active entry points.
+All current v1/v2 code, checkpoints, rollouts, completed-run logs, layout
+provenance, frozen v2 source, and representation/comparison/learning-curve
+results were retained. Generated data and generic supporting modules
 are not retired merely because they are absent from this list.
 
     Environment:
@@ -215,7 +334,8 @@ are not retired merely because they are absent from this list.
 
     Tests:
       dev/test_capability_env.py
-      tests/analysis/test_representation_analysis.py    # 13 representation regression tests
+      tests/coordination_grid/test_online_allocation.py
+      tests/analysis/test_representation_analysis.py    # representation/protocol regressions
 
     Evaluation:
       analysis/evaluate_partner_modelling.py
@@ -228,7 +348,205 @@ are not retired merely because they are absent from this list.
 
 ## Checkpoints, configs and data provenance
 
-The committed full experiment includes, for each of the 20 policies:
+### Counterbalanced v1/v2 training — submitted 2026-10-02
+
+The `v1_balanced_training` and `v2_balanced_training` experiments use the
+same frozen 1096-layout corpus and preallocated sampling schedule. This
+also changes v1's corpus from its original 1000 layouts. Each version
+retains its own original environment, allocation rules, network, PPO
+implementation, and evaluation functions; only sampling and exposure
+audit bookkeeping are patched into its frozen trainer. The v1 source
+comes from Git revision `541452613cdc531c98dfc5e0b8f00efe34fae3de`.
+
+The sampler lives in `baselines/IPPO/counterbalanced_scheduler.py`.
+Each shared 20-layout packet is allocated once to each of the 24 diverse
+profiles, in shuffled profile order, through one global asynchronous
+queue. Every layout pass is without replacement. Five passes form a
+complete cycle: 274 episodes / 5480 rounds per profile, 6576 episodes /
+131520 rounds total, and exactly five visits to every profile-layout pair.
+The single-partner control retains only `(1,4)` and uses the same layout
+stream. There is no queue wrap or independent worker cursor overlap.
+
+Training still stops after 915 PPO updates: 59,965,440 actual environment
+steps under the nominal 60M-step budget, with five learner seeds per
+condition. Preallocated episode counts differ by at most one between
+profiles at every queue prefix. Completed exposure can differ because of
+unfinished episodes at this fixed-step cutoff. Each checkpoint writes
+`*_sampling_audit.json` and `*_sampling_audit.npz`, including actual
+rounds started/completed and environment steps for every profile-layout
+pair, episode counts, the allocated queue prefix, and active episode IDs.
+
+The launch is reproducible with `bash/submit_counterbalanced_training.py`
+(`--prepare`, then `--submit-manifest`). Its manifest is
+`logs/sbatch_counterbalanced1096_20261002_235609.json`; frozen source,
+corpus, schedules, and preflight results are beneath
+`dev/run_snapshots/counterbalanced1096_20261002_235609/`.
+
+| Condition | v1 jobs (seeds 1–5) | v2 jobs (seeds 1–5) |
+|-----------|---------------------|---------------------|
+| Diverse RNN + influence | 17697345–17697349 | 17697365–17697369 |
+| Diverse MLP + influence | 17697350–17697354 | 17697370–17697374 |
+| Single RNN + influence | 17697355–17697359 | 17697375–17697379 |
+| Diverse RNN, no influence | 17697360–17697364 | 17697380–17697384 |
+
+Evaluation jobs **17697385** (v1) and **17697386** (v2) each depend on
+successful completion of their version's 20 training jobs. They retain
+20 episodes per familiar/novel capability, 20 rounds per episode, and
+evaluation seed 12345. Checkpoints/configs/audits and evaluation outputs
+are separated under `dev/train_logs/{v1,v2}_balanced_training/` and
+`dev/eval_out/{v1,v2}_balanced_training/`, respectively.
+
+Preflight passed 21 sampler/protocol regression tests, end-to-end training
+and audit-export smoke runs for all eight version/condition combinations,
+and standalone evaluation/HDF5 export smoke runs for both versions. Source
+and schedule hashes, original network/environment/evaluation functions,
+and launcher syntax were verified before submission. Existing experiment
+weights, rollouts, code snapshots, and numerical results were retained.
+
+**Completed results (checked 2026-10-03):** all 40 training jobs and both
+queued evaluations completed with exit code `0:0`. The v1 evaluation
+finished at 00:54:35 PDT and v2 at 02:31:42 PDT. Each policy collected
+59,965,440 environment steps. Held-out results below average five learner
+seeds; each seed evaluates 22 novel profiles × 20 episodes × 20 rounds.
+Layouts are familiar, so this measures partner generalization.
+
+| Condition | v1 success, mean ± SD | v2 success, mean ± SD | v1 episode return | v2 episode return | v1 episode steps | v2 episode steps |
+|-----------|-----------------------|-----------------------|-------------------|-------------------|------------------|------------------|
+| Diverse RNN + influence | 98.37 ± 0.47% | 96.06 ± 4.66% | 15.43 | 12.80 | 444.3 | 660.7 |
+| Diverse MLP + influence | 98.58 ± 1.09% | 94.54 ± 4.81% | 13.66 | 11.76 | 624.9 | 733.8 |
+| Single RNN + influence | 98.74 ± 0.63% | 93.62 ± 6.71% | 13.82 | 11.59 | 612.2 | 732.3 |
+| Diverse RNN, no influence | 89.81 ± 11.35% | 90.14 ± 9.91% | 9.80 | 9.80 | 833.6 | 841.2 |
+
+Counterbalanced v2 diverse RNN leads the mean success and return rankings;
+its success increased 11.22 percentage points relative to the preceding
+v2 run (84.84% → 96.06%) and episode steps decreased 26.3%. Diverse MLP
+improved 7.03 points, no-influence improved 15.25 points, and the single
+RNN mean changed only 0.10 points. These rankings are descriptive;
+substantial seed variation remains. In v1 the three influence conditions
+all approach 98–99% success, while diverse RNN has higher return and fewer
+steps. Comparing new and original v1 also changes the corpus from 1000
+to 1096 layouts, so that improvement cannot be attributed only to sampling.
+
+Independent reconstruction of each schedule prefix, subtracting the exact
+256 active episodes at the cutoff, matched every saved profile-layout
+matrix of rounds started and completed in all 40 runs. All trained profiles
+saw all 1096 layouts. Allocated episodes differ by at most one per profile;
+actual started counts for any one layout differ by at most two across
+profiles. Environment-step exposure is not balanced across profiles because
+round durations differ. This verification is reproducible with
+`analysis/audit_counterbalanced_results.py counterbalanced1096_20261002_235609`.
+
+Plots and per-seed/aggregate JSON/CSV results are in
+`analysis/protocol_comparison/counterbalanced1096_20261002_235609/`.
+Generate the three-panel comparison, episode-step plot, and round-success
+plot with `analysis/compare_allocation_protocols.py --counterbalanced-batch
+counterbalanced1096_20261002_235609`. The launch manifest now records the
+completed scheduler states and the sampling verification report.
+The verifier also exports `actual_exposure_by_run.csv` (40 runs) and
+`actual_exposure_by_profile.csv` (730 run/profile rows) in that results
+directory. These distinguish allocated episodes from the empirical
+started/completed episodes, rounds, and environment steps. The original
+audit NPZs retain all profile-by-layout counts, including the unfinished
+tail; full training observation/action trajectories were not saved.
+
+**Current protocol:** checkpoint/config paths are beneath
+`dev/train_logs/online_v2/`; standalone HDF5s/summaries go beneath
+`dev/eval_out/online_v2/`. Config JSON and HDF5 attributes identify
+`allocation_protocol = online_v2`. Fresh training has been submitted. No existing
+weights, rollouts or numerical results were changed by the redesign.
+
+### Balanced 1096-layout online_v2 Slurm launch — 2026-10-01
+
+| Condition | Seed 1 | Seed 2 | Seed 3 | Seed 4 | Seed 5 |
+|-----------|--------|--------|--------|--------|--------|
+| `rnn_diverse_influence` | 17688017 | 17688018 | 17688019 | 17688020 | 17688021 |
+| `mlp_diverse_influence` | 17688022 | 17688023 | 17688024 | 17688025 | 17688026 |
+| `rnn_single_influence` | 17688027 | 17688028 | 17688029 | 17688030 | 17688031 |
+| `rnn_diverse_noinfluence` | 17688032 | 17688033 | 17688034 | 17688035 | 17688036 |
+
+The batch uses the existing PPO settings and resource requests: one 80G GPU,
+4 CPUs, 32 GB memory, 8-hour training limit, account `nlp`, partition `sphinx`,
+excluding `sphinx9`. All four conditions retain their original semantics;
+the no-influence control freezes the random initial partner assignment.
+The protocol is explicitly `online_v2`, with random defaults at t=0 and
+online movement/allocation decisions from t=1 in influence conditions.
+
+Standalone evaluation **17688037** has an `afterok` dependency on all 20
+training jobs. It checks that all 20 checkpoint/config pairs exist and runs
+20 episodes per capability for all 24 familiar and 22 novel profiles, with
+seed 12345 and hidden-state recording for RNN policies. Its layouts default
+to each saved training config, fixing the old evaluator's hard-coded
+1,000-layout default. An explicit `--layouts_dir` override remains available.
+
+Frozen source and layouts live under
+`dev/run_snapshots/balanced1096_20261002_022924/source/`.
+Checkpoints/configs live under
+`dev/train_logs/online_v2/balanced1096_20261002_022924/`; standalone evaluation
+outputs live under `dev/eval_out/online_v2/balanced1096_20261002_022924/`.
+Each policy has its own Hydra output directory. The launch manifest records
+source hashes, the layout aggregate hash, exact commands, job IDs and the
+verified scheduler dependencies. `bash/submit_balanced_training.py` prepares
+and submits reproducible batches, recording submissions incrementally.
+
+Preflight: 11 online-protocol tests, two evaluator corpus-selection tests,
+shell syntax checks, and a finite small PPO update using the complete
+frozen 1,096-layout corpus passed. The small run imported the snapshot's
+trainer/environment and had zero t=0 entropy. These are preflight and
+submission checks, not evidence that full training or evaluation completed.
+
+### Previous online_v2 Slurm launch — 2026-10-01 (canceled)
+
+This table records the original submissions. Jobs 17686979–17686998 were
+subsequently canceled at the user's request before starting; only training
+job 17686978 was running at the cancellation check. The user then canceled
+that job too, and its generated run files were cleaned as recorded above.
+
+| Condition | Seed 1 | Seed 2 | Seed 3 | Seed 4 | Seed 5 |
+|-----------|--------|--------|--------|--------|--------|
+| `rnn_diverse_influence` | 17686978 | 17686979 | 17686980 | 17686981 | 17686982 |
+| `mlp_diverse_influence` | 17686983 | 17686984 | 17686985 | 17686986 | 17686987 |
+| `rnn_single_influence` | 17686988 | 17686989 | 17686990 | 17686991 | 17686992 |
+| `rnn_diverse_noinfluence` | 17686993 | 17686994 | 17686995 | 17686996 | 17686997 |
+
+Each job uses `bash/train_final_experiment.sh`, one GPU with the `80G`
+constraint on `sphinx`, account `nlp`, 4 CPUs, 32 GB RAM and an 8-hour
+limit. Each trains one policy (`NUM_SEEDS=1`) at the documented PPO
+settings with a nominal 60,000,000-step budget. Integer rollout batching
+gives 915 updates × 65,536 transitions = **59,965,440 actual steps** per
+policy. Tags are exactly `<condition>_seed<seed>` beneath the online_v2
+artifact directories; preflight confirmed no matching artifacts existed.
+W&B is disabled. Layouts, capability populations, episode length,
+schedule seed, optimizer settings and reward follow the configuration above.
+
+The training launcher now uses the evaluator's existing cuDNN settings
+(`TF_CUDNN_USE_AUTOTUNE=0`, `TF_CUDNN_DETERMINISTIC=1`,
+`--xla_gpu_deterministic_ops=true`) following earlier convolution failures
+on multiple nodes. Both launchers exclude `sphinx9`, where earlier runs
+also failed. These are execution settings, not environment-design changes.
+
+**Standalone evaluation job 17686998** runs
+`bash/eval_all_checkpoints.sh` with an `afterok` dependency on all 20
+training jobs and a 2-hour limit. An invalid dependency cancels evaluation;
+a failed training job therefore requires repair/resubmission before the
+full evaluation can run. Training also performs its existing in-process
+evaluation before exiting. The standalone evaluator uses seed 12345 and
+20 episodes per capability for all 24 familiar and 22 novel profiles,
+writes summaries and train/test HDF5s beneath `dev/eval_out/online_v2/`,
+and saves hidden states for the 15 RNN policies. Representation analysis
+has not been rerun on this protocol yet.
+
+The [launch manifest](logs/sbatch_online_v2_20261001_235402.json) records
+all job IDs, exact submission commands, hyperparameters, Git HEAD and
+SHA-256 hashes of the active source files. The submitted working tree
+includes the uncommitted online_v2 implementation. Slurm captures each
+batch script at submission; Python source is read from the shared repository
+when the job starts. Training logs are `logs/cg_cap_<jobid>.out/.err`;
+standalone evaluation logs are `logs/cg_eval_all_17686998.out/.err`.
+Shell syntax and `git diff --check` passed before submission. Scheduler
+inspection confirmed all 21 jobs and all 20 evaluation dependencies.
+These are submission checks, not evidence of completed training.
+
+**Historical fixed-allocation artifacts:** the committed full experiment includes, for each of the 20 policies:
 
     dev/train_logs/<condition>_seed<seed>_config.json
     dev/train_logs/<condition>_seed<seed>_eval.json
@@ -255,16 +573,21 @@ populations, reward, layouts, task structure or trained checkpoints.
 ## How to launch each condition
 
     # Main multi-partner RNN, seed 1
-    sbatch bash/train_final_experiment.sh
+    TAG=rnn_diverse_influence_seed1 sbatch bash/train_final_experiment.sh
 
     # Other conditions (same launcher, one env var):
-    CONDITION=mlp_diverse_influence     sbatch bash/train_final_experiment.sh
-    CONDITION=rnn_single_influence      sbatch bash/train_final_experiment.sh
-    CONDITION=rnn_diverse_noinfluence   sbatch bash/train_final_experiment.sh
+    CONDITION=mlp_diverse_influence TAG=mlp_diverse_influence_seed1 sbatch bash/train_final_experiment.sh
+    CONDITION=rnn_single_influence TAG=rnn_single_influence_seed1 sbatch bash/train_final_experiment.sh
+    CONDITION=rnn_diverse_noinfluence TAG=rnn_diverse_noinfluence_seed1 sbatch bash/train_final_experiment.sh
 
     # Different seeds
-    SEED=2 sbatch bash/train_final_experiment.sh
+    SEED=2 TAG=rnn_diverse_influence_seed2 sbatch bash/train_final_experiment.sh
     ...
+
+Explicit canonical tags above let representation analysis discover seeds
+1–5. If TAG is omitted, the launcher uses a timestamped run name instead.
+For online-v2 representation fits, use `--eval-dir dev/eval_out/online_v2`
+and a separate output path such as `--out-dir analysis/representation_results_online_v2`.
 
 ## Evaluation
 
@@ -273,7 +596,7 @@ populations, reward, layouts, task structure or trained checkpoints.
         --params <path to safetensors> \
         --n_episodes_per_capability 20 \
         --seed 12345 \
-        --out_prefix dev/eval_out/<condition>_seed<seed> \
+        --out_prefix dev/eval_out/online_v2/<condition>_seed<seed> \
         --save_hidden               # only meaningful for MODEL_TYPE=rnn
 
 Outputs a per-checkpoint HDF5 rollout record for both the train and test
@@ -285,36 +608,33 @@ existing summary; if a rollout file is missing or malformed despite that
 summary, rerun the evaluator explicitly for the affected checkpoint
 rather than assuming the bulk launcher repaired it.
 
-The primary behavioral metric is **fraction_optimal_allocation** —
-computed per t=0 sample using the same analytical
-`completion_time`/`_reward_from_time` primitive as
-`capability_validation.py`. For each (layout_idx, capability) the
-optimal alloc is `argmax(reward_A, reward_B)`; ties (equal analytical
-rewards) are excluded from the optimal-fraction accuracy but count with
-regret = 0 in `allocation_regret_mean`. Metrics reported per slice:
+The current evaluator summarizes success, return and successful completion
+for the valid prefix through the first final done. Online allocation metrics
+exclude t=0, because its supplied default is not a policy decision:
 
-    round_success_rate
-    mean_ep_return
-    mean_reward_per_round
-    mean_successful_completion_time
-    fraction_optimal_allocation_overall
-    fraction_optimal_allocation_by_round        # main adaptation curve
-    allocation_regret_mean
-    allocation_regret_by_round
-    partner_assigned_red_given_relative_cap     # secondary/qualitative
+    n_allocation_decisions / n_allocation_decisions_by_round
+    initial_allocation_red_fraction              # initialization diagnostic
+    fraction_partner_assigned_faster / _by_round # actual assignment, speed only
+    fraction_ego_requested_faster_partner_goal   # requested, hypothetical in no-influence
+    assignment_switch_count / _by_round
+    assignment_switches_per_round / assignment_switch_rate
+    partner_assigned_red_given_red_adv / blue_adv / tie
 
-`fraction_optimal_allocation_by_round` is the main adaptation signal:
-the design predicted improvement for the diverse-partner RNN and little
-adaptation for the MLP and single-partner controls. Actual results are
-reported below; this prediction is not enforced by the analysis.
+Speed adherence compares the assigned goal's d_R/d_B, excludes equal-delay
+profiles, and weights each valid t>=1 decision equally. It is **not an
+optimal-allocation oracle**: geometry, remaining distance, collisions and
+switch costs can make the slower task a reasonable assignment. Success
+and return remain the realized performance measures. The old t=0
+optimal-allocation fraction/regret headline fields are not emitted for
+online_v2. Their analytical helpers remain only for historical fixed-role
+layout validation. In no-influence, actual assignment statistics and ego
+requests are reported separately, rather than attributing causal control
+to the ego.
 
-**No-influence metric semantics:** optimal-allocation fraction and regret
-are calculated from the ego's chosen t=0 allocation, while the actual
-partner assignment is controlled by round parity. These are diagnostics
-of the ego's hypothetical allocation choice in that condition, not
-measures of an allocation it causally imposed. Round success and episode
-return still describe realized behavior. The relative-capability
-assignment diagnostic uses the actual `partner_assignment` field.
+HDF5 adds `assignment_changed` (actual switch) and `ego_request_changed`
+(request switch). At t=0 `ego_alloc_action` records the supplied default;
+at t>=1 it records the ego's request. Existing hidden-state timing and
+first-done masking remain unchanged.
 
 **Hidden-state convention (`--save_hidden`):** the saved `hidden_state`
 is the POST-observation state h_t = RNN(h_{t-1}, o_t) — the state used
@@ -332,7 +652,8 @@ post-observation hidden-state convention remains unchanged.
 The current scan schema includes `hidden_state`, `capability`, `dones`,
 `round_idx`, `round_done`, `round_time`, `is_t0`, `layout_idx`,
 `ego_alloc_action`, `partner_assignment`, `partner_goal`, `rewards`,
-`success`, `capability_index_per_ep`, and `capability_pool`. RNN scans have
+`success`, `assignment_changed`, `ego_request_changed`,
+`capability_index_per_ep`, and `capability_pool`. RNN scans have
 shape `(E, 2000, 128)` for hidden state; `E=480` for train and `E=440`
 for test. The actual episode often ends before the 2000-step scan.
 Behavioral summaries and representation features use states only through
@@ -345,7 +666,37 @@ explicitly re-injects `INFLUENCE` into `env_kwargs["influence"]` so a
 no-influence checkpoint cannot be accidentally evaluated under an
 influence-enabled env.
 
-## Completed five-seed behavioral evaluation
+## Online-v2 implementation and verification
+
+Changed environment resets/transitions, both policy masks, keyed scheduled
+resets, PPO replay resets, training diagnostics, evaluator schema/metrics,
+and launch/evaluation artifact directories. Representation analysis rejects
+mixed fixed_v1/online_v2 HDF5 inputs and requires a separate online_v2 output
+directory, preserving historical figures and fits. Capabilities, layout corpus,
+reward, horizon and network widths are preserved.
+
+Regression coverage checks random defaults and capability independence,
+both-agent t=0 STAY, same-step t>=1 movement/reassignment, goal-specific
+switch delays, repeated-assignment cadence, no-influence independence,
+round/episode boundaries, JIT/vmap, RNN/MLP action probabilities, legacy
+config rejection, one bounded PPO update and evaluation masking.
+
+Verified on CPU: **11 online-allocation regression tests, all 20 existing
+environment tests, and 14 representation/protocol tests passed**. The
+replay regression reproduces collected log-probabilities and values using
+unchanged parameters across an episode reset. The bounded PPO update
+produced finite losses and zero initialization entropy. Shell syntax,
+Python compilation and `git diff --check` also passed. This validation
+does not constitute training or scientific evaluation of the new experiment.
+
+    JAX_PLATFORMS=cpu python -m pytest tests/coordination_grid/test_online_allocation.py -q
+    JAX_PLATFORMS=cpu python dev/test_capability_env.py
+    python -m pytest tests/analysis/test_representation_analysis.py -q
+
+## Historical fixed-allocation five-seed behavioral evaluation
+
+**Everything in this section and the representation-results section below
+was measured before online_v2. These numbers do not evaluate the new design.**
 
 The table below is calculated from the five committed
 `dev/eval_out/<condition>_seed*_summary.json` files per condition, using
@@ -359,8 +710,8 @@ the five independently trained policies; no policy was excluded.
 | Single-partner RNN | 0.961 ± 0.047 | 13.073 ± 2.017 | 0.497 ± 0.006 | 0.1324 ± 0.0013 |
 | No-influence RNN | 0.907 ± 0.108 | 10.634 ± 4.269 | 0.501 ± 0.002 | 0.1290 ± 0.0006 |
 
-The last two columns for no-influence have the hypothetical-choice
-semantics described above. High success alone does not demonstrate
+For this historical no-influence control, the last two columns scored the
+ego's hypothetical t=0 choice; actual partner assignment used round parity. High success alone does not demonstrate
 partner-specific task allocation: the single-partner control succeeds
 frequently while its chosen allocations remain near 0.5 optimal.
 
@@ -379,7 +730,7 @@ formal significance test or a claim that every main-condition seed
 converged successfully. Full by-round values, training-slice results,
 allocation regret and assignment diagnostics remain in the source JSONs.
 
-## Completed representation analysis
+## Historical fixed-allocation representation analysis
 
 ### Entry point and analysis unit
 
@@ -616,7 +967,7 @@ test rerun was needed for this analysis-only addition.
 python -m pytest tests/analysis/test_representation_analysis.py -q
 ```
 
-## Analytical validation on the current corpus
+## Historical fixed-allocation analytical validation on the corpus
 
 Run once after any capability-population or `max_steps` change:
 
@@ -643,7 +994,7 @@ Both slices have `flip_fraction = 1.0` — every layout's optimal
 allocation depends on the capability profile, which is exactly the task
 pressure we want.
 
-## Scientific replication criteria and current conclusion
+## Historical scientific replication criteria and conclusion
 
 These are scientific success criteria, distinct from completion of the
 implementation and analysis. High PPO success or decodable hidden states
@@ -678,7 +1029,13 @@ policy uses it causally. Report this distinction and policy-seed
 variability rather than treating the full scientific replication as
 established or changing the experiment to obtain the expected pattern.
 
-## Replication-fidelity audit (2026-10-01)
+## Historical replication-fidelity audit (2026-10-01, before redesign)
+
+This audit describes the original fixed-allocation implementation. Online_v2
+supersedes its t=0 commitment, immutable round assignment and parity-control
+rows, and fixes its PPO replay reset mismatch. Other differences remain,
+including ego speed, task/layout structure, population weighting and model
+architecture. This redesign has not established any new scientific result.
 
 Audited against the [published NeurIPS paper](https://proceedings.neurips.cc/paper_files/paper/2025/file/0b8e8bfc40184226888e821620b216c9-Paper-Conference.pdf)
 and upstream commit
@@ -843,7 +1200,8 @@ the implemented Experiment-1 scope.
 
 ## Deferred / not-in-this-experiment
 
-Partner switching mid-episode, causal capability-shuffle interventions
+Partner **capability/profile** switching mid-episode (distinct from the
+implemented within-round goal reassignment), causal capability-shuffle interventions
 (distinct from the completed shuffled-label probe diagnostic),
 observation blindness / local visibility, communication conditions,
 larger capability grids, unseen-layout generalization, layout

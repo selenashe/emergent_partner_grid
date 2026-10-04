@@ -1,0 +1,63 @@
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+[main] compiling and running 1 seed(s)...
+[counterbalanced schedule] {'sampling_protocol': 'paired_counterbalanced_v1', 'seed': 2026, 'n_layouts': 1096, 'n_profiles': 24, 'rounds_per_episode': 20, 'passes_per_cycle': 5, 'episodes_per_profile_per_cycle': 274, 'rounds_per_cycle': 131520, 'visits_per_profile_layout_per_cycle': 5, 'packets': 125218, 'preallocated_episodes': 3005232, 'preallocated_rounds': 60104640, 'maximum_allocated_episode_imbalance_at_any_prefix': 1}
+[2026-10-03 13:43:44,230][absl][INFO] - A polynomial schedule was set with a non-positive `transition_steps` value; this results in a constant schedule with value `init_value`.
+[u    1] env=      256 rsucc=0.000 n_rounds=   84 ret=-0.600 len=60.0 ent(t0,t>=1)=(0.000,2.301) aL=-0.0029 vL=0.6727 initial=[red=0.51 blue=0.49] switch=0.440
+[main] training done in 23.7s
+[main] saved params (seed 0) -> /juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261003_203838/preflight/v2/mlp_diverse_influence/params.safetensors
+[main] saved resolved config -> /juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261003_203838/preflight/v2/mlp_diverse_influence/params_config.json
+[sampling audit] /juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261003_203838/preflight/v2/mlp_diverse_influence/params_sampling_audit.json
+[eval] train: layouts_dir=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261003_203838/corpus/layouts/train, 1 episodes/cap × 24 capability pairs...
+[eval] train: round_success_overall=0.000  (n_rounds=480)
+    cap=(1,4)  succ=0.000  n_rounds=20
+    cap=(1,7)  succ=0.000  n_rounds=20
+    cap=(1,8)  succ=0.000  n_rounds=20
+    cap=(1,9)  succ=0.000  n_rounds=20
+    cap=(2,4)  succ=0.000  n_rounds=20
+    cap=(2,7)  succ=0.000  n_rounds=20
+    cap=(2,8)  succ=0.000  n_rounds=20
+    cap=(2,9)  succ=0.000  n_rounds=20
+    cap=(3,4)  succ=0.000  n_rounds=20
+    cap=(3,7)  succ=0.000  n_rounds=20
+    cap=(3,8)  succ=0.000  n_rounds=20
+    cap=(3,9)  succ=0.000  n_rounds=20
+    cap=(4,1)  succ=0.000  n_rounds=20
+    cap=(4,2)  succ=0.000  n_rounds=20
+    cap=(4,3)  succ=0.000  n_rounds=20
+    cap=(7,1)  succ=0.000  n_rounds=20
+    cap=(7,2)  succ=0.000  n_rounds=20
+    cap=(7,3)  succ=0.000  n_rounds=20
+    cap=(8,1)  succ=0.000  n_rounds=20
+    cap=(8,2)  succ=0.000  n_rounds=20
+    cap=(8,3)  succ=0.000  n_rounds=20
+    cap=(9,1)  succ=0.000  n_rounds=20
+    cap=(9,2)  succ=0.000  n_rounds=20
+    cap=(9,3)  succ=0.000  n_rounds=20
+[eval] test: layouts_dir=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261003_203838/corpus/layouts/train, 1 episodes/cap × 22 capability pairs...
+[eval] test: round_success_overall=0.000  (n_rounds=440)
+    cap=(0,5)  succ=0.000  n_rounds=20
+    cap=(0,6)  succ=0.000  n_rounds=20
+    cap=(1,5)  succ=0.000  n_rounds=20
+    cap=(1,6)  succ=0.000  n_rounds=20
+    cap=(2,5)  succ=0.000  n_rounds=20
+    cap=(2,6)  succ=0.000  n_rounds=20
+    cap=(3,5)  succ=0.000  n_rounds=20
+    cap=(3,6)  succ=0.000  n_rounds=20
+    cap=(7,0)  succ=0.000  n_rounds=20
+    cap=(8,0)  succ=0.000  n_rounds=20
+    cap=(9,0)  succ=0.000  n_rounds=20
+    cap=(5,0)  succ=0.000  n_rounds=20
+    cap=(5,1)  succ=0.000  n_rounds=20
+    cap=(5,2)  succ=0.000  n_rounds=20
+    cap=(5,3)  succ=0.000  n_rounds=20
+    cap=(6,0)  succ=0.000  n_rounds=20
+    cap=(6,1)  succ=0.000  n_rounds=20
+    cap=(6,2)  succ=0.000  n_rounds=20
+    cap=(6,3)  succ=0.000  n_rounds=20
+    cap=(0,7)  succ=0.000  n_rounds=20
+    cap=(0,8)  succ=0.000  n_rounds=20
+    cap=(0,9)  succ=0.000  n_rounds=20
+[eval] wrote per-capability / per-round numbers -> /juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261003_203838/preflight/v2/mlp_diverse_influence/params_eval.json

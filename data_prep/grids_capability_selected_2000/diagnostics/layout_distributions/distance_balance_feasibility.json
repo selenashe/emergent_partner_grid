@@ -1,0 +1,112 @@
+{
+  "source_n_layouts": 2000,
+  "eligible_n_layouts": 1597,
+  "eligibility": "Both ego_to_red and ego_to_blue are in [1,8]",
+  "joint_counts_rows_red_columns_blue": [
+    [
+      0,
+      9,
+      23,
+      40,
+      39,
+      23,
+      36,
+      10
+    ],
+    [
+      21,
+      14,
+      38,
+      34,
+      31,
+      39,
+      26,
+      26
+    ],
+    [
+      24,
+      31,
+      29,
+      40,
+      30,
+      38,
+      28,
+      12
+    ],
+    [
+      31,
+      28,
+      40,
+      26,
+      29,
+      20,
+      27,
+      20
+    ],
+    [
+      42,
+      28,
+      27,
+      39,
+      24,
+      31,
+      13,
+      23
+    ],
+    [
+      22,
+      36,
+      33,
+      24,
+      19,
+      23,
+      30,
+      18
+    ],
+    [
+      25,
+      10,
+      37,
+      22,
+      14,
+      6,
+      21,
+      14
+    ],
+    [
+      16,
+      32,
+      11,
+      33,
+      15,
+      17,
+      16,
+      14
+    ]
+  ],
+  "red_available_by_distance_1_to_8": [
+    180,
+    229,
+    232,
+    221,
+    227,
+    205,
+    149,
+    154
+  ],
+  "blue_available_by_distance_1_to_8": [
+    181,
+    188,
+    238,
+    258,
+    201,
+    197,
+    197,
+    137
+  ],
+  "requested_per_distance": 150,
+  "requested_n_layouts": 1200,
+  "maximum_common_per_distance": 137,
+  "maximum_balanced_n_layouts": 1096,
+  "maximum_selectable_with_150_upper_caps": 1187
+}

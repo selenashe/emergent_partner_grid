@@ -10,7 +10,23 @@ import pandas as pd
 import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
-from analysis import representation_analysis as rep
+from eval import representation_analysis as rep
+
+
+def test_allocation_protocols_cannot_be_mixed(tmp_path):
+    paths = {name: tmp_path / f"{name}.h5" for name in ("train", "test")}
+    for path in paths.values():
+        with h5py.File(path, "w"):
+            pass
+    files = {("condition", 1): paths}
+    assert rep.validate_allocation_protocols(files) == "fixed_v1"
+    with h5py.File(paths["train"], "a") as handle:
+        handle.attrs["allocation_protocol"] = "online_v2"
+    with pytest.raises(ValueError, match="Mixed allocation protocols"):
+        rep.validate_allocation_protocols(files)
+    with h5py.File(paths["test"], "a") as handle:
+        handle.attrs["allocation_protocol"] = "online_v2"
+    assert rep.validate_allocation_protocols(files) == "online_v2"
 
 
 @pytest.fixture

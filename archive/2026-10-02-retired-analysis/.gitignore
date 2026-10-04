@@ -1,0 +1,5 @@
+# Every payload file in this historical archive was already tracked before
+# relocation. Keep those files visible to Git despite the root rules for
+# checkpoints, Hydra outputs, and logs. These exceptions apply only here.
+!*/
+!*

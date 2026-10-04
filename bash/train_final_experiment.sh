@@ -1,14 +1,15 @@
 #!/usr/bin/env bash
 #SBATCH --job-name=cg_capability
 #SBATCH --account=nlp
-#SBATCH --output=/juice6/u/jshe/emergent_partner_grid/logs/cg_cap_%j.out
-#SBATCH --error=/juice6/u/jshe/emergent_partner_grid/logs/cg_cap_%j.err
+#SBATCH --output=/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/cg_cap_%j.out
+#SBATCH --error=/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/cg_cap_%j.err
 #SBATCH --partition=sphinx
 #SBATCH --gres=gpu:1
 #SBATCH --constraint=80G
 #SBATCH --mem=32G
 #SBATCH --cpus-per-task=4
 #SBATCH --time=8:00:00
+#SBATCH --exclude=sphinx9
 # ---------------------------------------------------------------------------
 # CoordinationGrid final experiment launcher.
 #
@@ -25,8 +26,8 @@
 #   CONDITION=rnn_single_influence      -> partner-diversity control
 #   CONDITION=rnn_diverse_noinfluence   -> influence-pressure control
 #
-# The layout corpus is FIXED to dev/grids_capability_selected (1000
-# layouts, used for both training and evaluation). Training and test
+# The default corpus is data_prep/grids_capability_selected_balanced_1096
+# (1096 layouts, used for both training and evaluation). Training and test
 # capability populations are defined in
 # jaxmarl.environments.coordination_grid.capability_populations.
 #
@@ -40,10 +41,18 @@ set -euo pipefail
 source /nlp/scr/jshe/miniconda3/etc/profile.d/conda.sh
 conda activate emergent_partner_model
 
+# Match the evaluator's cuDNN settings after earlier convolution failures.
+export TF_CUDNN_USE_AUTOTUNE=0
+export TF_CUDNN_DETERMINISTIC=1
+export XLA_FLAGS="${XLA_FLAGS:+${XLA_FLAGS} }--xla_gpu_deterministic_ops=true"
+
 REPO_ROOT="${REPO_ROOT:-/juice6/u/jshe/emergent_partner_grid}"
 cd "${REPO_ROOT}" || exit 1
 
-mkdir -p "${REPO_ROOT}/logs" "${REPO_ROOT}/dev/train_logs"
+export PYTHONPATH="${REPO_ROOT}${PYTHONPATH:+:${PYTHONPATH}}"
+CHECKPOINT_DIR="${CHECKPOINT_DIR:-${REPO_ROOT}/train/train_logs/online_v2}"
+HYDRA_OUTPUT_DIR="${HYDRA_OUTPUT_DIR:-${REPO_ROOT}/train/hydra_outputs}"
+mkdir -p "${CHECKPOINT_DIR}" "${HYDRA_OUTPUT_DIR}"
 
 # --- Condition preset -------------------------------------------------------
 CONDITION="${CONDITION:-rnn_diverse_influence}"
@@ -77,11 +86,11 @@ SCHEDULE_SEED="${SCHEDULE_SEED:-2026}"
 N_EPS_TOTAL="${N_EPS_TOTAL:-131072}"
 EVAL_EPISODES_PER_CAPABILITY="${EVAL_EPISODES_PER_CAPABILITY:-20}"
 
-LAYOUTS_DIR="${LAYOUTS_DIR:-${REPO_ROOT}/dev/grids_capability_selected/layouts/train}"
+LAYOUTS_DIR="${LAYOUTS_DIR:-${REPO_ROOT}/data_prep/grids_capability_selected_balanced_1096/layouts/train}"
 N_LAYOUTS="$(ls -1 "${LAYOUTS_DIR}"/*.json 2>/dev/null | wc -l)"
 
 TAG="${TAG:-${CONDITION}_seed${SEED}_$(date +%Y%m%d_%H%M%S)}"
-SAVE_PARAMS_PATH="${REPO_ROOT}/dev/train_logs/${TAG}.safetensors"
+SAVE_PARAMS_PATH="${CHECKPOINT_DIR}/${TAG}.safetensors"
 
 WANDB_MODE="${WANDB_MODE:-disabled}"
 WANDB_ENTITY="${WANDB_ENTITY:-}"
@@ -108,12 +117,17 @@ echo "  GPU visible:"
 nvidia-smi -L 2>/dev/null || echo "    (no nvidia-smi)"
 echo
 
-python -u baselines/IPPO/ippo_rnn_coordination_grid.py \
+TRAIN_SCRIPT="train/ippo_rnn_coordination_grid.py"
+if [[ ! -f "${TRAIN_SCRIPT}" ]]; then
+    TRAIN_SCRIPT="baselines/IPPO/ippo_rnn_coordination_grid.py"  # original frozen snapshots
+fi
+python -u "${TRAIN_SCRIPT}" \
     SEED="${SEED}" \
     NUM_SEEDS="${NUM_SEEDS}" \
     MODEL_TYPE="${MODEL_TYPE}" \
     PARTNER_REGIME="${PARTNER_REGIME}" \
     INFLUENCE="${INFLUENCE}" \
+    ALLOCATION_PROTOCOL="${ALLOCATION_PROTOCOL:-online_v2}" \
     ENV_KWARGS.layouts_dir="${LAYOUTS_DIR}" \
     ENV_KWARGS.rounds_per_episode="${ROUNDS_PER_EPISODE}" \
     ENV_KWARGS.max_steps="${MAX_STEPS}" \
@@ -133,6 +147,7 @@ python -u baselines/IPPO/ippo_rnn_coordination_grid.py \
     WANDB_MODE="${WANDB_MODE}" \
     ENTITY="${WANDB_ENTITY}" \
     PROJECT="${WANDB_PROJECT}" \
+    hydra.run.dir="${HYDRA_OUTPUT_DIR}/${TAG}" \
     +STDOUT_LOG=true +STDOUT_SUMMARY=true
 
 echo

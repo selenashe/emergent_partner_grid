@@ -1,0 +1,997 @@
+{
+  "created_at_utc": "2026-10-03T20:31:56.428411+00:00",
+  "repository_root": "/juice6/u/jshe/emergent_partner_grid",
+  "records": [
+    {
+      "action": "move",
+      "source": "dev/grids_capability_selected",
+      "destination": "data_prep/grids_capability_selected",
+      "files": 2013,
+      "bytes": 14203004,
+      "verified": "same inode and size after rename"
+    },
+    {
+      "action": "move",
+      "source": "dev/grids_capability_selected_2000",
+      "destination": "data_prep/grids_capability_selected_2000",
+      "files": 2042,
+      "bytes": 9910632,
+      "verified": "same inode and size after rename"
+    },
+    {
+      "action": "move",
+      "source": "dev/grids_capability_selected_balanced_1096",
+      "destination": "data_prep/grids_capability_selected_balanced_1096",
+      "files": 2241,
+      "bytes": 18015033,
+      "verified": "same inode and size after rename"
+    },
+    {
+      "action": "move",
+      "source": "dev/env_generator.py",
+      "destination": "data_prep/env_generator.py",
+      "files": 1,
+      "bytes": 24376,
+      "verified": "same inode and size after rename"
+    },
+    {
+      "action": "move",
+      "source": "dev/capability_selection.py",
+      "destination": "data_prep/capability_selection.py",
+      "files": 1,
+      "bytes": 23917,
+      "verified": "same inode and size after rename"
+    },
+    {
+      "action": "move",
+      "source": "dev/build_final_corpus.py",
+      "destination": "data_prep/build_final_corpus.py",
+      "files": 1,
+      "bytes": 41812,
+      "verified": "same inode and size after rename"
+    },
+    {
+      "action": "move",
+      "source": "dev/capability_validation.py",
+      "destination": "data_prep/capability_validation.py",
+      "files": 1,
+      "bytes": 12520,
+      "verified": "same inode and size after rename"
+    },
+    {
+      "action": "move",
+      "source": "dev/balance_ego_distances.py",
+      "destination": "data_prep/balance_ego_distances.py",
+      "files": 1,
+      "bytes": 12079,
+      "verified": "same inode and size after rename"
+    },
+    {
+      "action": "move",
+      "source": "dev/plot_layout_distributions.py",
+      "destination": "data_prep/plot_layout_distributions.py",
+      "files": 1,
+      "bytes": 12124,
+      "verified": "same inode and size after rename"
+    },
+    {
+      "action": "move",
+      "source": "dev/render_layout_corpus.py",
+      "destination": "data_prep/render_layout_corpus.py",
+      "files": 1,
+      "bytes": 4895,
+      "verified": "same inode and size after rename"
+    },
+    {
+      "action": "move",
+      "source": "dev/test_capability_selection.py",
+      "destination": "tests/data_prep/test_capability_selection.py",
+      "files": 1,
+      "bytes": 9459,
+      "verified": "same inode and size after rename"
+    },
+    {
+      "action": "move",
+      "source": "dev/test_capability_env.py",
+      "destination": "tests/coordination_grid/test_capability_env.py",
+      "files": 1,
+      "bytes": 25092,
+      "verified": "same inode and size after rename"
+    },
+    {
+      "action": "move",
+      "source": "dev/train_logs",
+      "destination": "train/train_logs",
+      "files": 322,
+      "bytes": 95178161,
+      "verified": "same inode and size after rename"
+    },
+    {
+      "action": "move",
+      "source": "dev/eval_out",
+      "destination": "eval/eval_out",
+      "files": 241,
+      "bytes": 62709577210,
+      "verified": "same inode and size after rename"
+    },
+    {
+      "action": "move",
+      "source": "dev/run_snapshots",
+      "destination": "train/run_snapshots",
+      "files": 2816,
+      "bytes": 295971788,
+      "verified": "same inode and size after rename"
+    },
+    {
+      "action": "move",
+      "source": "baselines/IPPO/ippo_rnn_coordination_grid.py",
+      "destination": "train/ippo_rnn_coordination_grid.py",
+      "files": 1,
+      "bytes": 54095,
+      "verified": "same inode and size after rename"
+    },
+    {
+      "action": "move",
+      "source": "baselines/IPPO/counterbalanced_scheduler.py",
+      "destination": "train/counterbalanced_scheduler.py",
+      "files": 1,
+      "bytes": 9956,
+      "verified": "same inode and size after rename"
+    },
+    {
+      "action": "move",
+      "source": "baselines/IPPO/sweep_scheduler.py",
+      "destination": "train/episode_scheduler.py",
+      "files": 1,
+      "bytes": 5549,
+      "verified": "same inode and size after rename"
+    },
+    {
+      "action": "move",
+      "source": "baselines/IPPO/config/ippo_coordination_grid.yaml",
+      "destination": "train/config/ippo_coordination_grid.yaml",
+      "files": 1,
+      "bytes": 2875,
+      "verified": "same inode and size after rename"
+    },
+    {
+      "action": "move",
+      "source": "analysis/plot_training_curves.py",
+      "destination": "train/plot_training_curves.py",
+      "files": 1,
+      "bytes": 13719,
+      "verified": "same inode and size after rename"
+    },
+    {
+      "action": "move",
+      "source": "analysis/audit_counterbalanced_results.py",
+      "destination": "train/audit_counterbalanced_results.py",
+      "files": 1,
+      "bytes": 8985,
+      "verified": "same inode and size after rename"
+    },
+    {
+      "action": "move",
+      "source": "analysis/training_curves",
+      "destination": "train/training_curves",
+      "files": 9,
+      "bytes": 5539174,
+      "verified": "same inode and size after rename"
+    },
+    {
+      "action": "move",
+      "source": "analysis/protocol_comparison",
+      "destination": "eval/protocol_comparison",
+      "files": 21,
+      "bytes": 1431483,
+      "verified": "same inode and size after rename"
+    },
+    {
+      "action": "move",
+      "source": "analysis/representation_results",
+      "destination": "eval/representation_results",
+      "files": 47,
+      "bytes": 13553032,
+      "verified": "same inode and size after rename"
+    },
+    {
+      "action": "move",
+      "source": "analysis/compare_allocation_protocols.py",
+      "destination": "eval/compare_allocation_protocols.py",
+      "files": 1,
+      "bytes": 9342,
+      "verified": "same inode and size after rename"
+    },
+    {
+      "action": "move",
+      "source": "analysis/__init__.py",
+      "destination": "eval/__init__.py",
+      "files": 1,
+      "bytes": 0,
+      "verified": "same inode and size after rename"
+    },
+    {
+      "action": "move",
+      "source": "analysis/evaluate_partner_modelling.py",
+      "destination": "eval/evaluate_partner_modelling.py",
+      "files": 1,
+      "bytes": 19812,
+      "verified": "same inode and size after rename"
+    },
+    {
+      "action": "move",
+      "source": "analysis/representation_analysis.py",
+      "destination": "eval/representation_analysis.py",
+      "files": 1,
+      "bytes": 67552,
+      "verified": "same inode and size after rename"
+    },
+    {
+      "action": "move",
+      "source": "bash/validate_counterbalanced_training.py",
+      "destination": "train/validate_counterbalanced_training.py",
+      "files": 1,
+      "bytes": 5445,
+      "verified": "same inode and size after rename"
+    },
+    {
+      "action": "move",
+      "source": "outputs",
+      "destination": "train/hydra_outputs",
+      "files": 132,
+      "bytes": 221714,
+      "verified": "same inode and size after rename"
+    },
+    {
+      "action": "move",
+      "source": "logs",
+      "destination": "train/slurm_logs",
+      "files": 208,
+      "bytes": 20707017,
+      "verified": "same inode and size after rename"
+    },
+    {
+      "action": "move",
+      "source": "train/slurm_logs/cg_eval_all_17697386.out",
+      "destination": "eval/slurm_logs/cg_eval_all_17697386.out",
+      "files": 1,
+      "bytes": 9128,
+      "verified": "same inode and size after rename"
+    },
+    {
+      "action": "move",
+      "source": "train/slurm_logs/cg_eval_all_17667593.err",
+      "destination": "eval/slurm_logs/cg_eval_all_17667593.err",
+      "files": 1,
+      "bytes": 7500,
+      "verified": "same inode and size after rename"
+    },
+    {
+      "action": "move",
+      "source": "train/slurm_logs/sbatch_relaunch3_20260930_113347.txt",
+      "destination": "train/manifests/sbatch_relaunch3_20260930_113347.txt",
+      "files": 1,
+      "bytes": 248,
+      "verified": "same inode and size after rename"
+    },
+    {
+      "action": "move",
+      "source": "train/slurm_logs/sbatch_online_v2_20261001_235402.json",
+      "destination": "train/manifests/sbatch_online_v2_20261001_235402.json",
+      "files": 1,
+      "bytes": 24905,
+      "verified": "same inode and size after rename"
+    },
+    {
+      "action": "move",
+      "source": "train/slurm_logs/sbatch_relaunch_20260929_191709.txt",
+      "destination": "train/manifests/sbatch_relaunch_20260929_191709.txt",
+      "files": 1,
+      "bytes": 372,
+      "verified": "same inode and size after rename"
+    },
+    {
+      "action": "move",
+      "source": "train/slurm_logs/cg_eval_all_17697385.err",
+      "destination": "eval/slurm_logs/cg_eval_all_17697385.err",
+      "files": 1,
+      "bytes": 10000,
+      "verified": "same inode and size after rename"
+    },
+    {
+      "action": "move",
+      "source": "train/slurm_logs/cg_eval_all_17688037.err",
+      "destination": "eval/slurm_logs/cg_eval_all_17688037.err",
+      "files": 1,
+      "bytes": 10000,
+      "verified": "same inode and size after rename"
+    },
+    {
+      "action": "move",
+      "source": "train/slurm_logs/cg_eval_all_17669378.err",
+      "destination": "eval/slurm_logs/cg_eval_all_17669378.err",
+      "files": 1,
+      "bytes": 2500,
+      "verified": "same inode and size after rename"
+    },
+    {
+      "action": "move",
+      "source": "train/slurm_logs/sbatch_noinfluence_20260930_134719.txt",
+      "destination": "train/manifests/sbatch_noinfluence_20260930_134719.txt",
+      "files": 1,
+      "bytes": 320,
+      "verified": "same inode and size after rename"
+    },
+    {
+      "action": "move",
+      "source": "train/slurm_logs/cg_eval_all_17697386.err",
+      "destination": "eval/slurm_logs/cg_eval_all_17697386.err",
+      "files": 1,
+      "bytes": 10000,
+      "verified": "same inode and size after rename"
+    },
+    {
+      "action": "move",
+      "source": "train/slurm_logs/cg_eval_all_17667593.out",
+      "destination": "eval/slurm_logs/cg_eval_all_17667593.out",
+      "files": 1,
+      "bytes": 5212,
+      "verified": "same inode and size after rename"
+    },
+    {
+      "action": "move",
+      "source": "train/slurm_logs/cg_eval_all_17669378.out",
+      "destination": "eval/slurm_logs/cg_eval_all_17669378.out",
+      "files": 1,
+      "bytes": 2592,
+      "verified": "same inode and size after rename"
+    },
+    {
+      "action": "move",
+      "source": "train/slurm_logs/sbatch_relaunch2_20260929_230224.txt",
+      "destination": "train/manifests/sbatch_relaunch2_20260929_230224.txt",
+      "files": 1,
+      "bytes": 310,
+      "verified": "same inode and size after rename"
+    },
+    {
+      "action": "move",
+      "source": "train/slurm_logs/sbatch_launch_20260929_164644.txt",
+      "destination": "train/manifests/sbatch_launch_20260929_164644.txt",
+      "files": 1,
+      "bytes": 925,
+      "verified": "same inode and size after rename"
+    },
+    {
+      "action": "move",
+      "source": "train/slurm_logs/sbatch_counterbalanced1096_20261002_235609.json",
+      "destination": "train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+      "files": 1,
+      "bytes": 108052,
+      "verified": "same inode and size after rename"
+    },
+    {
+      "action": "move",
+      "source": "train/slurm_logs/cg_eval_all_17697385.out",
+      "destination": "eval/slurm_logs/cg_eval_all_17697385.out",
+      "files": 1,
+      "bytes": 8847,
+      "verified": "same inode and size after rename"
+    },
+    {
+      "action": "move",
+      "source": "train/slurm_logs/cg_eval_all_17688037.out",
+      "destination": "eval/slurm_logs/cg_eval_all_17688037.out",
+      "files": 1,
+      "bytes": 8767,
+      "verified": "same inode and size after rename"
+    },
+    {
+      "action": "move",
+      "source": "train/slurm_logs/sbatch_online_v2_balanced1096_20261002_022924.json",
+      "destination": "train/manifests/sbatch_online_v2_balanced1096_20261002_022924.json",
+      "files": 1,
+      "bytes": 54711,
+      "verified": "same inode and size after rename"
+    },
+    {
+      "action": "move",
+      "source": "eval/protocol_comparison/counterbalanced1096_20261002_235609/sampling_verification.json",
+      "destination": "train/sampling_audits/counterbalanced1096_20261002_235609/sampling_verification.json",
+      "files": 1,
+      "bytes": 53969,
+      "verified": "same inode and size after rename"
+    },
+    {
+      "action": "move",
+      "source": "eval/protocol_comparison/counterbalanced1096_20261002_235609/actual_exposure_by_run.csv",
+      "destination": "train/sampling_audits/counterbalanced1096_20261002_235609/actual_exposure_by_run.csv",
+      "files": 1,
+      "bytes": 16081,
+      "verified": "same inode and size after rename"
+    },
+    {
+      "action": "move",
+      "source": "eval/protocol_comparison/counterbalanced1096_20261002_235609/actual_exposure_by_profile.csv",
+      "destination": "train/sampling_audits/counterbalanced1096_20261002_235609/actual_exposure_by_profile.csv",
+      "files": 1,
+      "bytes": 57784,
+      "verified": "same inode and size after rename"
+    },
+    {
+      "action": "delete",
+      "source": "baselines/__init__.py",
+      "bytes": 0,
+      "reason": "Unused non-CoordinationGrid baseline or generated cache; current trainer, config and samplers have been relocated."
+    },
+    {
+      "action": "delete",
+      "source": "baselines/QLearning/iql_rnn.py",
+      "bytes": 25523,
+      "reason": "Unused non-CoordinationGrid baseline or generated cache; current trainer, config and samplers have been relocated."
+    },
+    {
+      "action": "delete",
+      "source": "baselines/QLearning/pqn_vdn_ff.py",
+      "bytes": 24140,
+      "reason": "Unused non-CoordinationGrid baseline or generated cache; current trainer, config and samplers have been relocated."
+    },
+    {
+      "action": "delete",
+      "source": "baselines/QLearning/vdn_rnn.py",
+      "bytes": 24709,
+      "reason": "Unused non-CoordinationGrid baseline or generated cache; current trainer, config and samplers have been relocated."
+    },
+    {
+      "action": "delete",
+      "source": "baselines/QLearning/vdn_ff.py",
+      "bytes": 19408,
+      "reason": "Unused non-CoordinationGrid baseline or generated cache; current trainer, config and samplers have been relocated."
+    },
+    {
+      "action": "delete",
+      "source": "baselines/QLearning/README.md",
+      "bytes": 3454,
+      "reason": "Unused non-CoordinationGrid baseline or generated cache; current trainer, config and samplers have been relocated."
+    },
+    {
+      "action": "delete",
+      "source": "baselines/QLearning/transf_qmix.py",
+      "bytes": 45161,
+      "reason": "Unused non-CoordinationGrid baseline or generated cache; current trainer, config and samplers have been relocated."
+    },
+    {
+      "action": "delete",
+      "source": "baselines/QLearning/shaq.py",
+      "bytes": 40397,
+      "reason": "Unused non-CoordinationGrid baseline or generated cache; current trainer, config and samplers have been relocated."
+    },
+    {
+      "action": "delete",
+      "source": "baselines/QLearning/qmix_rnn.py",
+      "bytes": 27759,
+      "reason": "Unused non-CoordinationGrid baseline or generated cache; current trainer, config and samplers have been relocated."
+    },
+    {
+      "action": "delete",
+      "source": "baselines/QLearning/pqn_vdn_rnn.py",
+      "bytes": 29611,
+      "reason": "Unused non-CoordinationGrid baseline or generated cache; current trainer, config and samplers have been relocated."
+    },
+    {
+      "action": "delete",
+      "source": "baselines/__pycache__/__init__.cpython-310.pyc",
+      "bytes": 151,
+      "reason": "Unused non-CoordinationGrid baseline or generated cache; current trainer, config and samplers have been relocated."
+    },
+    {
+      "action": "delete",
+      "source": "baselines/__pycache__/__init__.cpython-313.pyc",
+      "bytes": 155,
+      "reason": "Unused non-CoordinationGrid baseline or generated cache; current trainer, config and samplers have been relocated."
+    },
+    {
+      "action": "delete",
+      "source": "baselines/__pycache__/__init__.cpython-312.pyc",
+      "bytes": 155,
+      "reason": "Unused non-CoordinationGrid baseline or generated cache; current trainer, config and samplers have been relocated."
+    },
+    {
+      "action": "delete",
+      "source": "baselines/MAPPO/mappo_ff_hanabi.py",
+      "bytes": 19129,
+      "reason": "Unused non-CoordinationGrid baseline or generated cache; current trainer, config and samplers have been relocated."
+    },
+    {
+      "action": "delete",
+      "source": "baselines/MAPPO/README.md",
+      "bytes": 798,
+      "reason": "Unused non-CoordinationGrid baseline or generated cache; current trainer, config and samplers have been relocated."
+    },
+    {
+      "action": "delete",
+      "source": "baselines/MAPPO/mappo_rnn_hanabi.py",
+      "bytes": 22847,
+      "reason": "Unused non-CoordinationGrid baseline or generated cache; current trainer, config and samplers have been relocated."
+    },
+    {
+      "action": "delete",
+      "source": "baselines/MAPPO/mappo_rnn_smax.py",
+      "bytes": 23533,
+      "reason": "Unused non-CoordinationGrid baseline or generated cache; current trainer, config and samplers have been relocated."
+    },
+    {
+      "action": "delete",
+      "source": "baselines/MAPPO/mappo_rnn_mpe.py",
+      "bytes": 21440,
+      "reason": "Unused non-CoordinationGrid baseline or generated cache; current trainer, config and samplers have been relocated."
+    },
+    {
+      "action": "delete",
+      "source": "baselines/IPPO/__init__.py",
+      "bytes": 0,
+      "reason": "Unused non-CoordinationGrid baseline or generated cache; current trainer, config and samplers have been relocated."
+    },
+    {
+      "action": "delete",
+      "source": "baselines/IPPO/README.md",
+      "bytes": 721,
+      "reason": "Unused non-CoordinationGrid baseline or generated cache; current trainer, config and samplers have been relocated."
+    },
+    {
+      "action": "delete",
+      "source": "baselines/IPPO/output/0000.parquet",
+      "bytes": 261427,
+      "reason": "Unused non-CoordinationGrid baseline or generated cache; current trainer, config and samplers have been relocated."
+    },
+    {
+      "action": "delete",
+      "source": "baselines/IPPO/config/ippo_rnn_mpe.yaml",
+      "bytes": 426,
+      "reason": "Unused non-CoordinationGrid baseline or generated cache; current trainer, config and samplers have been relocated."
+    },
+    {
+      "action": "delete",
+      "source": "baselines/IPPO/config/ippo_ff_switch_riddle.yaml",
+      "bytes": 410,
+      "reason": "Unused non-CoordinationGrid baseline or generated cache; current trainer, config and samplers have been relocated."
+    },
+    {
+      "action": "delete",
+      "source": "baselines/IPPO/config/ippo_ff_hanabi.yaml",
+      "bytes": 335,
+      "reason": "Unused non-CoordinationGrid baseline or generated cache; current trainer, config and samplers have been relocated."
+    },
+    {
+      "action": "delete",
+      "source": "baselines/IPPO/config/ippo_ff_mabrax.yaml",
+      "bytes": 399,
+      "reason": "Unused non-CoordinationGrid baseline or generated cache; current trainer, config and samplers have been relocated."
+    },
+    {
+      "action": "delete",
+      "source": "baselines/IPPO/config/ippo_ff_mpe_facmac.yaml",
+      "bytes": 351,
+      "reason": "Unused non-CoordinationGrid baseline or generated cache; current trainer, config and samplers have been relocated."
+    },
+    {
+      "action": "delete",
+      "source": "baselines/IPPO/config/ippo_rnn_smax.yaml",
+      "bytes": 543,
+      "reason": "Unused non-CoordinationGrid baseline or generated cache; current trainer, config and samplers have been relocated."
+    },
+    {
+      "action": "delete",
+      "source": "baselines/IPPO/config/ippo_ff_mpe.yaml",
+      "bytes": 569,
+      "reason": "Unused non-CoordinationGrid baseline or generated cache; current trainer, config and samplers have been relocated."
+    },
+    {
+      "action": "delete",
+      "source": "baselines/IPPO/config/ippo_rnn_hanabi.yaml",
+      "bytes": 408,
+      "reason": "Unused non-CoordinationGrid baseline or generated cache; current trainer, config and samplers have been relocated."
+    },
+    {
+      "action": "delete",
+      "source": "baselines/IPPO/__pycache__/ippo_rnn_coordination_grid.cpython-310.pyc",
+      "bytes": 28423,
+      "reason": "Unused non-CoordinationGrid baseline or generated cache; current trainer, config and samplers have been relocated."
+    },
+    {
+      "action": "delete",
+      "source": "baselines/IPPO/__pycache__/__init__.cpython-310.pyc",
+      "bytes": 156,
+      "reason": "Unused non-CoordinationGrid baseline or generated cache; current trainer, config and samplers have been relocated."
+    },
+    {
+      "action": "delete",
+      "source": "baselines/IPPO/__pycache__/sweep_scheduler.cpython-310.pyc",
+      "bytes": 4968,
+      "reason": "Unused non-CoordinationGrid baseline or generated cache; current trainer, config and samplers have been relocated."
+    },
+    {
+      "action": "delete",
+      "source": "baselines/IPPO/__pycache__/sweep_scheduler.cpython-313.pyc",
+      "bytes": 11560,
+      "reason": "Unused non-CoordinationGrid baseline or generated cache; current trainer, config and samplers have been relocated."
+    },
+    {
+      "action": "delete",
+      "source": "baselines/IPPO/__pycache__/ippo_rnn_coordination_grid.cpython-313.pyc",
+      "bytes": 59973,
+      "reason": "Unused non-CoordinationGrid baseline or generated cache; current trainer, config and samplers have been relocated."
+    },
+    {
+      "action": "delete",
+      "source": "baselines/IPPO/__pycache__/__init__.cpython-313.pyc",
+      "bytes": 160,
+      "reason": "Unused non-CoordinationGrid baseline or generated cache; current trainer, config and samplers have been relocated."
+    },
+    {
+      "action": "delete",
+      "source": "baselines/IPPO/__pycache__/sweep_scheduler.cpython-312.pyc",
+      "bytes": 11683,
+      "reason": "Unused non-CoordinationGrid baseline or generated cache; current trainer, config and samplers have been relocated."
+    },
+    {
+      "action": "delete",
+      "source": "baselines/IPPO/__pycache__/__init__.cpython-312.pyc",
+      "bytes": 160,
+      "reason": "Unused non-CoordinationGrid baseline or generated cache; current trainer, config and samplers have been relocated."
+    },
+    {
+      "action": "delete",
+      "source": "baselines/MAPPO/config/mappo_homogenous_rnn_mpe.yaml",
+      "bytes": 458,
+      "reason": "Unused non-CoordinationGrid baseline or generated cache; current trainer, config and samplers have been relocated."
+    },
+    {
+      "action": "delete",
+      "source": "baselines/MAPPO/config/mappo_homogenous_ff_hanabi.yaml",
+      "bytes": 428,
+      "reason": "Unused non-CoordinationGrid baseline or generated cache; current trainer, config and samplers have been relocated."
+    },
+    {
+      "action": "delete",
+      "source": "baselines/MAPPO/config/mappo_homogenous_rnn_hanabi.yaml",
+      "bytes": 494,
+      "reason": "Unused non-CoordinationGrid baseline or generated cache; current trainer, config and samplers have been relocated."
+    },
+    {
+      "action": "delete",
+      "source": "baselines/MAPPO/config/mappo_homogenous_rnn_smax.yaml",
+      "bytes": 569,
+      "reason": "Unused non-CoordinationGrid baseline or generated cache; current trainer, config and samplers have been relocated."
+    },
+    {
+      "action": "delete",
+      "source": "baselines/QLearning/config/config.yaml",
+      "bytes": 320,
+      "reason": "Unused non-CoordinationGrid baseline or generated cache; current trainer, config and samplers have been relocated."
+    },
+    {
+      "action": "delete",
+      "source": "baselines/QLearning/utils/fast_attention.py",
+      "bytes": 26809,
+      "reason": "Unused non-CoordinationGrid baseline or generated cache; current trainer, config and samplers have been relocated."
+    },
+    {
+      "action": "delete",
+      "source": "baselines/QLearning/config/alg/ql_rnn_smax.yaml",
+      "bytes": 930,
+      "reason": "Unused non-CoordinationGrid baseline or generated cache; current trainer, config and samplers have been relocated."
+    },
+    {
+      "action": "delete",
+      "source": "baselines/QLearning/config/alg/shaq_mpe.yaml",
+      "bytes": 678,
+      "reason": "Unused non-CoordinationGrid baseline or generated cache; current trainer, config and samplers have been relocated."
+    },
+    {
+      "action": "delete",
+      "source": "baselines/QLearning/config/alg/pqn_vdn_rnn_smax.yaml",
+      "bytes": 874,
+      "reason": "Unused non-CoordinationGrid baseline or generated cache; current trainer, config and samplers have been relocated."
+    },
+    {
+      "action": "delete",
+      "source": "baselines/QLearning/config/alg/vdn_ff_mpe.yaml",
+      "bytes": 582,
+      "reason": "Unused non-CoordinationGrid baseline or generated cache; current trainer, config and samplers have been relocated."
+    },
+    {
+      "action": "delete",
+      "source": "baselines/QLearning/config/alg/transf_qmix_mpe.yaml",
+      "bytes": 817,
+      "reason": "Unused non-CoordinationGrid baseline or generated cache; current trainer, config and samplers have been relocated."
+    },
+    {
+      "action": "delete",
+      "source": "baselines/QLearning/config/alg/shaq_smax.yaml",
+      "bytes": 718,
+      "reason": "Unused non-CoordinationGrid baseline or generated cache; current trainer, config and samplers have been relocated."
+    },
+    {
+      "action": "delete",
+      "source": "baselines/QLearning/config/alg/pqn_vdn_ff_mpe.yaml",
+      "bytes": 764,
+      "reason": "Unused non-CoordinationGrid baseline or generated cache; current trainer, config and samplers have been relocated."
+    },
+    {
+      "action": "delete",
+      "source": "baselines/QLearning/config/alg/pqn_vdn_rnn_mpe.yaml",
+      "bytes": 859,
+      "reason": "Unused non-CoordinationGrid baseline or generated cache; current trainer, config and samplers have been relocated."
+    },
+    {
+      "action": "delete",
+      "source": "baselines/QLearning/config/alg/pqn_vdn_ff_hanabi.yaml",
+      "bytes": 710,
+      "reason": "Unused non-CoordinationGrid baseline or generated cache; current trainer, config and samplers have been relocated."
+    },
+    {
+      "action": "delete",
+      "source": "baselines/QLearning/config/alg/transf_qmix_smax.yaml",
+      "bytes": 1285,
+      "reason": "Unused non-CoordinationGrid baseline or generated cache; current trainer, config and samplers have been relocated."
+    },
+    {
+      "action": "delete",
+      "source": "baselines/QLearning/config/alg/ql_rnn_mpe.yaml",
+      "bytes": 881,
+      "reason": "Unused non-CoordinationGrid baseline or generated cache; current trainer, config and samplers have been relocated."
+    },
+    {
+      "action": "delete",
+      "source": "tests/baselines/test_ippo_mabrax.py",
+      "bytes": 432,
+      "reason": "Test targets a deleted, unrelated baseline."
+    },
+    {
+      "action": "delete",
+      "source": "tests/baselines/test_mappo_smax.py",
+      "bytes": 441,
+      "reason": "Test targets a deleted, unrelated baseline."
+    },
+    {
+      "action": "delete",
+      "source": "tests/baselines/test_qmix_mpe.py",
+      "bytes": 463,
+      "reason": "Test targets a deleted, unrelated baseline."
+    },
+    {
+      "action": "delete",
+      "source": "config.txt",
+      "bytes": 90,
+      "reason": "Unused Overcooked script pointer; target script is absent and current launchers do not read this file."
+    },
+    {
+      "action": "delete",
+      "source": "archive/2026-10-02-retired-analysis/dev/run_sweep.py",
+      "bytes": 9716,
+      "reason": "Retired stage A-D code/output or generator-sensitivity run_sweep.py; no current experiment dependency."
+    },
+    {
+      "action": "delete",
+      "source": "archive/2026-10-02-retired-analysis/dev/diagnose_stage_b.py",
+      "bytes": 15265,
+      "reason": "Retired stage A-D code/output or generator-sensitivity run_sweep.py; no current experiment dependency."
+    },
+    {
+      "action": "delete",
+      "source": "archive/2026-10-02-retired-analysis/bash/train_stage_cd.sh",
+      "bytes": 325,
+      "reason": "Retired stage A-D code/output or generator-sensitivity run_sweep.py; no current experiment dependency."
+    },
+    {
+      "action": "delete",
+      "source": "archive/2026-10-02-retired-analysis/bash/train_stage_b.sh",
+      "bytes": 325,
+      "reason": "Retired stage A-D code/output or generator-sensitivity run_sweep.py; no current experiment dependency."
+    },
+    {
+      "action": "delete",
+      "source": "archive/2026-10-02-retired-analysis/logs/cg_stage_b_17586190.out",
+      "bytes": 504605,
+      "reason": "Retired stage A-D code/output or generator-sensitivity run_sweep.py; no current experiment dependency."
+    },
+    {
+      "action": "delete",
+      "source": "archive/2026-10-02-retired-analysis/logs/cg_stage_b_17586980.err",
+      "bytes": 500,
+      "reason": "Retired stage A-D code/output or generator-sensitivity run_sweep.py; no current experiment dependency."
+    },
+    {
+      "action": "delete",
+      "source": "archive/2026-10-02-retired-analysis/logs/cg_stage_b_17588065.err",
+      "bytes": 1453,
+      "reason": "Retired stage A-D code/output or generator-sensitivity run_sweep.py; no current experiment dependency."
+    },
+    {
+      "action": "delete",
+      "source": "archive/2026-10-02-retired-analysis/logs/cg_stage_cd_17591636.out",
+      "bytes": 499773,
+      "reason": "Retired stage A-D code/output or generator-sensitivity run_sweep.py; no current experiment dependency."
+    },
+    {
+      "action": "delete",
+      "source": "archive/2026-10-02-retired-analysis/logs/cg_stage_cd_17588786.err",
+      "bytes": 500,
+      "reason": "Retired stage A-D code/output or generator-sensitivity run_sweep.py; no current experiment dependency."
+    },
+    {
+      "action": "delete",
+      "source": "archive/2026-10-02-retired-analysis/logs/cg_stage_b_17586190.err",
+      "bytes": 500,
+      "reason": "Retired stage A-D code/output or generator-sensitivity run_sweep.py; no current experiment dependency."
+    },
+    {
+      "action": "delete",
+      "source": "archive/2026-10-02-retired-analysis/logs/cg_stage_cd_17588786.out",
+      "bytes": 499736,
+      "reason": "Retired stage A-D code/output or generator-sensitivity run_sweep.py; no current experiment dependency."
+    },
+    {
+      "action": "delete",
+      "source": "archive/2026-10-02-retired-analysis/logs/cg_stage_b_17586980.out",
+      "bytes": 505031,
+      "reason": "Retired stage A-D code/output or generator-sensitivity run_sweep.py; no current experiment dependency."
+    },
+    {
+      "action": "delete",
+      "source": "archive/2026-10-02-retired-analysis/logs/cg_stage_cd_17591636.err",
+      "bytes": 500,
+      "reason": "Retired stage A-D code/output or generator-sensitivity run_sweep.py; no current experiment dependency."
+    },
+    {
+      "action": "delete",
+      "source": "archive/2026-10-02-retired-analysis/logs/cg_stage_b_17588065.out",
+      "bytes": 590367,
+      "reason": "Retired stage A-D code/output or generator-sensitivity run_sweep.py; no current experiment dependency."
+    },
+    {
+      "action": "delete",
+      "source": "archive/2026-10-02-retired-analysis/dev/train_logs/stage_b_z1.0_seed1_20260924_154645_eval.json",
+      "bytes": 12884,
+      "reason": "Retired stage A-D code/output or generator-sensitivity run_sweep.py; no current experiment dependency."
+    },
+    {
+      "action": "delete",
+      "source": "archive/2026-10-02-retired-analysis/dev/train_logs/stage_cd_causal_memory.json",
+      "bytes": 34410,
+      "reason": "Retired stage A-D code/output or generator-sensitivity run_sweep.py; no current experiment dependency."
+    },
+    {
+      "action": "delete",
+      "source": "archive/2026-10-02-retired-analysis/dev/train_logs/stage_b_z1.0_seed1_20260924_134017.safetensors",
+      "bytes": 1113088,
+      "reason": "Retired stage A-D code/output or generator-sensitivity run_sweep.py; no current experiment dependency."
+    },
+    {
+      "action": "delete",
+      "source": "archive/2026-10-02-retired-analysis/dev/train_logs/stage_cd_R20_seed1_20260924_165732.safetensors",
+      "bytes": 1113088,
+      "reason": "Retired stage A-D code/output or generator-sensitivity run_sweep.py; no current experiment dependency."
+    },
+    {
+      "action": "delete",
+      "source": "archive/2026-10-02-retired-analysis/dev/train_logs/stage_b_aug_diagnostic.json",
+      "bytes": 35270,
+      "reason": "Retired stage A-D code/output or generator-sensitivity run_sweep.py; no current experiment dependency."
+    },
+    {
+      "action": "delete",
+      "source": "archive/2026-10-02-retired-analysis/dev/train_logs/stage_cd_R20_hideK3_seed1_20260924_202349_eval.json",
+      "bytes": 2714,
+      "reason": "Retired stage A-D code/output or generator-sensitivity run_sweep.py; no current experiment dependency."
+    },
+    {
+      "action": "delete",
+      "source": "archive/2026-10-02-retired-analysis/dev/train_logs/stage_cd_behavior_by_z_r.json",
+      "bytes": 16486,
+      "reason": "Retired stage A-D code/output or generator-sensitivity run_sweep.py; no current experiment dependency."
+    },
+    {
+      "action": "delete",
+      "source": "archive/2026-10-02-retired-analysis/dev/train_logs/stage_cd_R20_hideK3_seed1_20260924_202349.safetensors",
+      "bytes": 1113088,
+      "reason": "Retired stage A-D code/output or generator-sensitivity run_sweep.py; no current experiment dependency."
+    },
+    {
+      "action": "delete",
+      "source": "archive/2026-10-02-retired-analysis/dev/train_logs/stage_cd_hideK3_causal.json",
+      "bytes": 34425,
+      "reason": "Retired stage A-D code/output or generator-sensitivity run_sweep.py; no current experiment dependency."
+    },
+    {
+      "action": "delete",
+      "source": "archive/2026-10-02-retired-analysis/dev/train_logs/stage_b_z1.0_seed1_20260924_142009_eval.json",
+      "bytes": 12995,
+      "reason": "Retired stage A-D code/output or generator-sensitivity run_sweep.py; no current experiment dependency."
+    },
+    {
+      "action": "delete",
+      "source": "archive/2026-10-02-retired-analysis/dev/train_logs/stage_cd_params_eval.json",
+      "bytes": 2982,
+      "reason": "Retired stage A-D code/output or generator-sensitivity run_sweep.py; no current experiment dependency."
+    },
+    {
+      "action": "delete",
+      "source": "archive/2026-10-02-retired-analysis/dev/train_logs/stage_b_behavioral_comm.json",
+      "bytes": 23871,
+      "reason": "Retired stage A-D code/output or generator-sensitivity run_sweep.py; no current experiment dependency."
+    },
+    {
+      "action": "delete",
+      "source": "archive/2026-10-02-retired-analysis/dev/train_logs/stage_cd_R20_seed1_20260924_165732_eval_fixed.json",
+      "bytes": 2700,
+      "reason": "Retired stage A-D code/output or generator-sensitivity run_sweep.py; no current experiment dependency."
+    },
+    {
+      "action": "delete",
+      "source": "archive/2026-10-02-retired-analysis/dev/train_logs/stage_b_z1.0_seed1_20260924_154645.safetensors",
+      "bytes": 1113088,
+      "reason": "Retired stage A-D code/output or generator-sensitivity run_sweep.py; no current experiment dependency."
+    },
+    {
+      "action": "delete",
+      "source": "archive/2026-10-02-retired-analysis/dev/train_logs/stage_b_z1.0_seed1_20260924_134017_eval.json",
+      "bytes": 12951,
+      "reason": "Retired stage A-D code/output or generator-sensitivity run_sweep.py; no current experiment dependency."
+    },
+    {
+      "action": "delete",
+      "source": "archive/2026-10-02-retired-analysis/dev/train_logs/stage_b_masked_diagnostic.json",
+      "bytes": 34106,
+      "reason": "Retired stage A-D code/output or generator-sensitivity run_sweep.py; no current experiment dependency."
+    },
+    {
+      "action": "delete",
+      "source": "archive/2026-10-02-retired-analysis/dev/train_logs/stage_b_msg_conditional.json",
+      "bytes": 86629,
+      "reason": "Retired stage A-D code/output or generator-sensitivity run_sweep.py; no current experiment dependency."
+    },
+    {
+      "action": "delete",
+      "source": "archive/2026-10-02-retired-analysis/dev/train_logs/stage_cd_params.safetensors",
+      "bytes": 1113088,
+      "reason": "Retired stage A-D code/output or generator-sensitivity run_sweep.py; no current experiment dependency."
+    },
+    {
+      "action": "delete",
+      "source": "archive/2026-10-02-retired-analysis/dev/train_logs/stageA1_20260924_122632.log",
+      "bytes": 3396,
+      "reason": "Retired stage A-D code/output or generator-sensitivity run_sweep.py; no current experiment dependency."
+    },
+    {
+      "action": "delete",
+      "source": "archive/2026-10-02-retired-analysis/dev/train_logs/stage_b_z1.0_seed1_20260924_142009.safetensors",
+      "bytes": 1113088,
+      "reason": "Retired stage A-D code/output or generator-sensitivity run_sweep.py; no current experiment dependency."
+    },
+    {
+      "action": "delete",
+      "source": "archive/2026-10-02-retired-analysis/dev/train_logs/stage_b_diagnostic.json",
+      "bytes": 35205,
+      "reason": "Retired stage A-D code/output or generator-sensitivity run_sweep.py; no current experiment dependency."
+    },
+    {
+      "action": "delete",
+      "source": "archive/2026-10-02-retired-analysis/dev/train_logs/stage_cd_hideK3_behavior_by_z_r.json",
+      "bytes": 16446,
+      "reason": "Retired stage A-D code/output or generator-sensitivity run_sweep.py; no current experiment dependency."
+    },
+    {
+      "action": "delete",
+      "source": "archive/2026-10-02-retired-analysis/dev/train_logs/stage_cd_R20_seed1_20260924_165732_eval.json",
+      "bytes": 2769,
+      "reason": "Retired stage A-D code/output or generator-sensitivity run_sweep.py; no current experiment dependency."
+    }
+  ],
+  "experiment_payload_move_verification": "All renamed files retained their original inode and byte size; no experiment payloads rewritten.",
+  "status": "complete",
+  "archive_policy": "Only 37 specifically identified retired stage/sweep files deleted; all other archived historical evidence retained.",
+  "completed_at_utc": "2026-10-03T20:58:28.871317+00:00",
+  "validation_report": "/juice6/u/jshe/emergent_partner_grid/train/repo_reorganization/validation.json"
+}

@@ -1,0 +1,14 @@
+# SUPERSEDED — do not use.
+#
+# This config was the pre-refactor RNN-only build with the 30/6 Cartesian
+# capability split, step_penalty=0.02, EVAL_LAYOUTS_DIRS.{val,test},
+# NUM_MINIBATCHES=8, and grids_final layouts. Kept only so historic
+# hydra invocations don't hard-crash.
+#
+# The active config is:
+#     baselines/IPPO/config/ippo_coordination_grid.yaml
+#
+# The trainer reads that one via @hydra.main(config_name="ippo_coordination_grid").
+
+"__SUPERSEDED__": True
+"__see_instead__": "ippo_coordination_grid.yaml"

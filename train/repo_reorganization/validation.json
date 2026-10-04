@@ -1,0 +1,120 @@
+{
+  "checked_at_utc": "2026-10-03T20:58:28.871317+00:00",
+  "training_smoke": {
+    "passed": true,
+    "smoke_runs": [
+      {
+        "version": "v1",
+        "condition": "rnn_diverse_influence",
+        "passed": true,
+        "collected_environment_steps": 256,
+        "completed_episodes": 4,
+        "completed_rounds": 84,
+        "log": "/juice6/u/jshe/emergent_partner_grid/train/repo_reorganization/preflight/v1/rnn_diverse_influence/smoke.log",
+        "audit": "/juice6/u/jshe/emergent_partner_grid/train/repo_reorganization/preflight/v1/rnn_diverse_influence/params_sampling_audit.json"
+      },
+      {
+        "version": "v1",
+        "condition": "mlp_diverse_influence",
+        "passed": true,
+        "collected_environment_steps": 256,
+        "completed_episodes": 4,
+        "completed_rounds": 84,
+        "log": "/juice6/u/jshe/emergent_partner_grid/train/repo_reorganization/preflight/v1/mlp_diverse_influence/smoke.log",
+        "audit": "/juice6/u/jshe/emergent_partner_grid/train/repo_reorganization/preflight/v1/mlp_diverse_influence/params_sampling_audit.json"
+      },
+      {
+        "version": "v1",
+        "condition": "rnn_single_influence",
+        "passed": true,
+        "collected_environment_steps": 256,
+        "completed_episodes": 4,
+        "completed_rounds": 84,
+        "log": "/juice6/u/jshe/emergent_partner_grid/train/repo_reorganization/preflight/v1/rnn_single_influence/smoke.log",
+        "audit": "/juice6/u/jshe/emergent_partner_grid/train/repo_reorganization/preflight/v1/rnn_single_influence/params_sampling_audit.json"
+      },
+      {
+        "version": "v1",
+        "condition": "rnn_diverse_noinfluence",
+        "passed": true,
+        "collected_environment_steps": 256,
+        "completed_episodes": 4,
+        "completed_rounds": 84,
+        "log": "/juice6/u/jshe/emergent_partner_grid/train/repo_reorganization/preflight/v1/rnn_diverse_noinfluence/smoke.log",
+        "audit": "/juice6/u/jshe/emergent_partner_grid/train/repo_reorganization/preflight/v1/rnn_diverse_noinfluence/params_sampling_audit.json"
+      },
+      {
+        "version": "v2",
+        "condition": "rnn_diverse_influence",
+        "passed": true,
+        "collected_environment_steps": 256,
+        "completed_episodes": 4,
+        "completed_rounds": 84,
+        "log": "/juice6/u/jshe/emergent_partner_grid/train/repo_reorganization/preflight/v2/rnn_diverse_influence/smoke.log",
+        "audit": "/juice6/u/jshe/emergent_partner_grid/train/repo_reorganization/preflight/v2/rnn_diverse_influence/params_sampling_audit.json"
+      },
+      {
+        "version": "v2",
+        "condition": "mlp_diverse_influence",
+        "passed": true,
+        "collected_environment_steps": 256,
+        "completed_episodes": 4,
+        "completed_rounds": 84,
+        "log": "/juice6/u/jshe/emergent_partner_grid/train/repo_reorganization/preflight/v2/mlp_diverse_influence/smoke.log",
+        "audit": "/juice6/u/jshe/emergent_partner_grid/train/repo_reorganization/preflight/v2/mlp_diverse_influence/params_sampling_audit.json"
+      },
+      {
+        "version": "v2",
+        "condition": "rnn_single_influence",
+        "passed": true,
+        "collected_environment_steps": 256,
+        "completed_episodes": 4,
+        "completed_rounds": 84,
+        "log": "/juice6/u/jshe/emergent_partner_grid/train/repo_reorganization/preflight/v2/rnn_single_influence/smoke.log",
+        "audit": "/juice6/u/jshe/emergent_partner_grid/train/repo_reorganization/preflight/v2/rnn_single_influence/params_sampling_audit.json"
+      },
+      {
+        "version": "v2",
+        "condition": "rnn_diverse_noinfluence",
+        "passed": true,
+        "collected_environment_steps": 256,
+        "completed_episodes": 4,
+        "completed_rounds": 84,
+        "log": "/juice6/u/jshe/emergent_partner_grid/train/repo_reorganization/preflight/v2/rnn_diverse_noinfluence/smoke.log",
+        "audit": "/juice6/u/jshe/emergent_partner_grid/train/repo_reorganization/preflight/v2/rnn_diverse_noinfluence/params_sampling_audit.json"
+      }
+    ],
+    "source_and_corpus_hashes_verified": true,
+    "unchanged_network_environment_and_evaluation_functions_verified": true,
+    "launcher_bash_syntax_verified": true,
+    "completed_at_utc": "2026-10-03T20:46:11.909591+00:00"
+  },
+  "standalone_evaluation": {
+    "v1": {
+      "passed": true,
+      "familiar_episodes": 24,
+      "novel_episodes": 22,
+      "summary": "/juice6/u/jshe/emergent_partner_grid/train/repo_reorganization/standalone_evaluation/v1_smoke_summary.json",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/repo_reorganization/eval_v1_smoke.log"
+    },
+    "v2": {
+      "passed": true,
+      "familiar_episodes": 24,
+      "novel_episodes": 22,
+      "summary": "/juice6/u/jshe/emergent_partner_grid/train/repo_reorganization/standalone_evaluation/v2_smoke_summary.json",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/repo_reorganization/eval_v2_smoke.log"
+    }
+  },
+  "regression_tests": {
+    "passed": 49,
+    "skipped": 0,
+    "note": "37 environment/sampler/analysis tests passed; 12 preparation tests, including end-to-end corpus generation, passed after relocating and removing the obsolete sweep test."
+  },
+  "environment_harness": "all checks passed",
+  "original_random_sampler": "arrays and initial cursors exactly match frozen original v2",
+  "original_counterbalanced_payloads": "all source/corpus/schedule hashes verified unchanged",
+  "empirical_exposure": "exact 40-run reconstruction verified after relocation",
+  "plot_readers": "learning curves and counterbalanced comparison regenerated successfully",
+  "slurm": "launchers pass bash -n; no new Slurm jobs submitted",
+  "temporary_fixture": "Full temporary preparation sources and schedules removed after successful smoke checks; small preflight evidence retained."
+}

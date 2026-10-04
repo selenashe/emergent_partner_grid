@@ -1,0 +1,8 @@
+stage,criterion,n_input,n_rejected,n_surviving
+unique_basic_validity,Reachable goals; agent/goal separation; enabled geometric checks; deduplication,20000,0,20000
+observability,Partner distance to both goals >= 3,20000,7413,12587
+allocation_balance,"Non-tied p_opt_red in [0.25, 0.75]; tie fraction <= 0.5",12587,2297,10290
+feasibility,Fixed-allocation analytical oracle success fraction >= 0.99,10290,0,10290
+delta_reward,Oracle minus best fixed expected reward >= 0.035833333333333162 (quantile=0.25),10290,2562,7728
+horizon,Worst-case oracle steps < 60.805160013316964 (mean + 3.0 SD),7728,83,7645
+final_selection,"Rank by distance to p_opt_red=0.5; tie-break by delta_reward descending, candidate index ascending",7645,5645,2000

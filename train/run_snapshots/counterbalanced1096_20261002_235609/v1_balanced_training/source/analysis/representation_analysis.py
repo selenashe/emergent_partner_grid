@@ -1,0 +1,983 @@
+"""Paper-matched linear decoding of CoordinationGrid partner cooldowns.
+
+Run with the dependencies in requirements/representation.txt:
+    python analysis/representation_analysis.py --eval-dir dev/eval_out \
+        --out-dir analysis/representation_results --analysis-seed 0
+
+This module deliberately imports neither the evaluator nor the RL environment.
+Only averaged post-observation GRU states are passed to probes. Networks never
+share a probe or an embedding. Batched fitting is independent linear models,
+not concatenation of representations from different policies.
+"""
+
+from __future__ import annotations
+
+import argparse
+from dataclasses import dataclass
+from datetime import datetime, timezone
+import hashlib
+import importlib.metadata
+import importlib.util
+import json
+from pathlib import Path
+import re
+import sys
+import time
+
+import h5py
+import numpy as np
+import pandas as pd
+
+CONDITIONS = (
+    "rnn_diverse_influence", "rnn_single_influence", "rnn_diverse_noinfluence",
+)
+CONDITION_LABELS = dict(zip(CONDITIONS, (
+    "Multi-partner RNN", "Single-partner RNN", "No-influence RNN",
+)))
+REFERENCE_TIMES = np.array([1, 50, 100, 150, 200, 250, 300, 350, 400])
+TARGETS = ("d_R", "d_B")
+N_ROUNDS, HIDDEN_DIM, N_EPISODES, N_REPS = 20, 128, 920, 20
+PROBE_STEPS, PROBE_LR, BOOTSTRAP_RESAMPLES = 1000, 1e-2, 10_000
+REPO_ROOT = Path(__file__).resolve().parents[1]
+PAPER_URL = "https://arxiv.org/html/2505.17323v1#A2.SS3"
+
+
+def require(condition: bool, message: str) -> None:
+    """Assertions that remain active even when Python is run with -O."""
+    if not condition:
+        raise ValueError(message)
+
+
+def capability_populations() -> dict[str, set[tuple[int, int]]]:
+    # Load the authoritative constants without executing jaxmarl/__init__.py
+    # (which imports unrelated environments and their training dependencies).
+    path = REPO_ROOT / "jaxmarl/environments/coordination_grid/capability_populations.py"
+    spec = importlib.util.spec_from_file_location("grid_capability_populations", path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return {"train": set(module.TRAIN_CAPABILITY_PAIRS),
+            "test": set(module.TEST_CAPABILITY_PAIRS)}
+
+
+def discover_rollout_files(eval_dir: Path) -> dict[tuple[str, int], dict[str, Path]]:
+    files = {}
+    missing = []
+    for condition in CONDITIONS:
+        for seed in range(1, 6):
+            slices = {}
+            for name in ("train", "test"):
+                matches = sorted(eval_dir.rglob(f"{condition}_seed{seed}_{name}.h5"))
+                require(len(matches) <= 1, f"Ambiguous rollouts for {condition}, seed {seed}, {name}: {matches}")
+                if not matches:
+                    missing.append(f"{condition}_seed{seed}_{name}.h5")
+                else:
+                    slices[name] = matches[0]
+            files[condition, seed] = slices
+    if missing:
+        raise FileNotFoundError(
+            f"Missing RNN rollout files below {eval_dir}:\n  " + "\n  ".join(missing)
+            + "\nGenerate ONLY the missing/malformed checkpoint slices with "
+            "analysis/evaluate_partner_modelling.py --save_hidden "
+            "--n_episodes_per_capability 20; existing rollouts must be reused."
+        )
+    require(len(files) == 15, "Expected exactly 15 recurrent checkpoints")
+    return files
+
+
+def episode_valid_length(dones: np.ndarray) -> int:
+    terminal = np.flatnonzero(dones)
+    require(len(terminal) > 0, "Episode has no final done; cannot infer a valid trajectory")
+    return int(terminal[0]) + 1
+
+
+def validate_allocation_protocols(files: dict) -> str:
+    """Reject combined fixed-allocation and online-allocation experiments."""
+    protocols = set()
+    for slices in files.values():
+        for path in slices.values():
+            with h5py.File(path, "r") as handle:
+                protocol = handle.attrs.get("allocation_protocol", "fixed_v1")
+                if isinstance(protocol, bytes):
+                    protocol = protocol.decode()
+                require(protocol in ("fixed_v1", "online_v2"),
+                        f"{path}: unknown allocation protocol {protocol!r}")
+                protocols.add(protocol)
+    require(len(protocols) == 1,
+            "Mixed allocation protocols: analyze fixed_v1 and online_v2 separately, "
+            "using separate --eval-dir and --out-dir paths.")
+    return protocols.pop()
+
+
+def prefix_mean_hidden(hidden: np.ndarray, cutoffs: np.ndarray) -> np.ndarray:
+    require(hidden.ndim == 2 and len(hidden) > 0, "Empty/invalid hidden trajectory")
+    cutoffs = np.minimum(np.asarray(cutoffs, dtype=int), len(hidden))
+    require(bool(np.all(cutoffs > 0)), "Prefix cutoffs must be positive")
+    prefix = np.cumsum(hidden, axis=0, dtype=np.float64)
+    return (prefix[cutoffs - 1] / cutoffs[:, None]).astype(np.float32)
+
+
+def round_prefix_mean_hidden(hidden: np.ndarray, round_idx: np.ndarray,
+                             round_done: np.ndarray) -> np.ndarray:
+    require(len(round_idx) == len(hidden) == len(round_done), "Round/hidden lengths differ")
+    ends = np.flatnonzero(round_done)
+    require(len(ends) == N_ROUNDS, f"Expected 20 valid round ends; found {len(ends)}")
+    require(np.array_equal(round_idx[ends], np.arange(N_ROUNDS)),
+            "Round ends must identify rounds 0..19 in order")
+    require(int(ends[-1]) == len(hidden) - 1, "Final done does not end round 19")
+    expected_idx = np.repeat(np.arange(N_ROUNDS), np.diff(np.r_[0, ends + 1]))
+    require(np.array_equal(round_idx, expected_idx), "Round indices inconsistent with round_done")
+    return prefix_mean_hidden(hidden, ends + 1)
+
+
+def final50_mean_hidden(hidden: np.ndarray) -> np.ndarray:
+    require(len(hidden) > 0, "Cannot average an empty episode")
+    return hidden[-50:].mean(axis=0, dtype=np.float64).astype(np.float32)
+
+
+@dataclass
+class RolloutDataset:
+    labels: np.ndarray
+    rollout_rep: np.ndarray
+    capability_slice: np.ndarray
+    lengths: np.ndarray
+    timestep_features: np.ndarray
+    round_features: np.ndarray
+    final50_features: np.ndarray
+    episodes: pd.DataFrame
+    validation: dict
+
+
+def validate_rollout_dataset(data: RolloutDataset) -> None:
+    require(data.labels.shape == (N_EPISODES, 2), "Expected 920 episodes with two targets")
+    pairs, counts = np.unique(data.labels, axis=0, return_counts=True)
+    require(len(pairs) == 46 and np.all(counts == N_REPS),
+            "Expected 46 unique profiles, exactly 20 repetitions each")
+    require(np.array_equal(np.unique(data.labels), np.arange(10)), "Delay labels must be 0..9")
+    for pair in pairs:
+        mask = np.all(data.labels == pair, axis=1)
+        require(np.array_equal(np.sort(data.rollout_rep[mask]), np.arange(N_REPS)),
+                f"Duplicate/missing repetition within profile {pair}")
+    for features, steps in ((data.timestep_features, len(REFERENCE_TIMES)),
+                            (data.round_features, N_ROUNDS)):
+        require(features.shape == (steps, N_EPISODES, HIDDEN_DIM), "Invalid averaged feature shape")
+        require(bool(np.isfinite(features).all()), "Non-finite averaged hidden states")
+    require(data.final50_features.shape == (N_EPISODES, HIDDEN_DIM), "Invalid final-50 shape")
+    require(bool(np.isfinite(data.final50_features).all()), "Non-finite final-50 hidden states")
+
+
+def load_checkpoint_rollouts(paths: dict[str, Path]) -> RolloutDataset:
+    """Read in small batches, check full scans, retain only valid prefix means."""
+    population = capability_populations()
+    labels, reps, slices, lengths, time_features, round_features, final_features = [], [], [], [], [], [], []
+    rows, sources = [], []
+    for name in ("train", "test"):
+        path = paths[name]
+        try:
+            with h5py.File(path, "r") as handle:
+                required = {"hidden_state", "capability", "dones", "round_idx", "round_done"}
+                require(required <= set(handle), f"{path}: missing datasets {required - set(handle)}")
+                E, T = handle["dones"].shape
+                require(E == len(population[name]) * N_REPS, f"{path}: invalid episode count {E}")
+                require(handle["hidden_state"].shape == (E, T, HIDDEN_DIM), f"{path}: expected hidden dimension 128")
+                require(handle["capability"].shape == (E, T, 2), f"{path}: invalid capability shape")
+                for field in ("round_idx", "round_done"):
+                    require(handle[field].shape == (E, T), f"{path}: invalid {field} shape")
+                indices = handle["capability_index_per_ep"][:] if "capability_index_per_ep" in handle else None
+                pool = handle["capability_pool"][:] if "capability_pool" in handle else None
+                require((indices is None) == (pool is None), f"{path}: incomplete capability ordering metadata")
+                if indices is not None:
+                    require(indices.shape == (E,) and pool.shape == (len(population[name]), 2),
+                            f"{path}: invalid capability ordering metadata shape")
+                    require(bool(np.all((indices >= 0) & (indices < len(pool)))), f"{path}: capability index out of range")
+                    require({tuple(p) for p in pool} == population[name], f"{path}: incorrect capability_pool")
+                counts = {}
+                for start in range(0, E, 16):
+                    stop = min(start + 16, E)
+                    block = {k: handle[k][start:stop] for k in required}
+                    require(bool(np.isfinite(block["hidden_state"]).all()),
+                            f"{path}: NaN/Inf in hidden-state scan at episodes {start}:{stop}")
+                    for local, e in enumerate(range(start, stop)):
+                        L = episode_valid_length(block["dones"][local])
+                        cap = block["capability"][local, 0]
+                        require(bool(np.all(block["capability"][local, :L] == cap)),
+                                f"{path}, episode {e}: capability changes before terminal")
+                        require(bool(np.all(cap == cap.astype(int))), f"{path}: non-integer cooldown")
+                        pair = tuple(int(x) for x in cap)
+                        require(pair in population[name], f"{path}: unexpected {name} profile {pair}")
+                        if indices is not None:
+                            require(np.array_equal(pool[indices[e]], cap), f"{path}: capability_index_per_ep disagrees with labels")
+                        rep = counts.get(pair, 0)
+                        counts[pair] = rep + 1
+                        # The terminal step is included; scan padding after it never enters features.
+                        hidden = block["hidden_state"][local, :L]
+                        tf = prefix_mean_hidden(hidden, REFERENCE_TIMES)
+                        rf = round_prefix_mean_hidden(hidden, block["round_idx"][local, :L],
+                                                      block["round_done"][local, :L])
+                        ff = final50_mean_hidden(hidden)
+                        labels.append(pair); reps.append(rep); slices.append(name); lengths.append(L)
+                        time_features.append(tf); round_features.append(rf); final_features.append(ff)
+                        rows.append({"source_file": str(path.resolve()), "source_episode": e,
+                                     "capability_slice": name, "capability_index": int(indices[e]) if indices is not None else -1,
+                                     "d_R": pair[0], "d_B": pair[1], "rollout_rep": rep,
+                                     "valid_length": L, "scan_length": T})
+                require(set(counts) == population[name] and set(counts.values()) == {N_REPS},
+                        f"{path}: expected exactly 20 rollouts for every authoritative profile")
+                stat = path.stat()
+                sources.append({"path": str(path.resolve()), "size_bytes": stat.st_size,
+                                "mtime_ns": stat.st_mtime_ns, "episodes": E, "scan_steps": T,
+                                "rep_source": "episode order within stored capability_index_per_ep" if indices is not None
+                                else "episode order within capability pair"})
+        except (OSError, ValueError) as error:
+            raise ValueError(f"Malformed rollout {path}: {error}. Regenerate this slice only using --save_hidden.") from error
+    # Canonical ordering makes random vectors, labels and probe splits paired
+    # even if files order their capability profiles differently.
+    labels = np.asarray(labels, dtype=np.int64)
+    reps = np.asarray(reps, dtype=np.int64)
+    order = np.lexsort((reps, labels[:, 1], labels[:, 0]))
+    dataset = RolloutDataset(labels[order], reps[order], np.asarray(slices)[order],
+                             np.asarray(lengths)[order], np.asarray(time_features)[order].transpose(1, 0, 2),
+                             np.asarray(round_features)[order].transpose(1, 0, 2),
+                             np.asarray(final_features)[order], pd.DataFrame(rows).iloc[order].reset_index(drop=True),
+                             {"sources": sources, "checks_passed": [
+                                 "train_and_test_present", "920_episodes", "46_authoritative_profiles",
+                                 "20_repetitions_per_profile", "hidden_dimension_128", "capability_constant_on_valid_steps",
+                                 "full_hidden_scans_finite", "final_done_every_episode", "terminal_step_included_padding_excluded",
+                                 "20_ordered_round_ends_every_episode"],
+                              "length_min": int(min(lengths)), "length_max": int(max(lengths)),
+                              "length_mean": float(np.mean(lengths)), "episodes_shorter_than_50": int(np.sum(np.asarray(lengths) < 50))})
+    validate_rollout_dataset(dataset)
+    return dataset
+
+
+def make_probe_split(analysis_seed: int) -> dict:
+    permutation = np.random.default_rng(analysis_seed).permutation(N_REPS)
+    return {"analysis_seed": analysis_seed, "rng": "numpy.default_rng (PCG64)",
+            "permutation": permutation.tolist(), "train_reps": permutation[:16].tolist(),
+            "test_reps": permutation[16:].tolist(),
+            "rep_definition": "zero-based occurrence in source episode order within each capability profile",
+            "n_train_per_profile": 16, "n_test_per_profile": 4}
+
+
+def split_masks(data: RolloutDataset, split: dict) -> tuple[np.ndarray, np.ndarray]:
+    train = np.isin(data.rollout_rep, split["train_reps"])
+    test = np.isin(data.rollout_rep, split["test_reps"])
+    require(not np.any(train & test) and bool(np.all(train | test)), "Probe split overlaps or omits rollouts")
+    require(int(train.sum()) == 736 and int(test.sum()) == 184, "Expected 736 probe train / 184 test episodes")
+    for pair in np.unique(data.labels, axis=0):
+        mask = np.all(data.labels == pair, axis=1)
+        require(int((train & mask).sum()) == 16 and int((test & mask).sum()) == 4,
+                f"Profile {pair}: split must be exactly 16/4")
+    return train, test
+
+
+def train_linear_probe(features: np.ndarray, labels: np.ndarray, train: np.ndarray,
+                       initialization_seeds: list[int], device: str = "cpu") -> tuple[np.ndarray, dict]:
+    """Fit P independent affine 128->10 layers with full-batch Adam.
+
+    Each loss is averaged over its own 736 examples, then summed across
+    models. Parameters and Adam moments are independent along the P axis.
+    No standardization, regularization, hidden layers, minibatch randomness,
+    validation-based tuning, or early stopping is applied.
+    """
+    import torch
+    require(features.ndim == 3 and features.shape[2] == HIDDEN_DIM, "Probe inputs must be averaged 128-D states only")
+    P, N, H = features.shape
+    require(labels.shape == (P, N) and len(initialization_seeds) == P, "Probe target/seed shapes differ")
+    require(bool(np.isfinite(features).all()), "Non-finite probe features")
+    require(bool(np.all((labels >= 0) & (labels < 10))), "Probe labels outside 0..9")
+    X = torch.as_tensor(np.ascontiguousarray(features), dtype=torch.float32, device=device)
+    Y = torch.as_tensor(labels, dtype=torch.long, device=device)
+    weights, biases = [], []
+    for seed in initialization_seeds:
+        generator = torch.Generator(device="cpu").manual_seed(seed)
+        bound = H ** -0.5
+        weights.append(torch.empty(H, 10).uniform_(-bound, bound, generator=generator))
+        biases.append(torch.empty(10).uniform_(-bound, bound, generator=generator))
+    W = torch.nn.Parameter(torch.stack(weights).to(device))
+    b = torch.nn.Parameter(torch.stack(biases).to(device))
+    optimizer = torch.optim.Adam([W, b], lr=PROBE_LR, betas=(0.9, 0.999), eps=1e-8,
+                                 weight_decay=0, foreach=False)
+    Xtrain, Ytrain = X[:, train], Y[:, train]
+    for _ in range(PROBE_STEPS):
+        optimizer.zero_grad(set_to_none=True)
+        logits = torch.bmm(Xtrain, W) + b[:, None, :]
+        loss = torch.nn.functional.cross_entropy(logits.reshape(-1, 10), Ytrain.reshape(-1),
+                                                 reduction="sum") / int(train.sum())
+        require(bool(torch.isfinite(loss)), "Linear-probe loss diverged")
+        loss.backward()
+        optimizer.step()
+    with torch.no_grad():
+        predictions = (torch.bmm(X, W) + b[:, None, :]).argmax(dim=-1).cpu().numpy()
+        losses = torch.nn.functional.cross_entropy(
+            (torch.bmm(Xtrain, W) + b[:, None, :]).reshape(-1, 10), Ytrain.reshape(-1),
+            reduction="none").reshape(P, -1).mean(dim=1).cpu().numpy()
+    return predictions, {"weight": W.detach().cpu().numpy(), "bias": b.detach().cpu().numpy(),
+                         "final_train_loss": losses}
+
+
+def distance_aware_accuracy(truth: np.ndarray, predictions: np.ndarray) -> float:
+    return float(np.mean(1.0 - np.abs(predictions - truth) / 9.0))
+
+
+def evaluate_probe(truth: np.ndarray, predictions: np.ndarray, mask: np.ndarray) -> dict:
+    require(bool(np.any(mask)), "Cannot evaluate an empty probe subset")
+    truth, predictions = truth[mask], predictions[mask]
+    return {"n_test": int(mask.sum()), "distance_accuracy": distance_aware_accuracy(truth, predictions),
+            "exact_accuracy": float(np.mean(truth == predictions)),
+            "mae": float(np.mean(np.abs(predictions - truth)))}
+
+
+def run_probes(data: RolloutDataset, split: dict, condition: str, seed: int,
+               analysis_seed: int, device: str, out_dir: Path) -> tuple[list, list, list]:
+    train, test = split_masks(data, split)
+    specs, features, labels, init_seeds = [], [], [], []
+    for axis, values, feature_set in (("reference_t", REFERENCE_TIMES, data.timestep_features),
+                                      ("round_idx", range(N_ROUNDS), data.round_features)):
+        for step, value in enumerate(values):
+            for target_idx, target in enumerate(TARGETS):
+                specs.append((axis, int(value), target))
+                features.append(feature_set[step]); labels.append(data.labels[:, target_idx])
+                init_seeds.append(analysis_seed + 10_000 + target_idx)
+    # One paired, global label permutation preserves the d_R/d_B joint population,
+    # but breaks its association with the hidden trajectory. No grouping fields
+    # enter any probe. Compare this final-t=400 diagnostic with Normal baseline.
+    shuffled = data.labels[np.random.default_rng(analysis_seed + 20_000).permutation(N_EPISODES)]
+    for target_idx, target in enumerate(TARGETS):
+        specs.append(("shuffled", 400, target)); features.append(data.timestep_features[-1])
+        labels.append(shuffled[:, target_idx]); init_seeds.append(analysis_seed + 10_000 + target_idx)
+    predictions, params = train_linear_probe(np.asarray(features), np.asarray(labels), train, init_seeds, device)
+    np.savez_compressed(out_dir / "probe_models" / f"{condition}_seed{seed}.npz", **params,
+                        axis=np.array([x[0] for x in specs]), step=np.array([x[1] for x in specs]),
+                        target=np.array([x[2] for x in specs]), initialization_seed=init_seeds)
+    timestep_rows, round_rows, shuffle_rows = [], [], []
+    for p, (axis, value, target) in enumerate(specs):
+        for subset in ("all", "familiar", "novel"):
+            mask = test.copy()
+            if subset != "all":
+                mask &= data.capability_slice == ("train" if subset == "familiar" else "test")
+            row = {"condition": condition, "training_seed": seed, "target": target,
+                   "capability_subset": subset, "n_train": int(train.sum()),
+                   "probe_initialization_seed": init_seeds[p], "final_train_loss": float(params["final_train_loss"][p]),
+                   **evaluate_probe(labels[p], predictions[p], mask)}
+            if axis == "reference_t":
+                row[axis] = value
+                subset_mask = np.ones(N_EPISODES, dtype=bool) if subset == "all" else (
+                    data.capability_slice == ("train" if subset == "familiar" else "test"))
+                row["fraction_episodes_complete"] = float(np.mean(data.lengths[subset_mask] <= value))
+                timestep_rows.append(row)
+            elif axis == "round_idx":
+                row[axis] = value; round_rows.append(row)
+            else:
+                row["reference_t"] = value; row["label_shuffle_seed"] = analysis_seed + 20_000
+                shuffle_rows.append(row)
+    return timestep_rows, round_rows, shuffle_rows
+
+
+def run_random_baseline(data: RolloutDataset, split: dict, device: str,
+                        analysis_seed: int, out_dir: Path) -> pd.DataFrame:
+    train, test = split_masks(data, split)
+    features, labels, seeds, specs = [], [], [], []
+    for random_seed in range(5):
+        for k, target in enumerate(TARGETS):
+            # Independent Normal representation for each target; seed=0 saved
+            # explicitly for both targets as the paper's single-realization view.
+            features.append(np.random.default_rng(np.random.SeedSequence([random_seed, k])).normal(
+                size=(N_EPISODES, HIDDEN_DIM)).astype(np.float32))
+            labels.append(data.labels[:, k]); seeds.append(analysis_seed + 10_000 + k)
+            specs.append((random_seed, target))
+    predictions, params = train_linear_probe(np.asarray(features), np.asarray(labels), train, seeds, device)
+    np.savez_compressed(out_dir / "probe_models/random_baseline.npz", **params,
+                        random_seed=np.array([x[0] for x in specs]), target=np.array([x[1] for x in specs]))
+    rows = []
+    for p, (random_seed, target) in enumerate(specs):
+        for subset in ("all", "familiar", "novel"):
+            mask = test.copy()
+            if subset != "all":
+                mask &= data.capability_slice == ("train" if subset == "familiar" else "test")
+            rows.append({"target": target, "random_vector_seed": random_seed, "capability_subset": subset,
+                         "n_train": int(train.sum()), "probe_initialization_seed": seeds[p],
+                         "final_train_loss": float(params["final_train_loss"][p]),
+                         **evaluate_probe(labels[p], predictions[p], mask)})
+    return pd.DataFrame(rows)
+
+
+def summarize_probes(table: pd.DataFrame, axis: str, bootstrap_seed: int) -> pd.DataFrame:
+    # The same resampled policy indices are used at every time, task and condition.
+    indices = np.random.default_rng(bootstrap_seed).integers(0, 5, (BOOTSTRAP_RESAMPLES, 5))
+    rows = []
+    for keys, group in table.groupby(["condition", "target", axis, "capability_subset"], sort=True):
+        group = group.sort_values("training_seed")
+        require(group.training_seed.tolist() == [1, 2, 3, 4, 5], "Summary must contain all five independent model seeds")
+        row = dict(zip(("condition", "target", axis, "capability_subset"), keys))
+        row["n_training_seeds"] = 5
+        for metric in ("distance_accuracy", "exact_accuracy", "mae"):
+            values = group[metric].to_numpy()
+            low, high = np.quantile(values[indices].mean(axis=1), [0.025, 0.975])
+            row.update({f"{metric}_mean": float(values.mean()), f"{metric}_std": float(values.std(ddof=1)),
+                        f"{metric}_ci_low": float(low), f"{metric}_ci_high": float(high)})
+        if "fraction_episodes_complete" in group:
+            row["fraction_episodes_complete_mean"] = float(group.fraction_episodes_complete.mean())
+        rows.append(row)
+    return pd.DataFrame(rows)
+
+
+def summarize_condition_differences(table: pd.DataFrame, axis: str, bootstrap_seed: int) -> pd.DataFrame:
+    """Paired descriptive contrasts against the diverse/influence condition."""
+    indices = np.random.default_rng(bootstrap_seed).integers(0, 5, (BOOTSTRAP_RESAMPLES, 5))
+    rows = []
+    for (target, step, subset), group in table.groupby(["target", axis, "capability_subset"]):
+        pivot = group.pivot(index="training_seed", columns="condition", values="distance_accuracy").sort_index()
+        require(pivot.index.tolist() == [1, 2, 3, 4, 5] and not pivot.isna().any().any(),
+                "Condition contrasts require all five seeds in every condition")
+        for control in CONDITIONS[1:]:
+            differences = (pivot[CONDITIONS[0]] - pivot[control]).to_numpy()
+            low, high = np.quantile(differences[indices].mean(axis=1), [0.025, 0.975])
+            rows.append({"axis": axis, "step": int(step), "target": target, "capability_subset": subset,
+                         "condition": CONDITIONS[0], "comparison_condition": control,
+                         "distance_accuracy_difference_mean": float(differences.mean()),
+                         "difference_ci_low": float(low), "difference_ci_high": float(high),
+                         "n_positive_seed_differences": int(np.sum(differences > 0)), "n_training_seeds": 5})
+    return pd.DataFrame(rows)
+
+
+def select_paper_style_seed(eval_dir: Path, logs_dir: Path) -> dict:
+    """Use final stdout training summaries only from logs that saved this policy."""
+    candidates = {}
+    for path in sorted(logs_dir.glob("*.out")):
+        text = path.read_text(errors="replace")
+        saved = re.findall(r"\[main\] saved params \(seed 0\) -> (.+)", text)
+        sequence = re.findall(r"^\s*ep_return_mean:\s*\[([^\]]+)\]", text, re.MULTILINE)
+        if not saved or not sequence or "[main] training done" not in text:
+            continue
+        match = re.fullmatch(r"(" + "|".join(CONDITIONS) + r")_seed([1-5])\.safetensors", Path(saved[-1]).name)
+        if match:
+            values = [float(value.strip()) for value in sequence[-1].split(",")]
+            if np.isfinite(values[-1]):
+                key = (match[1], int(match[2]))
+                item = {"training_seed": key[1], "value": values[-1], "source": str(path.resolve()),
+                        "summary_updates": len(values), "source_mtime_ns": path.stat().st_mtime_ns,
+                        "checkpoint_path": saved[-1].strip()}
+                if key not in candidates or item["source_mtime_ns"] > candidates[key]["source_mtime_ns"]:
+                    candidates[key] = item
+    selected = {}
+    for condition in CONDITIONS:
+        exact = all((condition, seed) in candidates for seed in range(1, 6))
+        if exact:
+            options = [candidates[condition, seed] for seed in range(1, 6)]
+            metric = "final_training.ep_return_mean (last PPO update; stdout rounded to 4 decimals)"
+        else:
+            options = []
+            for seed in range(1, 6):
+                matches = list(eval_dir.rglob(f"{condition}_seed{seed}_summary.json"))
+                require(len(matches) == 1, f"Cannot behavior-select {condition}: missing/ambiguous summary for seed {seed}")
+                value = json.loads(matches[0].read_text())["train"]["mean_ep_return"]
+                require(bool(np.isfinite(value)), "Non-finite behavior-selection metric")
+                options.append({"training_seed": seed, "value": value, "source": str(matches[0].resolve())})
+            metric = "train.mean_ep_return (evaluation-return proxy)"
+        # Metric ties choose the lowest seed; no representation result enters here.
+        best = max(options, key=lambda item: (item["value"], -item["training_seed"]))
+        selected[condition] = {"condition": condition, "selected_seed": best["training_seed"],
+                               "selection_metric": metric, "metric_value": best["value"],
+                               "exact_paper_style_final_training_return": exact,
+                               "eval_return_proxy": not exact, "source": best["source"],
+                               "candidate_metrics": options,
+                               "selection_rule": "highest behavioral metric; lower seed breaks ties",
+                               "fallback_reason": None if exact else "Final-training return not recoverable for all five seeds"}
+    return selected
+
+
+def run_umap(features: np.ndarray) -> tuple[np.ndarray, dict]:
+    from umap import UMAP
+    require(features.shape == (N_EPISODES, HIDDEN_DIM), "UMAP must receive exactly 920 final-50 vectors from ONE network")
+    reducer = UMAP(min_dist=1.0, n_neighbors=len(features) - 1, random_state=42)
+    embedding = reducer.fit_transform(features)
+    require(embedding.shape == (N_EPISODES, 2) and bool(np.isfinite(embedding).all()), "Invalid UMAP embedding")
+    parameters = {k: v for k, v in reducer.get_params().items()
+                  if isinstance(v, (str, int, float, bool, type(None)))}
+    return embedding, parameters
+
+
+def save_figure(fig, out_dir: Path, name: str) -> None:
+    for suffix in ("png", "pdf"):
+        fig.savefig(out_dir / f"{name}.{suffix}", dpi=300, bbox_inches="tight")
+
+
+def plotting_style():
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    plt.rcParams.update({"font.size": 10, "axes.spines.top": False, "axes.spines.right": False,
+                         "pdf.fonttype": 42, "axes.titlesize": 12, "figure.dpi": 140})
+    return plt
+
+
+def make_probe_figures(per_seed: pd.DataFrame, summary: pd.DataFrame, round_summary: pd.DataFrame,
+                       random: pd.DataFrame, selected: dict, out_dir: Path) -> None:
+    plt = plotting_style()
+    colors = ("#0072B2", "#D55E00", "#009E73")
+    for name, axis, source, selected_view in (
+        ("figure_probe_timestep_selected", "reference_t", per_seed, True),
+        ("figure_probe_timestep_all_seeds", "reference_t", summary, False),
+        ("figure_probe_by_round", "round_idx", round_summary, False),
+    ):
+        fig, axes = plt.subplots(1, 2, figsize=(10, 3.8), sharey=True, layout="constrained")
+        for ax, target, task in zip(axes, TARGETS, ("RED", "BLUE")):
+            for condition, color in zip(CONDITIONS, colors):
+                group = source[(source.condition == condition) & (source.target == target)
+                               & (source.capability_subset == "all")]
+                if selected_view:
+                    group = group[group.training_seed == selected[condition]["selected_seed"]]
+                group = group.sort_values(axis)
+                y = group.distance_accuracy if selected_view else group.distance_accuracy_mean
+                label = CONDITION_LABELS[condition]
+                if selected_view:
+                    label += f" (seed {selected[condition]['selected_seed']})"
+                ax.plot(group[axis], y, label=label, color=color, lw=2, marker="o", ms=3)
+                if not selected_view:
+                    ax.fill_between(group[axis], group.distance_accuracy_ci_low,
+                                    group.distance_accuracy_ci_high, alpha=0.16, color=color, lw=0)
+            baseline = random[(random.target == target) & (random.capability_subset == "all")]
+            if selected_view:
+                baseline = baseline[baseline.random_vector_seed == 0]
+            ax.axhline(baseline.distance_accuracy.mean(), color="#555555", ls="--", lw=1.7,
+                       label="Random Normal (seed 0)" if selected_view else "Random Normal (5 vector seeds)")
+            ax.set_title(f"{task}-task cooldown {target}")
+            ax.set_xlabel("Episode timestep" if axis == "reference_t" else "Interaction round")
+            ax.set_xticks(REFERENCE_TIMES if axis == "reference_t" else np.arange(0, 20, 2))
+            ax.set_ylim(0.45, 1.01)
+            ax.grid(axis="y", alpha=0.2)
+        axes[0].set_ylabel("Distance-aware test accuracy")
+        axes[1].legend(loc="lower right", fontsize=8, frameon=False)
+        title = "Behavior-selected policies" if selected_view else "Five policy seeds: mean and 95% bootstrap CI"
+        fig.suptitle(title, fontsize=12)
+        save_figure(fig, out_dir, name)
+        plt.close(fig)
+
+
+def make_umap_figures(embeddings: pd.DataFrame, selected: dict, out_dir: Path) -> None:
+    plt = plotting_style()
+    from matplotlib.colors import Normalize, TwoSlopeNorm
+    for field, color_label in (
+        ("relative_red_speed_advantage", "Relative RED speed advantage: d_B − d_R\npositive: RED faster; negative: BLUE faster"),
+        ("d_R", "RED-task cooldown d_R (lower = faster)"),
+        ("d_B", "BLUE-task cooldown d_B (lower = faster)"),
+    ):
+        fig, axes = plt.subplots(1, 3, figsize=(11.5, 3.6), layout="constrained")
+        norm = TwoSlopeNorm(vmin=-9, vcenter=0, vmax=9) if field == "relative_red_speed_advantage" else Normalize(0, 9)
+        for ax, condition in zip(axes, CONDITIONS):
+            group = embeddings[embeddings.condition == condition]
+            require(len(group) == N_EPISODES, "Each UMAP panel must contain 920 points")
+            scatter = ax.scatter(group.umap_1, group.umap_2, c=group[field], norm=norm,
+                                 cmap="coolwarm" if field == "relative_red_speed_advantage" else "viridis",
+                                 s=8, alpha=0.8, linewidths=0, rasterized=True)
+            ax.set_title(f"{CONDITION_LABELS[condition]}\nseed {selected[condition]['selected_seed']}")
+            ax.set_xticks([]); ax.set_yticks([])
+            ax.set_xlabel("UMAP 1"); ax.set_ylabel("UMAP 2")
+        fig.colorbar(scatter, ax=axes, fraction=0.035, pad=0.03, label=color_label)
+        save_figure(fig, out_dir, "figure_umap" if field == "relative_red_speed_advantage" else f"figure_umap_{field}")
+        plt.close(fig)
+
+
+def write_json(path: Path, payload: dict) -> None:
+    path.write_text(json.dumps(payload, indent=2, allow_nan=False) + "\n")
+
+
+def write_metadata(out_dir: Path, args, validation: list[dict], selected: dict,
+                   umap_parameters: dict, started: float) -> dict:
+    versions = {package: importlib.metadata.version(package) for package in
+                ("numpy", "h5py", "torch", "pandas", "matplotlib", "umap-learn", "numba", "scikit-learn")}
+    metadata = {
+        "completed_utc": datetime.now(timezone.utc).isoformat(), "elapsed_seconds": time.time() - started,
+        "entrypoint_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+        "python": sys.version, "versions": versions, "arguments": vars(args),
+        "conditions": list(CONDITIONS), "training_seeds": list(range(1, 6)), "n_checkpoints": len(validation),
+        "validation": validation, "same_split_across_networks_targets_and_times": True,
+        "canonical_episode_order": "lexicographic d_R, d_B, rollout_rep",
+        "hidden_convention": "post-observation h_t = GRU(h_{t-1}, o_t); terminal-step inclusive; no post-terminal states",
+        "feature_protocol": {"reference_times": REFERENCE_TIMES.tolist(), "prefix": "hidden[:min(t,L)].mean(0)",
+                             "round_prefix": "all valid states through inclusive round_done for r=0..19",
+                             "umap": "mean last min(50,L) valid hidden states"},
+        "probe": {"architecture": "single affine layer 128 -> 10 (bias included)", "loss": "softmax cross entropy",
+                  "optimizer": "Adam", "learning_rate": PROBE_LR, "steps": PROBE_STEPS,
+                  "batch_size": 736, "betas": [0.9, 0.999], "epsilon": 1e-8,
+                  "weight_decay": 0, "feature_standardization": False,
+                  "initialization_seeds": {target: args.analysis_seed + 10_000 + k for k, target in enumerate(TARGETS)},
+                  "initialization": "independent Uniform(-1/sqrt(128),1/sqrt(128)) weights and biases",
+                  "fixed_initialization_reused": "across conditions, policy seeds, times, rounds and baselines",
+                  "device": args.device, "cpu_threads": args.threads, "deterministic_algorithms": True},
+        "primary_metric": "mean(1 - abs(predicted_delay - true_delay)/9)",
+        "bootstrap": {"unit": "independent trained policy seed", "n_seeds": 5, "resamples": BOOTSTRAP_RESAMPLES,
+                      "seed": args.analysis_seed + 30_000, "CI": "95% percentile", "std_ddof": 1,
+                      "paired_resampling_indices_across_groups": True},
+        "condition_contrasts": {"metric": "distance_accuracy", "pairing": "nominal training seed 1..5",
+                                "bootstrap_seed": args.analysis_seed + 30_000, "resamples": BOOTSTRAP_RESAMPLES,
+                                "description": "five paired policy-seed differences; descriptive percentile confidence intervals"},
+        "random_baseline": {"vector_seeds": list(range(5)), "rng": "PCG64 SeedSequence([vector_seed,target_index])",
+                            "distribution": "Normal(0,1)", "shape": [920, 128],
+                            "curve": "one time-independent random representation per target/vector seed",
+                            "paper_selected_figure": "vector seed 0", "robustness_figure": "mean of five vector seeds"},
+        "label_shuffle": {"seed": args.analysis_seed + 20_000, "reference_t": 400,
+                          "method": "permute paired d_R/d_B labels over all episodes before applying unchanged 16/4 split",
+                          "diagnostic_pass_rule": "absolute distance-accuracy difference from random baseline mean <= 0.10",
+                          "interpretation": "broad descriptive leakage screen; not a statistical equivalence test"},
+        "selection": selected, "umap_parameters": umap_parameters,
+        "paper_protocol_source": PAPER_URL,
+        "unchanged_experiment": "No rollouts regenerated; no trainer, environment, populations, reward or checkpoints changed",
+    }
+    write_json(out_dir / "analysis_metadata.json", metadata)
+    return metadata
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("--eval-dir", default="dev/eval_out")
+    parser.add_argument("--out-dir", default="analysis/representation_results")
+    parser.add_argument("--logs-dir", default="logs", help="Completed Slurm stdout training logs for behavior selection")
+    parser.add_argument("--analysis-seed", type=int, default=0)
+    parser.add_argument("--device", default="cpu", choices=("cpu", "cuda"))
+    parser.add_argument("--threads", type=int, default=1, help="CPU threads (small matrix products usually favor one)")
+    args = parser.parse_args()
+    require(args.analysis_seed >= 0 and args.threads >= 1, "Seed must be nonnegative and threads positive")
+    import torch
+    torch.set_num_threads(args.threads)
+    torch.use_deterministic_algorithms(True)
+    if args.device == "cuda":
+        import os
+        os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":4096:8"
+        require(torch.cuda.is_available(), "CUDA requested but unavailable")
+    started = time.time()
+    eval_dir, out_dir = Path(args.eval_dir).resolve(), Path(args.out_dir).resolve()
+    files = discover_rollout_files(eval_dir)
+    allocation_protocol = validate_allocation_protocols(files)
+    if allocation_protocol == "online_v2":
+        require(out_dir != (REPO_ROOT / "analysis/representation_results").resolve(),
+                "Use a separate --out-dir for online_v2; representation_results contains historical results.")
+    args.allocation_protocol = allocation_protocol
+    # Fail before fitting if plotting/embedding dependencies are unavailable.
+    for module in ("umap", "matplotlib"):
+        require(importlib.util.find_spec(module) is not None,
+                f"Missing {module}: install requirements/representation.txt in an analysis environment")
+    out_dir.mkdir(parents=True, exist_ok=True)
+    (out_dir / "probe_models").mkdir(exist_ok=True)
+    split = make_probe_split(args.analysis_seed)
+    write_json(out_dir / "probe_split.json", split)
+    selected = select_paper_style_seed(eval_dir, Path(args.logs_dir).resolve())
+    write_json(out_dir / "selected_seeds.json", selected)
+    for condition, info in selected.items():
+        print(f"[selection] {condition}: seed {info['selected_seed']}, {info['selection_metric']}={info['metric_value']}", flush=True)
+    all_time, all_round, all_shuffle, validation, manifest, umap_features = [], [], [], [], [], {}
+    canonical = None
+    baseline = None
+    for (condition, seed), paths in files.items():
+        print(f"[validate] {condition} seed {seed}", flush=True)
+        data = load_checkpoint_rollouts(paths)
+        train, test = split_masks(data, split)
+        fingerprint = np.column_stack((data.labels, data.rollout_rep, train.astype(int)))
+        if canonical is None:
+            canonical = fingerprint
+            baseline = run_random_baseline(data, split, args.device, args.analysis_seed, out_dir)
+            baseline.to_csv(out_dir / "random_baseline.csv", index=False)
+        else:
+            require(np.array_equal(canonical, fingerprint), "Profiles/repetition/split differ across networks")
+        validation.append({"condition": condition, "training_seed": seed, **data.validation,
+                           "probe_train_episodes": int(train.sum()), "probe_test_episodes": int(test.sum()),
+                           "split_checks_passed": True})
+        episodes = data.episodes.copy()
+        episodes.insert(0, "training_seed", seed); episodes.insert(0, "condition", condition)
+        episodes["probe_partition"] = np.where(train, "train", "test")
+        manifest.append(episodes)
+        if seed == selected[condition]["selected_seed"]:
+            umap_features[condition] = (data.final50_features, episodes)
+        print(f"[probe] {condition} seed {seed}: 58 independent primary probes + 2 shuffle checks", flush=True)
+        tr, rr, sr = run_probes(data, split, condition, seed, args.analysis_seed, args.device, out_dir)
+        all_time.extend(tr); all_round.extend(rr); all_shuffle.extend(sr)
+        # Incremental tables preserve completed expensive work if a later input fails.
+        pd.DataFrame(all_time).to_csv(out_dir / "probe_timestep_per_seed.csv", index=False)
+        pd.DataFrame(all_round).to_csv(out_dir / "probe_by_round_per_seed.csv", index=False)
+        pd.DataFrame(all_shuffle).to_csv(out_dir / "shuffled_label_baseline.csv", index=False)
+        write_json(out_dir / "validation.json", {"checkpoints": validation})
+    require(len(validation) == 15, "All 15 checkpoints must pass validation")
+    pd.concat(manifest, ignore_index=True).to_csv(out_dir / "episode_manifest.csv", index=False)
+    timestep, rounds, shuffle = pd.DataFrame(all_time), pd.DataFrame(all_round), pd.DataFrame(all_shuffle)
+    require(len(timestep) == 15 * 9 * 2 * 3 and len(rounds) == 15 * 20 * 2 * 3,
+            "Incomplete timestep/round probe outputs")
+    time_summary = summarize_probes(timestep, "reference_t", args.analysis_seed + 30_000)
+    round_summary = summarize_probes(rounds, "round_idx", args.analysis_seed + 30_000)
+    time_summary.to_csv(out_dir / "probe_timestep_summary.csv", index=False)
+    round_summary.to_csv(out_dir / "probe_by_round_summary.csv", index=False)
+    rounds.to_csv(out_dir / "probe_by_round.csv", index=False)
+    contrasts = pd.concat([summarize_condition_differences(timestep, "reference_t", args.analysis_seed + 30_000),
+                           summarize_condition_differences(rounds, "round_idx", args.analysis_seed + 30_000)],
+                          ignore_index=True)
+    contrasts.to_csv(out_dir / "probe_condition_differences.csv", index=False)
+    random_means = baseline.groupby(["target", "capability_subset"]).distance_accuracy.mean()
+    shuffle["random_baseline_mean"] = [random_means.loc[(r.target, r.capability_subset)] for r in shuffle.itertuples()]
+    shuffle["difference_from_random"] = shuffle.distance_accuracy - shuffle.random_baseline_mean
+    shuffle["leakage_screen_pass"] = shuffle.difference_from_random.abs() <= 0.10
+    shuffle.to_csv(out_dir / "shuffled_label_baseline.csv", index=False)
+    make_probe_figures(timestep, time_summary, round_summary, baseline, selected, out_dir)
+    embeddings, parameters = [], {}
+    for condition in CONDITIONS:
+        print(f"[umap] {condition}: selected policy, 920 points, n_neighbors=919", flush=True)
+        features, episodes = umap_features[condition]
+        np.savez_compressed(out_dir / f"umap_features_{condition}.npz", hidden_final50=features,
+                            d_R=episodes.d_R.to_numpy(), d_B=episodes.d_B.to_numpy(),
+                            rollout_rep=episodes.rollout_rep.to_numpy())
+        coords, parameters[condition] = run_umap(features)
+        table = episodes.copy()
+        table["umap_1"], table["umap_2"] = coords.T
+        table["delay_diff"] = table.d_R - table.d_B
+        table["relative_red_speed_advantage"] = table.d_B - table.d_R
+        embeddings.append(table)
+    embedding_table = pd.concat(embeddings, ignore_index=True)
+    embedding_table.to_csv(out_dir / "umap_selected.csv", index=False)
+    make_umap_figures(embedding_table, selected, out_dir)
+    metadata = write_metadata(out_dir, args, validation, selected, parameters, started)
+    write_report(out_dir, timestep, time_summary, round_summary, baseline, shuffle, selected, metadata)
+    # Do not manufacture a pass: preserve the report and fail loudly on the
+    # primary leakage screen if shuffled real features look unexpectedly strong.
+    require(bool(shuffle[shuffle.capability_subset == "all"].leakage_screen_pass.all()),
+            "Shuffled-label leakage screen failed; inspect shuffled_label_baseline.csv before interpreting results")
+    print(f"[done] all 15 checkpoints, probes, baselines, figures and report saved to {out_dir}", flush=True)
+
+
+def write_report(out_dir: Path, per_seed: pd.DataFrame, time_summary: pd.DataFrame,
+                 round_summary: pd.DataFrame, random: pd.DataFrame, shuffle: pd.DataFrame,
+                 selected: dict, metadata: dict) -> None:
+    """Generate the methods and numerical report; qualitative interpretation is
+    added after inspecting the actual figures, never inferred from clustering.
+    """
+    lines = ["# CoordinationGrid representation analysis", "",
+             "## Data and validation", "",
+             "All 15 recurrent checkpoints (three conditions × policy seeds 1–5) were analyzed. "
+             "Existing train/test HDF5 files were reused; no evaluation or training was rerun. "
+             "Every checkpoint passed 920 episodes, 46 authoritative profiles (24 train + 22 novel), "
+             "20 repetitions/profile, finite 128-D hidden scans, constant capability on valid steps, "
+             "a final done, and all 20 ordered round ends. MLP checkpoints are excluded.", "",
+             "`episode_manifest.csv` records every input file, source episode, profile, repetition, "
+             "valid length and probe partition. `validation.json` and `analysis_metadata.json` "
+             "record the input sizes/timestamps, checks, software versions and analysis source hash.", "",
+             "| Condition | Valid length min–max across seeds | Mean length across seeds |",
+             "| --- | --- | --- |"]
+    for condition in CONDITIONS:
+        entries = [v for v in metadata["validation"] if v["condition"] == condition]
+        lines.append(f"| {CONDITION_LABELS[condition]} | {min(v['length_min'] for v in entries)}–{max(v['length_max'] for v in entries)} "
+                     f"| {np.mean([v['length_mean'] for v in entries]):.1f} |")
+    completion = time_summary[(time_summary.reference_t == 400) & (time_summary.target == "d_R")
+                              & (time_summary.capability_subset == "all")].set_index("condition")
+    lines.extend(["", "By the 400-step cutoff, the mean fraction already complete across the five policies is "
+                  + "; ".join(f"{CONDITION_LABELS[c]}: {100 * completion.loc[c].fraction_episodes_complete_mean:.2f}%"
+                              for c in CONDITIONS) + ". Earlier completion fractions are retained in the CSVs."])
+    split = json.loads((out_dir / "probe_split.json").read_text())
+    lines.extend(["", "## Probe protocol", "",
+                  f"PCG64 analysis seed {split['analysis_seed']} permutes repetitions 0–19 once. "
+                  f"Probe training repetitions: `{split['train_reps']}`; test repetitions: `{split['test_reps']}`. "
+                  "Each capability pair has 16 train and 4 held-out rollouts (736/184 total). "
+                  "A repetition is its zero-based occurrence within its capability profile in the stored "
+                  "episode order, checked against `capability_index_per_ep`. The split is identical "
+                  "for every condition, policy seed, target and cutoff; episode ordering is canonicalized "
+                  "by `(d_R,d_B,rollout_rep)` before fitting.", "",
+                  "Separate 10-class affine probes decode d_R and d_B directly as ordered classes 0–9. "
+                  "Each receives only 128 averaged GRU coordinates. Full-batch softmax cross entropy, "
+                  "Adam lr=0.01, 1000 updates, bias, no hidden layers, no scaling, no weight decay or tuning. "
+                  f"Fixed initialization seeds are `{metadata['probe']['initialization_seeds']}`. "
+                  "Every policy has its own probes; coordinate systems are never pooled. "
+                  "Independent probes are batched computationally, with separate parameters and Adam moments.", "",
+                  "The primary score is `mean(1 − |prediction − true delay|/9)`. Exact accuracy and "
+                  "delay MAE are also saved. A high distance score is not itself evidence of decoding: "
+                  "central-class guesses already score well, so compare with the trained Normal baseline.", "",
+                  "At t=1,50,100,…,400, inputs are `mean(hidden[:min(t,L)])`, where L includes "
+                  "the first terminal step. Round curves average from episode start through each round's "
+                  "terminal transition, using its post-observation hidden state. No scan padding is used. "
+                  "Completion fractions at each t are saved in the timestep tables.", "",
+                  "All-seed summaries use sample SD and 10,000 percentile bootstrap resamples of the "
+                  f"five independent policy seeds (RNG seed {metadata['bootstrap']['seed']}). "
+                  "These intervals describe policy-seed variability; five seeds provide limited precision. "
+                  "No rollout-level CI is substituted for model uncertainty.", "",
+                  "## Behavior-selected checkpoints", "",
+                  "Selection uses the final PPO-update `ep_return_mean` from completed stdout logs that "
+                  "saved each checkpoint (rounded to four decimals). If this metric is unavailable for "
+                  "any seed of a condition, all five candidates in that condition use "
+                  "`train.mean_ep_return` as an explicitly labeled evaluation proxy. "
+                  "Representation scores and novel-test returns never enter selection.", "",
+                  "| Condition | Selected seed | Metric | Value |",
+                  "| --- | --- | --- | --- |"])
+    for condition, entry in selected.items():
+        lines.append(f"| {CONDITION_LABELS[condition]} | {entry['selected_seed']} | {entry['selection_metric']} | {entry['metric_value']:.4f} |")
+    lines.extend(["", "All candidate values and exact source logs are in `selected_seeds.json`. "
+                  "The selected-seed view emphasizes paper fidelity; the all-five-seed view is the "
+                  "main robustness analysis and retains every policy, including weak policies.", "",
+                  "## Descriptive probe results", "",
+                  "| Condition | Target | t=1 mean | t=400 mean [95% CI] | Seed SD at t=400 | Selected t=400 | Round 0 → 19 mean |",
+                  "| --- | --- | --- | --- | --- | --- | --- |"])
+    for condition in CONDITIONS:
+        for target in TARGETS:
+            group = time_summary[(time_summary.condition == condition) & (time_summary.target == target)
+                                 & (time_summary.capability_subset == "all")].set_index("reference_t")
+            rg = round_summary[(round_summary.condition == condition) & (round_summary.target == target)
+                               & (round_summary.capability_subset == "all")].set_index("round_idx")
+            chosen = per_seed[(per_seed.condition == condition) & (per_seed.target == target)
+                              & (per_seed.capability_subset == "all") & (per_seed.reference_t == 400)
+                              & (per_seed.training_seed == selected[condition]["selected_seed"])].iloc[0]
+            end = group.loc[400]
+            lines.append(f"| {CONDITION_LABELS[condition]} | {target} | {group.loc[1].distance_accuracy_mean:.3f} "
+                         f"| {end.distance_accuracy_mean:.3f} [{end.distance_accuracy_ci_low:.3f}, {end.distance_accuracy_ci_high:.3f}] "
+                         f"| {end.distance_accuracy_std:.3f} | {chosen.distance_accuracy:.3f} "
+                         f"| {rg.loc[0].distance_accuracy_mean:.3f} → {rg.loc[19].distance_accuracy_mean:.3f} |")
+    lines.extend(["", "Per-policy endpoints (no seed omitted):", "",
+                  "| Condition | Target | Seeds 1, 2, 3, 4, 5 at t=400 | Above Normal mean (of 5) |",
+                  "| --- | --- | --- | --- |"])
+    for condition in CONDITIONS:
+        for target in TARGETS:
+            group = per_seed[(per_seed.condition == condition) & (per_seed.target == target)
+                             & (per_seed.capability_subset == "all") & (per_seed.reference_t == 400)].sort_values("training_seed")
+            baseline_mean = random[(random.target == target) & (random.capability_subset == "all")].distance_accuracy.mean()
+            lines.append(f"| {CONDITION_LABELS[condition]} | {target} | " + ", ".join(f"{v:.3f}" for v in group.distance_accuracy)
+                         + f" | {int((group.distance_accuracy > baseline_mean).sum())} |")
+    lines.extend(["", "Progression is measured as endpoint differences, without assuming the curve is monotonic:", "",
+                  "| Condition | Target | Mean t=1→400 change | Policies increasing (of 5) | Mean round 0→19 change | Policies increasing (of 5) |",
+                  "| --- | --- | --- | --- | --- | --- |"])
+    round_per_seed = pd.read_csv(out_dir / "probe_by_round_per_seed.csv")
+    for condition in CONDITIONS:
+        for target in TARGETS:
+            tg = per_seed[(per_seed.condition == condition) & (per_seed.target == target)
+                          & (per_seed.capability_subset == "all")].pivot(
+                              index="training_seed", columns="reference_t", values="distance_accuracy")
+            rg = round_per_seed[(round_per_seed.condition == condition) & (round_per_seed.target == target)
+                                & (round_per_seed.capability_subset == "all")].pivot(
+                                    index="training_seed", columns="round_idx", values="distance_accuracy")
+            td, rd = tg[400] - tg[1], rg[19] - rg[0]
+            lines.append(f"| {CONDITION_LABELS[condition]} | {target} | {td.mean():+.3f} | {int((td > 0).sum())} "
+                         f"| {rd.mean():+.3f} | {int((rd > 0).sum())} |")
+    lines.extend(["", "Multi-partner minus control contrasts pair the nominal model-training seed and "
+                  "bootstrap those five seed differences. They are descriptive comparisons of the "
+                  "trained policies, with limited uncertainty resolution:", "",
+                  "| Target | Control | t=400 difference [95% CI] | Round 19 difference [95% CI] |",
+                  "| --- | --- | --- | --- |"])
+    contrasts = pd.read_csv(out_dir / "probe_condition_differences.csv")
+    for target in TARGETS:
+        for condition in CONDITIONS[1:]:
+            group = contrasts[(contrasts.target == target) & (contrasts.comparison_condition == condition)
+                              & (contrasts.capability_subset == "all")]
+            t = group[(group.axis == "reference_t") & (group.step == 400)].iloc[0]
+            r = group[(group.axis == "round_idx") & (group.step == 19)].iloc[0]
+            lines.append(f"| {target} | {CONDITION_LABELS[condition]} "
+                         f"| {t.distance_accuracy_difference_mean:+.3f} [{t.difference_ci_low:+.3f}, {t.difference_ci_high:+.3f}] "
+                         f"| {r.distance_accuracy_difference_mean:+.3f} [{r.difference_ci_low:+.3f}, {r.difference_ci_high:+.3f}] |")
+    lines.extend(["", "## Interpretation", ""])
+    for axis, end, table, description in (("reference_t", 400, time_summary, "t=400"),
+                                         ("round_idx", 19, round_summary, "round 19")):
+        winners = []
+        for target in TARGETS:
+            endpoint = table[(table[axis] == end) & (table.target == target) & (table.capability_subset == "all")]
+            best = endpoint.loc[endpoint.distance_accuracy_mean.idxmax()]
+            winners.append(f"{target}: {CONDITION_LABELS[best.condition]} ({best.distance_accuracy_mean:.3f})")
+        lines.append(f"At {description}, the largest all-policy mean distance score is " + "; ".join(winners) + ".")
+        lines.append("")
+    final_contrasts = contrasts[(contrasts.axis == "reference_t") & (contrasts.step == 400)
+                               & (contrasts.capability_subset == "all")]
+    all_positive = bool((final_contrasts.distance_accuracy_difference_mean > 0).all())
+    lines.extend([("The multi-partner condition has a positive mean t=400 contrast against both controls "
+                   "for both cooldowns." if all_positive else
+                   "The predicted pattern of the multi-partner condition outperforming both controls "
+                   "on both cooldowns is not observed at t=400. Some control/target comparisons differ "
+                   "from that expectation; the table above preserves their direction and uncertainty."), "",
+                  "Evidence for capability information comes from held-out linear decoding above "
+                  "the Normal baseline and its development with history. Condition differences "
+                  "must be assessed for each cooldown and across all five policies; a behavior-selected "
+                  "policy or a UMAP panel alone cannot establish robustness. "
+                  "Decoding demonstrates recoverable information in recurrent state, but does not by "
+                  "itself establish that the action policy uses that information causally. "
+                  "The condition contrasts test selective strength under the current experiment, "
+                  "without modifying the task or excluding poorly trained policies."])
+    lines.extend(["", "Secondary familiar/novel decoding uses the same probe trained on all 46 profiles, "
+                  "then partitions the 184 held-out repetitions (96 familiar / 88 novel). "
+                  "This is novel to policy training, **not** a probe trained without novel labels; "
+                  "it is not a held-out-capability transfer test. For the single-partner policy, the "
+                  "24-profile 'familiar' slice means the experiment's TRAIN population; only its "
+                  "single training partner was actually familiar to that policy.", "",
+                  "| Condition | Target | Familiar t=400 mean | Novel t=400 mean |",
+                  "| --- | --- | --- | --- |"])
+    for condition in CONDITIONS:
+        for target in TARGETS:
+            group = time_summary[(time_summary.condition == condition) & (time_summary.target == target)
+                                 & (time_summary.reference_t == 400)].set_index("capability_subset")
+            lines.append(f"| {CONDITION_LABELS[condition]} | {target} | {group.loc['familiar'].distance_accuracy_mean:.3f} "
+                         f"| {group.loc['novel'].distance_accuracy_mean:.3f} |")
+    lines.extend(["", "## Baselines and leakage screen", "",
+                  "Normal(0,1) features have shape (920,128), use real labels and the same split, and "
+                  "are fitted with the identical linear probe. Five fixed vector seeds (0–4) are saved. "
+                  "The selected-policy figure uses seed 0; robustness/round figures show the five-vector-seed "
+                  "mean as a time-independent dashed reference. This baseline is not chance exact accuracy.", "",
+                  "| Target | Normal seed 0 | Normal mean ± SD | Shuffle t=400 across 15 policies mean ± SD |",
+                  "| --- | --- | --- | --- |"])
+    for target in TARGETS:
+        b = random[(random.target == target) & (random.capability_subset == "all")]
+        s = shuffle[(shuffle.target == target) & (shuffle.capability_subset == "all")]
+        lines.append(f"| {target} | {b[b.random_vector_seed == 0].distance_accuracy.iloc[0]:.3f} "
+                     f"| {b.distance_accuracy.mean():.3f} ± {b.distance_accuracy.std():.3f} "
+                     f"| {s.distance_accuracy.mean():.3f} ± {s.distance_accuracy.std():.3f} |")
+    primary_shuffle = shuffle[shuffle.capability_subset == "all"]
+    lines.extend(["", f"The descriptive leakage screen passed {int(primary_shuffle.leakage_screen_pass.sum())}/30 "
+                  "primary shuffled-target fits. Its predefined rule is absolute distance-score difference "
+                  "from the Normal mean ≤0.10; this broad screen is not a statistical equivalence claim. "
+                  "A fixed permutation of paired capability labels breaks their relation to the t=400 "
+                  "real representation. All per-fit results, including secondary subset screens, are saved.", "",
+                  "## UMAP", "",
+                  "Each behavior-selected network is embedded separately using 920 final-50 valid-step "
+                  "averages, min_dist=1.0, n_neighbors=919, random_state=42, otherwise UMAP defaults. "
+                  "Library versions and parameters are saved. All panels use one color scale for "
+                  "`relative_red_speed_advantage = d_B − d_R`: positive means RED faster, negative "
+                  "means BLUE faster. `delay_diff = d_R − d_B` is also saved. Companion figures show "
+                  "individual d_R/d_B cooldowns. Layout identity is never a grouping unit.", "",
+                  "UMAP is qualitative visualization only: separation does not measure representation "
+                  "strength or establish causal use of decoded information. Inspect the saved figures "
+                  "together with held-out linear probes.", "",
+                  "## Protocol correspondence and deviations", "",
+                  f"Reference: [Mon-Williams et al., Appendix A.2–A.3]({PAPER_URL}). "
+                  "The requested grid protocol follows the original Figure-3 analysis; it does not "
+                  "alter the grid experiment to reproduce the original findings.", "",
+                  "| Original representation protocol | CoordinationGrid |",
+                  "| --- | --- |",
+                  "| Task-1 / task-2 cooldown | d_R / d_B; lower delay means faster |",
+                  "| 46 evaluated profiles | 24 train + 22 novel = 46 |",
+                  "| 20 rollout seeds/profile, 920 rollouts | Same counts; repetition recovered from stored episode order |",
+                  "| RNN hidden state | Post-observation GRU state, dimension 128 |",
+                  "| Final-50 average, episode prefix average | Same, restricted to valid terminal-inclusive steps |",
+                  "| Single-layer ordered classification | Two affine 128→10 probes |",
+                  "| 80/20 rollout-seed split | Same: 16/4 per profile, fixed shared permutation |",
+                  "| 1000 updates, Adam lr=1e-2 | Same; full-batch implementation, fixed initialization |",
+                  "| Distance-aware accuracy | Same: 1 − absolute class error/9 |",
+                  "| Random Normal representation | Same; seed 0 plus four stability repeats |",
+                  "| UMAP min_dist=1, n_neighbors=N−1 | Same; fixed random_state=42 |",
+                  "| Best final-training-return policy among five | Same when recoverable; documented eval-return fallback otherwise |",
+                  "| Fixed 400-step episode | Variable-length 20-round partner episode; clip cutoffs to valid length and report completion fractions |",
+                  "| Five fixed kitchen layouts | Layouts vary each round from the fixed 1000-layout corpus; analyze whole partner episodes |",
+                  "", "The round-index curve, five-policy-seed confidence intervals, familiar/novel "
+                  "subsets and shuffled-label screen are additional diagnostics. The repeated-round "
+                  "analysis extends beyond the t=400 curve for long grid episodes.", "",
+                  "## Reproduction and artifacts", "", "```bash",
+                  "python -m pip install -r requirements/representation.txt",
+                  "python analysis/representation_analysis.py --eval-dir dev/eval_out \\",
+                  "  --out-dir analysis/representation_results --analysis-seed 0", "```", "",
+                  "Primary CSVs: `probe_timestep_per_seed.csv`, `probe_timestep_summary.csv`, "
+                  "`probe_by_round_per_seed.csv`, `probe_by_round_summary.csv`, `random_baseline.csv`. "
+                  "Additional CSVs: `probe_condition_differences.csv`, `shuffled_label_baseline.csv`, `episode_manifest.csv`, "
+                  "`umap_selected.csv`, and the round-table alias `probe_by_round.csv`. "
+                  "Figures are saved in PNG and PDF; fitted affine parameters and selected final-50 "
+                  "feature matrices are saved in NPZ for inspection.", ""])
+    # Optional observations are written only after viewing the actual figures,
+    # and reused only if the image is unchanged. Never infer strength from UMAP.
+    observation_path = out_dir / "umap_qualitative_observation.json"
+    if observation_path.exists():
+        observation = json.loads(observation_path.read_text())
+        digest = hashlib.sha256((out_dir / "figure_umap.png").read_bytes()).hexdigest()
+        if observation.get("figure_sha256") == digest:
+            marker = "UMAP is qualitative visualization only:"
+            index = next(i for i, line in enumerate(lines) if line.startswith(marker))
+            lines[index:index] = ["Visual inspection of the saved panels: " + observation["observation"], ""]
+    (out_dir / "README.md").write_text("\n".join(lines))
+
+
+if __name__ == "__main__":
+    main()

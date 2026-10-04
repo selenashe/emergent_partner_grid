@@ -1,0 +1,714 @@
+{
+  "corpora": {
+    "v1": {
+      "path": "/juice6/u/jshe/emergent_partner_grid/dev/grids_capability_selected",
+      "n_layouts": 1000,
+      "layouts_sha256": "77b1cc9a7106f7cc6f89b26c0087d873817c0addf47b7c3b0a3affc039173867",
+      "n_partner_equidistant": 878,
+      "ego_to_red": {
+        "mean": 5.288,
+        "min": 1.0,
+        "max": 17.0,
+        "counts": {
+          "1": 107,
+          "2": 122,
+          "3": 122,
+          "4": 97,
+          "5": 114,
+          "6": 102,
+          "7": 104,
+          "8": 72,
+          "9": 52,
+          "10": 35,
+          "11": 33,
+          "12": 17,
+          "13": 15,
+          "14": 5,
+          "15": 2,
+          "17": 1
+        }
+      },
+      "ego_to_blue": {
+        "mean": 5.247,
+        "min": 1.0,
+        "max": 19.0,
+        "counts": {
+          "1": 104,
+          "2": 104,
+          "3": 138,
+          "4": 109,
+          "5": 118,
+          "6": 103,
+          "7": 106,
+          "8": 70,
+          "9": 48,
+          "10": 39,
+          "11": 26,
+          "12": 11,
+          "13": 13,
+          "14": 6,
+          "15": 1,
+          "16": 3,
+          "19": 1
+        }
+      },
+      "partner_to_red": {
+        "mean": 6.143,
+        "min": 3.0,
+        "max": 11.0,
+        "counts": {
+          "3": 2,
+          "4": 197,
+          "5": 210,
+          "6": 219,
+          "7": 156,
+          "8": 107,
+          "9": 65,
+          "10": 32,
+          "11": 12
+        }
+      },
+      "partner_to_blue": {
+        "mean": 6.142,
+        "min": 4.0,
+        "max": 13.0,
+        "counts": {
+          "4": 203,
+          "5": 212,
+          "6": 215,
+          "7": 150,
+          "8": 111,
+          "9": 64,
+          "10": 31,
+          "11": 13,
+          "13": 1
+        }
+      },
+      "realized_wall_density": {
+        "mean": 0.24691836734693876,
+        "min": 0.02040816326530612,
+        "max": 0.6122448979591837,
+        "counts": {
+          "0.02040816326530612": 1,
+          "0.04081632653061224": 1,
+          "0.061224489795918366": 3,
+          "0.08163265306122448": 23,
+          "0.10204081632653061": 31,
+          "0.12244897959183673": 35,
+          "0.14285714285714285": 51,
+          "0.16326530612244897": 67,
+          "0.1836734693877551": 93,
+          "0.20408163265306123": 91,
+          "0.22448979591836735": 104,
+          "0.24489795918367346": 85,
+          "0.2653061224489796": 81,
+          "0.2857142857142857": 62,
+          "0.30612244897959184": 57,
+          "0.32653061224489793": 55,
+          "0.3469387755102041": 41,
+          "0.3673469387755102": 25,
+          "0.3877551020408163": 26,
+          "0.40816326530612246": 20,
+          "0.42857142857142855": 13,
+          "0.4489795918367347": 7,
+          "0.46938775510204084": 7,
+          "0.4897959183673469": 7,
+          "0.5102040816326531": 4,
+          "0.5306122448979592": 4,
+          "0.5510204081632653": 2,
+          "0.5714285714285714": 2,
+          "0.5918367346938775": 1,
+          "0.6122448979591837": 1
+        }
+      }
+    },
+    "v2": {
+      "path": "/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source/dev/grids_capability_selected_balanced_1096",
+      "n_layouts": 1096,
+      "layouts_sha256": "369bc123593d9f78d8d9f15383c2a9f6279393e6a84d01ef845c27039643740a",
+      "n_partner_equidistant": 559,
+      "ego_to_red": {
+        "mean": 4.5,
+        "min": 1.0,
+        "max": 8.0,
+        "counts": {
+          "1": 137,
+          "2": 137,
+          "3": 137,
+          "4": 137,
+          "5": 137,
+          "6": 137,
+          "7": 137,
+          "8": 137
+        }
+      },
+      "ego_to_blue": {
+        "mean": 4.5,
+        "min": 1.0,
+        "max": 8.0,
+        "counts": {
+          "1": 137,
+          "2": 137,
+          "3": 137,
+          "4": 137,
+          "5": 137,
+          "6": 137,
+          "7": 137,
+          "8": 137
+        }
+      },
+      "partner_to_red": {
+        "mean": 6.773722627737226,
+        "min": 4.0,
+        "max": 15.0,
+        "counts": {
+          "4": 167,
+          "5": 115,
+          "6": 221,
+          "7": 249,
+          "8": 156,
+          "9": 92,
+          "10": 50,
+          "11": 27,
+          "12": 11,
+          "13": 6,
+          "14": 1,
+          "15": 1
+        }
+      },
+      "partner_to_blue": {
+        "mean": 6.7700729927007295,
+        "min": 4.0,
+        "max": 15.0,
+        "counts": {
+          "4": 167,
+          "5": 115,
+          "6": 211,
+          "7": 265,
+          "8": 158,
+          "9": 86,
+          "10": 53,
+          "11": 20,
+          "12": 11,
+          "13": 6,
+          "14": 2,
+          "15": 2
+        }
+      },
+      "realized_wall_density": {
+        "mean": 0.24942276180545214,
+        "min": 0.04081632653061224,
+        "max": 0.6122448979591837,
+        "counts": {
+          "0.04081632653061224": 2,
+          "0.061224489795918366": 5,
+          "0.08163265306122448": 21,
+          "0.10204081632653061": 31,
+          "0.12244897959183673": 37,
+          "0.14285714285714285": 55,
+          "0.16326530612244897": 90,
+          "0.1836734693877551": 95,
+          "0.20408163265306123": 104,
+          "0.22448979591836735": 94,
+          "0.24489795918367346": 101,
+          "0.2653061224489796": 89,
+          "0.2857142857142857": 62,
+          "0.30612244897959184": 56,
+          "0.32653061224489793": 60,
+          "0.3469387755102041": 49,
+          "0.3673469387755102": 30,
+          "0.3877551020408163": 31,
+          "0.40816326530612246": 21,
+          "0.42857142857142855": 17,
+          "0.4489795918367347": 12,
+          "0.46938775510204084": 11,
+          "0.4897959183673469": 8,
+          "0.5102040816326531": 5,
+          "0.5306122448979592": 5,
+          "0.5510204081632653": 2,
+          "0.5714285714285714": 1,
+          "0.5918367346938775": 1,
+          "0.6122448979591837": 1
+        }
+      }
+    }
+  },
+  "actual_completed_training_rounds": [
+    {
+      "version": "v1",
+      "condition": "rnn_diverse_influence",
+      "mean_completed_rounds_per_run": 1752307.6,
+      "min_completed_rounds": 1171028,
+      "max_completed_rounds": 2390614,
+      "total_completed_rounds_five_runs": 8761538,
+      "mean_completed_rounds_per_layout_per_run": 1752.3076
+    },
+    {
+      "version": "v1",
+      "condition": "mlp_diverse_influence",
+      "mean_completed_rounds_per_run": 1288235.4,
+      "min_completed_rounds": 1113330,
+      "max_completed_rounds": 1765368,
+      "total_completed_rounds_five_runs": 6441177,
+      "mean_completed_rounds_per_layout_per_run": 1288.2353999999998
+    },
+    {
+      "version": "v1",
+      "condition": "rnn_single_influence",
+      "mean_completed_rounds_per_run": 3096970.8,
+      "min_completed_rounds": 1933378,
+      "max_completed_rounds": 4037670,
+      "total_completed_rounds_five_runs": 15484854,
+      "mean_completed_rounds_per_layout_per_run": 3096.9707999999996
+    },
+    {
+      "version": "v1",
+      "condition": "rnn_diverse_noinfluence",
+      "mean_completed_rounds_per_run": 1326903.6,
+      "min_completed_rounds": 946279,
+      "max_completed_rounds": 1572613,
+      "total_completed_rounds_five_runs": 6634518,
+      "mean_completed_rounds_per_layout_per_run": 1326.9036
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_influence",
+      "mean_completed_rounds_per_run": 1064886.8,
+      "min_completed_rounds": 945556,
+      "max_completed_rounds": 1159167,
+      "total_completed_rounds_five_runs": 5324434,
+      "mean_completed_rounds_per_layout_per_run": 971.6120437956205
+    },
+    {
+      "version": "v2",
+      "condition": "mlp_diverse_influence",
+      "mean_completed_rounds_per_run": 1196514.4,
+      "min_completed_rounds": 948502,
+      "max_completed_rounds": 1490753,
+      "total_completed_rounds_five_runs": 5982572,
+      "mean_completed_rounds_per_layout_per_run": 1091.7102189781021
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_single_influence",
+      "mean_completed_rounds_per_run": 2522797.4,
+      "min_completed_rounds": 1514510,
+      "max_completed_rounds": 3927439,
+      "total_completed_rounds_five_runs": 12613987,
+      "mean_completed_rounds_per_layout_per_run": 2301.8224452554746
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_noinfluence",
+      "mean_completed_rounds_per_run": 923942.8,
+      "min_completed_rounds": 909782,
+      "max_completed_rounds": 936382,
+      "total_completed_rounds_five_runs": 4619714,
+      "mean_completed_rounds_per_layout_per_run": 843.013503649635
+    }
+  ],
+  "per_seed_training_rounds": [
+    {
+      "version": "v1",
+      "condition": "rnn_diverse_influence",
+      "seed": 1,
+      "log": "/juice6/u/jshe/emergent_partner_grid/logs/cg_cap_17666487.out",
+      "config": "/juice6/u/jshe/emergent_partner_grid/dev/train_logs/rnn_diverse_influence_seed1_config.json",
+      "steps": 59965440,
+      "completed_rounds": 1171028
+    },
+    {
+      "version": "v1",
+      "condition": "rnn_diverse_influence",
+      "seed": 2,
+      "log": "/juice6/u/jshe/emergent_partner_grid/logs/cg_cap_17666490.out",
+      "config": "/juice6/u/jshe/emergent_partner_grid/dev/train_logs/rnn_diverse_influence_seed2_config.json",
+      "steps": 59965440,
+      "completed_rounds": 1830842
+    },
+    {
+      "version": "v1",
+      "condition": "rnn_diverse_influence",
+      "seed": 3,
+      "log": "/juice6/u/jshe/emergent_partner_grid/logs/cg_cap_17666491.out",
+      "config": "/juice6/u/jshe/emergent_partner_grid/dev/train_logs/rnn_diverse_influence_seed3_config.json",
+      "steps": 59965440,
+      "completed_rounds": 2188947
+    },
+    {
+      "version": "v1",
+      "condition": "rnn_diverse_influence",
+      "seed": 4,
+      "log": "/juice6/u/jshe/emergent_partner_grid/logs/cg_cap_17661506.out",
+      "config": "/juice6/u/jshe/emergent_partner_grid/dev/train_logs/rnn_diverse_influence_seed4_config.json",
+      "steps": 59965440,
+      "completed_rounds": 1180107
+    },
+    {
+      "version": "v1",
+      "condition": "rnn_diverse_influence",
+      "seed": 5,
+      "log": "/juice6/u/jshe/emergent_partner_grid/logs/cg_cap_17657662.out",
+      "config": "/juice6/u/jshe/emergent_partner_grid/dev/train_logs/rnn_diverse_influence_seed5_config.json",
+      "steps": 59965440,
+      "completed_rounds": 2390614
+    },
+    {
+      "version": "v1",
+      "condition": "mlp_diverse_influence",
+      "seed": 1,
+      "log": "/juice6/u/jshe/emergent_partner_grid/logs/cg_cap_17666492.out",
+      "config": "/juice6/u/jshe/emergent_partner_grid/dev/train_logs/mlp_diverse_influence_seed1_config.json",
+      "steps": 59965440,
+      "completed_rounds": 1150249
+    },
+    {
+      "version": "v1",
+      "condition": "mlp_diverse_influence",
+      "seed": 2,
+      "log": "/juice6/u/jshe/emergent_partner_grid/logs/cg_cap_17657664.out",
+      "config": "/juice6/u/jshe/emergent_partner_grid/dev/train_logs/mlp_diverse_influence_seed2_config.json",
+      "steps": 59965440,
+      "completed_rounds": 1156020
+    },
+    {
+      "version": "v1",
+      "condition": "mlp_diverse_influence",
+      "seed": 3,
+      "log": "/juice6/u/jshe/emergent_partner_grid/logs/cg_cap_17657665.out",
+      "config": "/juice6/u/jshe/emergent_partner_grid/dev/train_logs/mlp_diverse_influence_seed3_config.json",
+      "steps": 59965440,
+      "completed_rounds": 1256210
+    },
+    {
+      "version": "v1",
+      "condition": "mlp_diverse_influence",
+      "seed": 4,
+      "log": "/juice6/u/jshe/emergent_partner_grid/logs/cg_cap_17657666.out",
+      "config": "/juice6/u/jshe/emergent_partner_grid/dev/train_logs/mlp_diverse_influence_seed4_config.json",
+      "steps": 59965440,
+      "completed_rounds": 1113330
+    },
+    {
+      "version": "v1",
+      "condition": "mlp_diverse_influence",
+      "seed": 5,
+      "log": "/juice6/u/jshe/emergent_partner_grid/logs/cg_cap_17659307.out",
+      "config": "/juice6/u/jshe/emergent_partner_grid/dev/train_logs/mlp_diverse_influence_seed5_config.json",
+      "steps": 59965440,
+      "completed_rounds": 1765368
+    },
+    {
+      "version": "v1",
+      "condition": "rnn_single_influence",
+      "seed": 1,
+      "log": "/juice6/u/jshe/emergent_partner_grid/logs/cg_cap_17657668.out",
+      "config": "/juice6/u/jshe/emergent_partner_grid/dev/train_logs/rnn_single_influence_seed1_config.json",
+      "steps": 59965440,
+      "completed_rounds": 3851169
+    },
+    {
+      "version": "v1",
+      "condition": "rnn_single_influence",
+      "seed": 2,
+      "log": "/juice6/u/jshe/emergent_partner_grid/logs/cg_cap_17657669.out",
+      "config": "/juice6/u/jshe/emergent_partner_grid/dev/train_logs/rnn_single_influence_seed2_config.json",
+      "steps": 59965440,
+      "completed_rounds": 3701517
+    },
+    {
+      "version": "v1",
+      "condition": "rnn_single_influence",
+      "seed": 3,
+      "log": "/juice6/u/jshe/emergent_partner_grid/logs/cg_cap_17657670.out",
+      "config": "/juice6/u/jshe/emergent_partner_grid/dev/train_logs/rnn_single_influence_seed3_config.json",
+      "steps": 59965440,
+      "completed_rounds": 1961120
+    },
+    {
+      "version": "v1",
+      "condition": "rnn_single_influence",
+      "seed": 4,
+      "log": "/juice6/u/jshe/emergent_partner_grid/logs/cg_cap_17657671.out",
+      "config": "/juice6/u/jshe/emergent_partner_grid/dev/train_logs/rnn_single_influence_seed4_config.json",
+      "steps": 59965440,
+      "completed_rounds": 1933378
+    },
+    {
+      "version": "v1",
+      "condition": "rnn_single_influence",
+      "seed": 5,
+      "log": "/juice6/u/jshe/emergent_partner_grid/logs/cg_cap_17657672.out",
+      "config": "/juice6/u/jshe/emergent_partner_grid/dev/train_logs/rnn_single_influence_seed5_config.json",
+      "steps": 59965440,
+      "completed_rounds": 4037670
+    },
+    {
+      "version": "v1",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 1,
+      "log": "/juice6/u/jshe/emergent_partner_grid/logs/cg_cap_17667647.out",
+      "config": "/juice6/u/jshe/emergent_partner_grid/dev/train_logs/rnn_diverse_noinfluence_seed1_config.json",
+      "steps": 59965440,
+      "completed_rounds": 1086546
+    },
+    {
+      "version": "v1",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 2,
+      "log": "/juice6/u/jshe/emergent_partner_grid/logs/cg_cap_17667648.out",
+      "config": "/juice6/u/jshe/emergent_partner_grid/dev/train_logs/rnn_diverse_noinfluence_seed2_config.json",
+      "steps": 59965440,
+      "completed_rounds": 1523129
+    },
+    {
+      "version": "v1",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 3,
+      "log": "/juice6/u/jshe/emergent_partner_grid/logs/cg_cap_17667649.out",
+      "config": "/juice6/u/jshe/emergent_partner_grid/dev/train_logs/rnn_diverse_noinfluence_seed3_config.json",
+      "steps": 59965440,
+      "completed_rounds": 1572613
+    },
+    {
+      "version": "v1",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 4,
+      "log": "/juice6/u/jshe/emergent_partner_grid/logs/cg_cap_17667658.out",
+      "config": "/juice6/u/jshe/emergent_partner_grid/dev/train_logs/rnn_diverse_noinfluence_seed4_config.json",
+      "steps": 59965440,
+      "completed_rounds": 946279
+    },
+    {
+      "version": "v1",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 5,
+      "log": "/juice6/u/jshe/emergent_partner_grid/logs/cg_cap_17667660.out",
+      "config": "/juice6/u/jshe/emergent_partner_grid/dev/train_logs/rnn_diverse_noinfluence_seed5_config.json",
+      "steps": 59965440,
+      "completed_rounds": 1505951
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_influence",
+      "seed": 1,
+      "log": "/juice6/u/jshe/emergent_partner_grid/logs/cg_cap_17688017.out",
+      "config": "/juice6/u/jshe/emergent_partner_grid/dev/train_logs/online_v2/balanced1096_20261002_022924/rnn_diverse_influence_seed1_config.json",
+      "steps": 59965440,
+      "completed_rounds": 1105915
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_influence",
+      "seed": 2,
+      "log": "/juice6/u/jshe/emergent_partner_grid/logs/cg_cap_17688018.out",
+      "config": "/juice6/u/jshe/emergent_partner_grid/dev/train_logs/online_v2/balanced1096_20261002_022924/rnn_diverse_influence_seed2_config.json",
+      "steps": 59965440,
+      "completed_rounds": 1159167
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_influence",
+      "seed": 3,
+      "log": "/juice6/u/jshe/emergent_partner_grid/logs/cg_cap_17688019.out",
+      "config": "/juice6/u/jshe/emergent_partner_grid/dev/train_logs/online_v2/balanced1096_20261002_022924/rnn_diverse_influence_seed3_config.json",
+      "steps": 59965440,
+      "completed_rounds": 959141
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_influence",
+      "seed": 4,
+      "log": "/juice6/u/jshe/emergent_partner_grid/logs/cg_cap_17688020.out",
+      "config": "/juice6/u/jshe/emergent_partner_grid/dev/train_logs/online_v2/balanced1096_20261002_022924/rnn_diverse_influence_seed4_config.json",
+      "steps": 59965440,
+      "completed_rounds": 945556
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_influence",
+      "seed": 5,
+      "log": "/juice6/u/jshe/emergent_partner_grid/logs/cg_cap_17688021.out",
+      "config": "/juice6/u/jshe/emergent_partner_grid/dev/train_logs/online_v2/balanced1096_20261002_022924/rnn_diverse_influence_seed5_config.json",
+      "steps": 59965440,
+      "completed_rounds": 1154655
+    },
+    {
+      "version": "v2",
+      "condition": "mlp_diverse_influence",
+      "seed": 1,
+      "log": "/juice6/u/jshe/emergent_partner_grid/logs/cg_cap_17688022.out",
+      "config": "/juice6/u/jshe/emergent_partner_grid/dev/train_logs/online_v2/balanced1096_20261002_022924/mlp_diverse_influence_seed1_config.json",
+      "steps": 59965440,
+      "completed_rounds": 1064328
+    },
+    {
+      "version": "v2",
+      "condition": "mlp_diverse_influence",
+      "seed": 2,
+      "log": "/juice6/u/jshe/emergent_partner_grid/logs/cg_cap_17688023.out",
+      "config": "/juice6/u/jshe/emergent_partner_grid/dev/train_logs/online_v2/balanced1096_20261002_022924/mlp_diverse_influence_seed2_config.json",
+      "steps": 59965440,
+      "completed_rounds": 1373422
+    },
+    {
+      "version": "v2",
+      "condition": "mlp_diverse_influence",
+      "seed": 3,
+      "log": "/juice6/u/jshe/emergent_partner_grid/logs/cg_cap_17688024.out",
+      "config": "/juice6/u/jshe/emergent_partner_grid/dev/train_logs/online_v2/balanced1096_20261002_022924/mlp_diverse_influence_seed3_config.json",
+      "steps": 59965440,
+      "completed_rounds": 1105567
+    },
+    {
+      "version": "v2",
+      "condition": "mlp_diverse_influence",
+      "seed": 4,
+      "log": "/juice6/u/jshe/emergent_partner_grid/logs/cg_cap_17688025.out",
+      "config": "/juice6/u/jshe/emergent_partner_grid/dev/train_logs/online_v2/balanced1096_20261002_022924/mlp_diverse_influence_seed4_config.json",
+      "steps": 59965440,
+      "completed_rounds": 948502
+    },
+    {
+      "version": "v2",
+      "condition": "mlp_diverse_influence",
+      "seed": 5,
+      "log": "/juice6/u/jshe/emergent_partner_grid/logs/cg_cap_17688026.out",
+      "config": "/juice6/u/jshe/emergent_partner_grid/dev/train_logs/online_v2/balanced1096_20261002_022924/mlp_diverse_influence_seed5_config.json",
+      "steps": 59965440,
+      "completed_rounds": 1490753
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_single_influence",
+      "seed": 1,
+      "log": "/juice6/u/jshe/emergent_partner_grid/logs/cg_cap_17688027.out",
+      "config": "/juice6/u/jshe/emergent_partner_grid/dev/train_logs/online_v2/balanced1096_20261002_022924/rnn_single_influence_seed1_config.json",
+      "steps": 59965440,
+      "completed_rounds": 1691897
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_single_influence",
+      "seed": 2,
+      "log": "/juice6/u/jshe/emergent_partner_grid/logs/cg_cap_17688028.out",
+      "config": "/juice6/u/jshe/emergent_partner_grid/dev/train_logs/online_v2/balanced1096_20261002_022924/rnn_single_influence_seed2_config.json",
+      "steps": 59965440,
+      "completed_rounds": 1514510
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_single_influence",
+      "seed": 3,
+      "log": "/juice6/u/jshe/emergent_partner_grid/logs/cg_cap_17688029.out",
+      "config": "/juice6/u/jshe/emergent_partner_grid/dev/train_logs/online_v2/balanced1096_20261002_022924/rnn_single_influence_seed3_config.json",
+      "steps": 59965440,
+      "completed_rounds": 3846699
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_single_influence",
+      "seed": 4,
+      "log": "/juice6/u/jshe/emergent_partner_grid/logs/cg_cap_17688030.out",
+      "config": "/juice6/u/jshe/emergent_partner_grid/dev/train_logs/online_v2/balanced1096_20261002_022924/rnn_single_influence_seed4_config.json",
+      "steps": 59965440,
+      "completed_rounds": 1633442
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_single_influence",
+      "seed": 5,
+      "log": "/juice6/u/jshe/emergent_partner_grid/logs/cg_cap_17688031.out",
+      "config": "/juice6/u/jshe/emergent_partner_grid/dev/train_logs/online_v2/balanced1096_20261002_022924/rnn_single_influence_seed5_config.json",
+      "steps": 59965440,
+      "completed_rounds": 3927439
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 1,
+      "log": "/juice6/u/jshe/emergent_partner_grid/logs/cg_cap_17688032.out",
+      "config": "/juice6/u/jshe/emergent_partner_grid/dev/train_logs/online_v2/balanced1096_20261002_022924/rnn_diverse_noinfluence_seed1_config.json",
+      "steps": 59965440,
+      "completed_rounds": 915034
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 2,
+      "log": "/juice6/u/jshe/emergent_partner_grid/logs/cg_cap_17688033.out",
+      "config": "/juice6/u/jshe/emergent_partner_grid/dev/train_logs/online_v2/balanced1096_20261002_022924/rnn_diverse_noinfluence_seed2_config.json",
+      "steps": 59965440,
+      "completed_rounds": 909782
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 3,
+      "log": "/juice6/u/jshe/emergent_partner_grid/logs/cg_cap_17688034.out",
+      "config": "/juice6/u/jshe/emergent_partner_grid/dev/train_logs/online_v2/balanced1096_20261002_022924/rnn_diverse_noinfluence_seed3_config.json",
+      "steps": 59965440,
+      "completed_rounds": 933817
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 4,
+      "log": "/juice6/u/jshe/emergent_partner_grid/logs/cg_cap_17688035.out",
+      "config": "/juice6/u/jshe/emergent_partner_grid/dev/train_logs/online_v2/balanced1096_20261002_022924/rnn_diverse_noinfluence_seed4_config.json",
+      "steps": 59965440,
+      "completed_rounds": 936382
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 5,
+      "log": "/juice6/u/jshe/emergent_partner_grid/logs/cg_cap_17688036.out",
+      "config": "/juice6/u/jshe/emergent_partner_grid/dev/train_logs/online_v2/balanced1096_20261002_022924/rnn_diverse_noinfluence_seed5_config.json",
+      "steps": 59965440,
+      "completed_rounds": 924699
+    }
+  ],
+  "guaranteed_actual_coverage": {
+    "v1_diverse": {
+      "guaranteed_complete_episodes_per_env": 117,
+      "guaranteed_complete_rounds": 599040,
+      "unique_layouts_visited": 1000,
+      "unique_capability_layout_pairs_visited": 24000,
+      "min_guaranteed_visits_per_layout": 505,
+      "min_guaranteed_visits_per_pair": 9
+    },
+    "v1_single": {
+      "guaranteed_complete_episodes_per_env": 117,
+      "guaranteed_complete_rounds": 599040,
+      "unique_layouts_visited": 1000,
+      "unique_capability_layout_pairs_visited": 1000,
+      "min_guaranteed_visits_per_layout": 532,
+      "min_guaranteed_visits_per_pair": 532
+    },
+    "v2_diverse": {
+      "guaranteed_complete_episodes_per_env": 117,
+      "guaranteed_complete_rounds": 599040,
+      "unique_layouts_visited": 1096,
+      "unique_capability_layout_pairs_visited": 26304,
+      "min_guaranteed_visits_per_layout": 461,
+      "min_guaranteed_visits_per_pair": 6
+    },
+    "v2_single": {
+      "guaranteed_complete_episodes_per_env": 117,
+      "guaranteed_complete_rounds": 599040,
+      "unique_layouts_visited": 1096,
+      "unique_capability_layout_pairs_visited": 1096,
+      "min_guaranteed_visits_per_layout": 455,
+      "min_guaranteed_visits_per_pair": 455
+    }
+  },
+  "coverage_proof": "Each of 256 slots collected 915*256=234240 steps. Every episode lasts at most 20*100=2000 steps, so every slot completed at least 117 scheduled episodes. Reconstruct those schedule entries using the saved seed and frozen scheduler; every layout and every supported capability-layout pair occurs in this guaranteed prefix. Additional visits are not counted by this lower bound.",
+  "limitations": [
+    "Exact per-layout visitation counts throughout training are not saved; completed round counts come from all 915 training updates in matching successful logs.",
+    "A run can end with unfinished rounds; these counts cover completed rounds only.",
+    "The precomputed schedule is not itself the realized full visitation trace."
+  ],
+  "scheduler_path": "/juice6/u/jshe/emergent_partner_grid/dev/run_snapshots/balanced1096_20261002_022924/source/baselines/IPPO/sweep_scheduler.py",
+  "scheduler_sha256": "ec95125bc36fd14b48c2ac84f0d92b974ff6d4221133ba2b11bec9799262d43e"
+}

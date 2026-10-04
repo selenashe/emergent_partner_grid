@@ -1,0 +1,515 @@
+{
+  "submitted_at_utc": "2026-10-01T23:54:02.416845+00:00",
+  "allocation_protocol": "online_v2",
+  "git_head": "541452613cdc531c98dfc5e0b8f00efe34fae3de",
+  "working_tree_has_uncommitted_protocol_changes": true,
+  "source_sha256": {
+    "bash/train_final_experiment.sh": "bb8662f3b0b774b88843a61ed85c37e231b8d6d8c862d0a2996f348d52ff6cdc",
+    "bash/eval_all_checkpoints.sh": "19823619b40f000e98410f0ab30eb396e70dc1995b4b29f98ad3e025ab28e5f7",
+    "baselines/IPPO/config/ippo_coordination_grid.yaml": "6c0b1b2090eda714b70aa9be9b8362df7bf31c987a2d7b01373f737a5b88157c",
+    "baselines/IPPO/ippo_rnn_coordination_grid.py": "1b357795389c5a35771e41710ddb9200e553e8bf1b54d05c2a268bdbdb86f97e",
+    "analysis/evaluate_partner_modelling.py": "70e29457d5edfbde1b268cf580d9aa04a3dfa4aebdb86a8a1eeac5f272f3a856",
+    "analysis/representation_analysis.py": "dc6e617e36c96b9759b061dda73e02acdef4c88b835dce36b81b4c23b14ee6d8",
+    "jaxmarl/environments/coordination_grid/__init__.py": "a33b71a7c3f755e6e93731b3a840b04cc4f337c0a0ba9fed2f680974ae26c4a9",
+    "jaxmarl/environments/coordination_grid/capability_populations.py": "89c05bcf10f3eb53ec2423574d86e9a22fe7b449b5371246607fcbf68a0113dd",
+    "jaxmarl/environments/coordination_grid/coordination_grid.py": "d30dd64479f9bb9c06607e62f142dfbf9d3abb6597ab50eaba527f92765e69eb"
+  },
+  "resources_per_training_job": {
+    "account": "nlp",
+    "partition": "sphinx",
+    "gpus": 1,
+    "constraint": "80G",
+    "excluded_nodes": [
+      "sphinx9"
+    ],
+    "cpus": 4,
+    "memory": "32G",
+    "time_limit": "08:00:00"
+  },
+  "training": {
+    "seeds": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "nominal_timesteps_per_policy": 60000000,
+    "effective_timesteps_per_policy": 59965440,
+    "num_envs": 256,
+    "num_steps": 256,
+    "update_epochs": 4,
+    "num_minibatches": 64,
+    "lr": "5e-4",
+    "rounds_per_episode": 20,
+    "max_steps": 100,
+    "step_penalty": 0.01,
+    "schedule_seed": 2026,
+    "n_eps_total": 131072,
+    "layouts": 1000,
+    "wandb_mode": "disabled"
+  },
+  "evaluation": {
+    "episodes_per_capability": 20,
+    "seed": 12345,
+    "train_capability_profiles": 24,
+    "test_capability_profiles": 22,
+    "save_hidden_for_rnn": true,
+    "script": "bash/eval_all_checkpoints.sh",
+    "time_limit": "02:00:00"
+  },
+  "checkpoint_root": "dev/train_logs/online_v2/",
+  "evaluation_root": "dev/eval_out/online_v2/",
+  "training_jobs": [
+    {
+      "condition": "rnn_diverse_influence",
+      "seed": 1,
+      "tag": "rnn_diverse_influence_seed1",
+      "job_id": "17686978",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid",
+        "--job-name=cg_v2_rnn_diverse_influence_seed1",
+        "--export=ALL,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=131072,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/dev/grids_capability_selected/layouts/train,XLA_FLAGS=,CONDITION=rnn_diverse_influence,SEED=1,TAG=rnn_diverse_influence_seed1",
+        "bash/train_final_experiment.sh"
+      ]
+    },
+    {
+      "condition": "rnn_diverse_influence",
+      "seed": 2,
+      "tag": "rnn_diverse_influence_seed2",
+      "job_id": "17686979",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid",
+        "--job-name=cg_v2_rnn_diverse_influence_seed2",
+        "--export=ALL,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=131072,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/dev/grids_capability_selected/layouts/train,XLA_FLAGS=,CONDITION=rnn_diverse_influence,SEED=2,TAG=rnn_diverse_influence_seed2",
+        "bash/train_final_experiment.sh"
+      ]
+    },
+    {
+      "condition": "rnn_diverse_influence",
+      "seed": 3,
+      "tag": "rnn_diverse_influence_seed3",
+      "job_id": "17686980",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid",
+        "--job-name=cg_v2_rnn_diverse_influence_seed3",
+        "--export=ALL,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=131072,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/dev/grids_capability_selected/layouts/train,XLA_FLAGS=,CONDITION=rnn_diverse_influence,SEED=3,TAG=rnn_diverse_influence_seed3",
+        "bash/train_final_experiment.sh"
+      ]
+    },
+    {
+      "condition": "rnn_diverse_influence",
+      "seed": 4,
+      "tag": "rnn_diverse_influence_seed4",
+      "job_id": "17686981",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid",
+        "--job-name=cg_v2_rnn_diverse_influence_seed4",
+        "--export=ALL,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=131072,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/dev/grids_capability_selected/layouts/train,XLA_FLAGS=,CONDITION=rnn_diverse_influence,SEED=4,TAG=rnn_diverse_influence_seed4",
+        "bash/train_final_experiment.sh"
+      ]
+    },
+    {
+      "condition": "rnn_diverse_influence",
+      "seed": 5,
+      "tag": "rnn_diverse_influence_seed5",
+      "job_id": "17686982",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid",
+        "--job-name=cg_v2_rnn_diverse_influence_seed5",
+        "--export=ALL,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=131072,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/dev/grids_capability_selected/layouts/train,XLA_FLAGS=,CONDITION=rnn_diverse_influence,SEED=5,TAG=rnn_diverse_influence_seed5",
+        "bash/train_final_experiment.sh"
+      ]
+    },
+    {
+      "condition": "mlp_diverse_influence",
+      "seed": 1,
+      "tag": "mlp_diverse_influence_seed1",
+      "job_id": "17686983",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid",
+        "--job-name=cg_v2_mlp_diverse_influence_seed1",
+        "--export=ALL,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=131072,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/dev/grids_capability_selected/layouts/train,XLA_FLAGS=,CONDITION=mlp_diverse_influence,SEED=1,TAG=mlp_diverse_influence_seed1",
+        "bash/train_final_experiment.sh"
+      ]
+    },
+    {
+      "condition": "mlp_diverse_influence",
+      "seed": 2,
+      "tag": "mlp_diverse_influence_seed2",
+      "job_id": "17686984",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid",
+        "--job-name=cg_v2_mlp_diverse_influence_seed2",
+        "--export=ALL,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=131072,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/dev/grids_capability_selected/layouts/train,XLA_FLAGS=,CONDITION=mlp_diverse_influence,SEED=2,TAG=mlp_diverse_influence_seed2",
+        "bash/train_final_experiment.sh"
+      ]
+    },
+    {
+      "condition": "mlp_diverse_influence",
+      "seed": 3,
+      "tag": "mlp_diverse_influence_seed3",
+      "job_id": "17686985",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid",
+        "--job-name=cg_v2_mlp_diverse_influence_seed3",
+        "--export=ALL,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=131072,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/dev/grids_capability_selected/layouts/train,XLA_FLAGS=,CONDITION=mlp_diverse_influence,SEED=3,TAG=mlp_diverse_influence_seed3",
+        "bash/train_final_experiment.sh"
+      ]
+    },
+    {
+      "condition": "mlp_diverse_influence",
+      "seed": 4,
+      "tag": "mlp_diverse_influence_seed4",
+      "job_id": "17686986",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid",
+        "--job-name=cg_v2_mlp_diverse_influence_seed4",
+        "--export=ALL,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=131072,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/dev/grids_capability_selected/layouts/train,XLA_FLAGS=,CONDITION=mlp_diverse_influence,SEED=4,TAG=mlp_diverse_influence_seed4",
+        "bash/train_final_experiment.sh"
+      ]
+    },
+    {
+      "condition": "mlp_diverse_influence",
+      "seed": 5,
+      "tag": "mlp_diverse_influence_seed5",
+      "job_id": "17686987",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid",
+        "--job-name=cg_v2_mlp_diverse_influence_seed5",
+        "--export=ALL,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=131072,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/dev/grids_capability_selected/layouts/train,XLA_FLAGS=,CONDITION=mlp_diverse_influence,SEED=5,TAG=mlp_diverse_influence_seed5",
+        "bash/train_final_experiment.sh"
+      ]
+    },
+    {
+      "condition": "rnn_single_influence",
+      "seed": 1,
+      "tag": "rnn_single_influence_seed1",
+      "job_id": "17686988",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid",
+        "--job-name=cg_v2_rnn_single_influence_seed1",
+        "--export=ALL,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=131072,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/dev/grids_capability_selected/layouts/train,XLA_FLAGS=,CONDITION=rnn_single_influence,SEED=1,TAG=rnn_single_influence_seed1",
+        "bash/train_final_experiment.sh"
+      ]
+    },
+    {
+      "condition": "rnn_single_influence",
+      "seed": 2,
+      "tag": "rnn_single_influence_seed2",
+      "job_id": "17686989",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid",
+        "--job-name=cg_v2_rnn_single_influence_seed2",
+        "--export=ALL,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=131072,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/dev/grids_capability_selected/layouts/train,XLA_FLAGS=,CONDITION=rnn_single_influence,SEED=2,TAG=rnn_single_influence_seed2",
+        "bash/train_final_experiment.sh"
+      ]
+    },
+    {
+      "condition": "rnn_single_influence",
+      "seed": 3,
+      "tag": "rnn_single_influence_seed3",
+      "job_id": "17686990",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid",
+        "--job-name=cg_v2_rnn_single_influence_seed3",
+        "--export=ALL,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=131072,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/dev/grids_capability_selected/layouts/train,XLA_FLAGS=,CONDITION=rnn_single_influence,SEED=3,TAG=rnn_single_influence_seed3",
+        "bash/train_final_experiment.sh"
+      ]
+    },
+    {
+      "condition": "rnn_single_influence",
+      "seed": 4,
+      "tag": "rnn_single_influence_seed4",
+      "job_id": "17686991",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid",
+        "--job-name=cg_v2_rnn_single_influence_seed4",
+        "--export=ALL,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=131072,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/dev/grids_capability_selected/layouts/train,XLA_FLAGS=,CONDITION=rnn_single_influence,SEED=4,TAG=rnn_single_influence_seed4",
+        "bash/train_final_experiment.sh"
+      ]
+    },
+    {
+      "condition": "rnn_single_influence",
+      "seed": 5,
+      "tag": "rnn_single_influence_seed5",
+      "job_id": "17686992",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid",
+        "--job-name=cg_v2_rnn_single_influence_seed5",
+        "--export=ALL,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=131072,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/dev/grids_capability_selected/layouts/train,XLA_FLAGS=,CONDITION=rnn_single_influence,SEED=5,TAG=rnn_single_influence_seed5",
+        "bash/train_final_experiment.sh"
+      ]
+    },
+    {
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 1,
+      "tag": "rnn_diverse_noinfluence_seed1",
+      "job_id": "17686993",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid",
+        "--job-name=cg_v2_rnn_diverse_noinfluence_seed1",
+        "--export=ALL,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=131072,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/dev/grids_capability_selected/layouts/train,XLA_FLAGS=,CONDITION=rnn_diverse_noinfluence,SEED=1,TAG=rnn_diverse_noinfluence_seed1",
+        "bash/train_final_experiment.sh"
+      ]
+    },
+    {
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 2,
+      "tag": "rnn_diverse_noinfluence_seed2",
+      "job_id": "17686994",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid",
+        "--job-name=cg_v2_rnn_diverse_noinfluence_seed2",
+        "--export=ALL,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=131072,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/dev/grids_capability_selected/layouts/train,XLA_FLAGS=,CONDITION=rnn_diverse_noinfluence,SEED=2,TAG=rnn_diverse_noinfluence_seed2",
+        "bash/train_final_experiment.sh"
+      ]
+    },
+    {
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 3,
+      "tag": "rnn_diverse_noinfluence_seed3",
+      "job_id": "17686995",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid",
+        "--job-name=cg_v2_rnn_diverse_noinfluence_seed3",
+        "--export=ALL,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=131072,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/dev/grids_capability_selected/layouts/train,XLA_FLAGS=,CONDITION=rnn_diverse_noinfluence,SEED=3,TAG=rnn_diverse_noinfluence_seed3",
+        "bash/train_final_experiment.sh"
+      ]
+    },
+    {
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 4,
+      "tag": "rnn_diverse_noinfluence_seed4",
+      "job_id": "17686996",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid",
+        "--job-name=cg_v2_rnn_diverse_noinfluence_seed4",
+        "--export=ALL,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=131072,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/dev/grids_capability_selected/layouts/train,XLA_FLAGS=,CONDITION=rnn_diverse_noinfluence,SEED=4,TAG=rnn_diverse_noinfluence_seed4",
+        "bash/train_final_experiment.sh"
+      ]
+    },
+    {
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 5,
+      "tag": "rnn_diverse_noinfluence_seed5",
+      "job_id": "17686997",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid",
+        "--job-name=cg_v2_rnn_diverse_noinfluence_seed5",
+        "--export=ALL,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=131072,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/dev/grids_capability_selected/layouts/train,XLA_FLAGS=,CONDITION=rnn_diverse_noinfluence,SEED=5,TAG=rnn_diverse_noinfluence_seed5",
+        "bash/train_final_experiment.sh"
+      ]
+    }
+  ],
+  "evaluation_jobs": [
+    {
+      "job_id": "17686998",
+      "dependency": "afterok:17686978:17686979:17686980:17686981:17686982:17686983:17686984:17686985:17686986:17686987:17686988:17686989:17686990:17686991:17686992:17686993:17686994:17686995:17686996:17686997",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid",
+        "--job-name=cg_v2_eval_all",
+        "--dependency=afterok:17686978:17686979:17686980:17686981:17686982:17686983:17686984:17686985:17686986:17686987:17686988:17686989:17686990:17686991:17686992:17686993:17686994:17686995:17686996:17686997",
+        "--kill-on-invalid-dep=yes",
+        "--export=ALL,XLA_FLAGS=",
+        "bash/eval_all_checkpoints.sh"
+      ]
+    }
+  ],
+  "last_scheduler_check": {
+    "at_utc": "2026-10-01T23:55:45.860237+00:00",
+    "jobs": [
+      {
+        "job_id": "17686998",
+        "state": "PENDING",
+        "reason": "Dependency"
+      },
+      {
+        "job_id": "17686997",
+        "state": "PENDING",
+        "reason": "Priority"
+      },
+      {
+        "job_id": "17686996",
+        "state": "PENDING",
+        "reason": "Priority"
+      },
+      {
+        "job_id": "17686995",
+        "state": "PENDING",
+        "reason": "Priority"
+      },
+      {
+        "job_id": "17686994",
+        "state": "PENDING",
+        "reason": "Priority"
+      },
+      {
+        "job_id": "17686993",
+        "state": "PENDING",
+        "reason": "Priority"
+      },
+      {
+        "job_id": "17686992",
+        "state": "PENDING",
+        "reason": "Priority"
+      },
+      {
+        "job_id": "17686991",
+        "state": "PENDING",
+        "reason": "Priority"
+      },
+      {
+        "job_id": "17686990",
+        "state": "PENDING",
+        "reason": "Priority"
+      },
+      {
+        "job_id": "17686989",
+        "state": "PENDING",
+        "reason": "Priority"
+      },
+      {
+        "job_id": "17686988",
+        "state": "PENDING",
+        "reason": "Priority"
+      },
+      {
+        "job_id": "17686987",
+        "state": "PENDING",
+        "reason": "Priority"
+      },
+      {
+        "job_id": "17686986",
+        "state": "PENDING",
+        "reason": "Priority"
+      },
+      {
+        "job_id": "17686985",
+        "state": "PENDING",
+        "reason": "Priority"
+      },
+      {
+        "job_id": "17686984",
+        "state": "PENDING",
+        "reason": "Priority"
+      },
+      {
+        "job_id": "17686983",
+        "state": "PENDING",
+        "reason": "Priority"
+      },
+      {
+        "job_id": "17686982",
+        "state": "PENDING",
+        "reason": "Priority"
+      },
+      {
+        "job_id": "17686981",
+        "state": "PENDING",
+        "reason": "Priority"
+      },
+      {
+        "job_id": "17686980",
+        "state": "PENDING",
+        "reason": "Priority"
+      },
+      {
+        "job_id": "17686979",
+        "state": "PENDING",
+        "reason": "Priority"
+      },
+      {
+        "job_id": "17686978",
+        "state": "PENDING",
+        "reason": "Priority"
+      }
+    ]
+  },
+  "cancellation_at_user_request": {
+    "at_utc": "2026-10-02T00:19:37.856425+00:00",
+    "scope": "All pending jobs owned by jshe whose names start with cg; running jobs preserved.",
+    "remaining_cg_jobs": [],
+    "accounting_snapshot": [
+      "17686978|RUNNING",
+      "17686979|CANCELLED by 24705",
+      "17686980|CANCELLED by 24705",
+      "17686981|CANCELLED by 24705",
+      "17686982|CANCELLED by 24705",
+      "17686983|CANCELLED by 24705",
+      "17686984|CANCELLED by 24705",
+      "17686985|CANCELLED by 24705",
+      "17686986|CANCELLED by 24705",
+      "17686987|CANCELLED by 24705",
+      "17686988|CANCELLED by 24705",
+      "17686989|CANCELLED by 24705",
+      "17686990|CANCELLED by 24705",
+      "17686991|CANCELLED by 24705",
+      "17686992|CANCELLED by 24705",
+      "17686993|CANCELLED by 24705",
+      "17686994|CANCELLED by 24705",
+      "17686995|CANCELLED by 24705",
+      "17686996|CANCELLED by 24705",
+      "17686997|CANCELLED by 24705",
+      "17686998|CANCELLED by 24705"
+    ]
+  },
+  "interrupted_job_cleanup": {
+    "job_id": "17686978",
+    "at_utc": "2026-10-02T00:23:31.289104+00:00",
+    "state": "CANCELLED by user",
+    "removed_paths": [
+      "logs/cg_cap_17686978.out",
+      "logs/cg_cap_17686978.err",
+      "outputs/2026-10-01/16-57-39"
+    ],
+    "restored_tracked_bytecode": [
+      "baselines/IPPO/__pycache__/sweep_scheduler.cpython-310.pyc",
+      "jaxmarl/environments/coordination_grid/__pycache__/__init__.cpython-310.pyc",
+      "jaxmarl/environments/coordination_grid/__pycache__/coordination_grid.cpython-310.pyc"
+    ],
+    "checkpoint_or_eval_artifacts_saved": false
+  }
+}
