@@ -5,6 +5,7 @@ The stdout episode metrics average completed episodes within each PPO update;
 episode counts were not logged, so their smoothing weights updates equally.
 """
 
+import argparse
 import csv
 import hashlib
 import json
@@ -20,7 +21,7 @@ import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from repo_paths import resolve_record_paths
+from repo_paths import resolve_path, resolve_record_paths
 BATCH = "balanced1096_20261002_022924"
 AUDIT = ROOT / "eval/protocol_comparison" / BATCH / "final_training_grid_statistics.json"
 OUT = ROOT / "train/training_curves" / BATCH
@@ -59,11 +60,26 @@ def savefig(fig, name):
     plt.close(fig)
 
 
-def main():
+def main(manifest_path=None):
+    global OUT
+    action_selection = "categorical"
+    if manifest_path:
+        manifest = resolve_record_paths(json.loads(resolve_path(manifest_path).read_text()))
+        OUT = resolve_path(ROOT / "train/training_curves" / manifest["batch"])
+        action_selection = manifest.get("action_selection", "categorical")
+        runs = []
+        for job in manifest["training_jobs"]:
+            directory = Path(manifest["versions"][job["version"]]["checkpoint_root"])
+            sampling = json.loads((directory / f"{job['tag']}_sampling_audit.json").read_text())
+            runs.append({**job, "log": str(resolve_path(ROOT / "train/slurm_logs" / f"cg_cap_{job['job_id']}.out")),
+                         "config": str(directory / f"{job['tag']}_config.json"),
+                         "completed_rounds": sampling["rounds_completed"]})
+        audit = {"per_seed_training_rounds": runs}
+    else:
+        audit = resolve_record_paths(json.loads(AUDIT.read_text()))
     OUT.mkdir(parents=True, exist_ok=True)
     plt.rcParams.update({"font.size": 10, "axes.spines.top": False,
                          "axes.spines.right": False})
-    audit = resolve_record_paths(json.loads(AUDIT.read_text()))
     curves, provenance, raw_rows = {}, [], []
     for run in audit["per_seed_training_rounds"]:
         content = Path(run["log"]).read_text()
@@ -171,7 +187,8 @@ def main():
             ax.set_xlim(0, 60)
             if row == 1:
                 ax.set_xlabel("Collected environment steps (millions)")
-    fig.suptitle("Learning curves across all five training seeds", fontsize=16)
+    fig.suptitle("Learning curves across all five training seeds" +
+                 (" — greedy actions" if action_selection == "greedy_random_ties" else ""), fontsize=16)
     fig.legend(*axes[0, 0].get_legend_handles_labels(), loc="upper center",
                bbox_to_anchor=(0.5, 0.955), ncol=4, frameon=False)
     fig.text(0.5, 0.015, "Trailing 3.01M-step averages; bands: sample SD across five seeds. "
@@ -193,7 +210,7 @@ def main():
                 ax.set_xlabel("Environment steps (millions)")
             if col == 0:
                 ax.set_ylabel("Training episode return")
-    fig.suptitle("Some seeds learn quickly; others keep improving late", fontsize=16)
+    fig.suptitle("Training episode return by seed", fontsize=16)
     fig.legend(*axes[0, 0].get_legend_handles_labels(), loc="upper center",
                bbox_to_anchor=(0.5, 0.945), ncol=5, frameon=False)
     fig.text(0.5, 0.012, "Same trailing 3.01M-step smoothing. Single-partner training is evaluated "
@@ -222,7 +239,7 @@ def main():
     savefig(fig, "policy_diagnostics")
 
     summary = {
-        "runs": provenance, "window_updates": WINDOW,
+        "runs": provenance, "action_selection": action_selection, "window_updates": WINDOW,
         "window_steps": WINDOW * 65536,
         "smoothing": {"round_success": "Round-count-weighted trailing mean per seed",
                       "episode_return_and_length": "Equal-update-weighted trailing mean of completed-episode means; zero placeholders excluded",
@@ -230,7 +247,7 @@ def main():
         "final_band_definition": "Earliest smoothed point such that it and ALL subsequent points have success >= final - 2 percentage points, return >= final - 0.5, and episode steps <= final * 1.05. Final is last trailing-window value. A descriptive retrospective threshold, not a convergence test.",
         "final_band_results": bands, "budget_snapshots": snapshots,
         "limitations": ["Only final model checkpoints were saved; earlier held-out performance cannot be recovered.",
-                        "Curves are stochastic-policy training outcomes on familiar partner profiles and training layouts.",
+                        f"Curves are {action_selection} training outcomes on familiar partner profiles and training layouts.",
                         "Fewer sampled timesteps does not imply fewer distinct training layouts are sufficient.",
                         "Learning-rate warmup and cosine decay depend on the total update budget. A shorter fresh run has a different schedule from truncating this 60M run.",
                         "Plateau of task performance would not establish convergence of partner representations or probe accuracy.",
@@ -242,4 +259,6 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--manifest", type=Path, help="Plot the runs recorded in this submission manifest")
+    main(parser.parse_args().manifest)

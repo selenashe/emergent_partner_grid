@@ -1,0 +1,1667 @@
+{
+  "batch": "counterbalanced1096_20261004_212351_greedy_action_selection",
+  "status": "completed",
+  "prepared_at_utc": "2026-10-04T21:23:51.315277+00:00",
+  "v1_baseline_revision": "541452613cdc531c98dfc5e0b8f00efe34fae3de",
+  "sampling_protocol": "paired_counterbalanced_v1",
+  "action_selection": "greedy_random_ties",
+  "action_selection_note": "Unique probability maxima are deterministic; only exact equal maxima use seeded uniform tie-breaking. Training and evaluation use the same rule. PPO objective and entropy coefficient remain unchanged.",
+  "source_corpus": "/juice6/u/jshe/emergent_partner_grid/data_prep/grids_capability_selected_balanced_1096",
+  "frozen_layouts_dir": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/corpus/layouts/train",
+  "layout_files_sha256": "a5703edfe289b601df176938ed888b68da3d61c8f7d2c23ad5baaaea9a9f8ecc",
+  "n_layouts": 1096,
+  "corpus_note": "Both versions use 1096 layouts; original v1 used 1000.",
+  "nominal_timesteps_per_policy": 60000000,
+  "effective_timesteps_per_policy": 59965440,
+  "schedule_paths": {
+    "diverse": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/schedules/diverse.npz",
+    "single": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/schedules/single.npz"
+  },
+  "schedules": {
+    "diverse": {
+      "sampling_protocol": "paired_counterbalanced_v1",
+      "seed": 2026,
+      "n_layouts": 1096,
+      "n_profiles": 24,
+      "rounds_per_episode": 20,
+      "passes_per_cycle": 5,
+      "episodes_per_profile_per_cycle": 274,
+      "rounds_per_cycle": 131520,
+      "visits_per_profile_layout_per_cycle": 5,
+      "packets": 125218,
+      "preallocated_episodes": 3005232,
+      "preallocated_rounds": 60104640,
+      "maximum_allocated_episode_imbalance_at_any_prefix": 1,
+      "sha256": "3d41db4e8bdcb71d5300fd6fa2296a4e31367300c4e7e56e57620f89b40711ad"
+    },
+    "single": {
+      "sampling_protocol": "paired_counterbalanced_v1",
+      "seed": 2026,
+      "n_layouts": 1096,
+      "n_profiles": 1,
+      "rounds_per_episode": 20,
+      "passes_per_cycle": 5,
+      "episodes_per_profile_per_cycle": 274,
+      "rounds_per_cycle": 5480,
+      "visits_per_profile_layout_per_cycle": 5,
+      "packets": 3000300,
+      "preallocated_episodes": 3000300,
+      "preallocated_rounds": 60006000,
+      "maximum_allocated_episode_imbalance_at_any_prefix": 1,
+      "sha256": "359d749df173d1b9afd2dd160fde92bad5e661d61de9011e1cf9452c83efd42b"
+    }
+  },
+  "versions": {
+    "v1": {
+      "experiment_version": "v1_balanced_training",
+      "allocation_protocol": "fixed_v1",
+      "frozen_source_root": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source",
+      "source_sha256": {
+        "repo_paths.py": "46ba8264475023ef6b2b38fa81c6475ee5d2896a302c434d7b837641bddc32ac",
+        "bash/train_final_experiment.sh": "084e0979c4bfe35d4e2d300d31fa464e5083ede2dbeaae4ec437727eb4d60b68",
+        "bash/submit_counterbalanced_training.py": "db886191e2248c362068211ae141f6589dd3dc04fbcf37304ce19e20a8e5051a",
+        "bash/eval_all_checkpoints.sh": "d3f225a5249db280f646cede3d44a6deefb5c1207d707e5dbfa109753e85a4c7",
+        "jaxmarl/registration.py": "dc3a5cdabee5718147075b5b756c77d0fd194c1c6e2fb9d1da85a722122866cf",
+        "jaxmarl/__init__.py": "7e0b31c6d1a3b57edfae5b64e85896694089d9a2bab6e116509fd6135467551c",
+        "data_prep/capability_selection.py": "9fdda99a5ada7e2c2c24310d2ae74d57b72252e9c2621ba7e36e5b62032b7043",
+        "train/ippo_rnn_coordination_grid.py": "6434b5d8cf179023a6cf6ffff5723a8b13333c00127a2159d095233d6a347901",
+        "train/plot_training_curves.py": "79f9cd5bf15dd112aaf35026da9efdee74bd260e99188d3ec73feffe0dd00804",
+        "train/audit_counterbalanced_results.py": "592ad075f34006890ccc67f55a3f761ccadea33e7e4d7958a33043d9d91ae90d",
+        "train/__init__.py": "c1751052997c1512097163b7fdd8e018a2947520230a0374c5804d639d5a3436",
+        "train/action_selection.py": "c54fda970b891b32804a56cb21339eb27a7fbc1ebba5016f4e035d22b0940f82",
+        "train/episode_scheduler.py": "e90ab1e65d9f935550123afeb9213a02c78c1ecb4c80304dab20ea92ca5922c2",
+        "train/validate_counterbalanced_training.py": "11e4d3537dc8e3b3cc1049a37a513c69c2c0256a541b60ce1ab020764f158420",
+        "train/rebuild_counterbalanced_schedules.py": "6b572c5735606e6e198bbdf3da6c1359bccf359f28e6448e5d77e9255b9102e1",
+        "train/counterbalanced_scheduler.py": "5b9aad2bfac323419f0aa180e84964608296ac5ad14c64db5d1d50b41e04f03f",
+        "eval/compare_allocation_protocols.py": "605f09b4a8848a1ebbbd477e2f4d1b5d406c1e75996ffe4a225d27a4696e0fbc",
+        "eval/representation_analysis.py": "c06a5b3a2718967e2076c433165e5b426cec4aeee3acdb80857313789990c299",
+        "eval/plot_best_training_seed.py": "5b6d9ece90f8b217f4c1558c0dbecbe5d57b21b9fd7245d3005c4f3a750bfe6d",
+        "eval/evaluate_partner_modelling.py": "1e7c42f4be12dbe077831d1d8f1cf472520c23e017498046df3207e8a52e3809",
+        "eval/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "train/config/ippo_coordination_grid.yaml": "7900dec2d7e59fd150206caea5e42663cf5aee9337a8c6478491172ac71741bb",
+        "tests/coordination_grid/test_evaluation_layouts.py": "839e66201340f153119fe76d36aa3481e1b3fb781c8ae1d7ec2d6c3184408dd2",
+        "tests/coordination_grid/test_online_allocation.py": "70e88c28b0280b41a891cc0eccadcf42b5ac3c91b0a9b68ba67daf5f2fd63611",
+        "tests/coordination_grid/test_capability_env.py": "3db2002934f06407af606843441cccea7e5e1637b591b1c882fcc53a9eeabe56",
+        "tests/coordination_grid/test_action_selection.py": "a30232f4b351e228c5d419f6494b4be94ae2f3e0a4f972e8e8492b07e9222ef2",
+        "tests/coordination_grid/test_counterbalanced_scheduler.py": "2f9ab0a6e4a8eafe91baae316d2af0231dca743df7cc47e7d1853432024b89b5",
+        "jaxmarl/viz/window.py": "cdfc41455d78acaac8f7b7daff71a2c81288d9007945d914d7958f3c1be3ea31",
+        "jaxmarl/viz/visualizer.py": "cfd93707e9bc75bd4fdd40b2746c69c224264368c661f7141c90128dee5dfeed",
+        "jaxmarl/viz/grid_rendering.py": "2f25f648542b96645c62a74e1e848f0324f159592cc3482dd7f12d59b80721e1",
+        "jaxmarl/viz/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "jaxmarl/wrappers/baselines.py": "789d02c204de8af478ec3992748934f1fbe122fa0d2e3874d4cb1753ac8f5466",
+        "jaxmarl/wrappers/transformers.py": "7bb764062300cbcbc44f0f68ee2e9edca3b7ccfbf8395363df1876f4721d0479",
+        "jaxmarl/wrappers/gymnax.py": "15f7863946803b3238215e74788782cbc3e884728d050a9e24dd5063be6d77b7",
+        "jaxmarl/wrappers/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "jaxmarl/tutorials/storm_2p_introduction.py": "8e3ec82535fef0b6ddf276559dc692c4f8da77ce5e82dafa824544fc0777b1b2",
+        "jaxmarl/tutorials/smax_introduction.py": "2289a72fc7694792696645ef3463300c63f7e831f18cb775bd7f565c5f18ee35",
+        "jaxmarl/tutorials/mpe_introduction.py": "99882a172cb208a838746915b022fcaf04bbd7378ebe1d4dc1a7c0d887ae97e0",
+        "jaxmarl/tutorials/storm_introduction.py": "141a7bfcc59124609bf490469a56cbea9232498499d36e1e59717d4e347c0807",
+        "jaxmarl/environments/multi_agent_env.py": "3be0b97cfadf161cf077ab825cc70b301b83a3444a008b70a523e79b4a690430",
+        "jaxmarl/environments/multi_agent_env_.py": "f7582cdf883c69a51839c1190184a0c202621038baaff2d8e1d1211d091171b8",
+        "jaxmarl/environments/__init__.py": "ba45bcae0eaaa93de8999a3f7741221e56b8ca49bd79266cc6bcbd2fa9a7716f",
+        "jaxmarl/environments/spaces.py": "613bc1f7104eab120e97b3f1b122794b77dc28ba373522ec95efd81b43917c32",
+        "jaxmarl/environments/coordination_grid/__init__.py": "c9547975bf3c4968e7bc569daad3ad2fb7f57e25d2b46aade2d613b5b9387972",
+        "jaxmarl/environments/coordination_grid/coordination_grid.py": "7bc593fd7ba1adbd6ab3080dcf3c800c1f98e27501a799e797bbd81077c5feea",
+        "jaxmarl/environments/coordination_grid/capability_populations.py": "89c05bcf10f3eb53ec2423574d86e9a22fe7b449b5371246607fcbf68a0113dd",
+        "jaxmarl/environments/mpe/simple_world_comm.py": "8953f90a9c2ca4863f7b4d43a5c5865ceae662378ac25c19311d76ba97952771",
+        "jaxmarl/environments/mpe/mpe_visualizer.py": "9b7259d1e3e94e850b329113557224e73b85a430222f43712e0a69e233d50e72",
+        "jaxmarl/environments/mpe/simple_speaker_listener.py": "d4bd27d5d884436a1513e3a90b1d6ef56823a42fe0d426d5777c015be090bfd5",
+        "jaxmarl/environments/mpe/simple_adversary.py": "934f63f7e550d6add831dad9945d1a0d84682e0d8dbd8835764aa863bbc16d1a",
+        "jaxmarl/environments/mpe/simple_crypto.py": "836b9e94c2d83b99e5714a6c8fce146cda4e001a7b781811216b556bef583658",
+        "jaxmarl/environments/mpe/simple_spread.py": "907455b6290bc0ed86b0e4b004b103b609673430f88e5b5c7c765842043ba121",
+        "jaxmarl/environments/mpe/simple.py": "64c7eb19c904f4bea0d3c5383f0c6699708300e304f7a83602444ce9a9a2934a",
+        "jaxmarl/environments/mpe/default_params.py": "04365f1418999e1862620569f7d6a6703ad7b98d1c3689c0f121575f7f08712d",
+        "jaxmarl/environments/mpe/simple_push.py": "4a2a08cec8aa15128fce8d7346a701393a7ecc88ca2c98f89f631cd62baf967c",
+        "jaxmarl/environments/mpe/simple_facmac.py": "760b16bce5798af44307ea0943f683f490d016b89487af444f97db281e07ce2f",
+        "jaxmarl/environments/mpe/__init__.py": "226a20aba35b42ef774b7fab600b1b96cc636c65c213956c79191cee617a7d52",
+        "jaxmarl/environments/mpe/simple_reference.py": "7401cb2b7b216cccc91ea10eb66c7d509b9a45d2f5cb5f3889f69aab1f2996e8",
+        "jaxmarl/environments/mpe/simple_tag.py": "3696711bd665e217fa940809459ec2b96b95dd43688a9698d72c6869aeff3221",
+        "jaxmarl/environments/mabrax/mabrax_env.py": "e1d481476453a85f036c541d8a3ddd8d2432f8b3e1fb78609847906c7e1ef8a3",
+        "jaxmarl/environments/mabrax/__init__.py": "8046fe6de1d5c79b09b4a5bde608fc016b373268fd53a06a7fc1de42627ba0aa",
+        "jaxmarl/environments/mabrax/mappings.py": "cd6caf265da992be72be4e3f2be8b5c3ad3f73960256b60e44981778ec06248b",
+        "jaxmarl/environments/jaxnav/jaxnav_env.py": "083db89bbab0275c272b710a187c08b456e4d05831bc1f05215bea3d0b45b720",
+        "jaxmarl/environments/jaxnav/jaxnav_viz.py": "9f09df32f85a9632c34e5de93b18d7270e7075925d44089ae1ad0f5cb7e8c398",
+        "jaxmarl/environments/jaxnav/jaxnav_graph_utils.py": "5a86a6589bc683a12aeee37a507122807bbd83b73c43061f9b495de975ce3245",
+        "jaxmarl/environments/jaxnav/jaxnav_ued_utils.py": "20f850d3290d9897a79a60dbafcafc7ec62af806f3a1a48916145dd9a6b02148",
+        "jaxmarl/environments/jaxnav/__init__.py": "f8f62472abed4c9ce106c00a75f47708d25a908c9554d1ec503a7ade5a087c85",
+        "jaxmarl/environments/jaxnav/jaxnav_utils.py": "793a712c95bdd17b461626c2e244ef94848282c49781be11ff98bd8150394abe",
+        "jaxmarl/environments/jaxnav/jaxnav_singletons.py": "561238df998cebe4eb1ab0742560840187f478b5c2022f67650689d9fd7dcfe2",
+        "jaxmarl/environments/storm/__init__.py": "eb4b8f0cce9f3a7ddf19e81670e2e31dd31fb6a59889152b4183aa6ba971e2e6",
+        "jaxmarl/environments/storm/storm_env.py": "484c2333c4f7c4249f42c869c124f1f4de611acd336fca2d617ac7f75813f91a",
+        "jaxmarl/environments/storm/rendering.py": "da7b3e947818576f607426530f08216f086d114a17fda188799477fc1944e2ba",
+        "jaxmarl/environments/storm/storm_2p.py": "bd4056fe36682bfcc0d75bec288094b56f747075abba32cb240c0f7fd2b4cb01",
+        "jaxmarl/environments/hanabi/hanabi.py": "c2ea5adc64f5e68995a0777ba9a0e32cadaa32320ded4a0484ada24b748c64fd",
+        "jaxmarl/environments/hanabi/manual_game_human_agents.py": "fc8cba41966c600371bbb60ecfa91966478acfea63ea93127c255b182d04f5f6",
+        "jaxmarl/environments/hanabi/hanabi_game.py": "fb280333cece9bafc17bffc465cb549ace5340db1630cafd7ebedff8a17dad44",
+        "jaxmarl/environments/hanabi/manual_game.py": "8acf3dd146ee68635fb8596408c3c21403bd2097b1084f14bfab1d7b2ff2810f",
+        "jaxmarl/environments/hanabi/__init__.py": "259727d8560470ff27362301dca362909529f8a5cef87bb052c1faa976ffbc9b",
+        "jaxmarl/environments/smax/distributions.py": "ea61360b0eb2ec5805cc0c6e93f62ef25932d7faf9fb235deced1961c4bc9156",
+        "jaxmarl/environments/smax/heuristic_enemy_smax_env.py": "aee9a9e4c9193170e242330e2eca7ceb7a02ab1b31f2dda7e949248a083841df",
+        "jaxmarl/environments/smax/smax_env.py": "60cc9c9237a7fc81813684b4fe46cb6c31eb61adbb96ab837364284eb2205bcd",
+        "jaxmarl/environments/smax/speed.py": "ddd86e0da54e5d0d53cb6e316f60a028e4e35c47d97885f89ea5c2c0bc0932d1",
+        "jaxmarl/environments/smax/__init__.py": "481fe5862f4ea3ae106a168a02b55bc00bcc483123538482895bb6bfb42621bb",
+        "jaxmarl/environments/smax/heuristic_enemy.py": "4432744aadf425580310e78a85e5dfb0e0bdf58f8d79f5d8550f3f053f9833bd",
+        "jaxmarl/environments/switch_riddle/__init__.py": "21034477cded380889781be065f1e16f003853040c0c22c48d00cb900b30e78f",
+        "jaxmarl/environments/switch_riddle/switch_riddle.py": "0f5fd7c44991e05aa458eb6516b7c069180a4b4bf5a7de6ed4391a948a0e9d9f",
+        "jaxmarl/environments/coin_game/coin_game.py": "7a2f3f191ea33f42779b11701d82e04dab7469619fc31f2af6a234d43905a363",
+        "jaxmarl/environments/coin_game/__init__.py": "b26e47ff92a777ffd8cc0307565346ee2312595a638ef9a925efea3144b6e31c",
+        "jaxmarl/environments/hanabi/pretrained/obl_r2d2_agent.py": "bfd91056de331513689ab171fa1b18eee78e108608b29be99e771222dc9d9196",
+        "jaxmarl/environments/hanabi/pretrained/obl_r2d2_agent_test.py": "3119712c4c5b0a776af273b5ecc396f818fc32a4eebfa22e68970426e47f9d5b",
+        "jaxmarl/environments/hanabi/pretrained/__init__.py": "f50b1d6816a9c49b360d1b1f563a4d017c71787f3e331f859ec9ffc530e3d09e",
+        "jaxmarl/environments/jaxnav/maps/map.py": "04d608332ab37464ab15375c5d6ccd4670b121a033d22b924d5ee1b688460f94",
+        "jaxmarl/environments/jaxnav/maps/__init__.py": "2af5c8093e8652c119f5e370c199e130cb01fc44244fa04788eade55d321d0b7",
+        "jaxmarl/environments/jaxnav/maps/grid_map.py": "d585c5b18ae84716f628b7bb7dbf44247c89851398caca2d011fdc4bbcd15e5e",
+        "jaxmarl/environments/jaxnav/maps/polygon_map.py": "36e7596e228f7454456ae06ee4a623d256e45e9caca67feec3c08d0d54a72461",
+        "jaxmarl/environments/jaxnav/maps/map_registration.py": "98b2b9ec49df0906075dc3366764622efe5ad1f3c7bdcf2163f374c446a24e1f"
+      },
+      "baseline_trainer_sha256": "4b2ee00f656a19368ed23799e1f437f66bb1bcea5f8757f7199a5ca535853d4d",
+      "checkpoint_root": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261004_212351_greedy_action_selection",
+      "evaluation_root": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_balanced_training/counterbalanced1096_20261004_212351_greedy_action_selection",
+      "evaluation_jobs": [
+        {
+          "job_id": "17716591",
+          "dependency": "afterok:17716551:17716552:17716553:17716554:17716555:17716556:17716557:17716558:17716559:17716560:17716561:17716562:17716563:17716564:17716565:17716566:17716567:17716568:17716569:17716570",
+          "command": [
+            "sbatch",
+            "--parsable",
+            "--chdir=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source",
+            "--job-name=cg_v1_cb_eval",
+            "--dependency=afterok:17716551:17716552:17716553:17716554:17716555:17716556:17716557:17716558:17716559:17716560:17716561:17716562:17716563:17716564:17716565:17716566:17716567:17716568:17716569:17716570",
+            "--kill-on-invalid-dep=yes",
+            "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261004_212351_greedy_action_selection,EVAL_OUT_DIR=/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_balanced_training/counterbalanced1096_20261004_212351_greedy_action_selection,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/corpus/layouts/train,EXPECTED_CHECKPOINTS=20,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1",
+            "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source/bash/eval_all_checkpoints.sh"
+          ]
+        }
+      ]
+    },
+    "v2": {
+      "experiment_version": "v2_balanced_training",
+      "allocation_protocol": "online_v2",
+      "frozen_source_root": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source",
+      "source_sha256": {
+        "repo_paths.py": "46ba8264475023ef6b2b38fa81c6475ee5d2896a302c434d7b837641bddc32ac",
+        "data_prep/capability_selection.py": "9fdda99a5ada7e2c2c24310d2ae74d57b72252e9c2621ba7e36e5b62032b7043",
+        "jaxmarl/registration.py": "dc3a5cdabee5718147075b5b756c77d0fd194c1c6e2fb9d1da85a722122866cf",
+        "jaxmarl/__init__.py": "7e0b31c6d1a3b57edfae5b64e85896694089d9a2bab6e116509fd6135467551c",
+        "bash/train_final_experiment.sh": "084e0979c4bfe35d4e2d300d31fa464e5083ede2dbeaae4ec437727eb4d60b68",
+        "bash/submit_counterbalanced_training.py": "db886191e2248c362068211ae141f6589dd3dc04fbcf37304ce19e20a8e5051a",
+        "bash/eval_all_checkpoints.sh": "d3f225a5249db280f646cede3d44a6deefb5c1207d707e5dbfa109753e85a4c7",
+        "train/counterbalanced_scheduler.py": "5b9aad2bfac323419f0aa180e84964608296ac5ad14c64db5d1d50b41e04f03f",
+        "train/plot_training_curves.py": "79f9cd5bf15dd112aaf35026da9efdee74bd260e99188d3ec73feffe0dd00804",
+        "train/__init__.py": "c1751052997c1512097163b7fdd8e018a2947520230a0374c5804d639d5a3436",
+        "train/rebuild_counterbalanced_schedules.py": "6b572c5735606e6e198bbdf3da6c1359bccf359f28e6448e5d77e9255b9102e1",
+        "train/audit_counterbalanced_results.py": "592ad075f34006890ccc67f55a3f761ccadea33e7e4d7958a33043d9d91ae90d",
+        "train/ippo_rnn_coordination_grid.py": "4471e11965a7ed31cdf02ef692ce375c889688c23cc54930d6de8db577b3e1b0",
+        "train/episode_scheduler.py": "e90ab1e65d9f935550123afeb9213a02c78c1ecb4c80304dab20ea92ca5922c2",
+        "train/validate_counterbalanced_training.py": "11e4d3537dc8e3b3cc1049a37a513c69c2c0256a541b60ce1ab020764f158420",
+        "train/action_selection.py": "c54fda970b891b32804a56cb21339eb27a7fbc1ebba5016f4e035d22b0940f82",
+        "eval/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "eval/compare_allocation_protocols.py": "605f09b4a8848a1ebbbd477e2f4d1b5d406c1e75996ffe4a225d27a4696e0fbc",
+        "eval/representation_analysis.py": "c06a5b3a2718967e2076c433165e5b426cec4aeee3acdb80857313789990c299",
+        "eval/plot_best_training_seed.py": "5b6d9ece90f8b217f4c1558c0dbecbe5d57b21b9fd7245d3005c4f3a750bfe6d",
+        "eval/evaluate_partner_modelling.py": "684f1ea2c4dd5e5ecc76849da45a0948c8c29636c9ea88debb54771a3c32d8f2",
+        "tests/coordination_grid/test_counterbalanced_scheduler.py": "2f9ab0a6e4a8eafe91baae316d2af0231dca743df7cc47e7d1853432024b89b5",
+        "tests/coordination_grid/test_capability_env.py": "3db2002934f06407af606843441cccea7e5e1637b591b1c882fcc53a9eeabe56",
+        "tests/coordination_grid/test_online_allocation.py": "70e88c28b0280b41a891cc0eccadcf42b5ac3c91b0a9b68ba67daf5f2fd63611",
+        "tests/coordination_grid/test_evaluation_layouts.py": "839e66201340f153119fe76d36aa3481e1b3fb781c8ae1d7ec2d6c3184408dd2",
+        "tests/coordination_grid/test_action_selection.py": "a30232f4b351e228c5d419f6494b4be94ae2f3e0a4f972e8e8492b07e9222ef2",
+        "train/config/ippo_coordination_grid.yaml": "cb6d35b1cdc39981781df1a7ed5df9f8fee9641ad8d51f866fe84236fe14da67",
+        "jaxmarl/viz/grid_rendering.py": "2f25f648542b96645c62a74e1e848f0324f159592cc3482dd7f12d59b80721e1",
+        "jaxmarl/viz/window.py": "cdfc41455d78acaac8f7b7daff71a2c81288d9007945d914d7958f3c1be3ea31",
+        "jaxmarl/viz/visualizer.py": "cfd93707e9bc75bd4fdd40b2746c69c224264368c661f7141c90128dee5dfeed",
+        "jaxmarl/viz/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "jaxmarl/tutorials/storm_introduction.py": "141a7bfcc59124609bf490469a56cbea9232498499d36e1e59717d4e347c0807",
+        "jaxmarl/tutorials/smax_introduction.py": "2289a72fc7694792696645ef3463300c63f7e831f18cb775bd7f565c5f18ee35",
+        "jaxmarl/tutorials/storm_2p_introduction.py": "8e3ec82535fef0b6ddf276559dc692c4f8da77ce5e82dafa824544fc0777b1b2",
+        "jaxmarl/tutorials/mpe_introduction.py": "99882a172cb208a838746915b022fcaf04bbd7378ebe1d4dc1a7c0d887ae97e0",
+        "jaxmarl/wrappers/baselines.py": "789d02c204de8af478ec3992748934f1fbe122fa0d2e3874d4cb1753ac8f5466",
+        "jaxmarl/wrappers/transformers.py": "7bb764062300cbcbc44f0f68ee2e9edca3b7ccfbf8395363df1876f4721d0479",
+        "jaxmarl/wrappers/gymnax.py": "15f7863946803b3238215e74788782cbc3e884728d050a9e24dd5063be6d77b7",
+        "jaxmarl/wrappers/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "jaxmarl/environments/spaces.py": "613bc1f7104eab120e97b3f1b122794b77dc28ba373522ec95efd81b43917c32",
+        "jaxmarl/environments/multi_agent_env_.py": "f7582cdf883c69a51839c1190184a0c202621038baaff2d8e1d1211d091171b8",
+        "jaxmarl/environments/multi_agent_env.py": "3be0b97cfadf161cf077ab825cc70b301b83a3444a008b70a523e79b4a690430",
+        "jaxmarl/environments/__init__.py": "ba45bcae0eaaa93de8999a3f7741221e56b8ca49bd79266cc6bcbd2fa9a7716f",
+        "jaxmarl/environments/mpe/simple_reference.py": "7401cb2b7b216cccc91ea10eb66c7d509b9a45d2f5cb5f3889f69aab1f2996e8",
+        "jaxmarl/environments/mpe/simple_crypto.py": "836b9e94c2d83b99e5714a6c8fce146cda4e001a7b781811216b556bef583658",
+        "jaxmarl/environments/mpe/simple.py": "64c7eb19c904f4bea0d3c5383f0c6699708300e304f7a83602444ce9a9a2934a",
+        "jaxmarl/environments/mpe/simple_spread.py": "907455b6290bc0ed86b0e4b004b103b609673430f88e5b5c7c765842043ba121",
+        "jaxmarl/environments/mpe/simple_speaker_listener.py": "d4bd27d5d884436a1513e3a90b1d6ef56823a42fe0d426d5777c015be090bfd5",
+        "jaxmarl/environments/mpe/default_params.py": "04365f1418999e1862620569f7d6a6703ad7b98d1c3689c0f121575f7f08712d",
+        "jaxmarl/environments/mpe/simple_tag.py": "3696711bd665e217fa940809459ec2b96b95dd43688a9698d72c6869aeff3221",
+        "jaxmarl/environments/mpe/simple_push.py": "4a2a08cec8aa15128fce8d7346a701393a7ecc88ca2c98f89f631cd62baf967c",
+        "jaxmarl/environments/mpe/simple_world_comm.py": "8953f90a9c2ca4863f7b4d43a5c5865ceae662378ac25c19311d76ba97952771",
+        "jaxmarl/environments/mpe/__init__.py": "226a20aba35b42ef774b7fab600b1b96cc636c65c213956c79191cee617a7d52",
+        "jaxmarl/environments/mpe/simple_facmac.py": "760b16bce5798af44307ea0943f683f490d016b89487af444f97db281e07ce2f",
+        "jaxmarl/environments/mpe/simple_adversary.py": "934f63f7e550d6add831dad9945d1a0d84682e0d8dbd8835764aa863bbc16d1a",
+        "jaxmarl/environments/mpe/mpe_visualizer.py": "9b7259d1e3e94e850b329113557224e73b85a430222f43712e0a69e233d50e72",
+        "jaxmarl/environments/hanabi/hanabi_game.py": "fb280333cece9bafc17bffc465cb549ace5340db1630cafd7ebedff8a17dad44",
+        "jaxmarl/environments/hanabi/manual_game.py": "8acf3dd146ee68635fb8596408c3c21403bd2097b1084f14bfab1d7b2ff2810f",
+        "jaxmarl/environments/hanabi/hanabi.py": "c2ea5adc64f5e68995a0777ba9a0e32cadaa32320ded4a0484ada24b748c64fd",
+        "jaxmarl/environments/hanabi/__init__.py": "259727d8560470ff27362301dca362909529f8a5cef87bb052c1faa976ffbc9b",
+        "jaxmarl/environments/hanabi/manual_game_human_agents.py": "fc8cba41966c600371bbb60ecfa91966478acfea63ea93127c255b182d04f5f6",
+        "jaxmarl/environments/storm/storm_2p.py": "bd4056fe36682bfcc0d75bec288094b56f747075abba32cb240c0f7fd2b4cb01",
+        "jaxmarl/environments/storm/storm_env.py": "484c2333c4f7c4249f42c869c124f1f4de611acd336fca2d617ac7f75813f91a",
+        "jaxmarl/environments/storm/__init__.py": "eb4b8f0cce9f3a7ddf19e81670e2e31dd31fb6a59889152b4183aa6ba971e2e6",
+        "jaxmarl/environments/storm/rendering.py": "da7b3e947818576f607426530f08216f086d114a17fda188799477fc1944e2ba",
+        "jaxmarl/environments/switch_riddle/switch_riddle.py": "0f5fd7c44991e05aa458eb6516b7c069180a4b4bf5a7de6ed4391a948a0e9d9f",
+        "jaxmarl/environments/switch_riddle/__init__.py": "21034477cded380889781be065f1e16f003853040c0c22c48d00cb900b30e78f",
+        "jaxmarl/environments/coin_game/__init__.py": "b26e47ff92a777ffd8cc0307565346ee2312595a638ef9a925efea3144b6e31c",
+        "jaxmarl/environments/coin_game/coin_game.py": "7a2f3f191ea33f42779b11701d82e04dab7469619fc31f2af6a234d43905a363",
+        "jaxmarl/environments/mabrax/__init__.py": "8046fe6de1d5c79b09b4a5bde608fc016b373268fd53a06a7fc1de42627ba0aa",
+        "jaxmarl/environments/mabrax/mappings.py": "cd6caf265da992be72be4e3f2be8b5c3ad3f73960256b60e44981778ec06248b",
+        "jaxmarl/environments/mabrax/mabrax_env.py": "e1d481476453a85f036c541d8a3ddd8d2432f8b3e1fb78609847906c7e1ef8a3",
+        "jaxmarl/environments/jaxnav/jaxnav_utils.py": "793a712c95bdd17b461626c2e244ef94848282c49781be11ff98bd8150394abe",
+        "jaxmarl/environments/jaxnav/jaxnav_viz.py": "9f09df32f85a9632c34e5de93b18d7270e7075925d44089ae1ad0f5cb7e8c398",
+        "jaxmarl/environments/jaxnav/jaxnav_singletons.py": "561238df998cebe4eb1ab0742560840187f478b5c2022f67650689d9fd7dcfe2",
+        "jaxmarl/environments/jaxnav/jaxnav_graph_utils.py": "5a86a6589bc683a12aeee37a507122807bbd83b73c43061f9b495de975ce3245",
+        "jaxmarl/environments/jaxnav/jaxnav_env.py": "083db89bbab0275c272b710a187c08b456e4d05831bc1f05215bea3d0b45b720",
+        "jaxmarl/environments/jaxnav/jaxnav_ued_utils.py": "20f850d3290d9897a79a60dbafcafc7ec62af806f3a1a48916145dd9a6b02148",
+        "jaxmarl/environments/jaxnav/__init__.py": "f8f62472abed4c9ce106c00a75f47708d25a908c9554d1ec503a7ade5a087c85",
+        "jaxmarl/environments/coordination_grid/__init__.py": "a33b71a7c3f755e6e93731b3a840b04cc4f337c0a0ba9fed2f680974ae26c4a9",
+        "jaxmarl/environments/coordination_grid/coordination_grid.py": "d30dd64479f9bb9c06607e62f142dfbf9d3abb6597ab50eaba527f92765e69eb",
+        "jaxmarl/environments/coordination_grid/capability_populations.py": "89c05bcf10f3eb53ec2423574d86e9a22fe7b449b5371246607fcbf68a0113dd",
+        "jaxmarl/environments/smax/speed.py": "ddd86e0da54e5d0d53cb6e316f60a028e4e35c47d97885f89ea5c2c0bc0932d1",
+        "jaxmarl/environments/smax/__init__.py": "481fe5862f4ea3ae106a168a02b55bc00bcc483123538482895bb6bfb42621bb",
+        "jaxmarl/environments/smax/heuristic_enemy_smax_env.py": "aee9a9e4c9193170e242330e2eca7ceb7a02ab1b31f2dda7e949248a083841df",
+        "jaxmarl/environments/smax/smax_env.py": "60cc9c9237a7fc81813684b4fe46cb6c31eb61adbb96ab837364284eb2205bcd",
+        "jaxmarl/environments/smax/distributions.py": "ea61360b0eb2ec5805cc0c6e93f62ef25932d7faf9fb235deced1961c4bc9156",
+        "jaxmarl/environments/smax/heuristic_enemy.py": "4432744aadf425580310e78a85e5dfb0e0bdf58f8d79f5d8550f3f053f9833bd",
+        "jaxmarl/environments/jaxnav/maps/polygon_map.py": "36e7596e228f7454456ae06ee4a623d256e45e9caca67feec3c08d0d54a72461",
+        "jaxmarl/environments/jaxnav/maps/__init__.py": "2af5c8093e8652c119f5e370c199e130cb01fc44244fa04788eade55d321d0b7",
+        "jaxmarl/environments/jaxnav/maps/map.py": "04d608332ab37464ab15375c5d6ccd4670b121a033d22b924d5ee1b688460f94",
+        "jaxmarl/environments/jaxnav/maps/map_registration.py": "98b2b9ec49df0906075dc3366764622efe5ad1f3c7bdcf2163f374c446a24e1f",
+        "jaxmarl/environments/jaxnav/maps/grid_map.py": "d585c5b18ae84716f628b7bb7dbf44247c89851398caca2d011fdc4bbcd15e5e",
+        "jaxmarl/environments/hanabi/pretrained/obl_r2d2_agent_test.py": "3119712c4c5b0a776af273b5ecc396f818fc32a4eebfa22e68970426e47f9d5b",
+        "jaxmarl/environments/hanabi/pretrained/obl_r2d2_agent.py": "bfd91056de331513689ab171fa1b18eee78e108608b29be99e771222dc9d9196",
+        "jaxmarl/environments/hanabi/pretrained/__init__.py": "f50b1d6816a9c49b360d1b1f563a4d017c71787f3e331f859ec9ffc530e3d09e"
+      },
+      "baseline_trainer_sha256": "d866980f8ec80f12ec99539ae3d850b4b274d50787cb5a9ba7dab49be745d861",
+      "checkpoint_root": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261004_212351_greedy_action_selection",
+      "evaluation_root": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261004_212351_greedy_action_selection",
+      "evaluation_jobs": [
+        {
+          "job_id": "17716592",
+          "dependency": "afterok:17716571:17716572:17716573:17716574:17716575:17716576:17716577:17716578:17716579:17716580:17716581:17716582:17716583:17716584:17716585:17716586:17716587:17716588:17716589:17716590",
+          "command": [
+            "sbatch",
+            "--parsable",
+            "--chdir=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source",
+            "--job-name=cg_v2_cb_eval",
+            "--dependency=afterok:17716571:17716572:17716573:17716574:17716575:17716576:17716577:17716578:17716579:17716580:17716581:17716582:17716583:17716584:17716585:17716586:17716587:17716588:17716589:17716590",
+            "--kill-on-invalid-dep=yes",
+            "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261004_212351_greedy_action_selection,EVAL_OUT_DIR=/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261004_212351_greedy_action_selection,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/corpus/layouts/train,EXPECTED_CHECKPOINTS=20,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1",
+            "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source/bash/eval_all_checkpoints.sh"
+          ]
+        }
+      ]
+    }
+  },
+  "training_jobs": [
+    {
+      "version": "v1",
+      "condition": "rnn_diverse_influence",
+      "seed": 1,
+      "tag": "rnn_diverse_influence_seed1",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source",
+        "--job-name=cg_v1_cb_greedy_rnn_diverse_influence_seed1",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261004_212351_greedy_action_selection,HYDRA_OUTPUT_DIR=/juice6/u/jshe/emergent_partner_grid/train/hydra_outputs/counterbalanced1096_20261004_212351_greedy_action_selection,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/corpus/layouts/train,ALLOCATION_PROTOCOL=fixed_v1,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,ACTION_SELECTION=greedy_random_ties,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=3005232,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=rnn_diverse_influence,SEED=1,TAG=rnn_diverse_influence_seed1",
+        "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17716551"
+    },
+    {
+      "version": "v1",
+      "condition": "rnn_diverse_influence",
+      "seed": 2,
+      "tag": "rnn_diverse_influence_seed2",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source",
+        "--job-name=cg_v1_cb_greedy_rnn_diverse_influence_seed2",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261004_212351_greedy_action_selection,HYDRA_OUTPUT_DIR=/juice6/u/jshe/emergent_partner_grid/train/hydra_outputs/counterbalanced1096_20261004_212351_greedy_action_selection,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/corpus/layouts/train,ALLOCATION_PROTOCOL=fixed_v1,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,ACTION_SELECTION=greedy_random_ties,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=3005232,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=rnn_diverse_influence,SEED=2,TAG=rnn_diverse_influence_seed2",
+        "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17716552"
+    },
+    {
+      "version": "v1",
+      "condition": "rnn_diverse_influence",
+      "seed": 3,
+      "tag": "rnn_diverse_influence_seed3",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source",
+        "--job-name=cg_v1_cb_greedy_rnn_diverse_influence_seed3",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261004_212351_greedy_action_selection,HYDRA_OUTPUT_DIR=/juice6/u/jshe/emergent_partner_grid/train/hydra_outputs/counterbalanced1096_20261004_212351_greedy_action_selection,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/corpus/layouts/train,ALLOCATION_PROTOCOL=fixed_v1,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,ACTION_SELECTION=greedy_random_ties,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=3005232,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=rnn_diverse_influence,SEED=3,TAG=rnn_diverse_influence_seed3",
+        "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17716553"
+    },
+    {
+      "version": "v1",
+      "condition": "rnn_diverse_influence",
+      "seed": 4,
+      "tag": "rnn_diverse_influence_seed4",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source",
+        "--job-name=cg_v1_cb_greedy_rnn_diverse_influence_seed4",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261004_212351_greedy_action_selection,HYDRA_OUTPUT_DIR=/juice6/u/jshe/emergent_partner_grid/train/hydra_outputs/counterbalanced1096_20261004_212351_greedy_action_selection,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/corpus/layouts/train,ALLOCATION_PROTOCOL=fixed_v1,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,ACTION_SELECTION=greedy_random_ties,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=3005232,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=rnn_diverse_influence,SEED=4,TAG=rnn_diverse_influence_seed4",
+        "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17716554"
+    },
+    {
+      "version": "v1",
+      "condition": "rnn_diverse_influence",
+      "seed": 5,
+      "tag": "rnn_diverse_influence_seed5",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source",
+        "--job-name=cg_v1_cb_greedy_rnn_diverse_influence_seed5",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261004_212351_greedy_action_selection,HYDRA_OUTPUT_DIR=/juice6/u/jshe/emergent_partner_grid/train/hydra_outputs/counterbalanced1096_20261004_212351_greedy_action_selection,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/corpus/layouts/train,ALLOCATION_PROTOCOL=fixed_v1,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,ACTION_SELECTION=greedy_random_ties,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=3005232,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=rnn_diverse_influence,SEED=5,TAG=rnn_diverse_influence_seed5",
+        "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17716555"
+    },
+    {
+      "version": "v1",
+      "condition": "mlp_diverse_influence",
+      "seed": 1,
+      "tag": "mlp_diverse_influence_seed1",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source",
+        "--job-name=cg_v1_cb_greedy_mlp_diverse_influence_seed1",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261004_212351_greedy_action_selection,HYDRA_OUTPUT_DIR=/juice6/u/jshe/emergent_partner_grid/train/hydra_outputs/counterbalanced1096_20261004_212351_greedy_action_selection,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/corpus/layouts/train,ALLOCATION_PROTOCOL=fixed_v1,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,ACTION_SELECTION=greedy_random_ties,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=3005232,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=mlp_diverse_influence,SEED=1,TAG=mlp_diverse_influence_seed1",
+        "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17716556"
+    },
+    {
+      "version": "v1",
+      "condition": "mlp_diverse_influence",
+      "seed": 2,
+      "tag": "mlp_diverse_influence_seed2",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source",
+        "--job-name=cg_v1_cb_greedy_mlp_diverse_influence_seed2",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261004_212351_greedy_action_selection,HYDRA_OUTPUT_DIR=/juice6/u/jshe/emergent_partner_grid/train/hydra_outputs/counterbalanced1096_20261004_212351_greedy_action_selection,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/corpus/layouts/train,ALLOCATION_PROTOCOL=fixed_v1,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,ACTION_SELECTION=greedy_random_ties,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=3005232,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=mlp_diverse_influence,SEED=2,TAG=mlp_diverse_influence_seed2",
+        "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17716557"
+    },
+    {
+      "version": "v1",
+      "condition": "mlp_diverse_influence",
+      "seed": 3,
+      "tag": "mlp_diverse_influence_seed3",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source",
+        "--job-name=cg_v1_cb_greedy_mlp_diverse_influence_seed3",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261004_212351_greedy_action_selection,HYDRA_OUTPUT_DIR=/juice6/u/jshe/emergent_partner_grid/train/hydra_outputs/counterbalanced1096_20261004_212351_greedy_action_selection,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/corpus/layouts/train,ALLOCATION_PROTOCOL=fixed_v1,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,ACTION_SELECTION=greedy_random_ties,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=3005232,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=mlp_diverse_influence,SEED=3,TAG=mlp_diverse_influence_seed3",
+        "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17716558"
+    },
+    {
+      "version": "v1",
+      "condition": "mlp_diverse_influence",
+      "seed": 4,
+      "tag": "mlp_diverse_influence_seed4",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source",
+        "--job-name=cg_v1_cb_greedy_mlp_diverse_influence_seed4",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261004_212351_greedy_action_selection,HYDRA_OUTPUT_DIR=/juice6/u/jshe/emergent_partner_grid/train/hydra_outputs/counterbalanced1096_20261004_212351_greedy_action_selection,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/corpus/layouts/train,ALLOCATION_PROTOCOL=fixed_v1,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,ACTION_SELECTION=greedy_random_ties,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=3005232,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=mlp_diverse_influence,SEED=4,TAG=mlp_diverse_influence_seed4",
+        "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17716559"
+    },
+    {
+      "version": "v1",
+      "condition": "mlp_diverse_influence",
+      "seed": 5,
+      "tag": "mlp_diverse_influence_seed5",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source",
+        "--job-name=cg_v1_cb_greedy_mlp_diverse_influence_seed5",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261004_212351_greedy_action_selection,HYDRA_OUTPUT_DIR=/juice6/u/jshe/emergent_partner_grid/train/hydra_outputs/counterbalanced1096_20261004_212351_greedy_action_selection,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/corpus/layouts/train,ALLOCATION_PROTOCOL=fixed_v1,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,ACTION_SELECTION=greedy_random_ties,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=3005232,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=mlp_diverse_influence,SEED=5,TAG=mlp_diverse_influence_seed5",
+        "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17716560"
+    },
+    {
+      "version": "v1",
+      "condition": "rnn_single_influence",
+      "seed": 1,
+      "tag": "rnn_single_influence_seed1",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source",
+        "--job-name=cg_v1_cb_greedy_rnn_single_influence_seed1",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261004_212351_greedy_action_selection,HYDRA_OUTPUT_DIR=/juice6/u/jshe/emergent_partner_grid/train/hydra_outputs/counterbalanced1096_20261004_212351_greedy_action_selection,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/corpus/layouts/train,ALLOCATION_PROTOCOL=fixed_v1,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,ACTION_SELECTION=greedy_random_ties,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=3005232,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=rnn_single_influence,SEED=1,TAG=rnn_single_influence_seed1",
+        "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17716561"
+    },
+    {
+      "version": "v1",
+      "condition": "rnn_single_influence",
+      "seed": 2,
+      "tag": "rnn_single_influence_seed2",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source",
+        "--job-name=cg_v1_cb_greedy_rnn_single_influence_seed2",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261004_212351_greedy_action_selection,HYDRA_OUTPUT_DIR=/juice6/u/jshe/emergent_partner_grid/train/hydra_outputs/counterbalanced1096_20261004_212351_greedy_action_selection,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/corpus/layouts/train,ALLOCATION_PROTOCOL=fixed_v1,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,ACTION_SELECTION=greedy_random_ties,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=3005232,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=rnn_single_influence,SEED=2,TAG=rnn_single_influence_seed2",
+        "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17716562"
+    },
+    {
+      "version": "v1",
+      "condition": "rnn_single_influence",
+      "seed": 3,
+      "tag": "rnn_single_influence_seed3",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source",
+        "--job-name=cg_v1_cb_greedy_rnn_single_influence_seed3",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261004_212351_greedy_action_selection,HYDRA_OUTPUT_DIR=/juice6/u/jshe/emergent_partner_grid/train/hydra_outputs/counterbalanced1096_20261004_212351_greedy_action_selection,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/corpus/layouts/train,ALLOCATION_PROTOCOL=fixed_v1,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,ACTION_SELECTION=greedy_random_ties,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=3005232,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=rnn_single_influence,SEED=3,TAG=rnn_single_influence_seed3",
+        "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17716563"
+    },
+    {
+      "version": "v1",
+      "condition": "rnn_single_influence",
+      "seed": 4,
+      "tag": "rnn_single_influence_seed4",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source",
+        "--job-name=cg_v1_cb_greedy_rnn_single_influence_seed4",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261004_212351_greedy_action_selection,HYDRA_OUTPUT_DIR=/juice6/u/jshe/emergent_partner_grid/train/hydra_outputs/counterbalanced1096_20261004_212351_greedy_action_selection,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/corpus/layouts/train,ALLOCATION_PROTOCOL=fixed_v1,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,ACTION_SELECTION=greedy_random_ties,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=3005232,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=rnn_single_influence,SEED=4,TAG=rnn_single_influence_seed4",
+        "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17716564"
+    },
+    {
+      "version": "v1",
+      "condition": "rnn_single_influence",
+      "seed": 5,
+      "tag": "rnn_single_influence_seed5",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source",
+        "--job-name=cg_v1_cb_greedy_rnn_single_influence_seed5",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261004_212351_greedy_action_selection,HYDRA_OUTPUT_DIR=/juice6/u/jshe/emergent_partner_grid/train/hydra_outputs/counterbalanced1096_20261004_212351_greedy_action_selection,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/corpus/layouts/train,ALLOCATION_PROTOCOL=fixed_v1,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,ACTION_SELECTION=greedy_random_ties,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=3005232,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=rnn_single_influence,SEED=5,TAG=rnn_single_influence_seed5",
+        "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17716565"
+    },
+    {
+      "version": "v1",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 1,
+      "tag": "rnn_diverse_noinfluence_seed1",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source",
+        "--job-name=cg_v1_cb_greedy_rnn_diverse_noinfluence_seed1",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261004_212351_greedy_action_selection,HYDRA_OUTPUT_DIR=/juice6/u/jshe/emergent_partner_grid/train/hydra_outputs/counterbalanced1096_20261004_212351_greedy_action_selection,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/corpus/layouts/train,ALLOCATION_PROTOCOL=fixed_v1,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,ACTION_SELECTION=greedy_random_ties,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=3005232,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=rnn_diverse_noinfluence,SEED=1,TAG=rnn_diverse_noinfluence_seed1",
+        "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17716566"
+    },
+    {
+      "version": "v1",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 2,
+      "tag": "rnn_diverse_noinfluence_seed2",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source",
+        "--job-name=cg_v1_cb_greedy_rnn_diverse_noinfluence_seed2",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261004_212351_greedy_action_selection,HYDRA_OUTPUT_DIR=/juice6/u/jshe/emergent_partner_grid/train/hydra_outputs/counterbalanced1096_20261004_212351_greedy_action_selection,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/corpus/layouts/train,ALLOCATION_PROTOCOL=fixed_v1,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,ACTION_SELECTION=greedy_random_ties,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=3005232,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=rnn_diverse_noinfluence,SEED=2,TAG=rnn_diverse_noinfluence_seed2",
+        "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17716567"
+    },
+    {
+      "version": "v1",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 3,
+      "tag": "rnn_diverse_noinfluence_seed3",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source",
+        "--job-name=cg_v1_cb_greedy_rnn_diverse_noinfluence_seed3",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261004_212351_greedy_action_selection,HYDRA_OUTPUT_DIR=/juice6/u/jshe/emergent_partner_grid/train/hydra_outputs/counterbalanced1096_20261004_212351_greedy_action_selection,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/corpus/layouts/train,ALLOCATION_PROTOCOL=fixed_v1,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,ACTION_SELECTION=greedy_random_ties,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=3005232,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=rnn_diverse_noinfluence,SEED=3,TAG=rnn_diverse_noinfluence_seed3",
+        "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17716568"
+    },
+    {
+      "version": "v1",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 4,
+      "tag": "rnn_diverse_noinfluence_seed4",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source",
+        "--job-name=cg_v1_cb_greedy_rnn_diverse_noinfluence_seed4",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261004_212351_greedy_action_selection,HYDRA_OUTPUT_DIR=/juice6/u/jshe/emergent_partner_grid/train/hydra_outputs/counterbalanced1096_20261004_212351_greedy_action_selection,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/corpus/layouts/train,ALLOCATION_PROTOCOL=fixed_v1,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,ACTION_SELECTION=greedy_random_ties,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=3005232,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=rnn_diverse_noinfluence,SEED=4,TAG=rnn_diverse_noinfluence_seed4",
+        "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17716569"
+    },
+    {
+      "version": "v1",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 5,
+      "tag": "rnn_diverse_noinfluence_seed5",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source",
+        "--job-name=cg_v1_cb_greedy_rnn_diverse_noinfluence_seed5",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261004_212351_greedy_action_selection,HYDRA_OUTPUT_DIR=/juice6/u/jshe/emergent_partner_grid/train/hydra_outputs/counterbalanced1096_20261004_212351_greedy_action_selection,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/corpus/layouts/train,ALLOCATION_PROTOCOL=fixed_v1,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,ACTION_SELECTION=greedy_random_ties,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=3005232,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=rnn_diverse_noinfluence,SEED=5,TAG=rnn_diverse_noinfluence_seed5",
+        "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v1_balanced_training/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17716570"
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_influence",
+      "seed": 1,
+      "tag": "rnn_diverse_influence_seed1",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source",
+        "--job-name=cg_v2_cb_greedy_rnn_diverse_influence_seed1",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261004_212351_greedy_action_selection,HYDRA_OUTPUT_DIR=/juice6/u/jshe/emergent_partner_grid/train/hydra_outputs/counterbalanced1096_20261004_212351_greedy_action_selection,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/corpus/layouts/train,ALLOCATION_PROTOCOL=online_v2,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,ACTION_SELECTION=greedy_random_ties,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=3005232,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=rnn_diverse_influence,SEED=1,TAG=rnn_diverse_influence_seed1",
+        "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17716571"
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_influence",
+      "seed": 2,
+      "tag": "rnn_diverse_influence_seed2",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source",
+        "--job-name=cg_v2_cb_greedy_rnn_diverse_influence_seed2",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261004_212351_greedy_action_selection,HYDRA_OUTPUT_DIR=/juice6/u/jshe/emergent_partner_grid/train/hydra_outputs/counterbalanced1096_20261004_212351_greedy_action_selection,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/corpus/layouts/train,ALLOCATION_PROTOCOL=online_v2,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,ACTION_SELECTION=greedy_random_ties,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=3005232,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=rnn_diverse_influence,SEED=2,TAG=rnn_diverse_influence_seed2",
+        "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17716572"
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_influence",
+      "seed": 3,
+      "tag": "rnn_diverse_influence_seed3",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source",
+        "--job-name=cg_v2_cb_greedy_rnn_diverse_influence_seed3",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261004_212351_greedy_action_selection,HYDRA_OUTPUT_DIR=/juice6/u/jshe/emergent_partner_grid/train/hydra_outputs/counterbalanced1096_20261004_212351_greedy_action_selection,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/corpus/layouts/train,ALLOCATION_PROTOCOL=online_v2,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,ACTION_SELECTION=greedy_random_ties,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=3005232,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=rnn_diverse_influence,SEED=3,TAG=rnn_diverse_influence_seed3",
+        "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17716573"
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_influence",
+      "seed": 4,
+      "tag": "rnn_diverse_influence_seed4",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source",
+        "--job-name=cg_v2_cb_greedy_rnn_diverse_influence_seed4",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261004_212351_greedy_action_selection,HYDRA_OUTPUT_DIR=/juice6/u/jshe/emergent_partner_grid/train/hydra_outputs/counterbalanced1096_20261004_212351_greedy_action_selection,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/corpus/layouts/train,ALLOCATION_PROTOCOL=online_v2,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,ACTION_SELECTION=greedy_random_ties,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=3005232,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=rnn_diverse_influence,SEED=4,TAG=rnn_diverse_influence_seed4",
+        "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17716574"
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_influence",
+      "seed": 5,
+      "tag": "rnn_diverse_influence_seed5",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source",
+        "--job-name=cg_v2_cb_greedy_rnn_diverse_influence_seed5",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261004_212351_greedy_action_selection,HYDRA_OUTPUT_DIR=/juice6/u/jshe/emergent_partner_grid/train/hydra_outputs/counterbalanced1096_20261004_212351_greedy_action_selection,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/corpus/layouts/train,ALLOCATION_PROTOCOL=online_v2,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,ACTION_SELECTION=greedy_random_ties,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=3005232,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=rnn_diverse_influence,SEED=5,TAG=rnn_diverse_influence_seed5",
+        "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17716575"
+    },
+    {
+      "version": "v2",
+      "condition": "mlp_diverse_influence",
+      "seed": 1,
+      "tag": "mlp_diverse_influence_seed1",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source",
+        "--job-name=cg_v2_cb_greedy_mlp_diverse_influence_seed1",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261004_212351_greedy_action_selection,HYDRA_OUTPUT_DIR=/juice6/u/jshe/emergent_partner_grid/train/hydra_outputs/counterbalanced1096_20261004_212351_greedy_action_selection,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/corpus/layouts/train,ALLOCATION_PROTOCOL=online_v2,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,ACTION_SELECTION=greedy_random_ties,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=3005232,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=mlp_diverse_influence,SEED=1,TAG=mlp_diverse_influence_seed1",
+        "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17716576"
+    },
+    {
+      "version": "v2",
+      "condition": "mlp_diverse_influence",
+      "seed": 2,
+      "tag": "mlp_diverse_influence_seed2",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source",
+        "--job-name=cg_v2_cb_greedy_mlp_diverse_influence_seed2",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261004_212351_greedy_action_selection,HYDRA_OUTPUT_DIR=/juice6/u/jshe/emergent_partner_grid/train/hydra_outputs/counterbalanced1096_20261004_212351_greedy_action_selection,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/corpus/layouts/train,ALLOCATION_PROTOCOL=online_v2,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,ACTION_SELECTION=greedy_random_ties,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=3005232,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=mlp_diverse_influence,SEED=2,TAG=mlp_diverse_influence_seed2",
+        "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17716577"
+    },
+    {
+      "version": "v2",
+      "condition": "mlp_diverse_influence",
+      "seed": 3,
+      "tag": "mlp_diverse_influence_seed3",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source",
+        "--job-name=cg_v2_cb_greedy_mlp_diverse_influence_seed3",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261004_212351_greedy_action_selection,HYDRA_OUTPUT_DIR=/juice6/u/jshe/emergent_partner_grid/train/hydra_outputs/counterbalanced1096_20261004_212351_greedy_action_selection,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/corpus/layouts/train,ALLOCATION_PROTOCOL=online_v2,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,ACTION_SELECTION=greedy_random_ties,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=3005232,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=mlp_diverse_influence,SEED=3,TAG=mlp_diverse_influence_seed3",
+        "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17716578"
+    },
+    {
+      "version": "v2",
+      "condition": "mlp_diverse_influence",
+      "seed": 4,
+      "tag": "mlp_diverse_influence_seed4",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source",
+        "--job-name=cg_v2_cb_greedy_mlp_diverse_influence_seed4",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261004_212351_greedy_action_selection,HYDRA_OUTPUT_DIR=/juice6/u/jshe/emergent_partner_grid/train/hydra_outputs/counterbalanced1096_20261004_212351_greedy_action_selection,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/corpus/layouts/train,ALLOCATION_PROTOCOL=online_v2,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,ACTION_SELECTION=greedy_random_ties,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=3005232,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=mlp_diverse_influence,SEED=4,TAG=mlp_diverse_influence_seed4",
+        "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17716579"
+    },
+    {
+      "version": "v2",
+      "condition": "mlp_diverse_influence",
+      "seed": 5,
+      "tag": "mlp_diverse_influence_seed5",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source",
+        "--job-name=cg_v2_cb_greedy_mlp_diverse_influence_seed5",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261004_212351_greedy_action_selection,HYDRA_OUTPUT_DIR=/juice6/u/jshe/emergent_partner_grid/train/hydra_outputs/counterbalanced1096_20261004_212351_greedy_action_selection,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/corpus/layouts/train,ALLOCATION_PROTOCOL=online_v2,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,ACTION_SELECTION=greedy_random_ties,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=3005232,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=mlp_diverse_influence,SEED=5,TAG=mlp_diverse_influence_seed5",
+        "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17716580"
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_single_influence",
+      "seed": 1,
+      "tag": "rnn_single_influence_seed1",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source",
+        "--job-name=cg_v2_cb_greedy_rnn_single_influence_seed1",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261004_212351_greedy_action_selection,HYDRA_OUTPUT_DIR=/juice6/u/jshe/emergent_partner_grid/train/hydra_outputs/counterbalanced1096_20261004_212351_greedy_action_selection,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/corpus/layouts/train,ALLOCATION_PROTOCOL=online_v2,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,ACTION_SELECTION=greedy_random_ties,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=3005232,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=rnn_single_influence,SEED=1,TAG=rnn_single_influence_seed1",
+        "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17716581"
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_single_influence",
+      "seed": 2,
+      "tag": "rnn_single_influence_seed2",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source",
+        "--job-name=cg_v2_cb_greedy_rnn_single_influence_seed2",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261004_212351_greedy_action_selection,HYDRA_OUTPUT_DIR=/juice6/u/jshe/emergent_partner_grid/train/hydra_outputs/counterbalanced1096_20261004_212351_greedy_action_selection,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/corpus/layouts/train,ALLOCATION_PROTOCOL=online_v2,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,ACTION_SELECTION=greedy_random_ties,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=3005232,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=rnn_single_influence,SEED=2,TAG=rnn_single_influence_seed2",
+        "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17716582"
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_single_influence",
+      "seed": 3,
+      "tag": "rnn_single_influence_seed3",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source",
+        "--job-name=cg_v2_cb_greedy_rnn_single_influence_seed3",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261004_212351_greedy_action_selection,HYDRA_OUTPUT_DIR=/juice6/u/jshe/emergent_partner_grid/train/hydra_outputs/counterbalanced1096_20261004_212351_greedy_action_selection,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/corpus/layouts/train,ALLOCATION_PROTOCOL=online_v2,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,ACTION_SELECTION=greedy_random_ties,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=3005232,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=rnn_single_influence,SEED=3,TAG=rnn_single_influence_seed3",
+        "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17716583"
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_single_influence",
+      "seed": 4,
+      "tag": "rnn_single_influence_seed4",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source",
+        "--job-name=cg_v2_cb_greedy_rnn_single_influence_seed4",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261004_212351_greedy_action_selection,HYDRA_OUTPUT_DIR=/juice6/u/jshe/emergent_partner_grid/train/hydra_outputs/counterbalanced1096_20261004_212351_greedy_action_selection,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/corpus/layouts/train,ALLOCATION_PROTOCOL=online_v2,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,ACTION_SELECTION=greedy_random_ties,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=3005232,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=rnn_single_influence,SEED=4,TAG=rnn_single_influence_seed4",
+        "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17716584"
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_single_influence",
+      "seed": 5,
+      "tag": "rnn_single_influence_seed5",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source",
+        "--job-name=cg_v2_cb_greedy_rnn_single_influence_seed5",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261004_212351_greedy_action_selection,HYDRA_OUTPUT_DIR=/juice6/u/jshe/emergent_partner_grid/train/hydra_outputs/counterbalanced1096_20261004_212351_greedy_action_selection,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/corpus/layouts/train,ALLOCATION_PROTOCOL=online_v2,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,ACTION_SELECTION=greedy_random_ties,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=3005232,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=rnn_single_influence,SEED=5,TAG=rnn_single_influence_seed5",
+        "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17716585"
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 1,
+      "tag": "rnn_diverse_noinfluence_seed1",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source",
+        "--job-name=cg_v2_cb_greedy_rnn_diverse_noinfluence_seed1",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261004_212351_greedy_action_selection,HYDRA_OUTPUT_DIR=/juice6/u/jshe/emergent_partner_grid/train/hydra_outputs/counterbalanced1096_20261004_212351_greedy_action_selection,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/corpus/layouts/train,ALLOCATION_PROTOCOL=online_v2,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,ACTION_SELECTION=greedy_random_ties,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=3005232,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=rnn_diverse_noinfluence,SEED=1,TAG=rnn_diverse_noinfluence_seed1",
+        "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17716586"
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 2,
+      "tag": "rnn_diverse_noinfluence_seed2",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source",
+        "--job-name=cg_v2_cb_greedy_rnn_diverse_noinfluence_seed2",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261004_212351_greedy_action_selection,HYDRA_OUTPUT_DIR=/juice6/u/jshe/emergent_partner_grid/train/hydra_outputs/counterbalanced1096_20261004_212351_greedy_action_selection,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/corpus/layouts/train,ALLOCATION_PROTOCOL=online_v2,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,ACTION_SELECTION=greedy_random_ties,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=3005232,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=rnn_diverse_noinfluence,SEED=2,TAG=rnn_diverse_noinfluence_seed2",
+        "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17716587"
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 3,
+      "tag": "rnn_diverse_noinfluence_seed3",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source",
+        "--job-name=cg_v2_cb_greedy_rnn_diverse_noinfluence_seed3",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261004_212351_greedy_action_selection,HYDRA_OUTPUT_DIR=/juice6/u/jshe/emergent_partner_grid/train/hydra_outputs/counterbalanced1096_20261004_212351_greedy_action_selection,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/corpus/layouts/train,ALLOCATION_PROTOCOL=online_v2,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,ACTION_SELECTION=greedy_random_ties,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=3005232,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=rnn_diverse_noinfluence,SEED=3,TAG=rnn_diverse_noinfluence_seed3",
+        "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17716588"
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 4,
+      "tag": "rnn_diverse_noinfluence_seed4",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source",
+        "--job-name=cg_v2_cb_greedy_rnn_diverse_noinfluence_seed4",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261004_212351_greedy_action_selection,HYDRA_OUTPUT_DIR=/juice6/u/jshe/emergent_partner_grid/train/hydra_outputs/counterbalanced1096_20261004_212351_greedy_action_selection,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/corpus/layouts/train,ALLOCATION_PROTOCOL=online_v2,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,ACTION_SELECTION=greedy_random_ties,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=3005232,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=rnn_diverse_noinfluence,SEED=4,TAG=rnn_diverse_noinfluence_seed4",
+        "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17716589"
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 5,
+      "tag": "rnn_diverse_noinfluence_seed5",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source",
+        "--job-name=cg_v2_cb_greedy_rnn_diverse_noinfluence_seed5",
+        "--export=ALL,REPO_ROOT=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source,CHECKPOINT_DIR=/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261004_212351_greedy_action_selection,HYDRA_OUTPUT_DIR=/juice6/u/jshe/emergent_partner_grid/train/hydra_outputs/counterbalanced1096_20261004_212351_greedy_action_selection,LAYOUTS_DIR=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/corpus/layouts/train,ALLOCATION_PROTOCOL=online_v2,NUM_SEEDS=1,NUM_ENVS=256,NUM_STEPS=256,ACTION_SELECTION=greedy_random_ties,UPDATE_EPOCHS=4,NUM_MINIBATCHES=64,TOTAL_TIMESTEPS=60000000,LR=5e-4,MAX_STEPS=100,STEP_PENALTY=0.01,ROUNDS_PER_EPISODE=20,HIDE_PARTNER_UNTIL_TIME=0,SCHEDULE_SEED=2026,N_EPS_TOTAL=3005232,EVAL_EPISODES_PER_CAPABILITY=20,WANDB_MODE=disabled,XLA_FLAGS=,JAX_PLATFORMS=,PYTHONDONTWRITEBYTECODE=1,CONDITION=rnn_diverse_noinfluence,SEED=5,TAG=rnn_diverse_noinfluence_seed5",
+        "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/v2_balanced_training/source/bash/train_final_experiment.sh"
+      ],
+      "job_id": "17716590"
+    }
+  ],
+  "resources_per_training_job": {
+    "account": "nlp",
+    "partition": "sphinx",
+    "gpus": 1,
+    "constraint": "80G",
+    "memory": "32G",
+    "cpus": 4,
+    "time_limit": "08:00:00",
+    "exclude": "sphinx9"
+  },
+  "evaluation": {
+    "episodes_per_capability": 20,
+    "seed": 12345,
+    "familiar_profiles": 24,
+    "novel_profiles": 22,
+    "time_limit": "02:00:00",
+    "action_selection": "greedy_random_ties"
+  },
+  "preflight": {
+    "passed": true,
+    "smoke_runs": [
+      {
+        "version": "v1",
+        "condition": "rnn_diverse_influence",
+        "passed": true,
+        "collected_environment_steps": 256,
+        "completed_episodes": 4,
+        "completed_rounds": 84,
+        "log": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/preflight/v1/rnn_diverse_influence/smoke.log",
+        "audit": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/preflight/v1/rnn_diverse_influence/params_sampling_audit.json"
+      },
+      {
+        "version": "v1",
+        "condition": "mlp_diverse_influence",
+        "passed": true,
+        "collected_environment_steps": 256,
+        "completed_episodes": 4,
+        "completed_rounds": 84,
+        "log": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/preflight/v1/mlp_diverse_influence/smoke.log",
+        "audit": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/preflight/v1/mlp_diverse_influence/params_sampling_audit.json"
+      },
+      {
+        "version": "v1",
+        "condition": "rnn_single_influence",
+        "passed": true,
+        "collected_environment_steps": 256,
+        "completed_episodes": 4,
+        "completed_rounds": 84,
+        "log": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/preflight/v1/rnn_single_influence/smoke.log",
+        "audit": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/preflight/v1/rnn_single_influence/params_sampling_audit.json"
+      },
+      {
+        "version": "v1",
+        "condition": "rnn_diverse_noinfluence",
+        "passed": true,
+        "collected_environment_steps": 256,
+        "completed_episodes": 4,
+        "completed_rounds": 84,
+        "log": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/preflight/v1/rnn_diverse_noinfluence/smoke.log",
+        "audit": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/preflight/v1/rnn_diverse_noinfluence/params_sampling_audit.json"
+      },
+      {
+        "version": "v2",
+        "condition": "rnn_diverse_influence",
+        "passed": true,
+        "collected_environment_steps": 256,
+        "completed_episodes": 4,
+        "completed_rounds": 84,
+        "log": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/preflight/v2/rnn_diverse_influence/smoke.log",
+        "audit": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/preflight/v2/rnn_diverse_influence/params_sampling_audit.json"
+      },
+      {
+        "version": "v2",
+        "condition": "mlp_diverse_influence",
+        "passed": true,
+        "collected_environment_steps": 256,
+        "completed_episodes": 4,
+        "completed_rounds": 84,
+        "log": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/preflight/v2/mlp_diverse_influence/smoke.log",
+        "audit": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/preflight/v2/mlp_diverse_influence/params_sampling_audit.json"
+      },
+      {
+        "version": "v2",
+        "condition": "rnn_single_influence",
+        "passed": true,
+        "collected_environment_steps": 256,
+        "completed_episodes": 4,
+        "completed_rounds": 84,
+        "log": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/preflight/v2/rnn_single_influence/smoke.log",
+        "audit": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/preflight/v2/rnn_single_influence/params_sampling_audit.json"
+      },
+      {
+        "version": "v2",
+        "condition": "rnn_diverse_noinfluence",
+        "passed": true,
+        "collected_environment_steps": 256,
+        "completed_episodes": 4,
+        "completed_rounds": 84,
+        "log": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/preflight/v2/rnn_diverse_noinfluence/smoke.log",
+        "audit": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/preflight/v2/rnn_diverse_noinfluence/params_sampling_audit.json"
+      }
+    ],
+    "source_and_corpus_hashes_verified": true,
+    "network_and_environment_unchanged_except_authorized_action_selection": true,
+    "training_and_evaluation_share_action_selection": true,
+    "launcher_bash_syntax_verified": true,
+    "completed_at_utc": "2026-10-04T21:29:23.042003+00:00",
+    "action_selection_unit_tests": {
+      "passed": 29,
+      "record": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/preflight/action_selection_verification.json"
+    },
+    "all_eight_saved_configs_confirm_greedy_selection": true,
+    "standalone_evaluation_smoke_runs": [
+      {
+        "version": "v1",
+        "passed": true,
+        "train_episodes": 24,
+        "test_episodes": 22,
+        "hidden_states_verified": true,
+        "allocation_protocol": "fixed_v1",
+        "action_selection": "greedy_random_ties",
+        "log": "train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/preflight/v1/standalone_eval/evaluation.log"
+      },
+      {
+        "version": "v2",
+        "passed": true,
+        "train_episodes": 24,
+        "test_episodes": 22,
+        "hidden_states_verified": true,
+        "allocation_protocol": "online_v2",
+        "action_selection": "greedy_random_ties",
+        "log": "train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/preflight/v2/standalone_eval/evaluation.log"
+      }
+    ],
+    "standalone_evaluation_uses_same_greedy_checkpoint_config": true
+  },
+  "submitted_at_utc": "2026-10-04T21:32:21.517406+00:00",
+  "scheduler_check": {
+    "checked_at_utc": "2026-10-04T21:33:53.727219+00:00",
+    "jobs": [
+      {
+        "job_id": "17716592",
+        "state": "PENDING",
+        "reason": "Dependency",
+        "name": "cg_v2_cb_eval"
+      },
+      {
+        "job_id": "17716591",
+        "state": "PENDING",
+        "reason": "Dependency",
+        "name": "cg_v1_cb_eval"
+      },
+      {
+        "job_id": "17716590",
+        "state": "PENDING",
+        "reason": "Priority",
+        "name": "cg_v2_cb_greedy_rnn_diverse_noinfluence_seed5"
+      },
+      {
+        "job_id": "17716589",
+        "state": "PENDING",
+        "reason": "Priority",
+        "name": "cg_v2_cb_greedy_rnn_diverse_noinfluence_seed4"
+      },
+      {
+        "job_id": "17716588",
+        "state": "PENDING",
+        "reason": "Priority",
+        "name": "cg_v2_cb_greedy_rnn_diverse_noinfluence_seed3"
+      },
+      {
+        "job_id": "17716587",
+        "state": "PENDING",
+        "reason": "Priority",
+        "name": "cg_v2_cb_greedy_rnn_diverse_noinfluence_seed2"
+      },
+      {
+        "job_id": "17716586",
+        "state": "PENDING",
+        "reason": "Priority",
+        "name": "cg_v2_cb_greedy_rnn_diverse_noinfluence_seed1"
+      },
+      {
+        "job_id": "17716585",
+        "state": "PENDING",
+        "reason": "Priority",
+        "name": "cg_v2_cb_greedy_rnn_single_influence_seed5"
+      },
+      {
+        "job_id": "17716584",
+        "state": "PENDING",
+        "reason": "Priority",
+        "name": "cg_v2_cb_greedy_rnn_single_influence_seed4"
+      },
+      {
+        "job_id": "17716583",
+        "state": "PENDING",
+        "reason": "Priority",
+        "name": "cg_v2_cb_greedy_rnn_single_influence_seed3"
+      },
+      {
+        "job_id": "17716582",
+        "state": "PENDING",
+        "reason": "Priority",
+        "name": "cg_v2_cb_greedy_rnn_single_influence_seed2"
+      },
+      {
+        "job_id": "17716581",
+        "state": "PENDING",
+        "reason": "Priority",
+        "name": "cg_v2_cb_greedy_rnn_single_influence_seed1"
+      },
+      {
+        "job_id": "17716580",
+        "state": "PENDING",
+        "reason": "Priority",
+        "name": "cg_v2_cb_greedy_mlp_diverse_influence_seed5"
+      },
+      {
+        "job_id": "17716579",
+        "state": "PENDING",
+        "reason": "Priority",
+        "name": "cg_v2_cb_greedy_mlp_diverse_influence_seed4"
+      },
+      {
+        "job_id": "17716578",
+        "state": "PENDING",
+        "reason": "Priority",
+        "name": "cg_v2_cb_greedy_mlp_diverse_influence_seed3"
+      },
+      {
+        "job_id": "17716577",
+        "state": "PENDING",
+        "reason": "Priority",
+        "name": "cg_v2_cb_greedy_mlp_diverse_influence_seed2"
+      },
+      {
+        "job_id": "17716576",
+        "state": "PENDING",
+        "reason": "Priority",
+        "name": "cg_v2_cb_greedy_mlp_diverse_influence_seed1"
+      },
+      {
+        "job_id": "17716575",
+        "state": "PENDING",
+        "reason": "Priority",
+        "name": "cg_v2_cb_greedy_rnn_diverse_influence_seed5"
+      },
+      {
+        "job_id": "17716574",
+        "state": "PENDING",
+        "reason": "Priority",
+        "name": "cg_v2_cb_greedy_rnn_diverse_influence_seed4"
+      },
+      {
+        "job_id": "17716573",
+        "state": "PENDING",
+        "reason": "Priority",
+        "name": "cg_v2_cb_greedy_rnn_diverse_influence_seed3"
+      },
+      {
+        "job_id": "17716572",
+        "state": "PENDING",
+        "reason": "Priority",
+        "name": "cg_v2_cb_greedy_rnn_diverse_influence_seed2"
+      },
+      {
+        "job_id": "17716571",
+        "state": "PENDING",
+        "reason": "Priority",
+        "name": "cg_v2_cb_greedy_rnn_diverse_influence_seed1"
+      },
+      {
+        "job_id": "17716570",
+        "state": "PENDING",
+        "reason": "Priority",
+        "name": "cg_v1_cb_greedy_rnn_diverse_noinfluence_seed5"
+      },
+      {
+        "job_id": "17716569",
+        "state": "PENDING",
+        "reason": "Priority",
+        "name": "cg_v1_cb_greedy_rnn_diverse_noinfluence_seed4"
+      },
+      {
+        "job_id": "17716568",
+        "state": "PENDING",
+        "reason": "Priority",
+        "name": "cg_v1_cb_greedy_rnn_diverse_noinfluence_seed3"
+      },
+      {
+        "job_id": "17716567",
+        "state": "PENDING",
+        "reason": "Priority",
+        "name": "cg_v1_cb_greedy_rnn_diverse_noinfluence_seed2"
+      },
+      {
+        "job_id": "17716566",
+        "state": "PENDING",
+        "reason": "Priority",
+        "name": "cg_v1_cb_greedy_rnn_diverse_noinfluence_seed1"
+      },
+      {
+        "job_id": "17716565",
+        "state": "PENDING",
+        "reason": "Priority",
+        "name": "cg_v1_cb_greedy_rnn_single_influence_seed5"
+      },
+      {
+        "job_id": "17716564",
+        "state": "PENDING",
+        "reason": "Priority",
+        "name": "cg_v1_cb_greedy_rnn_single_influence_seed4"
+      },
+      {
+        "job_id": "17716563",
+        "state": "PENDING",
+        "reason": "Priority",
+        "name": "cg_v1_cb_greedy_rnn_single_influence_seed3"
+      },
+      {
+        "job_id": "17716562",
+        "state": "PENDING",
+        "reason": "Priority",
+        "name": "cg_v1_cb_greedy_rnn_single_influence_seed2"
+      },
+      {
+        "job_id": "17716561",
+        "state": "PENDING",
+        "reason": "Priority",
+        "name": "cg_v1_cb_greedy_rnn_single_influence_seed1"
+      },
+      {
+        "job_id": "17716560",
+        "state": "PENDING",
+        "reason": "Priority",
+        "name": "cg_v1_cb_greedy_mlp_diverse_influence_seed5"
+      },
+      {
+        "job_id": "17716559",
+        "state": "PENDING",
+        "reason": "Priority",
+        "name": "cg_v1_cb_greedy_mlp_diverse_influence_seed4"
+      },
+      {
+        "job_id": "17716558",
+        "state": "PENDING",
+        "reason": "Priority",
+        "name": "cg_v1_cb_greedy_mlp_diverse_influence_seed3"
+      },
+      {
+        "job_id": "17716557",
+        "state": "PENDING",
+        "reason": "Priority",
+        "name": "cg_v1_cb_greedy_mlp_diverse_influence_seed2"
+      },
+      {
+        "job_id": "17716556",
+        "state": "PENDING",
+        "reason": "Priority",
+        "name": "cg_v1_cb_greedy_mlp_diverse_influence_seed1"
+      },
+      {
+        "job_id": "17716555",
+        "state": "PENDING",
+        "reason": "Priority",
+        "name": "cg_v1_cb_greedy_rnn_diverse_influence_seed5"
+      },
+      {
+        "job_id": "17716554",
+        "state": "PENDING",
+        "reason": "Priority",
+        "name": "cg_v1_cb_greedy_rnn_diverse_influence_seed4"
+      },
+      {
+        "job_id": "17716553",
+        "state": "PENDING",
+        "reason": "Priority",
+        "name": "cg_v1_cb_greedy_rnn_diverse_influence_seed3"
+      },
+      {
+        "job_id": "17716552",
+        "state": "PENDING",
+        "reason": "Priority",
+        "name": "cg_v1_cb_greedy_rnn_diverse_influence_seed2"
+      },
+      {
+        "job_id": "17716551",
+        "state": "PENDING",
+        "reason": "Priority",
+        "name": "cg_v1_cb_greedy_rnn_diverse_influence_seed1"
+      }
+    ],
+    "state_counts": {
+      "PENDING": 42
+    },
+    "evaluation_dependencies_verified": true,
+    "evaluation_jobs": [
+      {
+        "version": "v1",
+        "job_id": "17716591",
+        "state": "PENDING",
+        "afterok_training_jobs": [
+          "17716551",
+          "17716552",
+          "17716553",
+          "17716554",
+          "17716555",
+          "17716556",
+          "17716557",
+          "17716558",
+          "17716559",
+          "17716560",
+          "17716561",
+          "17716562",
+          "17716563",
+          "17716564",
+          "17716565",
+          "17716566",
+          "17716567",
+          "17716568",
+          "17716569",
+          "17716570"
+        ],
+        "dependency_verified": true
+      },
+      {
+        "version": "v2",
+        "job_id": "17716592",
+        "state": "PENDING",
+        "afterok_training_jobs": [
+          "17716571",
+          "17716572",
+          "17716573",
+          "17716574",
+          "17716575",
+          "17716576",
+          "17716577",
+          "17716578",
+          "17716579",
+          "17716580",
+          "17716581",
+          "17716582",
+          "17716583",
+          "17716584",
+          "17716585",
+          "17716586",
+          "17716587",
+          "17716588",
+          "17716589",
+          "17716590"
+        ],
+        "dependency_verified": true
+      }
+    ]
+  },
+  "completion_check": {
+    "checked_at_utc": "2026-10-05T19:12:33.790827+00:00",
+    "training_jobs_completed": 40,
+    "evaluation_jobs_completed": 2,
+    "effective_steps_per_policy": 59965440,
+    "frozen_source_hashes_verified": true,
+    "greedy_action_configs_verified": 40,
+    "sampling_audit_verified_runs": 40,
+    "common_seed": 5,
+    "selection_window_updates": 46,
+    "results_root": "eval/protocol_comparison/counterbalanced1096_20261004_212351_greedy_action_selection",
+    "training_curves_root": "train/training_curves/counterbalanced1096_20261004_212351_greedy_action_selection",
+    "accounting": [
+      {
+        "job_id": "17716551",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "01:37:13",
+        "ended_at_scheduler_time": "2026-10-04T16:33:30"
+      },
+      {
+        "job_id": "17716552",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "01:37:20",
+        "ended_at_scheduler_time": "2026-10-04T18:14:37"
+      },
+      {
+        "job_id": "17716553",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "01:36:58",
+        "ended_at_scheduler_time": "2026-10-04T19:44:56"
+      },
+      {
+        "job_id": "17716554",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "01:37:25",
+        "ended_at_scheduler_time": "2026-10-04T19:45:23"
+      },
+      {
+        "job_id": "17716555",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "01:37:21",
+        "ended_at_scheduler_time": "2026-10-04T19:45:19"
+      },
+      {
+        "job_id": "17716556",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "00:11:25",
+        "ended_at_scheduler_time": "2026-10-04T18:19:23"
+      },
+      {
+        "job_id": "17716557",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "00:11:19",
+        "ended_at_scheduler_time": "2026-10-04T18:24:20"
+      },
+      {
+        "job_id": "17716558",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "00:11:11",
+        "ended_at_scheduler_time": "2026-10-04T18:29:17"
+      },
+      {
+        "job_id": "17716559",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "00:11:10",
+        "ended_at_scheduler_time": "2026-10-04T18:29:16"
+      },
+      {
+        "job_id": "17716560",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "00:11:07",
+        "ended_at_scheduler_time": "2026-10-04T18:34:18"
+      },
+      {
+        "job_id": "17716561",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "01:36:57",
+        "ended_at_scheduler_time": "2026-10-04T20:00:08"
+      },
+      {
+        "job_id": "17716562",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "01:36:10",
+        "ended_at_scheduler_time": "2026-10-04T19:59:21"
+      },
+      {
+        "job_id": "17716563",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "01:36:21",
+        "ended_at_scheduler_time": "2026-10-04T21:15:51"
+      },
+      {
+        "job_id": "17716564",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "01:36:47",
+        "ended_at_scheduler_time": "2026-10-04T21:31:29"
+      },
+      {
+        "job_id": "17716565",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "01:36:07",
+        "ended_at_scheduler_time": "2026-10-04T21:35:53"
+      },
+      {
+        "job_id": "17716566",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "01:36:43",
+        "ended_at_scheduler_time": "2026-10-04T21:36:29"
+      },
+      {
+        "job_id": "17716567",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "01:36:55",
+        "ended_at_scheduler_time": "2026-10-04T21:36:41"
+      },
+      {
+        "job_id": "17716568",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "01:36:29",
+        "ended_at_scheduler_time": "2026-10-04T21:41:19"
+      },
+      {
+        "job_id": "17716569",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "01:37:20",
+        "ended_at_scheduler_time": "2026-10-04T21:42:10"
+      },
+      {
+        "job_id": "17716570",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "01:37:27",
+        "ended_at_scheduler_time": "2026-10-04T21:42:17"
+      },
+      {
+        "job_id": "17716571",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "01:37:16",
+        "ended_at_scheduler_time": "2026-10-04T21:42:06"
+      },
+      {
+        "job_id": "17716572",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "01:37:08",
+        "ended_at_scheduler_time": "2026-10-04T21:41:58"
+      },
+      {
+        "job_id": "17716573",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "01:36:44",
+        "ended_at_scheduler_time": "2026-10-04T21:56:46"
+      },
+      {
+        "job_id": "17716574",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "01:36:43",
+        "ended_at_scheduler_time": "2026-10-04T21:56:45"
+      },
+      {
+        "job_id": "17716575",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "01:37:25",
+        "ended_at_scheduler_time": "2026-10-04T22:02:31"
+      },
+      {
+        "job_id": "17716576",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "00:11:26",
+        "ended_at_scheduler_time": "2026-10-04T20:36:32"
+      },
+      {
+        "job_id": "17716577",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "00:11:25",
+        "ended_at_scheduler_time": "2026-10-04T21:47:40"
+      },
+      {
+        "job_id": "17716578",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "00:13:26",
+        "ended_at_scheduler_time": "2026-10-04T21:59:45"
+      },
+      {
+        "job_id": "17716579",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "00:13:34",
+        "ended_at_scheduler_time": "2026-10-04T21:59:53"
+      },
+      {
+        "job_id": "17716580",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "00:13:29",
+        "ended_at_scheduler_time": "2026-10-04T21:59:48"
+      },
+      {
+        "job_id": "17716581",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "01:37:08",
+        "ended_at_scheduler_time": "2026-10-04T23:23:27"
+      },
+      {
+        "job_id": "17716582",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "01:36:38",
+        "ended_at_scheduler_time": "2026-10-04T23:22:57"
+      },
+      {
+        "job_id": "17716583",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "01:36:31",
+        "ended_at_scheduler_time": "2026-10-04T23:27:53"
+      },
+      {
+        "job_id": "17716584",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "01:36:53",
+        "ended_at_scheduler_time": "2026-10-04T23:38:22"
+      },
+      {
+        "job_id": "17716585",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "01:37:27",
+        "ended_at_scheduler_time": "2026-10-04T23:38:56"
+      },
+      {
+        "job_id": "17716586",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "01:37:29",
+        "ended_at_scheduler_time": "2026-10-04T23:38:58"
+      },
+      {
+        "job_id": "17716587",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "01:37:30",
+        "ended_at_scheduler_time": "2026-10-04T23:40:56"
+      },
+      {
+        "job_id": "17716588",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "01:37:09",
+        "ended_at_scheduler_time": "2026-10-04T23:47:35"
+      },
+      {
+        "job_id": "17716589",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "01:37:17",
+        "ended_at_scheduler_time": "2026-10-04T23:48:43"
+      },
+      {
+        "job_id": "17716590",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "01:36:55",
+        "ended_at_scheduler_time": "2026-10-04T23:53:34"
+      },
+      {
+        "job_id": "17716591",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "00:09:27",
+        "ended_at_scheduler_time": "2026-10-04T21:55:46"
+      },
+      {
+        "job_id": "17716592",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "elapsed": "00:10:06",
+        "ended_at_scheduler_time": "2026-10-05T00:07:49"
+      }
+    ]
+  }
+}

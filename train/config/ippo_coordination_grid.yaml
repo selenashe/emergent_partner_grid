@@ -11,6 +11,7 @@
 
 "ENV_NAME": "coordination_grid"
 "ALLOCATION_PROTOCOL": "online_v2"
+"ACTION_SELECTION": "greedy_random_ties"  # exact probability maximum; random ties only
 "ENV_KWARGS":
   # Exact ego-distance marginals: 137 layouts at each distance 1–8 per goal.
   "layouts_dir": "/juice6/u/jshe/emergent_partner_grid/data_prep/grids_capability_selected_balanced_1096/layouts/train"

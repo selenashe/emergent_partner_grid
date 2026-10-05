@@ -1,0 +1,159 @@
+{
+  "archived_at_utc": "2026-10-05T23:53:19.518683+00:00",
+  "reason": "Inherited JaxMARL tests for unrelated tasks; current grid experiment tests remain active",
+  "moves": [
+    {
+      "source": "tests/hanabi",
+      "destination": "archive/2026-10-05-unrelated-tests/tests/hanabi"
+    },
+    {
+      "source": "tests/brax",
+      "destination": "archive/2026-10-05-unrelated-tests/tests/brax"
+    },
+    {
+      "source": "tests/coin_game",
+      "destination": "archive/2026-10-05-unrelated-tests/tests/coin_game"
+    },
+    {
+      "source": "tests/jaxnav",
+      "destination": "archive/2026-10-05-unrelated-tests/tests/jaxnav"
+    },
+    {
+      "source": "tests/mpe",
+      "destination": "archive/2026-10-05-unrelated-tests/tests/mpe"
+    },
+    {
+      "source": "tests/smax",
+      "destination": "archive/2026-10-05-unrelated-tests/tests/smax"
+    },
+    {
+      "source": "tests/storm",
+      "destination": "archive/2026-10-05-unrelated-tests/tests/storm"
+    },
+    {
+      "source": "tests/switch_riddle",
+      "destination": "archive/2026-10-05-unrelated-tests/tests/switch_riddle"
+    },
+    {
+      "source": "tests/test_jaxmarl_api.py",
+      "destination": "archive/2026-10-05-unrelated-tests/tests/test_jaxmarl_api.py"
+    }
+  ],
+  "files": [
+    {
+      "original": "tests/hanabi/actions.json",
+      "archived": "archive/2026-10-05-unrelated-tests/tests/hanabi/actions.json",
+      "bytes": 2376247,
+      "sha256": "f144d55d9c7cd9ea8d5f693b63c879447053fd266e33e6f94956a25aa51519f9"
+    },
+    {
+      "original": "tests/hanabi/decks.json",
+      "archived": "archive/2026-10-05-unrelated-tests/tests/hanabi/decks.json",
+      "bytes": 3663677,
+      "sha256": "d968a395a3b339ed201c3d81199559d17710423cb1cdcec9ca9200c44fe3149f"
+    },
+    {
+      "original": "tests/hanabi/scores.txt",
+      "archived": "archive/2026-10-05-unrelated-tests/tests/hanabi/scores.txt",
+      "bytes": 78647,
+      "sha256": "5f497eb0f4f2bd5149a5bcb10445e4af43e9fa74ce35a3f9b95ea163f38d6cee"
+    },
+    {
+      "original": "tests/hanabi/test_hanabi.py",
+      "archived": "archive/2026-10-05-unrelated-tests/tests/hanabi/test_hanabi.py",
+      "bytes": 3176,
+      "sha256": "edd0cd9090ac9461ca461531f2ea3cb276c704d12411f693844297b71e1e672f"
+    },
+    {
+      "original": "tests/brax/test_brax_rand_acts.py",
+      "archived": "archive/2026-10-05-unrelated-tests/tests/brax/test_brax_rand_acts.py",
+      "bytes": 667,
+      "sha256": "a2668f93ec65eb671d481c00101407b02ca3ead6b95d108daa9156a793d254c3"
+    },
+    {
+      "original": "tests/coin_game/test_coin_game_rand_acts.py",
+      "archived": "archive/2026-10-05-unrelated-tests/tests/coin_game/test_coin_game_rand_acts.py",
+      "bytes": 677,
+      "sha256": "8f709d509e7c4c12888b98a3794d4950aee03976d7213b0da849972ec87c3a6c"
+    },
+    {
+      "original": "tests/jaxnav/test_jaxnav_gridpolymap.py",
+      "archived": "archive/2026-10-05-unrelated-tests/tests/jaxnav/test_jaxnav_gridpolymap.py",
+      "bytes": 6588,
+      "sha256": "f17bf1e34ea5137d4af7f7f56d33c2e7f6a592d40994dcedd737dfa0b72426ec"
+    },
+    {
+      "original": "tests/jaxnav/test_jaxnav_rand_acts.py",
+      "archived": "archive/2026-10-05-unrelated-tests/tests/jaxnav/test_jaxnav_rand_acts.py",
+      "bytes": 687,
+      "sha256": "60ff6a26a3b09b9875c001d20b87c95ff6a3bee9343003a2d3b606a79adc77b1"
+    },
+    {
+      "original": "tests/mpe/_test_utils/rollout_manager.py",
+      "archived": "archive/2026-10-05-unrelated-tests/tests/mpe/_test_utils/rollout_manager.py",
+      "bytes": 538,
+      "sha256": "c4da90d92b0673a43b50281cd3e9f4ec3b29c287fc2d32ab74bb64ef1fcef7b5"
+    },
+    {
+      "original": "tests/mpe/mpe_policy_transfer.py",
+      "archived": "archive/2026-10-05-unrelated-tests/tests/mpe/mpe_policy_transfer.py",
+      "bytes": 7543,
+      "sha256": "f783c0498cb767be0761c890dfa1a8a06c86cdb346b03919c0fe36ae16f6aadc"
+    },
+    {
+      "original": "tests/mpe/test_mpe.py",
+      "archived": "archive/2026-10-05-unrelated-tests/tests/mpe/test_mpe.py",
+      "bytes": 7422,
+      "sha256": "4729ca5ffd51a081916d5ba099e11e3a293db7e1fe86c8c6a96c13a00e795f59"
+    },
+    {
+      "original": "tests/mpe/zoo_benchmark.py",
+      "archived": "archive/2026-10-05-unrelated-tests/tests/mpe/zoo_benchmark.py",
+      "bytes": 2349,
+      "sha256": "46b8e4b6cfdebd451104eece937fa35f0a6dd3f4aae5d0763dbe98f4b990c63e"
+    },
+    {
+      "original": "tests/smax/test_smax.py",
+      "archived": "archive/2026-10-05-unrelated-tests/tests/smax/test_smax.py",
+      "bytes": 21435,
+      "sha256": "e02924290ce175e476911127bbb3c5e1fa645ebcd8fde15817996f1db4f42707"
+    },
+    {
+      "original": "tests/storm/test_storm_rand_acts.py",
+      "archived": "archive/2026-10-05-unrelated-tests/tests/storm/test_storm_rand_acts.py",
+      "bytes": 675,
+      "sha256": "07f5e138d4c5a51865e3e77cf8dfec818d4ffb19eb94360bd8121e9b879d9f91"
+    },
+    {
+      "original": "tests/switch_riddle/benchmark.py",
+      "archived": "archive/2026-10-05-unrelated-tests/tests/switch_riddle/benchmark.py",
+      "bytes": 2109,
+      "sha256": "b34b956d6d2d36eaeca9151b0dc25c3672a7bf8cb474a541d2c3b0fe0d88f431"
+    },
+    {
+      "original": "tests/switch_riddle/rollout_menager.py",
+      "archived": "archive/2026-10-05-unrelated-tests/tests/switch_riddle/rollout_menager.py",
+      "bytes": 943,
+      "sha256": "4fbecfb87d35a94eb1610b3d1c17df4fd75711933c367e58a22791c4de8da01f"
+    },
+    {
+      "original": "tests/switch_riddle/switch_riddle_nojax.py",
+      "archived": "archive/2026-10-05-unrelated-tests/tests/switch_riddle/switch_riddle_nojax.py",
+      "bytes": 5442,
+      "sha256": "85e2d236590e2bb3026be6728d50b9878ed00d5ecc6b471531926c0c79472387"
+    },
+    {
+      "original": "tests/switch_riddle/test_heuristic.py",
+      "archived": "archive/2026-10-05-unrelated-tests/tests/switch_riddle/test_heuristic.py",
+      "bytes": 10163,
+      "sha256": "a8d77c4277f6e6557d826f804d3347cdfb01a6f5dfe3165534c414fe0c3e5a45"
+    },
+    {
+      "original": "tests/test_jaxmarl_api.py",
+      "archived": "archive/2026-10-05-unrelated-tests/tests/test_jaxmarl_api.py",
+      "bytes": 1316,
+      "sha256": "77e793baf8fa4b700086a545c984a527eeb19a0b5cd3522169cb2cbb9eb98907"
+    }
+  ],
+  "verification": "All archived file sizes and SHA-256 hashes match; original paths absent"
+}

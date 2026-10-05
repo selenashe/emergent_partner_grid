@@ -3,6 +3,7 @@ import argparse
 import csv
 import json
 from pathlib import Path
+import sys
 
 import matplotlib
 matplotlib.use("Agg")
@@ -13,10 +14,13 @@ import h5py
 
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+from repo_paths import resolve_path
 BATCH = "balanced1096_20261002_022924"
 INPUTS = {"v1": ROOT / "eval/eval_out", "v2": ROOT / "eval/eval_out/online_v2" / BATCH}
 OUT = ROOT / "eval/protocol_comparison" / BATCH
 COUNTERBALANCED = False
+GREEDY = False
 CONDITIONS = {
     "rnn_diverse_influence": "Diverse RNN\n+ influence",
     "mlp_diverse_influence": "Diverse MLP\n+ influence",
@@ -101,7 +105,10 @@ def main():
                            s=17, color="black", alpha=.6, zorder=3)
         ax.set_xticks(np.arange(4), list(CONDITIONS.values()), fontsize=10)
         ax.set_ylabel(label)
-        ax.set_ylim(bottom=0)
+        if metric != "episode_return" or min(r[metric] for r in rows) >= 0:
+            ax.set_ylim(bottom=0)
+        else:
+            ax.axhline(0, color="black", linewidth=.7)
         ax.grid(axis="y", alpha=.18)
         ax.set_axisbelow(True)
     for ax, metric, scale, label in zip(axes, ["success", "episode_return", "episode_steps"], [100, 1, 1],
@@ -109,8 +116,8 @@ def main():
         plot_metric(ax, metric, scale, label)
     axes[0].legend(handles=[Patch(facecolor=colors["v1"], alpha=.8, label="v1: commit at round start"),
                            Patch(facecolor=colors["v2"], alpha=.8, label="v2: random start + switching")],
-                   loc="lower left", fontsize=9)
-    fig.suptitle("Held-out partner performance: " + ("counterbalanced v1 versus v2" if COUNTERBALANCED else "v1 versus v2"), fontsize=16)
+                   loc="upper left" if GREEDY else "lower left", fontsize=9)
+    fig.suptitle("Held-out partner performance: " + ("counterbalanced v1 versus v2" if COUNTERBALANCED else "v1 versus v2") + (" — greedy actions" if GREEDY else ""), fontsize=16)
     footnote = ("Same 1096 layouts and counterbalanced schedule; original v1/v2 protocols retained."
                 if COUNTERBALANCED else "Layout corpus and other implementation details also changed.")
     fig.text(.5, .02, "Dots: five trained seeds. Error bars: sample SD. " + footnote, ha="center", fontsize=9)
@@ -156,6 +163,8 @@ if __name__ == "__main__":
     if args.counterbalanced_batch:
         BATCH = args.counterbalanced_batch
         COUNTERBALANCED = True
-        INPUTS = {v: ROOT / "eval/eval_out" / f"{v}_balanced_training" / BATCH for v in ("v1", "v2")}
-        OUT = ROOT / "eval/protocol_comparison" / BATCH
+        INPUTS = {v: resolve_path(ROOT / "eval/eval_out" / f"{v}_balanced_training" / BATCH) for v in ("v1", "v2")}
+        OUT = resolve_path(ROOT / "eval/protocol_comparison" / BATCH)
+        manifest = json.loads(resolve_path(ROOT / "train/manifests" / f"sbatch_{BATCH}.json").read_text())
+        GREEDY = manifest.get("action_selection") == "greedy_random_ties"
     main()

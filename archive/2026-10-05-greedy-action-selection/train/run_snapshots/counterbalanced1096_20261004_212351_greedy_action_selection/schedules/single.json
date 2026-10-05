@@ -1,0 +1,16 @@
+{
+  "sampling_protocol": "paired_counterbalanced_v1",
+  "seed": 2026,
+  "n_layouts": 1096,
+  "n_profiles": 1,
+  "rounds_per_episode": 20,
+  "passes_per_cycle": 5,
+  "episodes_per_profile_per_cycle": 274,
+  "rounds_per_cycle": 5480,
+  "visits_per_profile_layout_per_cycle": 5,
+  "packets": 3000300,
+  "preallocated_episodes": 3000300,
+  "preallocated_rounds": 60006000,
+  "maximum_allocated_episode_imbalance_at_any_prefix": 1,
+  "sha256": "359d749df173d1b9afd2dd160fde92bad5e661d61de9011e1cf9452c83efd42b"
+}

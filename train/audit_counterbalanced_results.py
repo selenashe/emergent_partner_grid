@@ -15,12 +15,12 @@ CONDITIONS = ("rnn_diverse_influence", "mlp_diverse_influence",
 
 
 def main(batch):
-    manifest = json.loads((ROOT / "train/manifests" / f"sbatch_{batch}.json").read_text())
+    manifest = json.loads(resolve_path(ROOT / "train/manifests" / f"sbatch_{batch}.json").read_text())
     plans = {}
     rows = []
     profile_rows = []
     for version in ("v1", "v2"):
-        directory = ROOT / "train/train_logs" / f"{version}_balanced_training" / batch
+        directory = resolve_path(ROOT / "train/train_logs" / f"{version}_balanced_training" / batch)
         for condition in CONDITIONS:
             for seed in range(1, 6):
                 path = directory / f"{condition}_seed{seed}_sampling_audit.json"
@@ -114,7 +114,7 @@ def main(batch):
                     unfinished_rounds=int(planned.sum() - expected_completed.sum()),
                     verification="exact match to schedule prefix after subtracting active unfinished episodes",
                     source=str(path)))
-    out = ROOT / "train/sampling_audits" / batch
+    out = resolve_path(ROOT / "train/sampling_audits" / batch)
     out.mkdir(parents=True, exist_ok=True)
     report = dict(batch=batch, verified_runs=len(rows),
                   note="Episode allocation is balanced within one episode. Actual exposure reflects the 256 unfinished episodes at the fixed-step cutoff; environment steps are not balanced across profiles.",

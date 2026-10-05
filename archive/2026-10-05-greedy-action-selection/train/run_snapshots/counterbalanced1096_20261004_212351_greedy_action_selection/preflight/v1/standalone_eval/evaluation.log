@@ -1,0 +1,9 @@
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+[eval] slice=train, |pool|=24, n_eps/cap=1
+    round_success=0.000 reward/round=-0.0300 opt_alloc=nan regret=+0.0000
+[eval] slice=test, |pool|=22, n_eps/cap=1
+    round_success=0.000 reward/round=-0.0300 opt_alloc=nan regret=+0.0000
+[eval] wrote /juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261004_212351_greedy_action_selection/preflight/v1/standalone_eval/evaluation_summary.json

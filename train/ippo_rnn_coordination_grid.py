@@ -62,6 +62,7 @@ from jaxmarl.environments.coordination_grid import (
     ALLOCATION_PROTOCOL,
 )
 from episode_scheduler import build_schedule, initial_episode_cursor, summarize_schedule
+from action_selection import select_action
 
 
 # ---------------------------------------------------------------------------
@@ -530,7 +531,7 @@ def make_train(config):
                     train_state.params, hstate, (obs_in, dones_in)
                 )
                 rng, _rng = jax.random.split(rng)
-                action = pi.sample(seed=_rng)          # (1, N)
+                action = select_action(pi, _rng, config.get("ACTION_SELECTION", "categorical"))  # (1, N)
                 log_prob = pi.log_prob(action)         # (1, N)
 
                 env_act = {"agent_0": action.squeeze(0)}
@@ -1032,7 +1033,7 @@ def evaluate_policy(params, config, layouts_dir, key,
             done_in = done_prev[jnp.newaxis, :]
             hstate, pi, _ = network.apply(params, hstate, (obs_in, done_in))
             key, ka, ks = jax.random.split(key, 3)
-            action = pi.sample(seed=ka).squeeze(0)                 # (B,)
+            action = select_action(pi, ka, config.get("ACTION_SELECTION", "categorical")).squeeze(0)  # (B,)
             step_keys = jax.random.split(ks, B)
             obs, states, reward, done, info = jax.vmap(
                 env_eval.step_env, in_axes=(0, 0, {"agent_0": 0})

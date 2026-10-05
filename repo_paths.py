@@ -3,10 +3,14 @@
 Saved configs, manifests, rollout attributes and frozen sources are immutable
 evidence. Readers resolve their old paths in memory instead of rewriting them.
 """
+import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 ORIGINAL_ROOT = Path("/juice6/u/jshe/emergent_partner_grid")
+ARCHIVE_INDEX = ROOT / "archive/relocations.json"
+ARCHIVE_RELOCATIONS = (json.loads(ARCHIVE_INDEX.read_text())
+                       if ARCHIVE_INDEX.exists() else {})
 RELOCATIONS = (
     ("dev/grids_capability_selected_balanced_1096", "data_prep/grids_capability_selected_balanced_1096"),
     ("dev/grids_capability_selected_2000", "data_prep/grids_capability_selected_2000"),
@@ -19,6 +23,16 @@ RELOCATIONS = (
     ("analysis/representation_results", "eval/representation_results"),
     ("outputs", "train/hydra_outputs"),
 )
+
+
+def _archive_path(relative):
+    for old, new in ARCHIVE_RELOCATIONS.items():
+        try:
+            suffix = relative.relative_to(old)
+        except ValueError:
+            continue
+        return ROOT / new / suffix
+    return ROOT / relative
 
 
 def resolve_path(value):
@@ -40,18 +54,19 @@ def resolve_path(value):
         name = relative.name
         directory = "train/manifests" if name.startswith("sbatch_") else (
             "eval/slurm_logs" if name.startswith("cg_eval") else "train/slurm_logs")
-        return ROOT / directory / name
+        return _archive_path(Path(directory) / name)
     if (relative.name in {"sampling_verification.json", "actual_exposure_by_run.csv", "actual_exposure_by_profile.csv"}
             and len(relative.parts) >= 4 and relative.parts[0] in {"analysis", "eval"}
             and relative.parts[1] == "protocol_comparison"):
-        return ROOT / "train/sampling_audits" / relative.parts[2] / relative.name
+        return _archive_path(Path("train/sampling_audits") / relative.parts[2] / relative.name)
     for old, new in RELOCATIONS:
         try:
             suffix = relative.relative_to(old)
         except ValueError:
             continue
-        return ROOT / new / suffix
-    return ROOT / relative if (ROOT / relative).exists() else path
+        return _archive_path(Path(new) / suffix)
+    relocated = _archive_path(relative)
+    return relocated if relocated.exists() else path
 
 
 def resolve_record_paths(record):
