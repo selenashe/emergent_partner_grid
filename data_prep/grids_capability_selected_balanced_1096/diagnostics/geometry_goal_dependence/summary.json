@@ -1,0 +1,870 @@
+{
+  "n_layouts": 1096,
+  "n_unique_geometries": 1096,
+  "n_profiles": 46,
+  "n_layout_profile_pairs": 50416,
+  "capability_summary": [
+    {
+      "red_delay": 1,
+      "blue_delay": 4,
+      "pool": "training_24",
+      "n_red_optimal": 0,
+      "n_blue_optimal": 1096,
+      "n_equal_time": 0,
+      "optimal_goal_is_layout_invariant": true
+    },
+    {
+      "red_delay": 1,
+      "blue_delay": 7,
+      "pool": "training_24",
+      "n_red_optimal": 0,
+      "n_blue_optimal": 1096,
+      "n_equal_time": 0,
+      "optimal_goal_is_layout_invariant": true
+    },
+    {
+      "red_delay": 1,
+      "blue_delay": 8,
+      "pool": "training_24",
+      "n_red_optimal": 0,
+      "n_blue_optimal": 1096,
+      "n_equal_time": 0,
+      "optimal_goal_is_layout_invariant": true
+    },
+    {
+      "red_delay": 1,
+      "blue_delay": 9,
+      "pool": "training_24",
+      "n_red_optimal": 0,
+      "n_blue_optimal": 1096,
+      "n_equal_time": 0,
+      "optimal_goal_is_layout_invariant": true
+    },
+    {
+      "red_delay": 2,
+      "blue_delay": 4,
+      "pool": "training_24",
+      "n_red_optimal": 0,
+      "n_blue_optimal": 1096,
+      "n_equal_time": 0,
+      "optimal_goal_is_layout_invariant": true
+    },
+    {
+      "red_delay": 2,
+      "blue_delay": 7,
+      "pool": "training_24",
+      "n_red_optimal": 0,
+      "n_blue_optimal": 1096,
+      "n_equal_time": 0,
+      "optimal_goal_is_layout_invariant": true
+    },
+    {
+      "red_delay": 2,
+      "blue_delay": 8,
+      "pool": "training_24",
+      "n_red_optimal": 0,
+      "n_blue_optimal": 1096,
+      "n_equal_time": 0,
+      "optimal_goal_is_layout_invariant": true
+    },
+    {
+      "red_delay": 2,
+      "blue_delay": 9,
+      "pool": "training_24",
+      "n_red_optimal": 0,
+      "n_blue_optimal": 1096,
+      "n_equal_time": 0,
+      "optimal_goal_is_layout_invariant": true
+    },
+    {
+      "red_delay": 3,
+      "blue_delay": 4,
+      "pool": "training_24",
+      "n_red_optimal": 0,
+      "n_blue_optimal": 1096,
+      "n_equal_time": 0,
+      "optimal_goal_is_layout_invariant": true
+    },
+    {
+      "red_delay": 3,
+      "blue_delay": 7,
+      "pool": "training_24",
+      "n_red_optimal": 0,
+      "n_blue_optimal": 1096,
+      "n_equal_time": 0,
+      "optimal_goal_is_layout_invariant": true
+    },
+    {
+      "red_delay": 3,
+      "blue_delay": 8,
+      "pool": "training_24",
+      "n_red_optimal": 0,
+      "n_blue_optimal": 1096,
+      "n_equal_time": 0,
+      "optimal_goal_is_layout_invariant": true
+    },
+    {
+      "red_delay": 3,
+      "blue_delay": 9,
+      "pool": "training_24",
+      "n_red_optimal": 0,
+      "n_blue_optimal": 1096,
+      "n_equal_time": 0,
+      "optimal_goal_is_layout_invariant": true
+    },
+    {
+      "red_delay": 4,
+      "blue_delay": 1,
+      "pool": "training_24",
+      "n_red_optimal": 1096,
+      "n_blue_optimal": 0,
+      "n_equal_time": 0,
+      "optimal_goal_is_layout_invariant": true
+    },
+    {
+      "red_delay": 4,
+      "blue_delay": 2,
+      "pool": "training_24",
+      "n_red_optimal": 1096,
+      "n_blue_optimal": 0,
+      "n_equal_time": 0,
+      "optimal_goal_is_layout_invariant": true
+    },
+    {
+      "red_delay": 4,
+      "blue_delay": 3,
+      "pool": "training_24",
+      "n_red_optimal": 1096,
+      "n_blue_optimal": 0,
+      "n_equal_time": 0,
+      "optimal_goal_is_layout_invariant": true
+    },
+    {
+      "red_delay": 7,
+      "blue_delay": 1,
+      "pool": "training_24",
+      "n_red_optimal": 1096,
+      "n_blue_optimal": 0,
+      "n_equal_time": 0,
+      "optimal_goal_is_layout_invariant": true
+    },
+    {
+      "red_delay": 7,
+      "blue_delay": 2,
+      "pool": "training_24",
+      "n_red_optimal": 1096,
+      "n_blue_optimal": 0,
+      "n_equal_time": 0,
+      "optimal_goal_is_layout_invariant": true
+    },
+    {
+      "red_delay": 7,
+      "blue_delay": 3,
+      "pool": "training_24",
+      "n_red_optimal": 1096,
+      "n_blue_optimal": 0,
+      "n_equal_time": 0,
+      "optimal_goal_is_layout_invariant": true
+    },
+    {
+      "red_delay": 8,
+      "blue_delay": 1,
+      "pool": "training_24",
+      "n_red_optimal": 1096,
+      "n_blue_optimal": 0,
+      "n_equal_time": 0,
+      "optimal_goal_is_layout_invariant": true
+    },
+    {
+      "red_delay": 8,
+      "blue_delay": 2,
+      "pool": "training_24",
+      "n_red_optimal": 1096,
+      "n_blue_optimal": 0,
+      "n_equal_time": 0,
+      "optimal_goal_is_layout_invariant": true
+    },
+    {
+      "red_delay": 8,
+      "blue_delay": 3,
+      "pool": "training_24",
+      "n_red_optimal": 1096,
+      "n_blue_optimal": 0,
+      "n_equal_time": 0,
+      "optimal_goal_is_layout_invariant": true
+    },
+    {
+      "red_delay": 9,
+      "blue_delay": 1,
+      "pool": "training_24",
+      "n_red_optimal": 1096,
+      "n_blue_optimal": 0,
+      "n_equal_time": 0,
+      "optimal_goal_is_layout_invariant": true
+    },
+    {
+      "red_delay": 9,
+      "blue_delay": 2,
+      "pool": "training_24",
+      "n_red_optimal": 1096,
+      "n_blue_optimal": 0,
+      "n_equal_time": 0,
+      "optimal_goal_is_layout_invariant": true
+    },
+    {
+      "red_delay": 9,
+      "blue_delay": 3,
+      "pool": "training_24",
+      "n_red_optimal": 1096,
+      "n_blue_optimal": 0,
+      "n_equal_time": 0,
+      "optimal_goal_is_layout_invariant": true
+    },
+    {
+      "red_delay": 0,
+      "blue_delay": 5,
+      "pool": "held_out_22",
+      "n_red_optimal": 0,
+      "n_blue_optimal": 1096,
+      "n_equal_time": 0,
+      "optimal_goal_is_layout_invariant": true
+    },
+    {
+      "red_delay": 0,
+      "blue_delay": 6,
+      "pool": "held_out_22",
+      "n_red_optimal": 0,
+      "n_blue_optimal": 1096,
+      "n_equal_time": 0,
+      "optimal_goal_is_layout_invariant": true
+    },
+    {
+      "red_delay": 1,
+      "blue_delay": 5,
+      "pool": "held_out_22",
+      "n_red_optimal": 0,
+      "n_blue_optimal": 1096,
+      "n_equal_time": 0,
+      "optimal_goal_is_layout_invariant": true
+    },
+    {
+      "red_delay": 1,
+      "blue_delay": 6,
+      "pool": "held_out_22",
+      "n_red_optimal": 0,
+      "n_blue_optimal": 1096,
+      "n_equal_time": 0,
+      "optimal_goal_is_layout_invariant": true
+    },
+    {
+      "red_delay": 2,
+      "blue_delay": 5,
+      "pool": "held_out_22",
+      "n_red_optimal": 0,
+      "n_blue_optimal": 1096,
+      "n_equal_time": 0,
+      "optimal_goal_is_layout_invariant": true
+    },
+    {
+      "red_delay": 2,
+      "blue_delay": 6,
+      "pool": "held_out_22",
+      "n_red_optimal": 0,
+      "n_blue_optimal": 1096,
+      "n_equal_time": 0,
+      "optimal_goal_is_layout_invariant": true
+    },
+    {
+      "red_delay": 3,
+      "blue_delay": 5,
+      "pool": "held_out_22",
+      "n_red_optimal": 0,
+      "n_blue_optimal": 1096,
+      "n_equal_time": 0,
+      "optimal_goal_is_layout_invariant": true
+    },
+    {
+      "red_delay": 3,
+      "blue_delay": 6,
+      "pool": "held_out_22",
+      "n_red_optimal": 0,
+      "n_blue_optimal": 1096,
+      "n_equal_time": 0,
+      "optimal_goal_is_layout_invariant": true
+    },
+    {
+      "red_delay": 7,
+      "blue_delay": 0,
+      "pool": "held_out_22",
+      "n_red_optimal": 1096,
+      "n_blue_optimal": 0,
+      "n_equal_time": 0,
+      "optimal_goal_is_layout_invariant": true
+    },
+    {
+      "red_delay": 8,
+      "blue_delay": 0,
+      "pool": "held_out_22",
+      "n_red_optimal": 1096,
+      "n_blue_optimal": 0,
+      "n_equal_time": 0,
+      "optimal_goal_is_layout_invariant": true
+    },
+    {
+      "red_delay": 9,
+      "blue_delay": 0,
+      "pool": "held_out_22",
+      "n_red_optimal": 1096,
+      "n_blue_optimal": 0,
+      "n_equal_time": 0,
+      "optimal_goal_is_layout_invariant": true
+    },
+    {
+      "red_delay": 5,
+      "blue_delay": 0,
+      "pool": "held_out_22",
+      "n_red_optimal": 1096,
+      "n_blue_optimal": 0,
+      "n_equal_time": 0,
+      "optimal_goal_is_layout_invariant": true
+    },
+    {
+      "red_delay": 5,
+      "blue_delay": 1,
+      "pool": "held_out_22",
+      "n_red_optimal": 1096,
+      "n_blue_optimal": 0,
+      "n_equal_time": 0,
+      "optimal_goal_is_layout_invariant": true
+    },
+    {
+      "red_delay": 5,
+      "blue_delay": 2,
+      "pool": "held_out_22",
+      "n_red_optimal": 1096,
+      "n_blue_optimal": 0,
+      "n_equal_time": 0,
+      "optimal_goal_is_layout_invariant": true
+    },
+    {
+      "red_delay": 5,
+      "blue_delay": 3,
+      "pool": "held_out_22",
+      "n_red_optimal": 1096,
+      "n_blue_optimal": 0,
+      "n_equal_time": 0,
+      "optimal_goal_is_layout_invariant": true
+    },
+    {
+      "red_delay": 6,
+      "blue_delay": 0,
+      "pool": "held_out_22",
+      "n_red_optimal": 1096,
+      "n_blue_optimal": 0,
+      "n_equal_time": 0,
+      "optimal_goal_is_layout_invariant": true
+    },
+    {
+      "red_delay": 6,
+      "blue_delay": 1,
+      "pool": "held_out_22",
+      "n_red_optimal": 1096,
+      "n_blue_optimal": 0,
+      "n_equal_time": 0,
+      "optimal_goal_is_layout_invariant": true
+    },
+    {
+      "red_delay": 6,
+      "blue_delay": 2,
+      "pool": "held_out_22",
+      "n_red_optimal": 1096,
+      "n_blue_optimal": 0,
+      "n_equal_time": 0,
+      "optimal_goal_is_layout_invariant": true
+    },
+    {
+      "red_delay": 6,
+      "blue_delay": 3,
+      "pool": "held_out_22",
+      "n_red_optimal": 1096,
+      "n_blue_optimal": 0,
+      "n_equal_time": 0,
+      "optimal_goal_is_layout_invariant": true
+    },
+    {
+      "red_delay": 0,
+      "blue_delay": 7,
+      "pool": "held_out_22",
+      "n_red_optimal": 0,
+      "n_blue_optimal": 1096,
+      "n_equal_time": 0,
+      "optimal_goal_is_layout_invariant": true
+    },
+    {
+      "red_delay": 0,
+      "blue_delay": 8,
+      "pool": "held_out_22",
+      "n_red_optimal": 0,
+      "n_blue_optimal": 1096,
+      "n_equal_time": 0,
+      "optimal_goal_is_layout_invariant": true
+    },
+    {
+      "red_delay": 0,
+      "blue_delay": 9,
+      "pool": "held_out_22",
+      "n_red_optimal": 0,
+      "n_blue_optimal": 1096,
+      "n_equal_time": 0,
+      "optimal_goal_is_layout_invariant": true
+    }
+  ],
+  "n_profiles_with_layout_invariant_optimum": 46,
+  "capability_only_rule": {
+    "rule": "Ego takes the partner's slower goal; partner takes its faster goal",
+    "matches_all_cases": true
+  },
+  "profiles": [
+    {
+      "red_delay": 1,
+      "blue_delay": 4,
+      "pool": "training"
+    },
+    {
+      "red_delay": 1,
+      "blue_delay": 7,
+      "pool": "training"
+    },
+    {
+      "red_delay": 1,
+      "blue_delay": 8,
+      "pool": "training"
+    },
+    {
+      "red_delay": 1,
+      "blue_delay": 9,
+      "pool": "training"
+    },
+    {
+      "red_delay": 2,
+      "blue_delay": 4,
+      "pool": "training"
+    },
+    {
+      "red_delay": 2,
+      "blue_delay": 7,
+      "pool": "training"
+    },
+    {
+      "red_delay": 2,
+      "blue_delay": 8,
+      "pool": "training"
+    },
+    {
+      "red_delay": 2,
+      "blue_delay": 9,
+      "pool": "training"
+    },
+    {
+      "red_delay": 3,
+      "blue_delay": 4,
+      "pool": "training"
+    },
+    {
+      "red_delay": 3,
+      "blue_delay": 7,
+      "pool": "training"
+    },
+    {
+      "red_delay": 3,
+      "blue_delay": 8,
+      "pool": "training"
+    },
+    {
+      "red_delay": 3,
+      "blue_delay": 9,
+      "pool": "training"
+    },
+    {
+      "red_delay": 4,
+      "blue_delay": 1,
+      "pool": "training"
+    },
+    {
+      "red_delay": 4,
+      "blue_delay": 2,
+      "pool": "training"
+    },
+    {
+      "red_delay": 4,
+      "blue_delay": 3,
+      "pool": "training"
+    },
+    {
+      "red_delay": 7,
+      "blue_delay": 1,
+      "pool": "training"
+    },
+    {
+      "red_delay": 7,
+      "blue_delay": 2,
+      "pool": "training"
+    },
+    {
+      "red_delay": 7,
+      "blue_delay": 3,
+      "pool": "training"
+    },
+    {
+      "red_delay": 8,
+      "blue_delay": 1,
+      "pool": "training"
+    },
+    {
+      "red_delay": 8,
+      "blue_delay": 2,
+      "pool": "training"
+    },
+    {
+      "red_delay": 8,
+      "blue_delay": 3,
+      "pool": "training"
+    },
+    {
+      "red_delay": 9,
+      "blue_delay": 1,
+      "pool": "training"
+    },
+    {
+      "red_delay": 9,
+      "blue_delay": 2,
+      "pool": "training"
+    },
+    {
+      "red_delay": 9,
+      "blue_delay": 3,
+      "pool": "training"
+    },
+    {
+      "red_delay": 0,
+      "blue_delay": 5,
+      "pool": "held_out"
+    },
+    {
+      "red_delay": 0,
+      "blue_delay": 6,
+      "pool": "held_out"
+    },
+    {
+      "red_delay": 1,
+      "blue_delay": 5,
+      "pool": "held_out"
+    },
+    {
+      "red_delay": 1,
+      "blue_delay": 6,
+      "pool": "held_out"
+    },
+    {
+      "red_delay": 2,
+      "blue_delay": 5,
+      "pool": "held_out"
+    },
+    {
+      "red_delay": 2,
+      "blue_delay": 6,
+      "pool": "held_out"
+    },
+    {
+      "red_delay": 3,
+      "blue_delay": 5,
+      "pool": "held_out"
+    },
+    {
+      "red_delay": 3,
+      "blue_delay": 6,
+      "pool": "held_out"
+    },
+    {
+      "red_delay": 7,
+      "blue_delay": 0,
+      "pool": "held_out"
+    },
+    {
+      "red_delay": 8,
+      "blue_delay": 0,
+      "pool": "held_out"
+    },
+    {
+      "red_delay": 9,
+      "blue_delay": 0,
+      "pool": "held_out"
+    },
+    {
+      "red_delay": 5,
+      "blue_delay": 0,
+      "pool": "held_out"
+    },
+    {
+      "red_delay": 5,
+      "blue_delay": 1,
+      "pool": "held_out"
+    },
+    {
+      "red_delay": 5,
+      "blue_delay": 2,
+      "pool": "held_out"
+    },
+    {
+      "red_delay": 5,
+      "blue_delay": 3,
+      "pool": "held_out"
+    },
+    {
+      "red_delay": 6,
+      "blue_delay": 0,
+      "pool": "held_out"
+    },
+    {
+      "red_delay": 6,
+      "blue_delay": 1,
+      "pool": "held_out"
+    },
+    {
+      "red_delay": 6,
+      "blue_delay": 2,
+      "pool": "held_out"
+    },
+    {
+      "red_delay": 6,
+      "blue_delay": 3,
+      "pool": "held_out"
+    },
+    {
+      "red_delay": 0,
+      "blue_delay": 7,
+      "pool": "held_out"
+    },
+    {
+      "red_delay": 0,
+      "blue_delay": 8,
+      "pool": "held_out"
+    },
+    {
+      "red_delay": 0,
+      "blue_delay": 9,
+      "pool": "held_out"
+    }
+  ],
+  "source": {
+    "corpus": "/juice6/u/jshe/emergent_partner_grid/data_prep/grids_capability_selected_balanced_1096",
+    "training_manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711",
+    "layout_files_sha256": "a5703edfe289b601df176938ed888b68da3d61c8f7d2c23ad5baaaea9a9f8ecc",
+    "frozen_corpus_hash_verified": true,
+    "capability_source": "/juice6/u/jshe/emergent_partner_grid/jaxmarl/environments/coordination_grid/capability_populations.py",
+    "capability_source_sha256": "89c05bcf10f3eb53ec2423574d86e9a22fe7b449b5371246607fcbf68a0113dd",
+    "script_sha256": "71310fc08120c8e1a43beaea45d14ce281cce5bb5ae891a9d35319a762fe8a7c"
+  },
+  "definitions": {
+    "start": "Ego and partner row/column coordinates; row=y, column=x",
+    "outcome": "Fastest static analytical ego goal assignment; equal times are ties",
+    "ego_red_time": "max(1+ego_to_red, 2+(partner_to_blue-1)*(d_blue+1))",
+    "ego_blue_time": "max(1+ego_to_blue, 2+(partner_to_red-1)*(d_red+1))",
+    "weighting": "Uniform within each explicitly listed capability pool and across grids",
+    "max_steps": 100,
+    "horizon": "Reported for feasibility, not used to turn two timeouts into a tie"
+  },
+  "existing_checks": "Unit tests cover selection formulas, tie handling and capability flips on synthetic examples; no previous exhaustive coordinate-correlation audit of the final 1096 grids.",
+  "limitations": [
+    "Uses the established corpus-selection analytical convention, not an exact environment trajectory oracle.",
+    "Shortest paths are independent: agent collisions and v2 switching/destination cooldown changes are not simulated.",
+    "This common static assignment target is shared by the v1/v2 corpus; it is not a separate optimal switching policy for v2.",
+    "Uniform profile weighting does not reproduce small unfinished-episode exposure differences at the fixed training-step cutoff.",
+    "Zero coordinate correlation alone cannot rule out nonlinear geometry information; full-grid prediction limits address the finite enumerated population.",
+    "Tied assignments permit either goal; their tie-credited accuracy must not be mistaken for prediction of a uniquely correct goal.",
+    "These are exact descriptive statistics for this corpus and these 46 profiles, not a guarantee about other grids or capabilities."
+  ],
+  "pools": {
+    "all_46": {
+      "n_profiles": 46,
+      "n_layout_profile_pairs": 50416,
+      "n_red_optimal": 25208,
+      "n_blue_optimal": 25208,
+      "n_equal_time": 0,
+      "n_layouts_with_both_strict_optima": 1096,
+      "n_layouts_exactly_50_50_non_tied": 1096,
+      "oracle_cases_exceeding_horizon": 0,
+      "worst_oracle_completion_steps": 58,
+      "correlations": [
+        {
+          "feature": "ego_row",
+          "r": 3.0803109029302636e-18,
+          "n_non_tied": 50416
+        },
+        {
+          "feature": "ego_column",
+          "r": 5.0644322525040385e-18,
+          "n_non_tied": 50416
+        },
+        {
+          "feature": "partner_row",
+          "r": -6.073502336404736e-18,
+          "n_non_tied": 50416
+        },
+        {
+          "feature": "partner_column",
+          "r": -6.636418324838666e-20,
+          "n_non_tied": 50416
+        }
+      ],
+      "prediction_limits": {
+        "constant_goal": {
+          "n_feature_groups": 1,
+          "non_tied_accuracy": 0.5,
+          "tie_credited_accuracy": 0.5
+        },
+        "ego_start_only": {
+          "n_feature_groups": 49,
+          "non_tied_accuracy": 0.5,
+          "tie_credited_accuracy": 0.5
+        },
+        "partner_start_only": {
+          "n_feature_groups": 49,
+          "non_tied_accuracy": 0.5,
+          "tie_credited_accuracy": 0.5
+        },
+        "both_starts_only": {
+          "n_feature_groups": 842,
+          "non_tied_accuracy": 0.5,
+          "tie_credited_accuracy": 0.5
+        },
+        "full_grid_geometry": {
+          "n_feature_groups": 1096,
+          "non_tied_accuracy": 0.5,
+          "tie_credited_accuracy": 0.5
+        }
+      }
+    },
+    "training_24": {
+      "n_profiles": 24,
+      "n_layout_profile_pairs": 26304,
+      "n_red_optimal": 13152,
+      "n_blue_optimal": 13152,
+      "n_equal_time": 0,
+      "n_layouts_with_both_strict_optima": 1096,
+      "n_layouts_exactly_50_50_non_tied": 1096,
+      "oracle_cases_exceeding_horizon": 0,
+      "worst_oracle_completion_steps": 58,
+      "correlations": [
+        {
+          "feature": "ego_row",
+          "r": 6.177681745173509e-18,
+          "n_non_tied": 26304
+        },
+        {
+          "feature": "ego_column",
+          "r": 1.6273212458413717e-17,
+          "n_non_tied": 26304
+        },
+        {
+          "feature": "partner_row",
+          "r": -2.0373553079680178e-17,
+          "n_non_tied": 26304
+        },
+        {
+          "feature": "partner_column",
+          "r": -2.846055650350082e-18,
+          "n_non_tied": 26304
+        }
+      ],
+      "prediction_limits": {
+        "constant_goal": {
+          "n_feature_groups": 1,
+          "non_tied_accuracy": 0.5,
+          "tie_credited_accuracy": 0.5
+        },
+        "ego_start_only": {
+          "n_feature_groups": 49,
+          "non_tied_accuracy": 0.5,
+          "tie_credited_accuracy": 0.5
+        },
+        "partner_start_only": {
+          "n_feature_groups": 49,
+          "non_tied_accuracy": 0.5,
+          "tie_credited_accuracy": 0.5
+        },
+        "both_starts_only": {
+          "n_feature_groups": 842,
+          "non_tied_accuracy": 0.5,
+          "tie_credited_accuracy": 0.5
+        },
+        "full_grid_geometry": {
+          "n_feature_groups": 1096,
+          "non_tied_accuracy": 0.5,
+          "tie_credited_accuracy": 0.5
+        }
+      }
+    },
+    "held_out_22": {
+      "n_profiles": 22,
+      "n_layout_profile_pairs": 24112,
+      "n_red_optimal": 12056,
+      "n_blue_optimal": 12056,
+      "n_equal_time": 0,
+      "n_layouts_with_both_strict_optima": 1096,
+      "n_layouts_exactly_50_50_non_tied": 1096,
+      "oracle_cases_exceeding_horizon": 0,
+      "worst_oracle_completion_steps": 58,
+      "correlations": [
+        {
+          "feature": "ego_row",
+          "r": 5.3356853746416045e-18,
+          "n_non_tied": 24112
+        },
+        {
+          "feature": "ego_column",
+          "r": 7.28012136297456e-18,
+          "n_non_tied": 24112
+        },
+        {
+          "feature": "partner_row",
+          "r": -6.3275997918126754e-18,
+          "n_non_tied": 24112
+        },
+        {
+          "feature": "partner_column",
+          "r": -3.538417588652616e-18,
+          "n_non_tied": 24112
+        }
+      ],
+      "prediction_limits": {
+        "constant_goal": {
+          "n_feature_groups": 1,
+          "non_tied_accuracy": 0.5,
+          "tie_credited_accuracy": 0.5
+        },
+        "ego_start_only": {
+          "n_feature_groups": 49,
+          "non_tied_accuracy": 0.5,
+          "tie_credited_accuracy": 0.5
+        },
+        "partner_start_only": {
+          "n_feature_groups": 49,
+          "non_tied_accuracy": 0.5,
+          "tie_credited_accuracy": 0.5
+        },
+        "both_starts_only": {
+          "n_feature_groups": 842,
+          "non_tied_accuracy": 0.5,
+          "tie_credited_accuracy": 0.5
+        },
+        "full_grid_geometry": {
+          "n_feature_groups": 1096,
+          "non_tied_accuracy": 0.5,
+          "tie_credited_accuracy": 0.5
+        }
+      }
+    }
+  }
+}

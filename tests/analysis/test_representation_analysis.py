@@ -160,6 +160,32 @@ def test_bootstrap_unit_is_five_policy_seeds():
         rep.summarize_probes(pd.DataFrame(rows[:-1]), "reference_t", 30_000)
 
 
+def test_common_seed_selection_is_scoped_to_version_and_batch(tmp_path):
+    eval_dir = tmp_path / "v2_balanced_training" / "batch"
+    record = {"common_seed": 3, "selection": {"held_out_results_used": False}, "candidates": []}
+    for version in ("v1", "v2"):
+        for condition in rep.CONDITIONS:
+            for seed in range(1, 6):
+                record["candidates"].append({
+                    "experiment": "counterbalanced", "version": version, "condition": condition,
+                    "seed": seed, "training_return": seed + (100 if version == "v1" else 0),
+                    "training_log": f"/{version}/{condition}_{seed}.out",
+                    "config": f"/train/{version}_balanced_training/batch/{condition}_{seed}.json",
+                })
+    path = tmp_path / "selection.json"
+    path.write_text(json.dumps(record))
+    selected = rep.select_recorded_common_seed(eval_dir, path)
+    assert all(r["selected_seed"] == 3 and r["metric_value"] == 3 for r in selected.values())
+    assert all(r["source"].startswith("/v2/") for r in selected.values())
+    assert all(not r["eval_return_proxy"] for r in selected.values())
+    with pytest.raises(ValueError, match="different evaluated batch"):
+        rep.select_recorded_common_seed(eval_dir.parent / "other_batch", path)
+    record["selection"]["held_out_results_used"] = True
+    path.write_text(json.dumps(record))
+    with pytest.raises(ValueError, match="without held-out"):
+        rep.select_recorded_common_seed(eval_dir, path)
+
+
 def test_condition_contrasts_preserve_paired_seed_variation():
     rows = []
     for seed in range(1, 6):

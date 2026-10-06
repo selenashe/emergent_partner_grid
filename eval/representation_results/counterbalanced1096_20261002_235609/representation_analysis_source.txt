@@ -998,7 +998,7 @@ def write_report(out_dir: Path, per_seed: pd.DataFrame, time_summary: pd.DataFra
                   "strength or establish causal use of decoded information. Inspect the saved figures "
                   "together with held-out linear probes.", "",
                   "## Protocol correspondence and deviations", "",
-                  f"Reference: [Mon-Williams et al., Appendix B.3]({PAPER_URL}). "
+                  f"Reference: [Mon-Williams et al., Appendix A.2–A.3]({PAPER_URL}). "
                   "The requested grid protocol follows the original Figure-3 analysis; it does not "
                   "alter the grid experiment to reproduce the original findings.", "",
                   "| Original representation protocol | CoordinationGrid |",

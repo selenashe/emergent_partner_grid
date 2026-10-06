@@ -1,0 +1,80 @@
+[selection] rnn_diverse_influence: seed 5, final_training.ep_return_mean (common seed selected across experiments)=12.998
+[selection] rnn_single_influence: seed 5, final_training.ep_return_mean (common seed selected across experiments)=17.419
+[selection] rnn_diverse_noinfluence: seed 5, final_training.ep_return_mean (common seed selected across experiments)=10.626
+[validate] rnn_diverse_influence seed 1
+[probe] rnn_diverse_influence seed 1: 58 independent primary probes + 2 shuffle checks
+[validate] rnn_diverse_influence seed 2
+[probe] rnn_diverse_influence seed 2: 58 independent primary probes + 2 shuffle checks
+[validate] rnn_diverse_influence seed 3
+[probe] rnn_diverse_influence seed 3: 58 independent primary probes + 2 shuffle checks
+[validate] rnn_diverse_influence seed 4
+[probe] rnn_diverse_influence seed 4: 58 independent primary probes + 2 shuffle checks
+[validate] rnn_diverse_influence seed 5
+[probe] rnn_diverse_influence seed 5: 58 independent primary probes + 2 shuffle checks
+[validate] rnn_single_influence seed 1
+[probe] rnn_single_influence seed 1: 58 independent primary probes + 2 shuffle checks
+[validate] rnn_single_influence seed 2
+[probe] rnn_single_influence seed 2: 58 independent primary probes + 2 shuffle checks
+[validate] rnn_single_influence seed 3
+[probe] rnn_single_influence seed 3: 58 independent primary probes + 2 shuffle checks
+[validate] rnn_single_influence seed 4
+[probe] rnn_single_influence seed 4: 58 independent primary probes + 2 shuffle checks
+[validate] rnn_single_influence seed 5
+[probe] rnn_single_influence seed 5: 58 independent primary probes + 2 shuffle checks
+[validate] rnn_diverse_noinfluence seed 1
+[probe] rnn_diverse_noinfluence seed 1: 58 independent primary probes + 2 shuffle checks
+[validate] rnn_diverse_noinfluence seed 2
+[probe] rnn_diverse_noinfluence seed 2: 58 independent primary probes + 2 shuffle checks
+[validate] rnn_diverse_noinfluence seed 3
+[probe] rnn_diverse_noinfluence seed 3: 58 independent primary probes + 2 shuffle checks
+[validate] rnn_diverse_noinfluence seed 4
+[probe] rnn_diverse_noinfluence seed 4: 58 independent primary probes + 2 shuffle checks
+[validate] rnn_diverse_noinfluence seed 5
+[probe] rnn_diverse_noinfluence seed 5: 58 independent primary probes + 2 shuffle checks
+Matplotlib is building the font cache; this may take a moment.
+[umap] rnn_diverse_influence seed 1: 920 points, n_neighbors=919
+/tmp/grid_representation_analysis_20261005/lib/python3.10/site-packages/umap/umap_.py:1952: UserWarning: n_jobs value 1 overridden to 1 by setting random_state. Use no seed for parallelism.
+  warn(
+[umap] rnn_diverse_influence seed 2: 920 points, n_neighbors=919
+/tmp/grid_representation_analysis_20261005/lib/python3.10/site-packages/umap/umap_.py:1952: UserWarning: n_jobs value 1 overridden to 1 by setting random_state. Use no seed for parallelism.
+  warn(
+[umap] rnn_diverse_influence seed 3: 920 points, n_neighbors=919
+/tmp/grid_representation_analysis_20261005/lib/python3.10/site-packages/umap/umap_.py:1952: UserWarning: n_jobs value 1 overridden to 1 by setting random_state. Use no seed for parallelism.
+  warn(
+[umap] rnn_diverse_influence seed 4: 920 points, n_neighbors=919
+/tmp/grid_representation_analysis_20261005/lib/python3.10/site-packages/umap/umap_.py:1952: UserWarning: n_jobs value 1 overridden to 1 by setting random_state. Use no seed for parallelism.
+  warn(
+[umap] rnn_diverse_influence seed 5: 920 points, n_neighbors=919
+/tmp/grid_representation_analysis_20261005/lib/python3.10/site-packages/umap/umap_.py:1952: UserWarning: n_jobs value 1 overridden to 1 by setting random_state. Use no seed for parallelism.
+  warn(
+[umap] rnn_single_influence seed 1: 920 points, n_neighbors=919
+/tmp/grid_representation_analysis_20261005/lib/python3.10/site-packages/umap/umap_.py:1952: UserWarning: n_jobs value 1 overridden to 1 by setting random_state. Use no seed for parallelism.
+  warn(
+[umap] rnn_single_influence seed 2: 920 points, n_neighbors=919
+/tmp/grid_representation_analysis_20261005/lib/python3.10/site-packages/umap/umap_.py:1952: UserWarning: n_jobs value 1 overridden to 1 by setting random_state. Use no seed for parallelism.
+  warn(
+[umap] rnn_single_influence seed 3: 920 points, n_neighbors=919
+/tmp/grid_representation_analysis_20261005/lib/python3.10/site-packages/umap/umap_.py:1952: UserWarning: n_jobs value 1 overridden to 1 by setting random_state. Use no seed for parallelism.
+  warn(
+[umap] rnn_single_influence seed 4: 920 points, n_neighbors=919
+/tmp/grid_representation_analysis_20261005/lib/python3.10/site-packages/umap/umap_.py:1952: UserWarning: n_jobs value 1 overridden to 1 by setting random_state. Use no seed for parallelism.
+  warn(
+[umap] rnn_single_influence seed 5: 920 points, n_neighbors=919
+/tmp/grid_representation_analysis_20261005/lib/python3.10/site-packages/umap/umap_.py:1952: UserWarning: n_jobs value 1 overridden to 1 by setting random_state. Use no seed for parallelism.
+  warn(
+[umap] rnn_diverse_noinfluence seed 1: 920 points, n_neighbors=919
+/tmp/grid_representation_analysis_20261005/lib/python3.10/site-packages/umap/umap_.py:1952: UserWarning: n_jobs value 1 overridden to 1 by setting random_state. Use no seed for parallelism.
+  warn(
+[umap] rnn_diverse_noinfluence seed 2: 920 points, n_neighbors=919
+/tmp/grid_representation_analysis_20261005/lib/python3.10/site-packages/umap/umap_.py:1952: UserWarning: n_jobs value 1 overridden to 1 by setting random_state. Use no seed for parallelism.
+  warn(
+[umap] rnn_diverse_noinfluence seed 3: 920 points, n_neighbors=919
+/tmp/grid_representation_analysis_20261005/lib/python3.10/site-packages/umap/umap_.py:1952: UserWarning: n_jobs value 1 overridden to 1 by setting random_state. Use no seed for parallelism.
+  warn(
+[umap] rnn_diverse_noinfluence seed 4: 920 points, n_neighbors=919
+/tmp/grid_representation_analysis_20261005/lib/python3.10/site-packages/umap/umap_.py:1952: UserWarning: n_jobs value 1 overridden to 1 by setting random_state. Use no seed for parallelism.
+  warn(
+[umap] rnn_diverse_noinfluence seed 5: 920 points, n_neighbors=919
+/tmp/grid_representation_analysis_20261005/lib/python3.10/site-packages/umap/umap_.py:1952: UserWarning: n_jobs value 1 overridden to 1 by setting random_state. Use no seed for parallelism.
+  warn(
+[done] all 15 checkpoints, probes, baselines, figures and report saved to /juice6/u/jshe/emergent_partner_grid/eval/representation_results/counterbalanced1096_20261002_235609/v2_balanced_training

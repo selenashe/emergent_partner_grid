@@ -55,6 +55,30 @@ python data_prep/render_layout_corpus.py --help
 python data_prep/build_final_corpus.py --help
 ```
 
+`data_prep/check_geometry_goal_dependence.py` exhaustively checks the shared
+counterbalanced corpus against all 46 authoritative partner profiles. It
+recomputes BFS distances, verifies the frozen training-corpus hash, and reports
+start-coordinate correlations, optimal-goal frequencies per grid and capability,
+and exact limits on classification using geometry without capability input.
+
+```bash
+python data_prep/check_geometry_goal_dependence.py
+python -m pytest tests/data_prep/test_geometry_goal_dependence.py -q
+```
+
+Outputs are in
+`data_prep/grids_capability_selected_balanced_1096/diagnostics/geometry_goal_dependence/`.
+All 1096 grids have 23 red-optimal and 23 blue-optimal assignments across the
+46 profiles (12/12 on training profiles, 11/11 on held-out profiles), with no
+ties. Every starting coordinate has zero correlation with optimal goal, and
+any geometry-only classifier has a 50% accuracy ceiling under uniform profile
+weighting. On this corpus, the analytical best assignment always lets the
+partner take its faster goal. These conclusions use the established static
+independent-shortest-path formula; they do not simulate collisions or v2
+switching trajectories, and do not assert independence for other capabilities
+or different profile frequencies. The existing synthetic selection tests did
+not previously verify this entire final corpus; the new regression test does.
+
 ## Training and queued evaluation
 
 Use the existing `emergent_partner_model` Conda environment. The Slurm scripts
@@ -173,6 +197,34 @@ Plots are saved under each batch's `common_training_seed_5/` directory, with
 joint selection scores and provenance under
 `eval/protocol_comparison/common_training_seed/`. The earlier per-condition
 best-seed plots remain separate.
+
+Representation decoding for the non-greedy counterbalanced batch is saved under
+`eval/representation_results/counterbalanced1096_20261002_235609/`, separately
+for `v1_balanced_training` and `v2_balanced_training`. Each version includes
+all three RNN conditions and all five seeds. The analysis reuses saved evaluation
+hidden states, fits separate red/blue capability probes, and saves UMAPs for
+every network. All-seed summaries retain weak policies; the additional
+selected-policy view reuses common seed 5 from the behavior-only selection above.
+
+```bash
+for version in v1 v2; do
+  python eval/representation_analysis.py \
+    --eval-dir eval/eval_out/${version}_balanced_training/counterbalanced1096_20261002_235609 \
+    --out-dir eval/representation_results/counterbalanced1096_20261002_235609/${version}_balanced_training \
+    --layout-count 1096 --analysis-seed 0 --device cpu --threads 1 \
+    --common-seed-record eval/protocol_comparison/common_training_seed/selection.json \
+    --umap-all-seeds
+done
+python eval/compare_representation_versions.py
+```
+
+Install `requirements/representation.txt` in an analysis environment first.
+Version reports record software versions, input provenance, split and fitted
+probe settings. The `comparison/` directory contains v1/v2 mean curves,
+individual-seed curves, endpoint tables and descriptive version contrasts.
+Probe testing holds out episodes within each of the 46 capability profiles;
+it does not hold out entire capability profiles from probe fitting.
+Original-v1 representation results remain in `eval/representation_results/`.
 
 The archived batch
 `counterbalanced1096_20261004_212351_greedy_action_selection` uses the same
