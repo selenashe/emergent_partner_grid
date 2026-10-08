@@ -4,10 +4,11 @@ For a step-by-step map from the experimental methods to exact code files and
 functions, see [the implementation and audit guide](/juice6/u/jshe/emergent_partner_grid/IMPLEMENTATION_GUIDE.md).
 Core functions include plain-language audit comments describing their assumptions.
 
-This repository runs the four CoordinationGrid conditions for two allocation designs:
+This repository runs the four CoordinationGrid conditions for three allocation designs:
 
 - **v1:** choose an assignment at round start and retain it for the round.
 - **v2:** random initial assignment, followed by allocation decisions during movement.
+- **v3:** ego chooses RED or BLUE at initialization, followed by v2's allocation and switching rules.
 
 The conditions are diverse-partner RNN + influence, diverse-partner MLP + influence,
 single-partner RNN + influence, and diverse-partner RNN without influence. Each
@@ -343,3 +344,48 @@ v1/v2 success curves across rounds. There is one subplot per profile (22 novel,
 24 in the shared training population), using all ten learner seeds. PNG/PDF
 figures, metrics, and an index are saved together. Regenerate them with
 `python eval/plot_profile_performance.py --extension-manifest PATH`.
+
+## V3 counterbalanced runs
+
+V3 lets the ego choose STAY + RED or STAY + BLUE at every round's t=0.
+Both agents stay on that transition. The choice is an initial assignment,
+leaving the partner cooldown at zero, so retaining that assignment permits
+its first move at t=1. Later goal changes retain v2's destination-delay cost.
+The no-influence control keeps v2's uniform random initial assignment,
+forced initialization action, and ignored allocation requests.
+
+Before an influence-enabled v3 initialization, the previous-allocation channel
+is NONE and the partner goal is unset. After initialization, observations,
+movement, reward, collision handling, and round termination match v2.
+`ALLOCATION_PROTOCOL=online_v3` selects v3 in the active environment/trainer;
+the default remains `online_v2` for existing preparation workflows.
+
+`bash/submit_v3_counterbalanced_training.py` prepares 40 policies: four
+conditions, learner seeds 1–10, 60 million nominal transitions per policy
+(59,965,440 actual transitions; 915 PPO updates). Its frozen sources copy
+the completed v2 trainer and evaluator byte for byte and change only the
+environment's initialization rule and protocol tag. Layouts, counterbalanced
+schedules, resolved condition settings, architecture and PPO are reused.
+
+```bash
+python bash/submit_v3_counterbalanced_training.py prepare
+python bash/submit_v3_counterbalanced_training.py validate MANIFEST
+python bash/submit_v3_counterbalanced_training.py submit MANIFEST
+```
+
+The prepared batch is `counterbalanced1096_20261008_035848_v3`, recorded in
+`train/manifests/sbatch_counterbalanced1096_20261008_035848_v3.json`.
+Submission first queues two GPU checks using the production tensor dimensions,
+then 40 dependent training jobs, four evaluation jobs (one per condition), and
+a comparison/plot job. Every Slurm ID is saved immediately; repeating submission
+skips already-recorded jobs.
+
+Evaluation retains categorical sampling, seed 12345, 20 episodes per profile,
+24 familiar profiles, 22 novel profiles, and RNN hidden-state export. The final
+job combines v3 seeds 1–10 with the existing v1/v2 seeds 1–10. Pooled success,
+returns, episode steps, round curves, and per-profile PNG/PDF plots include all
+three protocols, using equal learner-seed weights and sample SD. Results will
+be written under
+`eval/protocol_comparison/counterbalanced1096_20261008_035848_v3/all_10_seeds/{familiar,novel}/`;
+per-profile plots are in each population's `per_profile/` folder. Plotting
+requires all requested results and fails on missing seeds.

@@ -199,6 +199,7 @@ def rollout_condition(
     #
     trainer_mod.require_current_protocol(config)
     env_kwargs = dict(config["ENV_KWARGS"])
+    env_kwargs["allocation_protocol"] = config["ALLOCATION_PROTOCOL"]
     env_kwargs["layouts_dir"] = layouts_dir
     env_kwargs["augment_symmetries"] = False
     env_kwargs.pop("layout_path", None)
@@ -388,7 +389,7 @@ def summarize(
     initial = record["is_t0"] & alive
     switches = int(record["assignment_changed"][decisions].sum())
     return {
-        "allocation_protocol": trainer_mod.ALLOCATION_PROTOCOL,
+        "allocation_protocol": getattr(env, "allocation_protocol", trainer_mod.ALLOCATION_PROTOCOL),
         "n_episodes": int(record["dones"].shape[0]),
         "n_rounds": n_rounds,
         "round_success_rate": round_success_rate,
@@ -414,7 +415,7 @@ def summarize(
     }
 
 
-def _save_hdf5(path: str, record: Dict[str, np.ndarray]) -> None:
+def _save_hdf5(path: str, record: Dict[str, np.ndarray], allocation_protocol=trainer_mod.ALLOCATION_PROTOCOL) -> None:
     # Audit guide:
     # Write rollout arrays and configuration/protocol metadata to one HDF5 file. Arrays
     # are evidence for downstream analysis; attributes identify which condition and
@@ -423,7 +424,7 @@ def _save_hdf5(path: str, record: Dict[str, np.ndarray]) -> None:
     import h5py
     os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
     with h5py.File(path, "w") as f:
-        f.attrs["allocation_protocol"] = trainer_mod.ALLOCATION_PROTOCOL
+        f.attrs["allocation_protocol"] = allocation_protocol
         for k, v in record.items():
             f.create_dataset(k, data=np.asarray(v))
 
@@ -487,7 +488,7 @@ def main():
             seed=args.seed,
             save_hidden=args.save_hidden and config.get("MODEL_TYPE", "rnn") == "rnn",
         )
-        _save_hdf5(f"{args.out_prefix}_{slice_name}.h5", record)
+        _save_hdf5(f"{args.out_prefix}_{slice_name}.h5", record, config["ALLOCATION_PROTOCOL"])
         summaries[slice_name] = summarize(
             record, env,
             max_steps=max_steps, step_penalty=step_penalty,

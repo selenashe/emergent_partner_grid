@@ -2,6 +2,7 @@
 import json
 from pathlib import Path
 import sys
+import shutil
 
 import h5py
 import numpy as np
@@ -72,3 +73,27 @@ def test_missing_new_seed_fails_instead_of_silently_averaging_five(mixed_evaluat
     with pytest.raises(FileNotFoundError):
         comparison.main()
     assert not (comparison.OUT / 'comparison.json').exists()
+
+
+def test_v3_is_included_in_all_ten_seed_aggregates_and_plots(mixed_evaluations, monkeypatch, tmp_path):
+    mixed_evaluations['v3'] = {}
+    for directory in set(mixed_evaluations['v2'].values()):
+        target = tmp_path / 'v3' / Path(directory).name
+        shutil.copytree(directory, target)
+        for summary in target.glob('*_summary.json'):
+            record = json.loads(summary.read_text())
+            for population in record.values():
+                population['allocation_protocol'] = 'online_v3'
+            summary.write_text(json.dumps(record))
+    for seed in range(1, 11):
+        mixed_evaluations['v3'][str(seed)] = str(tmp_path / 'v3' / Path(mixed_evaluations['v2'][str(seed)]).name)
+    monkeypatch.setattr(comparison, 'POPULATION', 'test')
+    comparison.main()
+    report = json.loads((comparison.OUT / 'comparison.json').read_text())
+    assert len(report['aggregates']) == 12
+    assert set(report['trajectories']) == {'v1', 'v2', 'v3'}
+    assert len(report['sources']) == 240
+    assert all(a['n_seeds'] == 10 for a in report['aggregates'])
+    assert all(a['success_mean'] == pytest.approx(.55) for a in report['aggregates'] if a['version'] == 'v3')
+    for name in ('performance_comparison.png', 'episode_steps.png', 'round_comparison.png'):
+        assert (comparison.OUT / name).is_file()

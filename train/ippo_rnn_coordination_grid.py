@@ -397,12 +397,12 @@ class Transition(NamedTuple):
 def require_current_protocol(config):
     # Audit guide:
     # Guard against evaluating a fixed-v1 checkpoint with online-v2 transition rules.
-    # Saved configurations must name the online_v2 protocol for this active trainer.
+    # Saved configurations must explicitly name online_v2 or online_v3.
     # Historical evaluation requires the matching frozen source.
     #
-    if config.get("ALLOCATION_PROTOCOL") != ALLOCATION_PROTOCOL:
+    if config.get("ALLOCATION_PROTOCOL") not in ("online_v2", "online_v3"):
         raise ValueError(
-            f"This implementation requires ALLOCATION_PROTOCOL={ALLOCATION_PROTOCOL!r}. "
+            "This implementation requires ALLOCATION_PROTOCOL='online_v2' or 'online_v3'. "
             "Untagged/older configs and checkpoints belong to the fixed-allocation "
             "experiment; use its original code to evaluate them."
         )
@@ -420,6 +420,7 @@ def make_train(config):
     # Resolve capability pool from PARTNER_REGIME, then override the pool
     # in the env kwargs so the env sees exactly what we sampled from.
     env_kwargs = dict(config["ENV_KWARGS"])
+    env_kwargs["allocation_protocol"] = config["ALLOCATION_PROTOCOL"]
     training_cap_pool = resolve_training_capability_pool(config)
     env_kwargs["partner_capability_pairs"] = training_cap_pool
     # Route INFLUENCE from top-level into the env (defaults true).
@@ -1096,6 +1097,7 @@ def evaluate_policy(params, config, layouts_dir, key,
     #
     require_current_protocol(config)
     env_kwargs = dict(config["ENV_KWARGS"])
+    env_kwargs["allocation_protocol"] = config["ALLOCATION_PROTOCOL"]
     env_kwargs["layouts_dir"] = layouts_dir
     env_kwargs["augment_symmetries"] = False
     env_kwargs.pop("layout_path", None)

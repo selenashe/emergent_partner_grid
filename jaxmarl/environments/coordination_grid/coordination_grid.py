@@ -38,8 +38,9 @@ Use ``encode_ego(move, alloc)`` / ``decode_ego(a)``.
 
 Legal-mask summary
 ------------------
-At reset, a uniform random RED/BLUE allocation is supplied to the ego.
-At t=0 both agents STAY; only STAY + that supplied allocation is legal.
+At t=0 both agents STAY. V2 supplies a uniform random RED/BLUE assignment.
+V3 with influence starts unset and lets the ego choose STAY + RED or BLUE.
+Without influence, both versions force the supplied random assignment.
 At t>=1 the ego chooses any move paired with RED or BLUE (10 choices).
 NONE remains a reserved encoding for historical artifacts and is never legal.
 
@@ -74,9 +75,10 @@ boundary; nothing else about partner navigation depends on capability.
 Allocation influence
 --------------------
 When ``influence=True`` (default), every t>=1 allocation controls the
-partner. When ``influence=False``, the random initial assignment remains
-fixed during the round and ego requests are ignored. Both conditions
-observe the random default initially and their own previous requests later.
+partner. V3 also lets the ego choose the initial assignment at t=0.
+When ``influence=False``, the random initial assignment remains fixed
+during the round and ego requests are ignored, including at t=0.
+After initialization both conditions observe their own previous requests.
 
 Reward and termination are unchanged:
     success (agents on distinct goals) → +1.0
@@ -147,7 +149,7 @@ N_MESSAGES = N_ALLOCATIONS
 Messages = Allocations
 
 # Legality of the flat ego actions per environment phase.
-# t=0: one of {13,14}, forced by the random default in the observation.
+# t=0: {13,14} for v3 influence; otherwise the supplied assignment is forced.
 # t>=1: moves x {RED,BLUE}. NONE ids are reserved and always masked out.
 ALLOCATION_PROTOCOL = "online_v2"
 LEGAL_ACTION_IDS_T0 = tuple(
@@ -164,22 +166,28 @@ ACTION_MASK_TGEQ1[list(LEGAL_ACTION_IDS_TGEQ1)] = True
 
 
 def ego_action_mask(obs):
-    """JAX-compatible legality mask, including the forced t=0 default.
+    """JAX-compatible mask for v2/v3 with arbitrary batch/time dimensions.
 
-    Accepts any leading batch/time dimensions. At t=0 the policy has
-    probability one on the supplied assignment, so it cannot choose it.
+    An unset v3 initialization permits RED/BLUE; supplied assignments
+    remain forced. After initialization the v2 movement mask is unchanged.
     """
     # Audit guide:
     # Turn the current observation into a yes/no list of allowed actions. At the
-    # initialization tick only STAY with the supplied assignment survives; later, each
-    # movement can accompany RED or BLUE. The five NONE codes remain forbidden even
+    # initialization tick STAY accompanies RED or BLUE, with supplied assignments
+    # forced in v2/no-influence. Later each movement can accompany RED or BLUE. NONE
+    # codes remain forbidden even
     # though the network has 15 outputs. Audit both this mask and step_env: direct
     # environment calls must obey the initialization rule too.
     #
-    initial_alloc = jnp.maximum(1, jnp.argmax(obs["last_allocation"], axis=-1))
+    observed_alloc = jnp.argmax(obs["last_allocation"], axis=-1)
+    initial_alloc = jnp.maximum(1, observed_alloc)
     forced_action = 3 * int(Actions.stay) + initial_alloc
     forced_mask = jnp.arange(N_EGO_ACTIONS) == forced_action[..., None]
-    return jnp.where((obs["is_t0"] > 0.5)[..., None], forced_mask,
+    # NONE at initialization denotes v3 with influence: both choices are legal.
+    # A supplied RED/BLUE assignment keeps v2 and no-influence actions forced.
+    initial_mask = jnp.where((observed_alloc == int(Allocations.none))[..., None],
+                             jnp.asarray(ACTION_MASK_T0), forced_mask)
+    return jnp.where((obs["is_t0"] > 0.5)[..., None], initial_mask,
                      jnp.asarray(ACTION_MASK_TGEQ1))
 
 # ---------------------------------------------------------------------------
@@ -250,12 +258,14 @@ class State:
     # ----- Split allocation fields -----
     # OBSERVATION-ONLY: what the ego picked on the most recent step. In both
     # influence and no-influence conditions this reflects the ego's action
-    # channel exactly at t>=1; at reset/t=0 it holds the random default.
+    # channel after initialization; at reset it holds NONE for v3 influence,
+    # otherwise the random default.
     # This is what obs["last_allocation"] reports in both conditions.
     last_ego_allocation: chex.Array  # scalar int32 (Allocations.*)
     # INTERNAL: the allocation that actually determines the partner's goal.
-    # Random at reset; updated on every t>=1 request under influence=True,
-    # and held fixed under influence=False.
+    # Unset at reset for v3 influence; random otherwise. Updated on every
+    # request under influence=True (starting at t=0 in v3, t=1 in v2), and
+    # held fixed under influence=False.
     # Not exposed in the observation under either condition.
     partner_assignment: chex.Array   # scalar int32 (Allocations.*)
     layout_idx: chex.Array          # scalar int32; addresses stacked layouts.
@@ -519,6 +529,7 @@ class CoordinationGrid(MultiAgentEnv):
         hide_partner_until_time: int = 0,
         communication_condition: str = COMM_ACTION_ONLY,
         influence: bool = True,
+        allocation_protocol: str = ALLOCATION_PROTOCOL,
         # legacy kwargs (accepted for backward compat, ignored otherwise):
         partner_z: Optional[float] = None,
         partner_z_values: Optional[Sequence[float]] = None,
@@ -656,6 +667,10 @@ class CoordinationGrid(MultiAgentEnv):
             )
         self.communication_condition: str = communication_condition
         self.influence: bool = bool(influence)
+        if allocation_protocol not in ("online_v2", "online_v3"):
+            raise ValueError(f"Unsupported allocation protocol: {allocation_protocol}")
+        self.allocation_protocol = allocation_protocol
+        self.choose_initial_allocation = allocation_protocol == "online_v3" and self.influence
         self.t0_action_mask = jnp.asarray(ACTION_MASK_T0, dtype=jnp.bool_)
         self.t0_action_mask_np = np.asarray(ACTION_MASK_T0, dtype=np.bool_)
 
@@ -682,7 +697,7 @@ class CoordinationGrid(MultiAgentEnv):
     ) -> "State":
         # Audit guide:
         # Start one physical round with both agents back at their starting cells and a
-        # fresh random assignment. A supplied capability and episode layout sequence are
+        # fresh initial assignment (unset in v3 influence). A supplied capability and episode layout sequence are
         # carried forward by callers across rounds. Only physical state and the movement
         # counter reset here; recurrent policy memory belongs to the trainer.
         #
@@ -703,8 +718,13 @@ class CoordinationGrid(MultiAgentEnv):
         else:
             eps_seq = jnp.asarray(episode_layout_seq, dtype=jnp.int32)
         initial_alloc = jax.random.randint(key, (), 1, 3, dtype=jnp.int32)
+        # Retain the v2 random draw/key stream; influence-enabled v3 starts unset.
+        if self.choose_initial_allocation:
+            initial_alloc = jnp.int32(Allocations.none)
         initial_goal = jnp.where(initial_alloc == int(Allocations.red),
                                  jnp.int32(GOAL_BLUE), jnp.int32(GOAL_RED))
+        if self.choose_initial_allocation:
+            initial_goal = jnp.int32(GOAL_UNSET)
         return State(
             agent_pos=agent_pos,
             wall_map=wall_map,
@@ -830,13 +850,17 @@ class CoordinationGrid(MultiAgentEnv):
         is_time0 = state.time == 0
         key, k_next_assignment = jax.random.split(key, 2)
 
-        # t=0 cannot override the supplied default, even for direct API calls.
+        # V3 influence chooses at t=0; v2/no-influence keep the supplied default.
         # Invalid reserved NONE requests do not unset the goal; policies mask
         # them out. Effective allocations are always RED/BLUE.
         valid_alloc = (ego_alloc == int(Allocations.red)) | (ego_alloc == int(Allocations.blue))
-        ego_alloc = jnp.where(is_time0 | (~valid_alloc), state.last_ego_allocation, ego_alloc)
+        forced_initial = is_time0 & jnp.bool_(not self.choose_initial_allocation)
+        # A direct invalid NONE request falls back to RED if no assignment exists.
+        fallback_alloc = jnp.maximum(jnp.int32(Allocations.red), state.last_ego_allocation)
+        ego_alloc = jnp.where(forced_initial | (~valid_alloc), fallback_alloc, ego_alloc)
         partner_assignment = jnp.where(
-            (~is_time0) & jnp.bool_(self.influence), ego_alloc, state.partner_assignment,
+            ((~is_time0) | jnp.bool_(self.choose_initial_allocation)) & jnp.bool_(self.influence),
+            ego_alloc, state.partner_assignment,
         )
         alloc_derived_goal = jnp.where(
             partner_assignment == int(Allocations.red),
@@ -1005,7 +1029,7 @@ class CoordinationGrid(MultiAgentEnv):
             "partner_goal": new_partner_goal,
             # Actual assignment after this step's request, before round reset.
             "partner_assignment": partner_assignment_written,
-            # At t=0 this is the supplied random default, not a policy choice.
+            # At t=0 this is the chosen v3 assignment or the supplied random default.
             "ego_alloc_action": ego_alloc,
             "allocation_decision": ~is_time0,
             "assignment_changed": assignment_changed,
