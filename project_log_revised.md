@@ -1,8 +1,8 @@
 # CoordinationGrid — Counterbalanced v1/v2 experiments
 
 Last design change: **2026-10-01** (random initialization and within-round allocation).
-Last documentation update: **2026-10-03** (counterbalanced results and repository
-reorganization verified).
+Last documentation update: **2026-10-07** (obsolete experiments deleted,
+counterbalanced reruns verified, and completed ten-seed results documented).
 
 ## Current status
 
@@ -29,6 +29,10 @@ targets that question and only that question. This is the grid analogue
 of Mon-Williams et al.'s Overcooked partner-modelling experiment.
 
 ## Design summary
+
+The transition rules below describe v2. V1 chooses its allocation at round
+start and retains it for the round; its exact rules are preserved in the frozen
+counterbalanced source. Both protocols use the paired counterbalanced scheduler.
 
 ### Environment — `jaxmarl.environments.coordination_grid.CoordinationGrid`
 
@@ -204,6 +208,7 @@ balanced at every queue prefix; completed exposure is audited separately.
 
 The root trainer and episode scheduler remain source templates for preparation.
 Prepared copies receive the counterbalanced scheduler patch before training.
+Direct CLI training rejects the unprepared root template.
 
 ## Active files
 
@@ -249,8 +254,8 @@ corpus, schedules, and preflight results are beneath
 | Single RNN + influence | 17697355–17697359 | 17697375–17697379 |
 | Diverse RNN, no influence | 17697360–17697364 | 17697380–17697384 |
 
-Evaluation jobs **17697385** (v1) and **17697386** (v2) each depend on
-successful completion of their version's 20 training jobs. They retain
+Evaluation jobs **17697385** (v1) and **17697386** (v2) were queued after
+successful completion of their version's 20 training jobs. They used
 20 episodes per familiar/novel capability, 20 rounds per episode, and
 evaluation seed 12345. Checkpoints/configs/audits and evaluation outputs
 are separated under `train/train_logs/{v1,v2}_balanced_training/` and
@@ -293,11 +298,30 @@ plot with `eval/compare_allocation_protocols.py --counterbalanced-batch
 counterbalanced1096_20261002_235609`. The launch manifest now records the
 completed scheduler states and the sampling verification report.
 The verifier also exports `actual_exposure_by_run.csv` (40 runs) and
-`actual_exposure_by_profile.csv` (730 run/profile rows) in that results
-directory. These distinguish allocated episodes from the empirical
+`actual_exposure_by_profile.csv` (730 run/profile rows) beneath
+`train/sampling_audits/counterbalanced1096_20261002_235609/`.
+These distinguish allocated episodes from the empirical
 started/completed episodes, rounds, and environment steps. The original
 audit NPZs retain all profile-by-layout counts, including the unfinished
 tail; full training observation/action trajectories were not saved.
+
+### Seeds 6–10 extension — completed 2026-10-07
+
+`counterbalanced1096_20261007_001529_seeds6to10` adds 40 policies using the
+base batch's exact frozen trainer, environment, evaluator, corpus, schedules,
+and hyperparameters. All additional training jobs, both evaluations, and the
+combined comparison completed successfully (43 jobs). Each added policy used
+its recorded learner seed and completed 915 updates / 59,965,440 transitions.
+
+The manifest is
+`train/manifests/sbatch_counterbalanced1096_20261007_001529_seeds6to10.json`.
+Combined familiar/novel metrics and per-profile figures are beneath
+`eval/protocol_comparison/counterbalanced1096_20261007_001529_seeds6to10/all_10_seeds/`;
+`RESULTS_SUMMARY.md` there reports all four conditions. All ten learner seeds
+contribute equally, retaining categorical action sampling and sample SD across
+seeds. Novel-partner diverse-RNN success is 97.77 ± 1.56% for v1 and
+95.96 ± 4.56% for v2, with episode returns 15.07 ± 1.14 and 13.07 ± 2.48.
+Base five-seed results remain available separately.
 
 ## How to launch each condition
 
@@ -335,14 +359,14 @@ python eval/plot_common_training_seed.py
 The common seed is chosen using only retained counterbalanced training returns.
 All-ten-seed performance includes every learner seed with equal weight.
 
-## Online-v2 implementation and verification
+## Historical online-v2 implementation checks
 
 Changed environment resets/transitions, both policy masks, keyed scheduled
 resets, PPO replay resets, training diagnostics, evaluator schema/metrics,
 and launch/evaluation artifact directories. Representation analysis rejects
-mixed fixed_v1/online_v2 HDF5 inputs and requires a separate online_v2 output
-directory, preserving historical figures and fits. Capabilities, layout corpus,
-reward, horizon and network widths are preserved.
+mixed fixed_v1/online_v2 HDF5 inputs and requires separate protocol-specific
+output directories. Capabilities, layout corpus, reward, horizon and network
+widths are preserved.
 
 Regression coverage checks random defaults and capability independence,
 both-agent t=0 STAY, same-step t>=1 movement/reassignment, goal-specific
@@ -350,17 +374,40 @@ switch delays, repeated-assignment cadence, no-influence independence,
 round/episode boundaries, JIT/vmap, RNN/MLP action probabilities, legacy
 config rejection, one bounded PPO update and evaluation masking.
 
-Verified on CPU: **11 online-allocation regression tests, all 20 existing
-environment tests, and 14 representation/protocol tests passed**. The
+Before the counterbalanced launches, CPU checks passed **11 online-allocation
+regression tests, all 20 existing environment tests, and 14
+representation/protocol tests**. The
 replay regression reproduces collected log-probabilities and values using
 unchanged parameters across an episode reset. The bounded PPO update
 produced finite losses and zero initialization entropy. Shell syntax,
-Python compilation and `git diff --check` also passed. This validation
-does not constitute training or scientific evaluation of the new experiment.
+Python compilation and `git diff --check` also passed. These were implementation
+checks; the completed training and scientific evaluations are recorded above.
 
     JAX_PLATFORMS=cpu python -m pytest tests/coordination_grid/test_online_allocation.py -q
     JAX_PLATFORMS=cpu python tests/coordination_grid/test_capability_env.py
     python -m pytest tests/analysis/test_representation_analysis.py -q
+
+## Cleanup and verification — 2026-10-07
+
+Deleted the original random-sampling v1/v2 runs, archived greedy experiments,
+their checkpoints/configs/analyses, obsolete smoke outputs, unrelated active
+JAX environments and utilities, and upstream Dockerfiles/documentation.
+The active package registers only CoordinationGrid. Shared preparation
+templates, layout provenance, all counterbalanced artifacts, and exact frozen
+snapshots remain. Inherited modules and dependencies inside the snapshots are
+required for their imports and recorded integrity checks.
+
+Analysis entry points now use counterbalanced artifacts. Common-seed selection
+uses only the base counterbalanced policies and still selects seed 5; all-ten
+aggregation includes every learner seed. No retained scientific settings,
+checkpoints, or frozen source bytes were changed.
+
+Verification passed 119 tests and the standalone capability-environment checks.
+A fresh batch prepared from the cleaned sources passed eight short CPU
+training/evaluation checks covering both protocols and all four conditions.
+The 101 recorded checkpoint/manifest hashes were unchanged, and full frozen
+source, corpus, schedule, and extension-config integrity checks passed. No
+training jobs were submitted during cleanup.
 
 ## Deferred / not-in-this-experiment
 

@@ -19,7 +19,7 @@ profiles; evaluation includes 22 novel profiles on familiar layouts.
 | Directory | Contents |
 | --- | --- |
 | `data_prep/` | Grid generation, analytical filtering, distance-distribution plots, balancing, rendering, and the source/current layout corpora with their preparation audits. |
-| `train/` | PPO trainer and config, random and counterbalanced samplers, preflight validation, training curves, empirical sampling audits, checkpoints, and frozen experiment sources. |
+| `train/` | PPO preparation templates, counterbalanced scheduling, preflight validation, training curves, empirical sampling audits, checkpoints, and frozen experiment sources. |
 | `eval/` | Checkpoint evaluation, performance comparisons and representation analysis, saved rollouts, summaries, figures, and evaluation Slurm logs. |
 | `bash/` | Slurm training/evaluation entry points and batch submission scripts. |
 | `jaxmarl/` | Shared JAX interface and the CoordinationGrid environment; capability populations are defined in `jaxmarl/environments/coordination_grid/capability_populations.py`. |
@@ -133,10 +133,9 @@ is resumable from the manifest. Completed manifests are not resubmitted.
 
 The root trainer/config and `train/episode_scheduler.py` are preparation templates:
 `submit_counterbalanced_training.py` patches their copied sources to use the paired
-counterbalanced scheduler. Direct CLI training rejects this unprepared template. Launch training from a
-prepared snapshot. The v1
-protocol is recovered from its recorded Git revision; the v2 template remains
-in the active tree.
+counterbalanced scheduler. Direct CLI training rejects this unprepared template.
+Launch training from a prepared snapshot. The v1 protocol is recovered from its
+recorded Git revision; the v2 template remains in the active tree.
 
 `bash/eval_all_checkpoints.sh` evaluates a checkpoint directory using its matching
 frozen source through `REPO_ROOT` and its corpus through `LAYOUTS_DIR`. The batch
@@ -280,20 +279,21 @@ and completed counterbalanced checkpoints remain unchanged.
 
 The active test folders are `tests/coordination_grid/` (environment, training
 and evaluation behavior), `tests/data_prep/` (layout-selection calculations),
-and `tests/analysis/` (representation-analysis validation). These import and
+`tests/train/` (launchers and the counterbalanced entry point), and
+`tests/analysis/` (representation-analysis validation). These import and
 verify the implementation in `jaxmarl/`, `train/`, `data_prep/`, and `eval/`;
 they do not contain duplicate experiment implementations or generated results.
 Inherited tests for unrelated JaxMARL tasks have been removed.
 
 ```bash
-JAX_PLATFORMS=cpu python -m pytest \
-  tests/coordination_grid/test_counterbalanced_scheduler.py \
-  tests/coordination_grid/test_evaluation_layouts.py \
-  tests/coordination_grid/test_online_allocation.py \
-  tests/data_prep/test_capability_selection.py \
-  tests/analysis/test_representation_analysis.py
+JAX_PLATFORMS=cpu python -m pytest tests -q
 python tests/coordination_grid/test_capability_env.py
 ```
+
+Cleanup verification on 2026-10-07 passed 119 tests, the standalone environment
+checks, and eight short training/evaluation checks from a freshly prepared
+counterbalanced batch. Recorded hashes for 101 retained checkpoints/manifests
+were unchanged, and both batches passed full frozen-source and input checks.
 
 The former stage A/B/C/D and generator-sensitivity `run_sweep.py` pipeline was
 retired before the final experiments. Those stages are not required to prepare,
@@ -301,7 +301,7 @@ train, or evaluate the current v1/v2 designs.
 
 ## Additional counterbalanced seeds
 
-`counterbalanced1096_20261007_001529_seeds6to10` extends the original
+`counterbalanced1096_20261007_001529_seeds6to10` extends the base
 `counterbalanced1096_20261002_235609` batch with learner seeds 6–10 in all four
 conditions and both allocation protocols (40 additional policies). It reuses
 that batch's exact frozen trainer, environment, evaluator, layouts, schedules
@@ -311,7 +311,7 @@ action sampling.
 The launcher is `bash/extend_counterbalanced_training.py`; its `prepare`,
 `validate` and `submit MANIFEST` stages create the configs, check eight short
 training runs, and launch the jobs. Each protocol's evaluation waits for its
-20 new policies. A dependent comparison job combines the original five and new
+20 new policies. A dependent comparison job combines the base five and additional
 five seeds with equal seed weights, reporting means and sample SD for familiar
 and novel partners separately. All ten seeds are required; no seed is selected
 by performance.
@@ -320,12 +320,12 @@ The manifest is
 `train/manifests/sbatch_counterbalanced1096_20261007_001529_seeds6to10.json`.
 Combined results are saved in
 `eval/protocol_comparison/counterbalanced1096_20261007_001529_seeds6to10/all_10_seeds/{familiar,novel}/`.
-Original five-seed results remain intact. The implementation and validation
+Base five-seed results remain intact. The implementation and validation
 mapping is documented in `IMPLEMENTATION_GUIDE.md`.
 
 All 40 additional policies completed successfully, with actual learner seeds
 6–10 and 59,965,440 transitions (915 PPO updates) each. Both evaluations and
-ten-seed aggregation also completed. All-ten results retain original categorical
+ten-seed aggregation also completed. All-ten results retain categorical
 sampling and equal seed weights, including poorly performing seeds.
 
 Combined familiar/novel results and figures are in
