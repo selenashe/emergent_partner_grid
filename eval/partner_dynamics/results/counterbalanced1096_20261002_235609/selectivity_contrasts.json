@@ -1,0 +1,68 @@
+[
+  {
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_influence",
+    "partner_minus_rank_control": {
+      "mean": 0.007971209717401468,
+      "low": 8.318137986407237e-07,
+      "high": 0.023887892436116925,
+      "n_units": 5
+    },
+    "n_paired_recipients": 30
+  },
+  {
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_noinfluence",
+    "partner_minus_rank_control": {
+      "mean": 0.00990269719720042,
+      "low": -0.014152011389742257,
+      "high": 0.03682448367277781,
+      "n_units": 5
+    },
+    "n_paired_recipients": 30
+  },
+  {
+    "protocol": "fixed_v1",
+    "condition": "rnn_single_influence",
+    "partner_minus_rank_control": {
+      "mean": -1.5314420064290365e-05,
+      "low": -4.3183863162994384e-05,
+      "high": -4.76837158203125e-08,
+      "n_units": 5
+    },
+    "n_paired_recipients": 30
+  },
+  {
+    "protocol": "online_v2",
+    "condition": "rnn_diverse_influence",
+    "partner_minus_rank_control": {
+      "mean": 0.0035463069494198864,
+      "low": -0.0009793805103743127,
+      "high": 0.011913302947262613,
+      "n_units": 5
+    },
+    "n_paired_recipients": 30
+  },
+  {
+    "protocol": "online_v2",
+    "condition": "rnn_diverse_noinfluence",
+    "partner_minus_rank_control": {
+      "mean": -0.004680591868236659,
+      "low": -0.01698548172911008,
+      "high": 0.007269027347986898,
+      "n_units": 5
+    },
+    "n_paired_recipients": 30
+  },
+  {
+    "protocol": "online_v2",
+    "condition": "rnn_single_influence",
+    "partner_minus_rank_control": {
+      "mean": 0.00784490107325837,
+      "low": -5.235507463415465e-07,
+      "high": 0.02352590411901474,
+      "n_units": 5
+    },
+    "n_paired_recipients": 30
+  }
+]

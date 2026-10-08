@@ -1,0 +1,8 @@
+# Rich rollouts are already ignored globally as *.h5.
+# Keep compact operators, provenance, tables and figures visible.
+**/raw_jacobians/
+**/bulky_cache/
+# Dense derived event indexes remain local; compact counts/summaries are tracked.
+**/sample_index.csv
+**/instrumented_event_index.csv
+**/round_boundary_transitions.csv

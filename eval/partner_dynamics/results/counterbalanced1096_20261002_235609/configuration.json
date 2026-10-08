@@ -1,0 +1,84 @@
+{
+  "batch": "counterbalanced1096_20261002_235609",
+  "protocols": [
+    "v1",
+    "v2"
+  ],
+  "conditions": [
+    "rnn_diverse_influence",
+    "rnn_single_influence",
+    "rnn_diverse_noinfluence"
+  ],
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "analysis_seed": 2026,
+  "device": "cpu",
+  "pca_rank": 20,
+  "temporal_rounds": [
+    0,
+    4,
+    9,
+    19
+  ],
+  "bootstrap": 200,
+  "events": [
+    "round_start",
+    "round_midpoint",
+    "round_end"
+  ],
+  "capture_profiles": [
+    [
+      1,
+      4
+    ],
+    [
+      4,
+      1
+    ],
+    [
+      2,
+      7
+    ],
+    [
+      7,
+      2
+    ],
+    [
+      0,
+      5
+    ],
+    [
+      5,
+      0
+    ]
+  ],
+  "capture_repetitions": 4,
+  "diagnostic_layout_count": 8,
+  "capture_history_rounds": 4,
+  "ranks": [
+    10,
+    20,
+    40
+  ],
+  "delays": [
+    1,
+    2,
+    4,
+    8
+  ],
+  "intervention_magnitudes": [
+    0,
+    0.25,
+    0.5,
+    1.0
+  ],
+  "output_root": "eval/partner_dynamics_results",
+  "dsa_source": "eval/partner_dynamics/reference/dsa",
+  "dsa_revision": "c437ce93ddab5a578b369ef9f1cbbbfa0f6ff7a2",
+  "smoke": false
+}

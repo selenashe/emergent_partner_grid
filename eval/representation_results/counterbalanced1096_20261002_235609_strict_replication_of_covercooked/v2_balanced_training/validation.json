@@ -1,0 +1,574 @@
+{
+  "checkpoints": [
+    {
+      "condition": "rnn_diverse_influence",
+      "training_seed": 1,
+      "sources": [
+        {
+          "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed1_train.h5",
+          "size_bytes": 531854400,
+          "mtime_ns": 1791019399251709473,
+          "episodes": 480,
+          "scan_steps": 2000,
+          "rep_source": "episode order within stored capability_index_per_ep"
+        },
+        {
+          "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed1_test.h5",
+          "size_bytes": 487534224,
+          "mtime_ns": 1791019409883637570,
+          "episodes": 440,
+          "scan_steps": 2000,
+          "rep_source": "episode order within stored capability_index_per_ep"
+        }
+      ],
+      "checks_passed": [
+        "train_and_test_present",
+        "920_episodes",
+        "46_authoritative_profiles",
+        "20_repetitions_per_profile",
+        "hidden_dimension_128",
+        "capability_constant_on_valid_steps",
+        "full_hidden_scans_finite",
+        "final_done_every_episode",
+        "terminal_step_included_padding_excluded",
+        "20_ordered_round_ends_every_episode"
+      ],
+      "length_min": 185,
+      "length_max": 1187,
+      "length_mean": 604.7119565217391,
+      "episodes_shorter_than_50": 0
+    },
+    {
+      "condition": "rnn_diverse_influence",
+      "training_seed": 2,
+      "sources": [
+        {
+          "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed2_train.h5",
+          "size_bytes": 531854400,
+          "mtime_ns": 1791019435335465182,
+          "episodes": 480,
+          "scan_steps": 2000,
+          "rep_source": "episode order within stored capability_index_per_ep"
+        },
+        {
+          "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed2_test.h5",
+          "size_bytes": 487534224,
+          "mtime_ns": 1791019446195391522,
+          "episodes": 440,
+          "scan_steps": 2000,
+          "rep_source": "episode order within stored capability_index_per_ep"
+        }
+      ],
+      "checks_passed": [
+        "train_and_test_present",
+        "920_episodes",
+        "46_authoritative_profiles",
+        "20_repetitions_per_profile",
+        "hidden_dimension_128",
+        "capability_constant_on_valid_steps",
+        "full_hidden_scans_finite",
+        "final_done_every_episode",
+        "terminal_step_included_padding_excluded",
+        "20_ordered_round_ends_every_episode"
+      ],
+      "length_min": 184,
+      "length_max": 1291,
+      "length_mean": 645.6565217391304,
+      "episodes_shorter_than_50": 0
+    },
+    {
+      "condition": "rnn_diverse_influence",
+      "training_seed": 3,
+      "sources": [
+        {
+          "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed3_train.h5",
+          "size_bytes": 531854400,
+          "mtime_ns": 1791019470171228696,
+          "episodes": 480,
+          "scan_steps": 2000,
+          "rep_source": "episode order within stored capability_index_per_ep"
+        },
+        {
+          "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed3_test.h5",
+          "size_bytes": 487534224,
+          "mtime_ns": 1791019481047154749,
+          "episodes": 440,
+          "scan_steps": 2000,
+          "rep_source": "episode order within stored capability_index_per_ep"
+        }
+      ],
+      "checks_passed": [
+        "train_and_test_present",
+        "920_episodes",
+        "46_authoritative_profiles",
+        "20_repetitions_per_profile",
+        "hidden_dimension_128",
+        "capability_constant_on_valid_steps",
+        "full_hidden_scans_finite",
+        "final_done_every_episode",
+        "terminal_step_included_padding_excluded",
+        "20_ordered_round_ends_every_episode"
+      ],
+      "length_min": 174,
+      "length_max": 1377,
+      "length_mean": 665.3423913043479,
+      "episodes_shorter_than_50": 0
+    },
+    {
+      "condition": "rnn_diverse_influence",
+      "training_seed": 4,
+      "sources": [
+        {
+          "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed4_train.h5",
+          "size_bytes": 531854400,
+          "mtime_ns": 1791019504678993896,
+          "episodes": 480,
+          "scan_steps": 2000,
+          "rep_source": "episode order within stored capability_index_per_ep"
+        },
+        {
+          "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed4_test.h5",
+          "size_bytes": 487534224,
+          "mtime_ns": 1791019515438920583,
+          "episodes": 440,
+          "scan_steps": 2000,
+          "rep_source": "episode order within stored capability_index_per_ep"
+        }
+      ],
+      "checks_passed": [
+        "train_and_test_present",
+        "920_episodes",
+        "46_authoritative_profiles",
+        "20_repetitions_per_profile",
+        "hidden_dimension_128",
+        "capability_constant_on_valid_steps",
+        "full_hidden_scans_finite",
+        "final_done_every_episode",
+        "terminal_step_included_padding_excluded",
+        "20_ordered_round_ends_every_episode"
+      ],
+      "length_min": 337,
+      "length_max": 1775,
+      "length_mean": 920.8913043478261,
+      "episodes_shorter_than_50": 0
+    },
+    {
+      "condition": "rnn_diverse_influence",
+      "training_seed": 5,
+      "sources": [
+        {
+          "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed5_train.h5",
+          "size_bytes": 531854400,
+          "mtime_ns": 1791019539034759660,
+          "episodes": 480,
+          "scan_steps": 2000,
+          "rep_source": "episode order within stored capability_index_per_ep"
+        },
+        {
+          "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed5_test.h5",
+          "size_bytes": 487534224,
+          "mtime_ns": 1791019549682686978,
+          "episodes": 440,
+          "scan_steps": 2000,
+          "rep_source": "episode order within stored capability_index_per_ep"
+        }
+      ],
+      "checks_passed": [
+        "train_and_test_present",
+        "920_episodes",
+        "46_authoritative_profiles",
+        "20_repetitions_per_profile",
+        "hidden_dimension_128",
+        "capability_constant_on_valid_steps",
+        "full_hidden_scans_finite",
+        "final_done_every_episode",
+        "terminal_step_included_padding_excluded",
+        "20_ordered_round_ends_every_episode"
+      ],
+      "length_min": 189,
+      "length_max": 1338,
+      "length_mean": 664.2010869565217,
+      "episodes_shorter_than_50": 0
+    },
+    {
+      "condition": "rnn_single_influence",
+      "training_seed": 1,
+      "sources": [
+        {
+          "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed1_train.h5",
+          "size_bytes": 531854400,
+          "mtime_ns": 1791019746957351748,
+          "episodes": 480,
+          "scan_steps": 2000,
+          "rep_source": "episode order within stored capability_index_per_ep"
+        },
+        {
+          "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed1_test.h5",
+          "size_bytes": 487534224,
+          "mtime_ns": 1791019757709279668,
+          "episodes": 440,
+          "scan_steps": 2000,
+          "rep_source": "episode order within stored capability_index_per_ep"
+        }
+      ],
+      "checks_passed": [
+        "train_and_test_present",
+        "920_episodes",
+        "46_authoritative_profiles",
+        "20_repetitions_per_profile",
+        "hidden_dimension_128",
+        "capability_constant_on_valid_steps",
+        "full_hidden_scans_finite",
+        "final_done_every_episode",
+        "terminal_step_included_padding_excluded",
+        "20_ordered_round_ends_every_episode"
+      ],
+      "length_min": 161,
+      "length_max": 1516,
+      "length_mean": 678.0684782608696,
+      "episodes_shorter_than_50": 0
+    },
+    {
+      "condition": "rnn_single_influence",
+      "training_seed": 2,
+      "sources": [
+        {
+          "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed2_train.h5",
+          "size_bytes": 531854400,
+          "mtime_ns": 1791019781861117464,
+          "episodes": 480,
+          "scan_steps": 2000,
+          "rep_source": "episode order within stored capability_index_per_ep"
+        },
+        {
+          "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed2_test.h5",
+          "size_bytes": 487534224,
+          "mtime_ns": 1791019792917043082,
+          "episodes": 440,
+          "scan_steps": 2000,
+          "rep_source": "episode order within stored capability_index_per_ep"
+        }
+      ],
+      "checks_passed": [
+        "train_and_test_present",
+        "920_episodes",
+        "46_authoritative_profiles",
+        "20_repetitions_per_profile",
+        "hidden_dimension_128",
+        "capability_constant_on_valid_steps",
+        "full_hidden_scans_finite",
+        "final_done_every_episode",
+        "terminal_step_included_padding_excluded",
+        "20_ordered_round_ends_every_episode"
+      ],
+      "length_min": 239,
+      "length_max": 1235,
+      "length_mean": 682.1489130434783,
+      "episodes_shorter_than_50": 0
+    },
+    {
+      "condition": "rnn_single_influence",
+      "training_seed": 3,
+      "sources": [
+        {
+          "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed3_train.h5",
+          "size_bytes": 531854400,
+          "mtime_ns": 1791019818272872214,
+          "episodes": 480,
+          "scan_steps": 2000,
+          "rep_source": "episode order within stored capability_index_per_ep"
+        },
+        {
+          "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed3_test.h5",
+          "size_bytes": 487534224,
+          "mtime_ns": 1791019829352797433,
+          "episodes": 440,
+          "scan_steps": 2000,
+          "rep_source": "episode order within stored capability_index_per_ep"
+        }
+      ],
+      "checks_passed": [
+        "train_and_test_present",
+        "920_episodes",
+        "46_authoritative_profiles",
+        "20_repetitions_per_profile",
+        "hidden_dimension_128",
+        "capability_constant_on_valid_steps",
+        "full_hidden_scans_finite",
+        "final_done_every_episode",
+        "terminal_step_included_padding_excluded",
+        "20_ordered_round_ends_every_episode"
+      ],
+      "length_min": 198,
+      "length_max": 1709,
+      "length_mean": 934.8282608695653,
+      "episodes_shorter_than_50": 0
+    },
+    {
+      "condition": "rnn_single_influence",
+      "training_seed": 4,
+      "sources": [
+        {
+          "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed4_train.h5",
+          "size_bytes": 531854400,
+          "mtime_ns": 1791019854748625785,
+          "episodes": 480,
+          "scan_steps": 2000,
+          "rep_source": "episode order within stored capability_index_per_ep"
+        },
+        {
+          "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed4_test.h5",
+          "size_bytes": 487534224,
+          "mtime_ns": 1791019865492553071,
+          "episodes": 440,
+          "scan_steps": 2000,
+          "rep_source": "episode order within stored capability_index_per_ep"
+        }
+      ],
+      "checks_passed": [
+        "train_and_test_present",
+        "920_episodes",
+        "46_authoritative_profiles",
+        "20_repetitions_per_profile",
+        "hidden_dimension_128",
+        "capability_constant_on_valid_steps",
+        "full_hidden_scans_finite",
+        "final_done_every_episode",
+        "terminal_step_included_padding_excluded",
+        "20_ordered_round_ends_every_episode"
+      ],
+      "length_min": 187,
+      "length_max": 1714,
+      "length_mean": 920.0521739130435,
+      "episodes_shorter_than_50": 0
+    },
+    {
+      "condition": "rnn_single_influence",
+      "training_seed": 5,
+      "sources": [
+        {
+          "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed5_train.h5",
+          "size_bytes": 531854400,
+          "mtime_ns": 1791019890072386516,
+          "episodes": 480,
+          "scan_steps": 2000,
+          "rep_source": "episode order within stored capability_index_per_ep"
+        },
+        {
+          "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed5_test.h5",
+          "size_bytes": 487534224,
+          "mtime_ns": 1791019900928312873,
+          "episodes": 440,
+          "scan_steps": 2000,
+          "rep_source": "episode order within stored capability_index_per_ep"
+        }
+      ],
+      "checks_passed": [
+        "train_and_test_present",
+        "920_episodes",
+        "46_authoritative_profiles",
+        "20_repetitions_per_profile",
+        "hidden_dimension_128",
+        "capability_constant_on_valid_steps",
+        "full_hidden_scans_finite",
+        "final_done_every_episode",
+        "terminal_step_included_padding_excluded",
+        "20_ordered_round_ends_every_episode"
+      ],
+      "length_min": 164,
+      "length_max": 1432,
+      "length_mean": 664.3880434782609,
+      "episodes_shorter_than_50": 0
+    },
+    {
+      "condition": "rnn_diverse_noinfluence",
+      "training_seed": 1,
+      "sources": [
+        {
+          "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed1_train.h5",
+          "size_bytes": 531854400,
+          "mtime_ns": 1791019573214526220,
+          "episodes": 480,
+          "scan_steps": 2000,
+          "rep_source": "episode order within stored capability_index_per_ep"
+        },
+        {
+          "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed1_test.h5",
+          "size_bytes": 487534224,
+          "mtime_ns": 1791019584198451124,
+          "episodes": 440,
+          "scan_steps": 2000,
+          "rep_source": "episode order within stored capability_index_per_ep"
+        }
+      ],
+      "checks_passed": [
+        "train_and_test_present",
+        "920_episodes",
+        "46_authoritative_profiles",
+        "20_repetitions_per_profile",
+        "hidden_dimension_128",
+        "capability_constant_on_valid_steps",
+        "full_hidden_scans_finite",
+        "final_done_every_episode",
+        "terminal_step_included_padding_excluded",
+        "20_ordered_round_ends_every_episode"
+      ],
+      "length_min": 462,
+      "length_max": 1295,
+      "length_mean": 827.3163043478261,
+      "episodes_shorter_than_50": 0
+    },
+    {
+      "condition": "rnn_diverse_noinfluence",
+      "training_seed": 2,
+      "sources": [
+        {
+          "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed2_train.h5",
+          "size_bytes": 531854400,
+          "mtime_ns": 1791019608066287826,
+          "episodes": 480,
+          "scan_steps": 2000,
+          "rep_source": "episode order within stored capability_index_per_ep"
+        },
+        {
+          "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed2_test.h5",
+          "size_bytes": 487534224,
+          "mtime_ns": 1791019618830214131,
+          "episodes": 440,
+          "scan_steps": 2000,
+          "rep_source": "episode order within stored capability_index_per_ep"
+        }
+      ],
+      "checks_passed": [
+        "train_and_test_present",
+        "920_episodes",
+        "46_authoritative_profiles",
+        "20_repetitions_per_profile",
+        "hidden_dimension_128",
+        "capability_constant_on_valid_steps",
+        "full_hidden_scans_finite",
+        "final_done_every_episode",
+        "terminal_step_included_padding_excluded",
+        "20_ordered_round_ends_every_episode"
+      ],
+      "length_min": 389,
+      "length_max": 1269,
+      "length_mean": 775.8891304347826,
+      "episodes_shorter_than_50": 0
+    },
+    {
+      "condition": "rnn_diverse_noinfluence",
+      "training_seed": 3,
+      "sources": [
+        {
+          "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed3_train.h5",
+          "size_bytes": 531854400,
+          "mtime_ns": 1791019643382047793,
+          "episodes": 480,
+          "scan_steps": 2000,
+          "rep_source": "episode order within stored capability_index_per_ep"
+        },
+        {
+          "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed3_test.h5",
+          "size_bytes": 487534224,
+          "mtime_ns": 1791019653441979804,
+          "episodes": 440,
+          "scan_steps": 2000,
+          "rep_source": "episode order within stored capability_index_per_ep"
+        }
+      ],
+      "checks_passed": [
+        "train_and_test_present",
+        "920_episodes",
+        "46_authoritative_profiles",
+        "20_repetitions_per_profile",
+        "hidden_dimension_128",
+        "capability_constant_on_valid_steps",
+        "full_hidden_scans_finite",
+        "final_done_every_episode",
+        "terminal_step_included_padding_excluded",
+        "20_ordered_round_ends_every_episode"
+      ],
+      "length_min": 413,
+      "length_max": 1252,
+      "length_mean": 782.4315217391304,
+      "episodes_shorter_than_50": 0
+    },
+    {
+      "condition": "rnn_diverse_noinfluence",
+      "training_seed": 4,
+      "sources": [
+        {
+          "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed4_train.h5",
+          "size_bytes": 531854400,
+          "mtime_ns": 1791019677393817720,
+          "episodes": 480,
+          "scan_steps": 2000,
+          "rep_source": "episode order within stored capability_index_per_ep"
+        },
+        {
+          "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed4_test.h5",
+          "size_bytes": 487534224,
+          "mtime_ns": 1791019688281743950,
+          "episodes": 440,
+          "scan_steps": 2000,
+          "rep_source": "episode order within stored capability_index_per_ep"
+        }
+      ],
+      "checks_passed": [
+        "train_and_test_present",
+        "920_episodes",
+        "46_authoritative_profiles",
+        "20_repetitions_per_profile",
+        "hidden_dimension_128",
+        "capability_constant_on_valid_steps",
+        "full_hidden_scans_finite",
+        "final_done_every_episode",
+        "terminal_step_included_padding_excluded",
+        "20_ordered_round_ends_every_episode"
+      ],
+      "length_min": 773,
+      "length_max": 1727,
+      "length_mean": 1230.1065217391304,
+      "episodes_shorter_than_50": 0
+    },
+    {
+      "condition": "rnn_diverse_noinfluence",
+      "training_seed": 5,
+      "sources": [
+        {
+          "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed5_train.h5",
+          "size_bytes": 531854400,
+          "mtime_ns": 1791019711753587125,
+          "episodes": 480,
+          "scan_steps": 2000,
+          "rep_source": "episode order within stored capability_index_per_ep"
+        },
+        {
+          "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed5_test.h5",
+          "size_bytes": 487534224,
+          "mtime_ns": 1791019722645514406,
+          "episodes": 440,
+          "scan_steps": 2000,
+          "rep_source": "episode order within stored capability_index_per_ep"
+        }
+      ],
+      "checks_passed": [
+        "train_and_test_present",
+        "920_episodes",
+        "46_authoritative_profiles",
+        "20_repetitions_per_profile",
+        "hidden_dimension_128",
+        "capability_constant_on_valid_steps",
+        "full_hidden_scans_finite",
+        "final_done_every_episode",
+        "terminal_step_included_padding_excluded",
+        "20_ordered_round_ends_every_episode"
+      ],
+      "length_min": 422,
+      "length_max": 1206,
+      "length_mean": 779.0576086956522,
+      "episodes_shorter_than_50": 0
+    }
+  ]
+}

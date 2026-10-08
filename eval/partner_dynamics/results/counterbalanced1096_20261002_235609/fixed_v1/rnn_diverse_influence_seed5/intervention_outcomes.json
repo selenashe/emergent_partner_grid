@@ -1,0 +1,7130 @@
+[
+  {
+    "episode": 3,
+    "recipient_profile": [
+      1,
+      4
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 147,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "whole",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 8.594947814941406,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.8400000333786011,
+    "zero_identity": true
+  },
+  {
+    "episode": 3,
+    "recipient_profile": [
+      1,
+      4
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 147,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "whole",
+    "magnitude": 0.25,
+    "perturb_norm": 2.2589385509490967,
+    "support_distance": 6.776815891265869,
+    "open_loop_probability_l1": 1.4456868484558072e-06,
+    "open_loop_value_delta": -0.39295101165771484,
+    "allocation_red_probability_delta": -7.152557373046875e-07,
+    "reward_delta": 0.009999990463256836,
+    "success_delta": 0,
+    "steps_delta": -1,
+    "switch_delta": 0,
+    "baseline_reward": 0.8400000333786011,
+    "zero_identity": null
+  },
+  {
+    "episode": 3,
+    "recipient_profile": [
+      1,
+      4
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 147,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "whole",
+    "magnitude": 0.5,
+    "perturb_norm": 4.517877578735352,
+    "support_distance": 4.517877578735352,
+    "open_loop_probability_l1": 0.0007854989962652326,
+    "open_loop_value_delta": -0.7218227386474609,
+    "allocation_red_probability_delta": -0.00039273500442504883,
+    "reward_delta": 0.009999990463256836,
+    "success_delta": 0,
+    "steps_delta": -1,
+    "switch_delta": 0,
+    "baseline_reward": 0.8400000333786011,
+    "zero_identity": null
+  },
+  {
+    "episode": 3,
+    "recipient_profile": [
+      1,
+      4
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 147,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "whole",
+    "magnitude": 1.0,
+    "perturb_norm": 9.035755157470703,
+    "support_distance": 2.5339676312796655e-07,
+    "open_loop_probability_l1": 1.999127745628357,
+    "open_loop_value_delta": -0.8517308235168457,
+    "allocation_red_probability_delta": -0.9995638728141785,
+    "reward_delta": -1.8399994373321533,
+    "success_delta": -1,
+    "steps_delta": 83,
+    "switch_delta": 0,
+    "baseline_reward": 0.8400000333786011,
+    "zero_identity": null
+  },
+  {
+    "episode": 3,
+    "recipient_profile": [
+      1,
+      4
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 147,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "partner",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 8.594948152486415,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.8400000333786011,
+    "zero_identity": true
+  },
+  {
+    "episode": 3,
+    "recipient_profile": [
+      1,
+      4
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 147,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "partner",
+    "magnitude": 0.25,
+    "perturb_norm": 0.12043074533549201,
+    "support_distance": 8.599297585958563,
+    "open_loop_probability_l1": 5.932254687479599e-11,
+    "open_loop_value_delta": -0.014056205749511719,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.8400000333786011,
+    "zero_identity": null
+  },
+  {
+    "episode": 3,
+    "recipient_profile": [
+      1,
+      4
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 147,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "partner",
+    "magnitude": 0.5,
+    "perturb_norm": 0.2408614906709841,
+    "support_distance": 8.605330402062435,
+    "open_loop_probability_l1": 1.144033756617091e-10,
+    "open_loop_value_delta": -0.027652263641357422,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.8400000333786011,
+    "zero_identity": null
+  },
+  {
+    "episode": 3,
+    "recipient_profile": [
+      1,
+      4
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 147,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "partner",
+    "magnitude": 1.0,
+    "perturb_norm": 0.48172298134196806,
+    "support_distance": 8.622431062569705,
+    "open_loop_probability_l1": 2.1318291576477577e-10,
+    "open_loop_value_delta": -0.05344676971435547,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.8400000333786011,
+    "zero_identity": null
+  },
+  {
+    "episode": 3,
+    "recipient_profile": [
+      1,
+      4
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 147,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "attenuate",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 8.594948152486415,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.8400000333786011,
+    "zero_identity": true
+  },
+  {
+    "episode": 3,
+    "recipient_profile": [
+      1,
+      4
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 147,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "attenuate",
+    "magnitude": 0.25,
+    "perturb_norm": 0.012839183191467509,
+    "support_distance": 8.5953266738975,
+    "open_loop_probability_l1": 6.608602554081244e-12,
+    "open_loop_value_delta": -0.0011968612670898438,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.8400000333786011,
+    "zero_identity": null
+  },
+  {
+    "episode": 3,
+    "recipient_profile": [
+      1,
+      4
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 147,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "attenuate",
+    "magnitude": 0.5,
+    "perturb_norm": 0.02567836638293509,
+    "support_distance": 8.595724356175463,
+    "open_loop_probability_l1": 1.3165579737517419e-11,
+    "open_loop_value_delta": -0.002388477325439453,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.8400000333786011,
+    "zero_identity": null
+  },
+  {
+    "episode": 3,
+    "recipient_profile": [
+      1,
+      4
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 147,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "attenuate",
+    "magnitude": 1.0,
+    "perturb_norm": 0.051356732765870175,
+    "support_distance": 8.59657719256721,
+    "open_loop_probability_l1": 2.612388083633732e-11,
+    "open_loop_value_delta": -0.004754543304443359,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.8400000333786011,
+    "zero_identity": null
+  },
+  {
+    "episode": 3,
+    "recipient_profile": [
+      1,
+      4
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 147,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "random",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 8.594948152486415,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.8400000333786011,
+    "zero_identity": true
+  },
+  {
+    "episode": 3,
+    "recipient_profile": [
+      1,
+      4
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 147,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "random",
+    "magnitude": 0.25,
+    "perturb_norm": 0.12043074533549206,
+    "support_distance": 8.596681666849275,
+    "open_loop_probability_l1": 3.3187930181810543e-10,
+    "open_loop_value_delta": -1.811981201171875e-05,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.8400000333786011,
+    "zero_identity": null
+  },
+  {
+    "episode": 3,
+    "recipient_profile": [
+      1,
+      4
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 147,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "random",
+    "magnitude": 0.5,
+    "perturb_norm": 0.24086149067098409,
+    "support_distance": 8.600101438192418,
+    "open_loop_probability_l1": 7.421242509408899e-10,
+    "open_loop_value_delta": -6.67572021484375e-05,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.8400000333786011,
+    "zero_identity": null
+  },
+  {
+    "episode": 3,
+    "recipient_profile": [
+      1,
+      4
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 147,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "random",
+    "magnitude": 1.0,
+    "perturb_norm": 0.4817229813419681,
+    "support_distance": 8.611990726065923,
+    "open_loop_probability_l1": 1.860372189632642e-09,
+    "open_loop_value_delta": -0.0002751350402832031,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.8400000333786011,
+    "zero_identity": null
+  },
+  {
+    "episode": 3,
+    "recipient_profile": [
+      1,
+      4
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 147,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "nonpartner",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 8.594948152486415,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.8400000333786011,
+    "zero_identity": true
+  },
+  {
+    "episode": 3,
+    "recipient_profile": [
+      1,
+      4
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 147,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "nonpartner",
+    "magnitude": 0.25,
+    "perturb_norm": 0.12043074533549199,
+    "support_distance": 8.604793173582813,
+    "open_loop_probability_l1": 3.622787625445767e-10,
+    "open_loop_value_delta": -0.003406524658203125,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.8400000333786011,
+    "zero_identity": null
+  },
+  {
+    "episode": 3,
+    "recipient_profile": [
+      1,
+      4
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 147,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "nonpartner",
+    "magnitude": 0.5,
+    "perturb_norm": 0.24086149067098406,
+    "support_distance": 8.616310376558474,
+    "open_loop_probability_l1": 8.082986502344625e-10,
+    "open_loop_value_delta": -0.006712913513183594,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.8400000333786011,
+    "zero_identity": null
+  },
+  {
+    "episode": 3,
+    "recipient_profile": [
+      1,
+      4
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 147,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "nonpartner",
+    "magnitude": 1.0,
+    "perturb_norm": 0.48172298134196806,
+    "support_distance": 8.644333622774244,
+    "open_loop_probability_l1": 2.070323468217339e-09,
+    "open_loop_value_delta": -0.013015270233154297,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.8400000333786011,
+    "zero_identity": null
+  },
+  {
+    "episode": 3,
+    "recipient_profile": [
+      1,
+      4
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 147,
+    "donor_history_steps": 127,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "whole",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 8.594947814941406,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.8400000333786011,
+    "zero_identity": true
+  },
+  {
+    "episode": 3,
+    "recipient_profile": [
+      1,
+      4
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 147,
+    "donor_history_steps": 127,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "whole",
+    "magnitude": 0.25,
+    "perturb_norm": 2.161864995956421,
+    "support_distance": 6.485595226287842,
+    "open_loop_probability_l1": 4.539982834117495e-10,
+    "open_loop_value_delta": -0.07822799682617188,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.8400000333786011,
+    "zero_identity": null
+  },
+  {
+    "episode": 3,
+    "recipient_profile": [
+      1,
+      4
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 147,
+    "donor_history_steps": 127,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "whole",
+    "magnitude": 0.5,
+    "perturb_norm": 4.323729991912842,
+    "support_distance": 4.32373046875,
+    "open_loop_probability_l1": 5.681936032786439e-10,
+    "open_loop_value_delta": -0.14864444732666016,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.8400000333786011,
+    "zero_identity": null
+  },
+  {
+    "episode": 3,
+    "recipient_profile": [
+      1,
+      4
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 147,
+    "donor_history_steps": 127,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "whole",
+    "magnitude": 1.0,
+    "perturb_norm": 8.647459983825684,
+    "support_distance": 2.2632480067841243e-07,
+    "open_loop_probability_l1": 1.22436916161206e-09,
+    "open_loop_value_delta": -0.33021068572998047,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.009999990463256836,
+    "success_delta": 0,
+    "steps_delta": -1,
+    "switch_delta": 0,
+    "baseline_reward": 0.8400000333786011,
+    "zero_identity": null
+  },
+  {
+    "episode": 3,
+    "recipient_profile": [
+      1,
+      4
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 147,
+    "donor_history_steps": 127,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "partner",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 8.594948152486415,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.8400000333786011,
+    "zero_identity": true
+  },
+  {
+    "episode": 3,
+    "recipient_profile": [
+      1,
+      4
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 147,
+    "donor_history_steps": 127,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "partner",
+    "magnitude": 0.25,
+    "perturb_norm": 0.034610453017432034,
+    "support_distance": 8.594063564910408,
+    "open_loop_probability_l1": 1.722932907455288e-11,
+    "open_loop_value_delta": 0.0014348030090332031,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.8400000333786011,
+    "zero_identity": null
+  },
+  {
+    "episode": 3,
+    "recipient_profile": [
+      1,
+      4
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 147,
+    "donor_history_steps": 127,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "partner",
+    "magnitude": 0.5,
+    "perturb_norm": 0.06922090603486422,
+    "support_distance": 8.593318284482875,
+    "open_loop_probability_l1": 3.486300137467424e-11,
+    "open_loop_value_delta": 0.002910137176513672,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.8400000333786011,
+    "zero_identity": null
+  },
+  {
+    "episode": 3,
+    "recipient_profile": [
+      1,
+      4
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 147,
+    "donor_history_steps": 127,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "partner",
+    "magnitude": 1.0,
+    "perturb_norm": 0.13844181206972828,
+    "support_distance": 8.592245783297306,
+    "open_loop_probability_l1": 7.139944191436598e-11,
+    "open_loop_value_delta": 0.005982875823974609,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.8400000333786011,
+    "zero_identity": null
+  },
+  {
+    "episode": 3,
+    "recipient_profile": [
+      1,
+      4
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 147,
+    "donor_history_steps": 127,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "attenuate",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 8.594948152486415,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.8400000333786011,
+    "zero_identity": true
+  },
+  {
+    "episode": 3,
+    "recipient_profile": [
+      1,
+      4
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 147,
+    "donor_history_steps": 127,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "attenuate",
+    "magnitude": 0.25,
+    "perturb_norm": 0.012839183191467509,
+    "support_distance": 8.5953266738975,
+    "open_loop_probability_l1": 6.608602554081244e-12,
+    "open_loop_value_delta": -0.0011968612670898438,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.8400000333786011,
+    "zero_identity": null
+  },
+  {
+    "episode": 3,
+    "recipient_profile": [
+      1,
+      4
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 147,
+    "donor_history_steps": 127,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "attenuate",
+    "magnitude": 0.5,
+    "perturb_norm": 0.02567836638293509,
+    "support_distance": 8.595724356175463,
+    "open_loop_probability_l1": 1.3165579737517419e-11,
+    "open_loop_value_delta": -0.002388477325439453,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.8400000333786011,
+    "zero_identity": null
+  },
+  {
+    "episode": 3,
+    "recipient_profile": [
+      1,
+      4
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 147,
+    "donor_history_steps": 127,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "attenuate",
+    "magnitude": 1.0,
+    "perturb_norm": 0.051356732765870175,
+    "support_distance": 8.59657719256721,
+    "open_loop_probability_l1": 2.612388083633732e-11,
+    "open_loop_value_delta": -0.004754543304443359,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.8400000333786011,
+    "zero_identity": null
+  },
+  {
+    "episode": 3,
+    "recipient_profile": [
+      1,
+      4
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 147,
+    "donor_history_steps": 127,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "random",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 8.594948152486415,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.8400000333786011,
+    "zero_identity": true
+  },
+  {
+    "episode": 3,
+    "recipient_profile": [
+      1,
+      4
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 147,
+    "donor_history_steps": 127,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "random",
+    "magnitude": 0.25,
+    "perturb_norm": 0.034610453017432,
+    "support_distance": 8.59690975773392,
+    "open_loop_probability_l1": 5.952571768830239e-12,
+    "open_loop_value_delta": -0.006155490875244141,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.8400000333786011,
+    "zero_identity": null
+  },
+  {
+    "episode": 3,
+    "recipient_profile": [
+      1,
+      4
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 147,
+    "donor_history_steps": 127,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "random",
+    "magnitude": 0.5,
+    "perturb_norm": 0.06922090603486414,
+    "support_distance": 8.599010221428273,
+    "open_loop_probability_l1": 1.1895706641951165e-11,
+    "open_loop_value_delta": -0.012297630310058594,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.8400000333786011,
+    "zero_identity": null
+  },
+  {
+    "episode": 3,
+    "recipient_profile": [
+      1,
+      4
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 147,
+    "donor_history_steps": 127,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "random",
+    "magnitude": 1.0,
+    "perturb_norm": 0.13844181206972836,
+    "support_distance": 8.603627310628392,
+    "open_loop_probability_l1": 2.390976305832737e-11,
+    "open_loop_value_delta": -0.0245361328125,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.8400000333786011,
+    "zero_identity": null
+  },
+  {
+    "episode": 3,
+    "recipient_profile": [
+      1,
+      4
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 147,
+    "donor_history_steps": 127,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "nonpartner",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 8.594948152486415,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.8400000333786011,
+    "zero_identity": true
+  },
+  {
+    "episode": 3,
+    "recipient_profile": [
+      1,
+      4
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 147,
+    "donor_history_steps": 127,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "nonpartner",
+    "magnitude": 0.25,
+    "perturb_norm": 0.03461045301743204,
+    "support_distance": 8.591070160017255,
+    "open_loop_probability_l1": 5.943245895423388e-12,
+    "open_loop_value_delta": -0.002223968505859375,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.8400000333786011,
+    "zero_identity": null
+  },
+  {
+    "episode": 3,
+    "recipient_profile": [
+      1,
+      4
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 147,
+    "donor_history_steps": 127,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "nonpartner",
+    "magnitude": 0.5,
+    "perturb_norm": 0.06922090603486415,
+    "support_distance": 8.587329911658474,
+    "open_loop_probability_l1": 1.2077117084174915e-11,
+    "open_loop_value_delta": -0.004423618316650391,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.8400000333786011,
+    "zero_identity": null
+  },
+  {
+    "episode": 3,
+    "recipient_profile": [
+      1,
+      4
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 147,
+    "donor_history_steps": 127,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "nonpartner",
+    "magnitude": 1.0,
+    "perturb_norm": 0.13844181206972836,
+    "support_distance": 8.580263361171589,
+    "open_loop_probability_l1": 2.4905966178323524e-11,
+    "open_loop_value_delta": -0.008754730224609375,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.8400000333786011,
+    "zero_identity": null
+  },
+  {
+    "episode": 3,
+    "recipient_profile": [
+      1,
+      4
+    ],
+    "donor_profile": [
+      1,
+      4
+    ],
+    "history_steps": 147,
+    "donor_history_steps": 100,
+    "donor_kind": "same_profile",
+    "kind": "sham",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 8.594948152486415,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.8400000333786011,
+    "zero_identity": true
+  },
+  {
+    "episode": 3,
+    "recipient_profile": [
+      1,
+      4
+    ],
+    "donor_profile": [
+      1,
+      4
+    ],
+    "history_steps": 147,
+    "donor_history_steps": 100,
+    "donor_kind": "same_profile",
+    "kind": "sham",
+    "magnitude": 0.25,
+    "perturb_norm": 0.06391269765404914,
+    "support_distance": 8.593315426713879,
+    "open_loop_probability_l1": 3.209887911026499e-11,
+    "open_loop_value_delta": 0.008849620819091797,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.8400000333786011,
+    "zero_identity": null
+  },
+  {
+    "episode": 3,
+    "recipient_profile": [
+      1,
+      4
+    ],
+    "donor_profile": [
+      1,
+      4
+    ],
+    "history_steps": 147,
+    "donor_history_steps": 100,
+    "donor_kind": "same_profile",
+    "kind": "sham",
+    "magnitude": 0.5,
+    "perturb_norm": 0.12782539530809836,
+    "support_distance": 8.592157817912254,
+    "open_loop_probability_l1": 6.5502381296767e-11,
+    "open_loop_value_delta": 0.017812728881835938,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.8400000333786011,
+    "zero_identity": null
+  },
+  {
+    "episode": 3,
+    "recipient_profile": [
+      1,
+      4
+    ],
+    "donor_profile": [
+      1,
+      4
+    ],
+    "history_steps": 147,
+    "donor_history_steps": 100,
+    "donor_kind": "same_profile",
+    "kind": "sham",
+    "magnitude": 1.0,
+    "perturb_norm": 0.2556507906161966,
+    "support_distance": 8.591268640617814,
+    "open_loop_probability_l1": 1.364044432961009e-10,
+    "open_loop_value_delta": 0.03607892990112305,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.8400000333786011,
+    "zero_identity": null
+  },
+  {
+    "episode": 7,
+    "recipient_profile": [
+      4,
+      1
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 78,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "whole",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.59450101852417,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": true
+  },
+  {
+    "episode": 7,
+    "recipient_profile": [
+      4,
+      1
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 78,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "whole",
+    "magnitude": 0.25,
+    "perturb_norm": 2.5591676235198975,
+    "support_distance": 7.090548992156982,
+    "open_loop_probability_l1": 0.006363575346767902,
+    "open_loop_value_delta": -0.5628786087036133,
+    "allocation_red_probability_delta": 0.0031818195711821318,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 7,
+    "recipient_profile": [
+      4,
+      1
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 78,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "whole",
+    "magnitude": 0.5,
+    "perturb_norm": 5.118335247039795,
+    "support_distance": 5.118335247039795,
+    "open_loop_probability_l1": 1.8690991401672363,
+    "open_loop_value_delta": -0.9620785713195801,
+    "allocation_red_probability_delta": 0.9345496296882629,
+    "reward_delta": 1.6199994087219238,
+    "success_delta": 1,
+    "steps_delta": -61,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 7,
+    "recipient_profile": [
+      4,
+      1
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 78,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "whole",
+    "magnitude": 1.0,
+    "perturb_norm": 10.23667049407959,
+    "support_distance": 2.6807211384038965e-07,
+    "open_loop_probability_l1": 1.9999966621398926,
+    "open_loop_value_delta": -0.9099335670471191,
+    "allocation_red_probability_delta": 0.9999983310699463,
+    "reward_delta": 1.6199994087219238,
+    "success_delta": 1,
+    "steps_delta": -61,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 7,
+    "recipient_profile": [
+      4,
+      1
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 78,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "partner",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.59450078942087,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": true
+  },
+  {
+    "episode": 7,
+    "recipient_profile": [
+      4,
+      1
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 78,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "partner",
+    "magnitude": 0.25,
+    "perturb_norm": 0.13653855063036024,
+    "support_distance": 7.593989505397045,
+    "open_loop_probability_l1": 2.815806965372758e-08,
+    "open_loop_value_delta": -0.009076118469238281,
+    "allocation_red_probability_delta": 2.815806965372758e-08,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 7,
+    "recipient_profile": [
+      4,
+      1
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 78,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "partner",
+    "magnitude": 0.5,
+    "perturb_norm": 0.27307710126072043,
+    "support_distance": 7.595932893809895,
+    "open_loop_probability_l1": 5.7679926612763666e-08,
+    "open_loop_value_delta": -0.017843246459960938,
+    "allocation_red_probability_delta": 5.7679926612763666e-08,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 7,
+    "recipient_profile": [
+      4,
+      1
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 78,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "partner",
+    "magnitude": 1.0,
+    "perturb_norm": 0.5461542025214409,
+    "support_distance": 7.607173786662038,
+    "open_loop_probability_l1": 2.3989775854715845e-07,
+    "open_loop_value_delta": -0.033382415771484375,
+    "allocation_red_probability_delta": 1.206884689963772e-07,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 7,
+    "recipient_profile": [
+      4,
+      1
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 78,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "attenuate",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.59450078942087,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": true
+  },
+  {
+    "episode": 7,
+    "recipient_profile": [
+      4,
+      1
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 78,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "attenuate",
+    "magnitude": 0.25,
+    "perturb_norm": 0.0867795495847237,
+    "support_distance": 7.593856543740063,
+    "open_loop_probability_l1": 2.0801962818950415e-08,
+    "open_loop_value_delta": -0.0037937164306640625,
+    "allocation_red_probability_delta": 2.0801962818950415e-08,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 7,
+    "recipient_profile": [
+      4,
+      1
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 78,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "attenuate",
+    "magnitude": 0.5,
+    "perturb_norm": 0.1735590991694474,
+    "support_distance": 7.594203944703196,
+    "open_loop_probability_l1": 4.220316895953147e-08,
+    "open_loop_value_delta": -0.008215904235839844,
+    "allocation_red_probability_delta": 4.220316895953147e-08,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 7,
+    "recipient_profile": [
+      4,
+      1
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 78,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "attenuate",
+    "magnitude": 1.0,
+    "perturb_norm": 0.3471181983388947,
+    "support_distance": 7.597872754184948,
+    "open_loop_probability_l1": 2.060223778244108e-07,
+    "open_loop_value_delta": -0.01518869400024414,
+    "allocation_red_probability_delta": 8.681308827362955e-08,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 7,
+    "recipient_profile": [
+      4,
+      1
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 78,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "random",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.59450078942087,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": true
+  },
+  {
+    "episode": 7,
+    "recipient_profile": [
+      4,
+      1
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 78,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "random",
+    "magnitude": 0.25,
+    "perturb_norm": 0.13653855063036022,
+    "support_distance": 7.599965340294338,
+    "open_loop_probability_l1": 3.085243633904611e-07,
+    "open_loop_value_delta": 0.007372856140136719,
+    "allocation_red_probability_delta": 1.8931507383967983e-07,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 7,
+    "recipient_profile": [
+      4,
+      1
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 78,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "random",
+    "magnitude": 0.5,
+    "perturb_norm": 0.2730771012607205,
+    "support_distance": 7.60787681672441,
+    "open_loop_probability_l1": 7.420558176818304e-07,
+    "open_loop_value_delta": 0.014912128448486328,
+    "allocation_red_probability_delta": 3.844279490294866e-07,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 7,
+    "recipient_profile": [
+      4,
+      1
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 78,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "random",
+    "magnitude": 1.0,
+    "perturb_norm": 0.546154202521441,
+    "support_distance": 7.631007750150512,
+    "open_loop_probability_l1": 1.6625524494884303e-06,
+    "open_loop_value_delta": 0.0304718017578125,
+    "allocation_red_probability_delta": 8.280874226329615e-07,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 7,
+    "recipient_profile": [
+      4,
+      1
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 78,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "nonpartner",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.59450078942087,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": true
+  },
+  {
+    "episode": 7,
+    "recipient_profile": [
+      4,
+      1
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 78,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "nonpartner",
+    "magnitude": 0.25,
+    "perturb_norm": 0.13653855063036024,
+    "support_distance": 7.5919437023758425,
+    "open_loop_probability_l1": 4.784035354532534e-07,
+    "open_loop_value_delta": -0.0008392333984375,
+    "allocation_red_probability_delta": -2.399849563516909e-07,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 7,
+    "recipient_profile": [
+      4,
+      1
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 78,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "nonpartner",
+    "magnitude": 0.5,
+    "perturb_norm": 0.27307710126072055,
+    "support_distance": 7.59184178386185,
+    "open_loop_probability_l1": 9.212917575496249e-07,
+    "open_loop_value_delta": -0.0024938583374023438,
+    "allocation_red_probability_delta": -4.444545993464999e-07,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 7,
+    "recipient_profile": [
+      4,
+      1
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 78,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "nonpartner",
+    "magnitude": 1.0,
+    "perturb_norm": 0.546154202521441,
+    "support_distance": 7.5990014678464854,
+    "open_loop_probability_l1": 1.6023404896259308e-06,
+    "open_loop_value_delta": -0.005909442901611328,
+    "allocation_red_probability_delta": -7.678755196138809e-07,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 7,
+    "recipient_profile": [
+      4,
+      1
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 78,
+    "donor_history_steps": 99,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "whole",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.59450101852417,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": true
+  },
+  {
+    "episode": 7,
+    "recipient_profile": [
+      4,
+      1
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 78,
+    "donor_history_steps": 99,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "whole",
+    "magnitude": 0.25,
+    "perturb_norm": 2.3665096759796143,
+    "support_distance": 6.795953273773193,
+    "open_loop_probability_l1": 6.809099204474478e-07,
+    "open_loop_value_delta": -0.24612951278686523,
+    "allocation_red_probability_delta": -3.2328205179510405e-07,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 7,
+    "recipient_profile": [
+      4,
+      1
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 78,
+    "donor_history_steps": 99,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "whole",
+    "magnitude": 0.5,
+    "perturb_norm": 4.7330193519592285,
+    "support_distance": 4.7330193519592285,
+    "open_loop_probability_l1": 2.994269152623019e-07,
+    "open_loop_value_delta": -0.4599142074584961,
+    "allocation_red_probability_delta": 1.8021762571152067e-07,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 7,
+    "recipient_profile": [
+      4,
+      1
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 78,
+    "donor_history_steps": 99,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "whole",
+    "magnitude": 1.0,
+    "perturb_norm": 9.466038703918457,
+    "support_distance": 2.4719201974221505e-07,
+    "open_loop_probability_l1": 2.1215602828306146e-05,
+    "open_loop_value_delta": -0.8425507545471191,
+    "allocation_red_probability_delta": 1.0605976058286615e-05,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 7,
+    "recipient_profile": [
+      4,
+      1
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 78,
+    "donor_history_steps": 99,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "partner",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.59450078942087,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": true
+  },
+  {
+    "episode": 7,
+    "recipient_profile": [
+      4,
+      1
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 78,
+    "donor_history_steps": 99,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "partner",
+    "magnitude": 0.25,
+    "perturb_norm": 0.02125019997302448,
+    "support_distance": 7.594805736056489,
+    "open_loop_probability_l1": 2.569095158833079e-09,
+    "open_loop_value_delta": 0.0005130767822265625,
+    "allocation_red_probability_delta": -2.569095158833079e-09,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 7,
+    "recipient_profile": [
+      4,
+      1
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 78,
+    "donor_history_steps": 99,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "partner",
+    "magnitude": 0.5,
+    "perturb_norm": 0.042500399946048734,
+    "support_distance": 7.595170125702033,
+    "open_loop_probability_l1": 5.063611752120778e-09,
+    "open_loop_value_delta": 0.0010328292846679688,
+    "allocation_red_probability_delta": -5.063611752120778e-09,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 7,
+    "recipient_profile": [
+      4,
+      1
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 78,
+    "donor_history_steps": 99,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "partner",
+    "magnitude": 1.0,
+    "perturb_norm": 0.08500079989209748,
+    "support_distance": 7.596077198409071,
+    "open_loop_probability_l1": 9.927589417202398e-09,
+    "open_loop_value_delta": 0.0020904541015625,
+    "allocation_red_probability_delta": -9.927589417202398e-09,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 7,
+    "recipient_profile": [
+      4,
+      1
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 78,
+    "donor_history_steps": 99,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "attenuate",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.59450078942087,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": true
+  },
+  {
+    "episode": 7,
+    "recipient_profile": [
+      4,
+      1
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 78,
+    "donor_history_steps": 99,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "attenuate",
+    "magnitude": 0.25,
+    "perturb_norm": 0.0867795495847237,
+    "support_distance": 7.593856543740063,
+    "open_loop_probability_l1": 2.0801962818950415e-08,
+    "open_loop_value_delta": -0.0037937164306640625,
+    "allocation_red_probability_delta": 2.0801962818950415e-08,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 7,
+    "recipient_profile": [
+      4,
+      1
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 78,
+    "donor_history_steps": 99,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "attenuate",
+    "magnitude": 0.5,
+    "perturb_norm": 0.1735590991694474,
+    "support_distance": 7.594203944703196,
+    "open_loop_probability_l1": 4.220316895953147e-08,
+    "open_loop_value_delta": -0.008215904235839844,
+    "allocation_red_probability_delta": 4.220316895953147e-08,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 7,
+    "recipient_profile": [
+      4,
+      1
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 78,
+    "donor_history_steps": 99,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "attenuate",
+    "magnitude": 1.0,
+    "perturb_norm": 0.3471181983388947,
+    "support_distance": 7.597872754184948,
+    "open_loop_probability_l1": 2.060223778244108e-07,
+    "open_loop_value_delta": -0.01518869400024414,
+    "allocation_red_probability_delta": 8.681308827362955e-08,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 7,
+    "recipient_profile": [
+      4,
+      1
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 78,
+    "donor_history_steps": 99,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "random",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.59450078942087,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": true
+  },
+  {
+    "episode": 7,
+    "recipient_profile": [
+      4,
+      1
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 78,
+    "donor_history_steps": 99,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "random",
+    "magnitude": 0.25,
+    "perturb_norm": 0.02125019997302438,
+    "support_distance": 7.5932169420722,
+    "open_loop_probability_l1": 6.002255759085529e-08,
+    "open_loop_value_delta": 0.00705718994140625,
+    "allocation_red_probability_delta": 6.002255759085529e-08,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 7,
+    "recipient_profile": [
+      4,
+      1
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 78,
+    "donor_history_steps": 99,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "random",
+    "magnitude": 0.5,
+    "perturb_norm": 0.0425003999460488,
+    "support_distance": 7.591992357756174,
+    "open_loop_probability_l1": 2.4147868771251524e-07,
+    "open_loop_value_delta": 0.014111518859863281,
+    "allocation_red_probability_delta": 1.22269398161734e-07,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 7,
+    "recipient_profile": [
+      4,
+      1
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 78,
+    "donor_history_steps": 99,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "random",
+    "magnitude": 1.0,
+    "perturb_norm": 0.08500079989209758,
+    "support_distance": 7.589721091577293,
+    "open_loop_probability_l1": 4.92160438625433e-07,
+    "open_loop_value_delta": 0.02820587158203125,
+    "allocation_red_probability_delta": 2.537418595238705e-07,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 7,
+    "recipient_profile": [
+      4,
+      1
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 78,
+    "donor_history_steps": 99,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "nonpartner",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.59450078942087,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": true
+  },
+  {
+    "episode": 7,
+    "recipient_profile": [
+      4,
+      1
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 78,
+    "donor_history_steps": 99,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "nonpartner",
+    "magnitude": 0.25,
+    "perturb_norm": 0.021250199973024377,
+    "support_distance": 7.592406969501128,
+    "open_loop_probability_l1": 4.516300577961374e-08,
+    "open_loop_value_delta": -0.0025658607482910156,
+    "allocation_red_probability_delta": 4.516300577961374e-08,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 7,
+    "recipient_profile": [
+      4,
+      1
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 78,
+    "donor_history_steps": 99,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "nonpartner",
+    "magnitude": 0.5,
+    "perturb_norm": 0.042500399946048754,
+    "support_distance": 7.590372064829377,
+    "open_loop_probability_l1": 2.1060554900032002e-07,
+    "open_loop_value_delta": -0.005123138427734375,
+    "allocation_red_probability_delta": 9.139625944953877e-08,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 7,
+    "recipient_profile": [
+      4,
+      1
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 78,
+    "donor_history_steps": 99,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "nonpartner",
+    "magnitude": 1.0,
+    "perturb_norm": 0.08500079989209751,
+    "support_distance": 7.586479189489766,
+    "open_loop_probability_l1": 3.062749556193012e-07,
+    "open_loop_value_delta": -0.010358810424804688,
+    "allocation_red_probability_delta": 1.8706566606851993e-07,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 7,
+    "recipient_profile": [
+      4,
+      1
+    ],
+    "donor_profile": [
+      4,
+      1
+    ],
+    "history_steps": 78,
+    "donor_history_steps": 87,
+    "donor_kind": "same_profile",
+    "kind": "sham",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.59450078942087,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": true
+  },
+  {
+    "episode": 7,
+    "recipient_profile": [
+      4,
+      1
+    ],
+    "donor_profile": [
+      4,
+      1
+    ],
+    "history_steps": 78,
+    "donor_history_steps": 87,
+    "donor_kind": "same_profile",
+    "kind": "sham",
+    "magnitude": 0.25,
+    "perturb_norm": 0.037366090740446535,
+    "support_distance": 7.594098872264193,
+    "open_loop_probability_l1": 6.681148079223931e-09,
+    "open_loop_value_delta": -0.0008168220520019531,
+    "allocation_red_probability_delta": 6.681148079223931e-09,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 7,
+    "recipient_profile": [
+      4,
+      1
+    ],
+    "donor_profile": [
+      4,
+      1
+    ],
+    "history_steps": 78,
+    "donor_history_steps": 87,
+    "donor_kind": "same_profile",
+    "kind": "sham",
+    "magnitude": 0.5,
+    "perturb_norm": 0.07473218148089308,
+    "support_distance": 7.593880797879883,
+    "open_loop_probability_l1": 1.3516000763047487e-08,
+    "open_loop_value_delta": -0.0018315315246582031,
+    "allocation_red_probability_delta": 1.3516000763047487e-08,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 7,
+    "recipient_profile": [
+      4,
+      1
+    ],
+    "donor_profile": [
+      4,
+      1
+    ],
+    "history_steps": 78,
+    "donor_history_steps": 87,
+    "donor_kind": "same_profile",
+    "kind": "sham",
+    "magnitude": 1.0,
+    "perturb_norm": 0.1494643629617862,
+    "support_distance": 7.593996227428688,
+    "open_loop_probability_l1": 2.7557803150557447e-08,
+    "open_loop_value_delta": -0.004360198974609375,
+    "allocation_red_probability_delta": 2.7557803150557447e-08,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 11,
+    "recipient_profile": [
+      2,
+      7
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 151,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "whole",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.917677879333496,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.7699999809265137,
+    "zero_identity": true
+  },
+  {
+    "episode": 11,
+    "recipient_profile": [
+      2,
+      7
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 151,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "whole",
+    "magnitude": 0.25,
+    "perturb_norm": 2.1804416179656982,
+    "support_distance": 6.541324615478516,
+    "open_loop_probability_l1": 1.4341299902298488e-05,
+    "open_loop_value_delta": -0.11621725559234619,
+    "allocation_red_probability_delta": -7.152557373046875e-06,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.7699999809265137,
+    "zero_identity": null
+  },
+  {
+    "episode": 11,
+    "recipient_profile": [
+      2,
+      7
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 151,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "whole",
+    "magnitude": 0.5,
+    "perturb_norm": 4.3608832359313965,
+    "support_distance": 4.3608832359313965,
+    "open_loop_probability_l1": 0.0033568311482667923,
+    "open_loop_value_delta": -0.1640397310256958,
+    "allocation_red_probability_delta": -0.0016784071922302246,
+    "reward_delta": 0.009999990463256836,
+    "success_delta": 0,
+    "steps_delta": -1,
+    "switch_delta": 0,
+    "baseline_reward": 0.7699999809265137,
+    "zero_identity": null
+  },
+  {
+    "episode": 11,
+    "recipient_profile": [
+      2,
+      7
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 151,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "whole",
+    "magnitude": 1.0,
+    "perturb_norm": 8.721766471862793,
+    "support_distance": 2.2521258813412715e-07,
+    "open_loop_probability_l1": 1.999127745628357,
+    "open_loop_value_delta": 0.1128687858581543,
+    "allocation_red_probability_delta": -0.9995638728141785,
+    "reward_delta": -0.25999975204467773,
+    "success_delta": 0,
+    "steps_delta": 26,
+    "switch_delta": 0,
+    "baseline_reward": 0.7699999809265137,
+    "zero_identity": null
+  },
+  {
+    "episode": 11,
+    "recipient_profile": [
+      2,
+      7
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 151,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "partner",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.917677653517472,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.7699999809265137,
+    "zero_identity": true
+  },
+  {
+    "episode": 11,
+    "recipient_profile": [
+      2,
+      7
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 151,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "partner",
+    "magnitude": 0.25,
+    "perturb_norm": 0.09965027833101199,
+    "support_distance": 7.921199523821648,
+    "open_loop_probability_l1": 5.213784959323675e-10,
+    "open_loop_value_delta": -0.011504650115966797,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.7699999809265137,
+    "zero_identity": null
+  },
+  {
+    "episode": 11,
+    "recipient_profile": [
+      2,
+      7
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 151,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "partner",
+    "magnitude": 0.5,
+    "perturb_norm": 0.1993005566620239,
+    "support_distance": 7.92597279350097,
+    "open_loop_probability_l1": 1.1612932837579137e-09,
+    "open_loop_value_delta": -0.02255392074584961,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.7699999809265137,
+    "zero_identity": null
+  },
+  {
+    "episode": 11,
+    "recipient_profile": [
+      2,
+      7
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 151,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "partner",
+    "magnitude": 1.0,
+    "perturb_norm": 0.3986011133240478,
+    "support_distance": 7.939263910804122,
+    "open_loop_probability_l1": 2.330001080963484e-09,
+    "open_loop_value_delta": -0.04327678680419922,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.7699999809265137,
+    "zero_identity": null
+  },
+  {
+    "episode": 11,
+    "recipient_profile": [
+      2,
+      7
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 151,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "attenuate",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.917677653517472,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.7699999809265137,
+    "zero_identity": true
+  },
+  {
+    "episode": 11,
+    "recipient_profile": [
+      2,
+      7
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 151,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "attenuate",
+    "magnitude": 0.25,
+    "perturb_norm": 0.009887271112014089,
+    "support_distance": 7.917462528503351,
+    "open_loop_probability_l1": 4.3005599081880064e-11,
+    "open_loop_value_delta": 0.0021207332611083984,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.7699999809265137,
+    "zero_identity": null
+  },
+  {
+    "episode": 11,
+    "recipient_profile": [
+      2,
+      7
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 151,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "attenuate",
+    "magnitude": 0.5,
+    "perturb_norm": 0.019774542224028243,
+    "support_distance": 7.917259745123908,
+    "open_loop_probability_l1": 8.546763297090365e-11,
+    "open_loop_value_delta": 0.004243373870849609,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.7699999809265137,
+    "zero_identity": null
+  },
+  {
+    "episode": 11,
+    "recipient_profile": [
+      2,
+      7
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 151,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "attenuate",
+    "magnitude": 1.0,
+    "perturb_norm": 0.03954908444805646,
+    "support_distance": 7.916891207004765,
+    "open_loop_probability_l1": 1.708659880250707e-10,
+    "open_loop_value_delta": 0.008494377136230469,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.7699999809265137,
+    "zero_identity": null
+  },
+  {
+    "episode": 11,
+    "recipient_profile": [
+      2,
+      7
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 151,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "random",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.917677653517472,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.7699999809265137,
+    "zero_identity": true
+  },
+  {
+    "episode": 11,
+    "recipient_profile": [
+      2,
+      7
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 151,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "random",
+    "magnitude": 0.25,
+    "perturb_norm": 0.09965027833101196,
+    "support_distance": 7.909181438298447,
+    "open_loop_probability_l1": 4.691429467129637e-10,
+    "open_loop_value_delta": -0.0060727596282958984,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.7699999809265137,
+    "zero_identity": null
+  },
+  {
+    "episode": 11,
+    "recipient_profile": [
+      2,
+      7
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 151,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "random",
+    "magnitude": 0.5,
+    "perturb_norm": 0.19930055666202393,
+    "support_distance": 7.901932863469692,
+    "open_loop_probability_l1": 8.872422796457613e-10,
+    "open_loop_value_delta": -0.012100458145141602,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.7699999809265137,
+    "zero_identity": null
+  },
+  {
+    "episode": 11,
+    "recipient_profile": [
+      2,
+      7
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 151,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "random",
+    "magnitude": 1.0,
+    "perturb_norm": 0.39860111332404785,
+    "support_distance": 7.8911917956875355,
+    "open_loop_probability_l1": 1.6383374656925298e-09,
+    "open_loop_value_delta": -0.024010181427001953,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.7699999809265137,
+    "zero_identity": null
+  },
+  {
+    "episode": 11,
+    "recipient_profile": [
+      2,
+      7
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 151,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "nonpartner",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.917677653517472,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.7699999809265137,
+    "zero_identity": true
+  },
+  {
+    "episode": 11,
+    "recipient_profile": [
+      2,
+      7
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 151,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "nonpartner",
+    "magnitude": 0.25,
+    "perturb_norm": 0.09965027833101198,
+    "support_distance": 7.910517853165361,
+    "open_loop_probability_l1": 1.5542234166332491e-09,
+    "open_loop_value_delta": 0.0029625892639160156,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.7699999809265137,
+    "zero_identity": null
+  },
+  {
+    "episode": 11,
+    "recipient_profile": [
+      2,
+      7
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 151,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "nonpartner",
+    "magnitude": 0.5,
+    "perturb_norm": 0.199300556662024,
+    "support_distance": 7.904607918260638,
+    "open_loop_probability_l1": 3.2172700059618364e-09,
+    "open_loop_value_delta": 0.006030559539794922,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.7699999809265137,
+    "zero_identity": null
+  },
+  {
+    "episode": 11,
+    "recipient_profile": [
+      2,
+      7
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 151,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "nonpartner",
+    "magnitude": 1.0,
+    "perturb_norm": 0.3986011133240478,
+    "support_distance": 7.8965482764065476,
+    "open_loop_probability_l1": 6.967722399053855e-09,
+    "open_loop_value_delta": 0.01249074935913086,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.7699999809265137,
+    "zero_identity": null
+  },
+  {
+    "episode": 11,
+    "recipient_profile": [
+      2,
+      7
+    ],
+    "donor_profile": [
+      1,
+      4
+    ],
+    "history_steps": 151,
+    "donor_history_steps": 100,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "whole",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.917677879333496,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.7699999809265137,
+    "zero_identity": true
+  },
+  {
+    "episode": 11,
+    "recipient_profile": [
+      2,
+      7
+    ],
+    "donor_profile": [
+      1,
+      4
+    ],
+    "history_steps": 151,
+    "donor_history_steps": 100,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "whole",
+    "magnitude": 0.25,
+    "perturb_norm": 2.2057037353515625,
+    "support_distance": 6.520480632781982,
+    "open_loop_probability_l1": 1.2449163477867842e-08,
+    "open_loop_value_delta": 0.3176689147949219,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.7699999809265137,
+    "zero_identity": null
+  },
+  {
+    "episode": 11,
+    "recipient_profile": [
+      2,
+      7
+    ],
+    "donor_profile": [
+      1,
+      4
+    ],
+    "history_steps": 151,
+    "donor_history_steps": 100,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "whole",
+    "magnitude": 0.5,
+    "perturb_norm": 4.411407470703125,
+    "support_distance": 4.411407470703125,
+    "open_loop_probability_l1": 1.8514532129643158e-08,
+    "open_loop_value_delta": 0.6279048919677734,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.7699999809265137,
+    "zero_identity": null
+  },
+  {
+    "episode": 11,
+    "recipient_profile": [
+      2,
+      7
+    ],
+    "donor_profile": [
+      1,
+      4
+    ],
+    "history_steps": 151,
+    "donor_history_steps": 100,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "whole",
+    "magnitude": 1.0,
+    "perturb_norm": 8.82281494140625,
+    "support_distance": 2.0349770579741744e-07,
+    "open_loop_probability_l1": 1.9792933514395372e-08,
+    "open_loop_value_delta": 1.2170677185058594,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.009999990463256836,
+    "success_delta": 0,
+    "steps_delta": -1,
+    "switch_delta": 0,
+    "baseline_reward": 0.7699999809265137,
+    "zero_identity": null
+  },
+  {
+    "episode": 11,
+    "recipient_profile": [
+      2,
+      7
+    ],
+    "donor_profile": [
+      1,
+      4
+    ],
+    "history_steps": 151,
+    "donor_history_steps": 100,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "partner",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.917677653517472,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.7699999809265137,
+    "zero_identity": true
+  },
+  {
+    "episode": 11,
+    "recipient_profile": [
+      2,
+      7
+    ],
+    "donor_profile": [
+      1,
+      4
+    ],
+    "history_steps": 151,
+    "donor_history_steps": 100,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "partner",
+    "magnitude": 0.25,
+    "perturb_norm": 0.08471775598920073,
+    "support_distance": 7.915712558985261,
+    "open_loop_probability_l1": 4.2721204351892084e-10,
+    "open_loop_value_delta": 0.012670516967773438,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.7699999809265137,
+    "zero_identity": null
+  },
+  {
+    "episode": 11,
+    "recipient_profile": [
+      2,
+      7
+    ],
+    "donor_profile": [
+      1,
+      4
+    ],
+    "history_steps": 151,
+    "donor_history_steps": 100,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "partner",
+    "magnitude": 0.5,
+    "perturb_norm": 0.16943551197840148,
+    "support_distance": 7.914653839827977,
+    "open_loop_probability_l1": 8.374687610057663e-10,
+    "open_loop_value_delta": 0.02562999725341797,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.7699999809265137,
+    "zero_identity": null
+  },
+  {
+    "episode": 11,
+    "recipient_profile": [
+      2,
+      7
+    ],
+    "donor_profile": [
+      1,
+      4
+    ],
+    "history_steps": 151,
+    "donor_history_steps": 100,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "partner",
+    "magnitude": 1.0,
+    "perturb_norm": 0.338871023956803,
+    "support_distance": 7.915256671077465,
+    "open_loop_probability_l1": 1.5942198672291852e-09,
+    "open_loop_value_delta": 0.05240774154663086,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.7699999809265137,
+    "zero_identity": null
+  },
+  {
+    "episode": 11,
+    "recipient_profile": [
+      2,
+      7
+    ],
+    "donor_profile": [
+      1,
+      4
+    ],
+    "history_steps": 151,
+    "donor_history_steps": 100,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "attenuate",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.917677653517472,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.7699999809265137,
+    "zero_identity": true
+  },
+  {
+    "episode": 11,
+    "recipient_profile": [
+      2,
+      7
+    ],
+    "donor_profile": [
+      1,
+      4
+    ],
+    "history_steps": 151,
+    "donor_history_steps": 100,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "attenuate",
+    "magnitude": 0.25,
+    "perturb_norm": 0.009887271112014089,
+    "support_distance": 7.917462528503351,
+    "open_loop_probability_l1": 4.3005599081880064e-11,
+    "open_loop_value_delta": 0.0021207332611083984,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.7699999809265137,
+    "zero_identity": null
+  },
+  {
+    "episode": 11,
+    "recipient_profile": [
+      2,
+      7
+    ],
+    "donor_profile": [
+      1,
+      4
+    ],
+    "history_steps": 151,
+    "donor_history_steps": 100,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "attenuate",
+    "magnitude": 0.5,
+    "perturb_norm": 0.019774542224028243,
+    "support_distance": 7.917259745123908,
+    "open_loop_probability_l1": 8.546763297090365e-11,
+    "open_loop_value_delta": 0.004243373870849609,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.7699999809265137,
+    "zero_identity": null
+  },
+  {
+    "episode": 11,
+    "recipient_profile": [
+      2,
+      7
+    ],
+    "donor_profile": [
+      1,
+      4
+    ],
+    "history_steps": 151,
+    "donor_history_steps": 100,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "attenuate",
+    "magnitude": 1.0,
+    "perturb_norm": 0.03954908444805646,
+    "support_distance": 7.916891207004765,
+    "open_loop_probability_l1": 1.708659880250707e-10,
+    "open_loop_value_delta": 0.008494377136230469,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.7699999809265137,
+    "zero_identity": null
+  },
+  {
+    "episode": 11,
+    "recipient_profile": [
+      2,
+      7
+    ],
+    "donor_profile": [
+      1,
+      4
+    ],
+    "history_steps": 151,
+    "donor_history_steps": 100,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "random",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.917677653517472,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.7699999809265137,
+    "zero_identity": true
+  },
+  {
+    "episode": 11,
+    "recipient_profile": [
+      2,
+      7
+    ],
+    "donor_profile": [
+      1,
+      4
+    ],
+    "history_steps": 151,
+    "donor_history_steps": 100,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "random",
+    "magnitude": 0.25,
+    "perturb_norm": 0.08471775598920075,
+    "support_distance": 7.8968678391226215,
+    "open_loop_probability_l1": 5.442135631028577e-10,
+    "open_loop_value_delta": -0.02790069580078125,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.7699999809265137,
+    "zero_identity": null
+  },
+  {
+    "episode": 11,
+    "recipient_profile": [
+      2,
+      7
+    ],
+    "donor_profile": [
+      1,
+      4
+    ],
+    "history_steps": 151,
+    "donor_history_steps": 100,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "random",
+    "magnitude": 0.5,
+    "perturb_norm": 0.1694355119784015,
+    "support_distance": 7.876914250421169,
+    "open_loop_probability_l1": 1.0347100953822519e-09,
+    "open_loop_value_delta": -0.055751800537109375,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.7699999809265137,
+    "zero_identity": null
+  },
+  {
+    "episode": 11,
+    "recipient_profile": [
+      2,
+      7
+    ],
+    "donor_profile": [
+      1,
+      4
+    ],
+    "history_steps": 151,
+    "donor_history_steps": 100,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "random",
+    "magnitude": 1.0,
+    "perturb_norm": 0.33887102395680296,
+    "support_distance": 7.839601621090516,
+    "open_loop_probability_l1": 1.9654464722407283e-09,
+    "open_loop_value_delta": -0.11130237579345703,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.7699999809265137,
+    "zero_identity": null
+  },
+  {
+    "episode": 11,
+    "recipient_profile": [
+      2,
+      7
+    ],
+    "donor_profile": [
+      1,
+      4
+    ],
+    "history_steps": 151,
+    "donor_history_steps": 100,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "nonpartner",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.917677653517472,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.7699999809265137,
+    "zero_identity": true
+  },
+  {
+    "episode": 11,
+    "recipient_profile": [
+      2,
+      7
+    ],
+    "donor_profile": [
+      1,
+      4
+    ],
+    "history_steps": 151,
+    "donor_history_steps": 100,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "nonpartner",
+    "magnitude": 0.25,
+    "perturb_norm": 0.08471775598920075,
+    "support_distance": 7.918524452867715,
+    "open_loop_probability_l1": 6.096616544937206e-10,
+    "open_loop_value_delta": 0.005767822265625,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.7699999809265137,
+    "zero_identity": null
+  },
+  {
+    "episode": 11,
+    "recipient_profile": [
+      2,
+      7
+    ],
+    "donor_profile": [
+      1,
+      4
+    ],
+    "history_steps": 151,
+    "donor_history_steps": 100,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "nonpartner",
+    "magnitude": 0.5,
+    "perturb_norm": 0.16943551197840157,
+    "support_distance": 7.920277381044025,
+    "open_loop_probability_l1": 1.194234044987752e-09,
+    "open_loop_value_delta": 0.011568546295166016,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.7699999809265137,
+    "zero_identity": null
+  },
+  {
+    "episode": 11,
+    "recipient_profile": [
+      2,
+      7
+    ],
+    "donor_profile": [
+      1,
+      4
+    ],
+    "history_steps": 151,
+    "donor_history_steps": 100,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "nonpartner",
+    "magnitude": 1.0,
+    "perturb_norm": 0.338871023956803,
+    "support_distance": 7.926498908457885,
+    "open_loop_probability_l1": 2.2984867342756843e-09,
+    "open_loop_value_delta": 0.0232696533203125,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.7699999809265137,
+    "zero_identity": null
+  },
+  {
+    "episode": 11,
+    "recipient_profile": [
+      2,
+      7
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 151,
+    "donor_history_steps": 127,
+    "donor_kind": "same_profile",
+    "kind": "sham",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.917677653517472,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.7699999809265137,
+    "zero_identity": true
+  },
+  {
+    "episode": 11,
+    "recipient_profile": [
+      2,
+      7
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 151,
+    "donor_history_steps": 127,
+    "donor_kind": "same_profile",
+    "kind": "sham",
+    "magnitude": 0.25,
+    "perturb_norm": 0.054208709835772174,
+    "support_distance": 7.916283905955845,
+    "open_loop_probability_l1": 2.604423343655071e-10,
+    "open_loop_value_delta": 0.0053558349609375,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.7699999809265137,
+    "zero_identity": null
+  },
+  {
+    "episode": 11,
+    "recipient_profile": [
+      2,
+      7
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 151,
+    "donor_history_steps": 127,
+    "donor_kind": "same_profile",
+    "kind": "sham",
+    "magnitude": 0.5,
+    "perturb_norm": 0.10841741967154436,
+    "support_distance": 7.915261177170671,
+    "open_loop_probability_l1": 5.137046343861584e-10,
+    "open_loop_value_delta": 0.010855674743652344,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.7699999809265137,
+    "zero_identity": null
+  },
+  {
+    "episode": 11,
+    "recipient_profile": [
+      2,
+      7
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 151,
+    "donor_history_steps": 127,
+    "donor_kind": "same_profile",
+    "kind": "sham",
+    "magnitude": 1.0,
+    "perturb_norm": 0.21683483934308864,
+    "support_distance": 7.914329299088901,
+    "open_loop_probability_l1": 9.998153416290734e-10,
+    "open_loop_value_delta": 0.022279739379882812,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.7699999809265137,
+    "zero_identity": null
+  },
+  {
+    "episode": 15,
+    "recipient_profile": [
+      7,
+      2
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 104,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "whole",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.667966365814209,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": true
+  },
+  {
+    "episode": 15,
+    "recipient_profile": [
+      7,
+      2
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 104,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "whole",
+    "magnitude": 0.25,
+    "perturb_norm": 2.4454543590545654,
+    "support_distance": 6.53373908996582,
+    "open_loop_probability_l1": 0.02703353390097618,
+    "open_loop_value_delta": -0.23314428329467773,
+    "allocation_red_probability_delta": 0.013516809791326523,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 15,
+    "recipient_profile": [
+      7,
+      2
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 104,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "whole",
+    "magnitude": 0.5,
+    "perturb_norm": 4.890908718109131,
+    "support_distance": 4.890908718109131,
+    "open_loop_probability_l1": 1.9366494417190552,
+    "open_loop_value_delta": -0.264581561088562,
+    "allocation_red_probability_delta": 0.9683247804641724,
+    "reward_delta": 1.419999599456787,
+    "success_delta": 1,
+    "steps_delta": -41,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 15,
+    "recipient_profile": [
+      7,
+      2
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 104,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "whole",
+    "magnitude": 1.0,
+    "perturb_norm": 9.781817436218262,
+    "support_distance": 2.4260907593998127e-07,
+    "open_loop_probability_l1": 1.9999589920043945,
+    "open_loop_value_delta": 0.22222328186035156,
+    "allocation_red_probability_delta": 0.999979555606842,
+    "reward_delta": 1.429999589920044,
+    "success_delta": 1,
+    "steps_delta": -42,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 15,
+    "recipient_profile": [
+      7,
+      2
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 104,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "partner",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.667966491076045,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": true
+  },
+  {
+    "episode": 15,
+    "recipient_profile": [
+      7,
+      2
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 104,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "partner",
+    "magnitude": 0.25,
+    "perturb_norm": 0.10474760375755265,
+    "support_distance": 7.671541064967983,
+    "open_loop_probability_l1": 1.2198379408800974e-06,
+    "open_loop_value_delta": 0.0027618408203125,
+    "allocation_red_probability_delta": 6.237914931261912e-07,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 15,
+    "recipient_profile": [
+      7,
+      2
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 104,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "partner",
+    "magnitude": 0.5,
+    "perturb_norm": 0.2094952075151055,
+    "support_distance": 7.676543404143626,
+    "open_loop_probability_l1": 2.4607379600638524e-06,
+    "open_loop_value_delta": 0.005927324295043945,
+    "allocation_red_probability_delta": 1.2686450645560399e-06,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 15,
+    "recipient_profile": [
+      7,
+      2
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 104,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "partner",
+    "magnitude": 1.0,
+    "perturb_norm": 0.4189904150302107,
+    "support_distance": 7.690819439245764,
+    "open_loop_probability_l1": 4.829204044654034e-06,
+    "open_loop_value_delta": 0.014285087585449219,
+    "allocation_red_probability_delta": 2.445018253638409e-06,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 15,
+    "recipient_profile": [
+      7,
+      2
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 104,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "attenuate",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.667966491076045,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": true
+  },
+  {
+    "episode": 15,
+    "recipient_profile": [
+      7,
+      2
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 104,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "attenuate",
+    "magnitude": 0.25,
+    "perturb_norm": 0.055062955708130336,
+    "support_distance": 7.669671705403337,
+    "open_loop_probability_l1": 5.784058885183185e-07,
+    "open_loop_value_delta": 0.003161907196044922,
+    "allocation_red_probability_delta": 3.3998730941675603e-07,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 15,
+    "recipient_profile": [
+      7,
+      2
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 104,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "attenuate",
+    "magnitude": 0.5,
+    "perturb_norm": 0.11012591141626087,
+    "support_distance": 7.671771756722604,
+    "open_loop_probability_l1": 1.2832460924983025e-06,
+    "open_loop_value_delta": 0.00642704963684082,
+    "allocation_red_probability_delta": 6.871996447443962e-07,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 15,
+    "recipient_profile": [
+      7,
+      2
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 104,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "attenuate",
+    "magnitude": 1.0,
+    "perturb_norm": 0.22025182283252182,
+    "support_distance": 7.677155013346982,
+    "open_loop_probability_l1": 2.714172296691686e-06,
+    "open_loop_value_delta": 0.013256072998046875,
+    "allocation_red_probability_delta": 1.4028701116330922e-06,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 15,
+    "recipient_profile": [
+      7,
+      2
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 104,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "random",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.667966491076045,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": true
+  },
+  {
+    "episode": 15,
+    "recipient_profile": [
+      7,
+      2
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 104,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "random",
+    "magnitude": 0.25,
+    "perturb_norm": 0.10474760375755267,
+    "support_distance": 7.6749841252375575,
+    "open_loop_probability_l1": 8.807783160591498e-07,
+    "open_loop_value_delta": 0.023698091506958008,
+    "allocation_red_probability_delta": -4.039411578560248e-07,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 15,
+    "recipient_profile": [
+      7,
+      2
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 104,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "random",
+    "magnitude": 0.5,
+    "perturb_norm": 0.20949520751510536,
+    "support_distance": 7.683423498546585,
+    "open_loop_probability_l1": 1.63211916515138e-06,
+    "open_loop_value_delta": 0.04739665985107422,
+    "allocation_red_probability_delta": -7.976541382959113e-07,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 15,
+    "recipient_profile": [
+      7,
+      2
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 104,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "random",
+    "magnitude": 1.0,
+    "perturb_norm": 0.4189904150302108,
+    "support_distance": 7.7045479875015515,
+    "open_loop_probability_l1": 3.3237793104490265e-06,
+    "open_loop_value_delta": 0.09479141235351562,
+    "allocation_red_probability_delta": -1.654849256738089e-06,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 15,
+    "recipient_profile": [
+      7,
+      2
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 104,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "nonpartner",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.667966491076045,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": true
+  },
+  {
+    "episode": 15,
+    "recipient_profile": [
+      7,
+      2
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 104,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "nonpartner",
+    "magnitude": 0.25,
+    "perturb_norm": 0.10474760375755275,
+    "support_distance": 7.6670651085432535,
+    "open_loop_probability_l1": 1.402146153850481e-06,
+    "open_loop_value_delta": -0.031239986419677734,
+    "allocation_red_probability_delta": -6.868904165457934e-07,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 15,
+    "recipient_profile": [
+      7,
+      2
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 104,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "nonpartner",
+    "magnitude": 0.5,
+    "perturb_norm": 0.20949520751510536,
+    "support_distance": 7.6675947186848346,
+    "open_loop_probability_l1": 2.7646728995023295e-06,
+    "open_loop_value_delta": -0.06248283386230469,
+    "allocation_red_probability_delta": -1.3341614248929545e-06,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 15,
+    "recipient_profile": [
+      7,
+      2
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 104,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "nonpartner",
+    "magnitude": 1.0,
+    "perturb_norm": 0.4189904150302108,
+    "support_distance": 7.672944931099508,
+    "open_loop_probability_l1": 5.140038410900161e-06,
+    "open_loop_value_delta": -0.12498068809509277,
+    "allocation_red_probability_delta": -2.517434040782973e-06,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 15,
+    "recipient_profile": [
+      7,
+      2
+    ],
+    "donor_profile": [
+      4,
+      1
+    ],
+    "history_steps": 104,
+    "donor_history_steps": 87,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "whole",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.667966365814209,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": true
+  },
+  {
+    "episode": 15,
+    "recipient_profile": [
+      7,
+      2
+    ],
+    "donor_profile": [
+      4,
+      1
+    ],
+    "history_steps": 104,
+    "donor_history_steps": 87,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "whole",
+    "magnitude": 0.25,
+    "perturb_norm": 2.113971471786499,
+    "support_distance": 5.992215633392334,
+    "open_loop_probability_l1": 3.637850022641942e-05,
+    "open_loop_value_delta": 0.41509008407592773,
+    "allocation_red_probability_delta": -1.8139477106160484e-05,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 15,
+    "recipient_profile": [
+      7,
+      2
+    ],
+    "donor_profile": [
+      4,
+      1
+    ],
+    "history_steps": 104,
+    "donor_history_steps": 87,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "whole",
+    "magnitude": 0.5,
+    "perturb_norm": 4.227942943572998,
+    "support_distance": 4.227942943572998,
+    "open_loop_probability_l1": 4.025032831123099e-05,
+    "open_loop_value_delta": 0.8491573333740234,
+    "allocation_red_probability_delta": -2.010396019613836e-05,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 15,
+    "recipient_profile": [
+      7,
+      2
+    ],
+    "donor_profile": [
+      4,
+      1
+    ],
+    "history_steps": 104,
+    "donor_history_steps": 87,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "whole",
+    "magnitude": 1.0,
+    "perturb_norm": 8.455885887145996,
+    "support_distance": 2.046558904567064e-07,
+    "open_loop_probability_l1": 4.074440221302211e-05,
+    "open_loop_value_delta": 1.5007901191711426,
+    "allocation_red_probability_delta": -2.035961369983852e-05,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 15,
+    "recipient_profile": [
+      7,
+      2
+    ],
+    "donor_profile": [
+      4,
+      1
+    ],
+    "history_steps": 104,
+    "donor_history_steps": 87,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "partner",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.667966491076045,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": true
+  },
+  {
+    "episode": 15,
+    "recipient_profile": [
+      7,
+      2
+    ],
+    "donor_profile": [
+      4,
+      1
+    ],
+    "history_steps": 104,
+    "donor_history_steps": 87,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "partner",
+    "magnitude": 0.25,
+    "perturb_norm": 0.010780533374875651,
+    "support_distance": 7.668118362649945,
+    "open_loop_probability_l1": 1.469543349230662e-07,
+    "open_loop_value_delta": 0.0011453628540039062,
+    "allocation_red_probability_delta": -2.774504537228495e-08,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 15,
+    "recipient_profile": [
+      7,
+      2
+    ],
+    "donor_profile": [
+      4,
+      1
+    ],
+    "history_steps": 104,
+    "donor_history_steps": 87,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "partner",
+    "magnitude": 0.5,
+    "perturb_norm": 0.02156106674975138,
+    "support_distance": 7.668285387148367,
+    "open_loop_probability_l1": 1.7444835975766182e-07,
+    "open_loop_value_delta": 0.002292156219482422,
+    "allocation_red_probability_delta": -5.523907020688057e-08,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 15,
+    "recipient_profile": [
+      7,
+      2
+    ],
+    "donor_profile": [
+      4,
+      1
+    ],
+    "history_steps": 104,
+    "donor_history_steps": 87,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "partner",
+    "magnitude": 1.0,
+    "perturb_norm": 0.04312213349950267,
+    "support_distance": 7.6686648908685555,
+    "open_loop_probability_l1": 2.2859057935420424e-07,
+    "open_loop_value_delta": 0.0045871734619140625,
+    "allocation_red_probability_delta": -1.0938128980342299e-07,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 15,
+    "recipient_profile": [
+      7,
+      2
+    ],
+    "donor_profile": [
+      4,
+      1
+    ],
+    "history_steps": 104,
+    "donor_history_steps": 87,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "attenuate",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.667966491076045,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": true
+  },
+  {
+    "episode": 15,
+    "recipient_profile": [
+      7,
+      2
+    ],
+    "donor_profile": [
+      4,
+      1
+    ],
+    "history_steps": 104,
+    "donor_history_steps": 87,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "attenuate",
+    "magnitude": 0.25,
+    "perturb_norm": 0.055062955708130336,
+    "support_distance": 7.669671705403337,
+    "open_loop_probability_l1": 5.784058885183185e-07,
+    "open_loop_value_delta": 0.003161907196044922,
+    "allocation_red_probability_delta": 3.3998730941675603e-07,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 15,
+    "recipient_profile": [
+      7,
+      2
+    ],
+    "donor_profile": [
+      4,
+      1
+    ],
+    "history_steps": 104,
+    "donor_history_steps": 87,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "attenuate",
+    "magnitude": 0.5,
+    "perturb_norm": 0.11012591141626087,
+    "support_distance": 7.671771756722604,
+    "open_loop_probability_l1": 1.2832460924983025e-06,
+    "open_loop_value_delta": 0.00642704963684082,
+    "allocation_red_probability_delta": 6.871996447443962e-07,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 15,
+    "recipient_profile": [
+      7,
+      2
+    ],
+    "donor_profile": [
+      4,
+      1
+    ],
+    "history_steps": 104,
+    "donor_history_steps": 87,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "attenuate",
+    "magnitude": 1.0,
+    "perturb_norm": 0.22025182283252182,
+    "support_distance": 7.677155013346982,
+    "open_loop_probability_l1": 2.714172296691686e-06,
+    "open_loop_value_delta": 0.013256072998046875,
+    "allocation_red_probability_delta": 1.4028701116330922e-06,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 15,
+    "recipient_profile": [
+      7,
+      2
+    ],
+    "donor_profile": [
+      4,
+      1
+    ],
+    "history_steps": 104,
+    "donor_history_steps": 87,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "random",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.667966491076045,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": true
+  },
+  {
+    "episode": 15,
+    "recipient_profile": [
+      7,
+      2
+    ],
+    "donor_profile": [
+      4,
+      1
+    ],
+    "history_steps": 104,
+    "donor_history_steps": 87,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "random",
+    "magnitude": 0.25,
+    "perturb_norm": 0.01078053337487567,
+    "support_distance": 7.667207550747936,
+    "open_loop_probability_l1": 3.289824235253036e-08,
+    "open_loop_value_delta": 0.0015430450439453125,
+    "allocation_red_probability_delta": 3.289824235253036e-08,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 15,
+    "recipient_profile": [
+      7,
+      2
+    ],
+    "donor_profile": [
+      4,
+      1
+    ],
+    "history_steps": 104,
+    "donor_history_steps": 87,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "random",
+    "magnitude": 0.5,
+    "perturb_norm": 0.021561066749751397,
+    "support_distance": 7.666463694822205,
+    "open_loop_probability_l1": 6.600930646527559e-08,
+    "open_loop_value_delta": 0.0030863285064697266,
+    "allocation_red_probability_delta": 6.600930646527559e-08,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 15,
+    "recipient_profile": [
+      7,
+      2
+    ],
+    "donor_profile": [
+      4,
+      1
+    ],
+    "history_steps": 104,
+    "donor_history_steps": 87,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "random",
+    "magnitude": 1.0,
+    "perturb_norm": 0.04312213349950278,
+    "support_distance": 7.665021253655307,
+    "open_loop_probability_l1": 2.5100780476350337e-07,
+    "open_loop_value_delta": 0.00617218017578125,
+    "allocation_red_probability_delta": 1.3179851521272212e-07,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 15,
+    "recipient_profile": [
+      7,
+      2
+    ],
+    "donor_profile": [
+      4,
+      1
+    ],
+    "history_steps": 104,
+    "donor_history_steps": 87,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "nonpartner",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.667966491076045,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": true
+  },
+  {
+    "episode": 15,
+    "recipient_profile": [
+      7,
+      2
+    ],
+    "donor_profile": [
+      4,
+      1
+    ],
+    "history_steps": 104,
+    "donor_history_steps": 87,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "nonpartner",
+    "magnitude": 0.25,
+    "perturb_norm": 0.010780533374875613,
+    "support_distance": 7.6671781022085534,
+    "open_loop_probability_l1": 3.618897608248517e-07,
+    "open_loop_value_delta": 0.0002155303955078125,
+    "allocation_red_probability_delta": -1.234711817232892e-07,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 15,
+    "recipient_profile": [
+      7,
+      2
+    ],
+    "donor_profile": [
+      4,
+      1
+    ],
+    "history_steps": 104,
+    "donor_history_steps": 87,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "nonpartner",
+    "magnitude": 0.5,
+    "perturb_norm": 0.021561066749751424,
+    "support_distance": 7.666404791915656,
+    "open_loop_probability_l1": 6.035588739905506e-07,
+    "open_loop_value_delta": 0.0004324913024902344,
+    "allocation_red_probability_delta": -2.459310053382069e-07,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 15,
+    "recipient_profile": [
+      7,
+      2
+    ],
+    "donor_profile": [
+      4,
+      1
+    ],
+    "history_steps": 104,
+    "donor_history_steps": 87,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "nonpartner",
+    "magnitude": 1.0,
+    "perturb_norm": 0.04312213349950269,
+    "support_distance": 7.66490342521994,
+    "open_loop_probability_l1": 1.0840376489795744e-06,
+    "open_loop_value_delta": 0.0008630752563476562,
+    "allocation_red_probability_delta": -4.879912012256682e-07,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 15,
+    "recipient_profile": [
+      7,
+      2
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 104,
+    "donor_history_steps": 99,
+    "donor_kind": "same_profile",
+    "kind": "sham",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.667966491076045,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": true
+  },
+  {
+    "episode": 15,
+    "recipient_profile": [
+      7,
+      2
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 104,
+    "donor_history_steps": 99,
+    "donor_kind": "same_profile",
+    "kind": "sham",
+    "magnitude": 0.25,
+    "perturb_norm": 0.05254759505519687,
+    "support_distance": 7.66670603059597,
+    "open_loop_probability_l1": 6.895606929901987e-07,
+    "open_loop_value_delta": -0.002613067626953125,
+    "allocation_red_probability_delta": -3.31932824337855e-07,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 15,
+    "recipient_profile": [
+      7,
+      2
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 104,
+    "donor_history_steps": 99,
+    "donor_kind": "same_profile",
+    "kind": "sham",
+    "magnitude": 0.5,
+    "perturb_norm": 0.10509519011039373,
+    "support_distance": 7.665805574783405,
+    "open_loop_probability_l1": 1.3729168131249025e-06,
+    "open_loop_value_delta": -0.0051305294036865234,
+    "allocation_red_probability_delta": -6.57661075820215e-07,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 15,
+    "recipient_profile": [
+      7,
+      2
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 104,
+    "donor_history_steps": 99,
+    "donor_kind": "same_profile",
+    "kind": "sham",
+    "magnitude": 1.0,
+    "perturb_norm": 0.21019038022078737,
+    "support_distance": 7.665085133934538,
+    "open_loop_probability_l1": 2.602331733214669e-06,
+    "open_loop_value_delta": -0.009874820709228516,
+    "allocation_red_probability_delta": -1.2910295481560752e-06,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 19,
+    "recipient_profile": [
+      0,
+      5
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 140,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "whole",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.477731704711914,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.9000000357627869,
+    "zero_identity": true
+  },
+  {
+    "episode": 19,
+    "recipient_profile": [
+      0,
+      5
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 140,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "whole",
+    "magnitude": 0.25,
+    "perturb_norm": 2.0887835025787354,
+    "support_distance": 6.266350269317627,
+    "open_loop_probability_l1": 2.62469598055759e-07,
+    "open_loop_value_delta": -0.7083454132080078,
+    "allocation_red_probability_delta": -1.1920928955078125e-07,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.9000000357627869,
+    "zero_identity": null
+  },
+  {
+    "episode": 19,
+    "recipient_profile": [
+      0,
+      5
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 140,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "whole",
+    "magnitude": 0.5,
+    "perturb_norm": 4.177567005157471,
+    "support_distance": 4.177567005157471,
+    "open_loop_probability_l1": 0.0003704150440171361,
+    "open_loop_value_delta": -1.347043514251709,
+    "allocation_red_probability_delta": -0.00018519163131713867,
+    "reward_delta": 0.009999990463256836,
+    "success_delta": 0,
+    "steps_delta": -1,
+    "switch_delta": 0,
+    "baseline_reward": 0.9000000357627869,
+    "zero_identity": null
+  },
+  {
+    "episode": 19,
+    "recipient_profile": [
+      0,
+      5
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 140,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "whole",
+    "magnitude": 1.0,
+    "perturb_norm": 8.355134010314941,
+    "support_distance": 2.1705410802042024e-07,
+    "open_loop_probability_l1": 1.999127745628357,
+    "open_loop_value_delta": -1.999372959136963,
+    "allocation_red_probability_delta": -0.9995638728141785,
+    "reward_delta": -0.2699999213218689,
+    "success_delta": 0,
+    "steps_delta": 27,
+    "switch_delta": 0,
+    "baseline_reward": 0.9000000357627869,
+    "zero_identity": null
+  },
+  {
+    "episode": 19,
+    "recipient_profile": [
+      0,
+      5
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 140,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "partner",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.477732037043349,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.9000000357627869,
+    "zero_identity": true
+  },
+  {
+    "episode": 19,
+    "recipient_profile": [
+      0,
+      5
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 140,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "partner",
+    "magnitude": 0.25,
+    "perturb_norm": 0.13727886425325697,
+    "support_distance": 7.4836128361991365,
+    "open_loop_probability_l1": 7.527159451292675e-12,
+    "open_loop_value_delta": -0.01049184799194336,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.9000000357627869,
+    "zero_identity": null
+  },
+  {
+    "episode": 19,
+    "recipient_profile": [
+      0,
+      5
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 140,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "partner",
+    "magnitude": 0.5,
+    "perturb_norm": 0.27455772850651394,
+    "support_distance": 7.492004853146173,
+    "open_loop_probability_l1": 1.4712217555334917e-11,
+    "open_loop_value_delta": -0.020166873931884766,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.9000000357627869,
+    "zero_identity": null
+  },
+  {
+    "episode": 19,
+    "recipient_profile": [
+      0,
+      5
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 140,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "partner",
+    "magnitude": 1.0,
+    "perturb_norm": 0.549115457013028,
+    "support_distance": 7.516286377851262,
+    "open_loop_probability_l1": 2.832656331719363e-11,
+    "open_loop_value_delta": -0.03793907165527344,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.9000000357627869,
+    "zero_identity": null
+  },
+  {
+    "episode": 19,
+    "recipient_profile": [
+      0,
+      5
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 140,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "attenuate",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.477732037043349,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.9000000357627869,
+    "zero_identity": true
+  },
+  {
+    "episode": 19,
+    "recipient_profile": [
+      0,
+      5
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 140,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "attenuate",
+    "magnitude": 0.25,
+    "perturb_norm": 0.029771382719424533,
+    "support_distance": 7.4787849197885805,
+    "open_loop_probability_l1": 1.7189027978758986e-12,
+    "open_loop_value_delta": -0.0016865730285644531,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.9000000357627869,
+    "zero_identity": null
+  },
+  {
+    "episode": 19,
+    "recipient_profile": [
+      0,
+      5
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 140,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "attenuate",
+    "magnitude": 0.5,
+    "perturb_norm": 0.05954276543884891,
+    "support_distance": 7.47995614997493,
+    "open_loop_probability_l1": 3.4227620737681264e-12,
+    "open_loop_value_delta": -0.0033311843872070312,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.9000000357627869,
+    "zero_identity": null
+  },
+  {
+    "episode": 19,
+    "recipient_profile": [
+      0,
+      5
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 140,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "attenuate",
+    "magnitude": 1.0,
+    "perturb_norm": 0.11908553087769773,
+    "support_distance": 7.482653424762052,
+    "open_loop_probability_l1": 6.748782088727978e-12,
+    "open_loop_value_delta": -0.006496429443359375,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.9000000357627869,
+    "zero_identity": null
+  },
+  {
+    "episode": 19,
+    "recipient_profile": [
+      0,
+      5
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 140,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "random",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.477732037043349,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.9000000357627869,
+    "zero_identity": true
+  },
+  {
+    "episode": 19,
+    "recipient_profile": [
+      0,
+      5
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 140,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "random",
+    "magnitude": 0.25,
+    "perturb_norm": 0.137278864253257,
+    "support_distance": 7.495490920434463,
+    "open_loop_probability_l1": 7.956710290635272e-11,
+    "open_loop_value_delta": -0.01329803466796875,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.9000000357627869,
+    "zero_identity": null
+  },
+  {
+    "episode": 19,
+    "recipient_profile": [
+      0,
+      5
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 140,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "random",
+    "magnitude": 0.5,
+    "perturb_norm": 0.274557728506514,
+    "support_distance": 7.515715723199475,
+    "open_loop_probability_l1": 1.9145926510866218e-10,
+    "open_loop_value_delta": -0.02632904052734375,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.9000000357627869,
+    "zero_identity": null
+  },
+  {
+    "episode": 19,
+    "recipient_profile": [
+      0,
+      5
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 140,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "random",
+    "magnitude": 1.0,
+    "perturb_norm": 0.549115457013028,
+    "support_distance": 7.563481548773452,
+    "open_loop_probability_l1": 5.805037006645364e-10,
+    "open_loop_value_delta": -0.05106306076049805,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.9000000357627869,
+    "zero_identity": null
+  },
+  {
+    "episode": 19,
+    "recipient_profile": [
+      0,
+      5
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 140,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "nonpartner",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.477732037043349,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.9000000357627869,
+    "zero_identity": true
+  },
+  {
+    "episode": 19,
+    "recipient_profile": [
+      0,
+      5
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 140,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "nonpartner",
+    "magnitude": 0.25,
+    "perturb_norm": 0.13727886425325703,
+    "support_distance": 7.472398939602291,
+    "open_loop_probability_l1": 1.8210544183716593e-11,
+    "open_loop_value_delta": -0.012457847595214844,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.9000000357627869,
+    "zero_identity": null
+  },
+  {
+    "episode": 19,
+    "recipient_profile": [
+      0,
+      5
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 140,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "nonpartner",
+    "magnitude": 0.5,
+    "perturb_norm": 0.27455772850651405,
+    "support_distance": 7.4695854222611135,
+    "open_loop_probability_l1": 3.8233763377526486e-11,
+    "open_loop_value_delta": -0.024849414825439453,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.9000000357627869,
+    "zero_identity": null
+  },
+  {
+    "episode": 19,
+    "recipient_profile": [
+      0,
+      5
+    ],
+    "donor_profile": [
+      7,
+      2
+    ],
+    "history_steps": 140,
+    "donor_history_steps": 100,
+    "donor_kind": "opposite",
+    "kind": "nonpartner",
+    "magnitude": 1.0,
+    "perturb_norm": 0.5491154570130281,
+    "support_distance": 7.471525964329664,
+    "open_loop_probability_l1": 8.952374952464481e-11,
+    "open_loop_value_delta": -0.05299520492553711,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.9000000357627869,
+    "zero_identity": null
+  },
+  {
+    "episode": 19,
+    "recipient_profile": [
+      0,
+      5
+    ],
+    "donor_profile": [
+      1,
+      4
+    ],
+    "history_steps": 140,
+    "donor_history_steps": 100,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "whole",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.477731704711914,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.9000000357627869,
+    "zero_identity": true
+  },
+  {
+    "episode": 19,
+    "recipient_profile": [
+      0,
+      5
+    ],
+    "donor_profile": [
+      1,
+      4
+    ],
+    "history_steps": 140,
+    "donor_history_steps": 100,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "whole",
+    "magnitude": 0.25,
+    "perturb_norm": 2.410362720489502,
+    "support_distance": 6.746767044067383,
+    "open_loop_probability_l1": 2.109058760968452e-11,
+    "open_loop_value_delta": -0.21555614471435547,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.009999990463256836,
+    "success_delta": 0,
+    "steps_delta": -1,
+    "switch_delta": 0,
+    "baseline_reward": 0.9000000357627869,
+    "zero_identity": null
+  },
+  {
+    "episode": 19,
+    "recipient_profile": [
+      0,
+      5
+    ],
+    "donor_profile": [
+      1,
+      4
+    ],
+    "history_steps": 140,
+    "donor_history_steps": 100,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "whole",
+    "magnitude": 0.5,
+    "perturb_norm": 4.820725440979004,
+    "support_distance": 4.820725440979004,
+    "open_loop_probability_l1": 9.557169639018426e-11,
+    "open_loop_value_delta": -0.4620361328125,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.009999990463256836,
+    "success_delta": 0,
+    "steps_delta": -1,
+    "switch_delta": 0,
+    "baseline_reward": 0.9000000357627869,
+    "zero_identity": null
+  },
+  {
+    "episode": 19,
+    "recipient_profile": [
+      0,
+      5
+    ],
+    "donor_profile": [
+      1,
+      4
+    ],
+    "history_steps": 140,
+    "donor_history_steps": 100,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "whole",
+    "magnitude": 1.0,
+    "perturb_norm": 9.641449928283691,
+    "support_distance": 2.3844768293201923e-07,
+    "open_loop_probability_l1": 1.8455624528623815e-10,
+    "open_loop_value_delta": -0.895174503326416,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.009999990463256836,
+    "success_delta": 0,
+    "steps_delta": -1,
+    "switch_delta": 0,
+    "baseline_reward": 0.9000000357627869,
+    "zero_identity": null
+  },
+  {
+    "episode": 19,
+    "recipient_profile": [
+      0,
+      5
+    ],
+    "donor_profile": [
+      1,
+      4
+    ],
+    "history_steps": 140,
+    "donor_history_steps": 100,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "partner",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.477732037043349,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.9000000357627869,
+    "zero_identity": true
+  },
+  {
+    "episode": 19,
+    "recipient_profile": [
+      0,
+      5
+    ],
+    "donor_profile": [
+      1,
+      4
+    ],
+    "history_steps": 140,
+    "donor_history_steps": 100,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "partner",
+    "magnitude": 0.25,
+    "perturb_norm": 0.047579723788306494,
+    "support_distance": 7.476298493048116,
+    "open_loop_probability_l1": 2.437522406140147e-12,
+    "open_loop_value_delta": 0.005537509918212891,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.9000000357627869,
+    "zero_identity": null
+  },
+  {
+    "episode": 19,
+    "recipient_profile": [
+      0,
+      5
+    ],
+    "donor_profile": [
+      1,
+      4
+    ],
+    "history_steps": 140,
+    "donor_history_steps": 100,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "partner",
+    "magnitude": 0.5,
+    "perturb_norm": 0.09515944757661313,
+    "support_distance": 7.475167526999921,
+    "open_loop_probability_l1": 4.9000387081221675e-12,
+    "open_loop_value_delta": 0.011157989501953125,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.9000000357627869,
+    "zero_identity": null
+  },
+  {
+    "episode": 19,
+    "recipient_profile": [
+      0,
+      5
+    ],
+    "donor_profile": [
+      1,
+      4
+    ],
+    "history_steps": 140,
+    "donor_history_steps": 100,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "partner",
+    "magnitude": 1.0,
+    "perturb_norm": 0.19031889515322598,
+    "support_distance": 7.473813841441994,
+    "open_loop_probability_l1": 9.911460541189854e-12,
+    "open_loop_value_delta": 0.02264881134033203,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.9000000357627869,
+    "zero_identity": null
+  },
+  {
+    "episode": 19,
+    "recipient_profile": [
+      0,
+      5
+    ],
+    "donor_profile": [
+      1,
+      4
+    ],
+    "history_steps": 140,
+    "donor_history_steps": 100,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "attenuate",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.477732037043349,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.9000000357627869,
+    "zero_identity": true
+  },
+  {
+    "episode": 19,
+    "recipient_profile": [
+      0,
+      5
+    ],
+    "donor_profile": [
+      1,
+      4
+    ],
+    "history_steps": 140,
+    "donor_history_steps": 100,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "attenuate",
+    "magnitude": 0.25,
+    "perturb_norm": 0.029771382719424533,
+    "support_distance": 7.4787849197885805,
+    "open_loop_probability_l1": 1.7189027978758986e-12,
+    "open_loop_value_delta": -0.0016865730285644531,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.9000000357627869,
+    "zero_identity": null
+  },
+  {
+    "episode": 19,
+    "recipient_profile": [
+      0,
+      5
+    ],
+    "donor_profile": [
+      1,
+      4
+    ],
+    "history_steps": 140,
+    "donor_history_steps": 100,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "attenuate",
+    "magnitude": 0.5,
+    "perturb_norm": 0.05954276543884891,
+    "support_distance": 7.47995614997493,
+    "open_loop_probability_l1": 3.4227620737681264e-12,
+    "open_loop_value_delta": -0.0033311843872070312,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.9000000357627869,
+    "zero_identity": null
+  },
+  {
+    "episode": 19,
+    "recipient_profile": [
+      0,
+      5
+    ],
+    "donor_profile": [
+      1,
+      4
+    ],
+    "history_steps": 140,
+    "donor_history_steps": 100,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "attenuate",
+    "magnitude": 1.0,
+    "perturb_norm": 0.11908553087769773,
+    "support_distance": 7.482653424762052,
+    "open_loop_probability_l1": 6.748782088727978e-12,
+    "open_loop_value_delta": -0.006496429443359375,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.9000000357627869,
+    "zero_identity": null
+  },
+  {
+    "episode": 19,
+    "recipient_profile": [
+      0,
+      5
+    ],
+    "donor_profile": [
+      1,
+      4
+    ],
+    "history_steps": 140,
+    "donor_history_steps": 100,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "random",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.477732037043349,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.9000000357627869,
+    "zero_identity": true
+  },
+  {
+    "episode": 19,
+    "recipient_profile": [
+      0,
+      5
+    ],
+    "donor_profile": [
+      1,
+      4
+    ],
+    "history_steps": 140,
+    "donor_history_steps": 100,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "random",
+    "magnitude": 0.25,
+    "perturb_norm": 0.047579723788306515,
+    "support_distance": 7.477957912578345,
+    "open_loop_probability_l1": 7.946504565481405e-12,
+    "open_loop_value_delta": 0.005230903625488281,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.9000000357627869,
+    "zero_identity": null
+  },
+  {
+    "episode": 19,
+    "recipient_profile": [
+      0,
+      5
+    ],
+    "donor_profile": [
+      1,
+      4
+    ],
+    "history_steps": 140,
+    "donor_history_steps": 100,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "random",
+    "magnitude": 0.5,
+    "perturb_norm": 0.095159447576613,
+    "support_distance": 7.478486499753357,
+    "open_loop_probability_l1": 1.563685292360617e-11,
+    "open_loop_value_delta": 0.010499000549316406,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.9000000357627869,
+    "zero_identity": null
+  },
+  {
+    "episode": 19,
+    "recipient_profile": [
+      0,
+      5
+    ],
+    "donor_profile": [
+      1,
+      4
+    ],
+    "history_steps": 140,
+    "donor_history_steps": 100,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "random",
+    "magnitude": 1.0,
+    "perturb_norm": 0.19031889515322598,
+    "support_distance": 7.480451515589694,
+    "open_loop_probability_l1": 3.0256561145414196e-11,
+    "open_loop_value_delta": 0.018698692321777344,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.9000000357627869,
+    "zero_identity": null
+  },
+  {
+    "episode": 19,
+    "recipient_profile": [
+      0,
+      5
+    ],
+    "donor_profile": [
+      1,
+      4
+    ],
+    "history_steps": 140,
+    "donor_history_steps": 100,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "nonpartner",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.477732037043349,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.9000000357627869,
+    "zero_identity": true
+  },
+  {
+    "episode": 19,
+    "recipient_profile": [
+      0,
+      5
+    ],
+    "donor_profile": [
+      1,
+      4
+    ],
+    "history_steps": 140,
+    "donor_history_steps": 100,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "nonpartner",
+    "magnitude": 0.25,
+    "perturb_norm": 0.047579723788306535,
+    "support_distance": 7.484973828246088,
+    "open_loop_probability_l1": 8.639533533028043e-12,
+    "open_loop_value_delta": 0.017403602600097656,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.9000000357627869,
+    "zero_identity": null
+  },
+  {
+    "episode": 19,
+    "recipient_profile": [
+      0,
+      5
+    ],
+    "donor_profile": [
+      1,
+      4
+    ],
+    "history_steps": 140,
+    "donor_history_steps": 100,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "nonpartner",
+    "magnitude": 0.5,
+    "perturb_norm": 0.09515944757661296,
+    "support_distance": 7.492510771528118,
+    "open_loop_probability_l1": 1.6814036274404032e-11,
+    "open_loop_value_delta": 0.034801483154296875,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.9000000357627869,
+    "zero_identity": null
+  },
+  {
+    "episode": 19,
+    "recipient_profile": [
+      0,
+      5
+    ],
+    "donor_profile": [
+      1,
+      4
+    ],
+    "history_steps": 140,
+    "donor_history_steps": 100,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "nonpartner",
+    "magnitude": 1.0,
+    "perturb_norm": 0.19031889515322603,
+    "support_distance": 7.508466524266551,
+    "open_loop_probability_l1": 3.208339149907147e-11,
+    "open_loop_value_delta": 0.06957006454467773,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.009999990463256836,
+    "success_delta": 0,
+    "steps_delta": -1,
+    "switch_delta": 0,
+    "baseline_reward": 0.9000000357627869,
+    "zero_identity": null
+  },
+  {
+    "episode": 19,
+    "recipient_profile": [
+      0,
+      5
+    ],
+    "donor_profile": [
+      0,
+      5
+    ],
+    "history_steps": 140,
+    "donor_history_steps": 164,
+    "donor_kind": "same_profile",
+    "kind": "sham",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.477732037043349,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.9000000357627869,
+    "zero_identity": true
+  },
+  {
+    "episode": 19,
+    "recipient_profile": [
+      0,
+      5
+    ],
+    "donor_profile": [
+      0,
+      5
+    ],
+    "history_steps": 140,
+    "donor_history_steps": 164,
+    "donor_kind": "same_profile",
+    "kind": "sham",
+    "magnitude": 0.25,
+    "perturb_norm": 0.06836151119500476,
+    "support_distance": 7.475737924118305,
+    "open_loop_probability_l1": 3.829686567868862e-12,
+    "open_loop_value_delta": 0.005956172943115234,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.9000000357627869,
+    "zero_identity": null
+  },
+  {
+    "episode": 19,
+    "recipient_profile": [
+      0,
+      5
+    ],
+    "donor_profile": [
+      0,
+      5
+    ],
+    "history_steps": 140,
+    "donor_history_steps": 164,
+    "donor_kind": "same_profile",
+    "kind": "sham",
+    "magnitude": 0.5,
+    "perturb_norm": 0.1367230223900095,
+    "support_distance": 7.47436854823219,
+    "open_loop_probability_l1": 7.728623296898718e-12,
+    "open_loop_value_delta": 0.012115478515625,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.9000000357627869,
+    "zero_identity": null
+  },
+  {
+    "episode": 19,
+    "recipient_profile": [
+      0,
+      5
+    ],
+    "donor_profile": [
+      0,
+      5
+    ],
+    "history_steps": 140,
+    "donor_history_steps": 164,
+    "donor_kind": "same_profile",
+    "kind": "sham",
+    "magnitude": 1.0,
+    "perturb_norm": 0.2734460447800191,
+    "support_distance": 7.47350522455719,
+    "open_loop_probability_l1": 1.5737966485573907e-11,
+    "open_loop_value_delta": 0.025051593780517578,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": 0.9000000357627869,
+    "zero_identity": null
+  },
+  {
+    "episode": 23,
+    "recipient_profile": [
+      5,
+      0
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 51,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "whole",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.817343235015869,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": true
+  },
+  {
+    "episode": 23,
+    "recipient_profile": [
+      5,
+      0
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 51,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "whole",
+    "magnitude": 0.25,
+    "perturb_norm": 2.5752243995666504,
+    "support_distance": 6.51690149307251,
+    "open_loop_probability_l1": 0.000603909429628402,
+    "open_loop_value_delta": -0.6683235168457031,
+    "allocation_red_probability_delta": 0.0003019522991962731,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 23,
+    "recipient_profile": [
+      5,
+      0
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 51,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "whole",
+    "magnitude": 0.5,
+    "perturb_norm": 5.150448799133301,
+    "support_distance": 5.150448799133301,
+    "open_loop_probability_l1": 1.356339454650879,
+    "open_loop_value_delta": -1.312088966369629,
+    "allocation_red_probability_delta": 0.6781697869300842,
+    "reward_delta": 1.5699994564056396,
+    "success_delta": 1,
+    "steps_delta": -56,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 23,
+    "recipient_profile": [
+      5,
+      0
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 51,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "whole",
+    "magnitude": 1.0,
+    "perturb_norm": 10.300897598266602,
+    "support_distance": 3.0436441988968e-07,
+    "open_loop_probability_l1": 1.9999995231628418,
+    "open_loop_value_delta": -1.6365985870361328,
+    "allocation_red_probability_delta": 0.9999997615814209,
+    "reward_delta": 1.5599994659423828,
+    "success_delta": 1,
+    "steps_delta": -55,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 23,
+    "recipient_profile": [
+      5,
+      0
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 51,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "partner",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.817342974874941,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": true
+  },
+  {
+    "episode": 23,
+    "recipient_profile": [
+      5,
+      0
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 51,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "partner",
+    "magnitude": 0.25,
+    "perturb_norm": 0.09198547468044554,
+    "support_distance": 7.82087515723836,
+    "open_loop_probability_l1": 2.530953224777477e-08,
+    "open_loop_value_delta": -0.008694648742675781,
+    "allocation_red_probability_delta": 2.530953224777477e-08,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 23,
+    "recipient_profile": [
+      5,
+      0
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 51,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "partner",
+    "magnitude": 0.5,
+    "perturb_norm": 0.18397094936089117,
+    "support_distance": 7.825487072284643,
+    "open_loop_probability_l1": 1.7209939073836722e-07,
+    "open_loop_value_delta": -0.017128944396972656,
+    "allocation_red_probability_delta": 5.289010118758597e-08,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 23,
+    "recipient_profile": [
+      5,
+      0
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 51,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "partner",
+    "magnitude": 1.0,
+    "perturb_norm": 0.3679418987217823,
+    "support_distance": 7.837942030315039,
+    "open_loop_probability_l1": 2.348157579490362e-07,
+    "open_loop_value_delta": -0.0331873893737793,
+    "allocation_red_probability_delta": 1.1560646839825495e-07,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 23,
+    "recipient_profile": [
+      5,
+      0
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 51,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "attenuate",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.817342974874941,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": true
+  },
+  {
+    "episode": 23,
+    "recipient_profile": [
+      5,
+      0
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 51,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "attenuate",
+    "magnitude": 0.25,
+    "perturb_norm": 0.041532310079496336,
+    "support_distance": 7.818810572773008,
+    "open_loop_probability_l1": 1.1257753840254736e-08,
+    "open_loop_value_delta": -0.003795623779296875,
+    "allocation_red_probability_delta": 1.1257753840254736e-08,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 23,
+    "recipient_profile": [
+      5,
+      0
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 51,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "attenuate",
+    "magnitude": 0.5,
+    "perturb_norm": 0.0830646201589928,
+    "support_distance": 7.820498463943869,
+    "open_loop_probability_l1": 2.2965707557887072e-08,
+    "open_loop_value_delta": -0.0075397491455078125,
+    "allocation_red_probability_delta": 2.2965707557887072e-08,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 23,
+    "recipient_profile": [
+      5,
+      0
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 51,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "attenuate",
+    "magnitude": 1.0,
+    "perturb_norm": 0.1661292403179855,
+    "support_distance": 7.824534537243386,
+    "open_loop_probability_l1": 1.6700795413271408e-07,
+    "open_loop_value_delta": -0.014872074127197266,
+    "allocation_red_probability_delta": 4.7798664581932826e-08,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 23,
+    "recipient_profile": [
+      5,
+      0
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 51,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "random",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.817342974874941,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": true
+  },
+  {
+    "episode": 23,
+    "recipient_profile": [
+      5,
+      0
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 51,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "random",
+    "magnitude": 0.25,
+    "perturb_norm": 0.09198547468044554,
+    "support_distance": 7.81743130391585,
+    "open_loop_probability_l1": 1.943395204762055e-07,
+    "open_loop_value_delta": -0.0019421577453613281,
+    "allocation_red_probability_delta": 7.513023092542426e-08,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 23,
+    "recipient_profile": [
+      5,
+      0
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 51,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "random",
+    "magnitude": 0.5,
+    "perturb_norm": 0.18397094936089126,
+    "support_distance": 7.818601911541776,
+    "open_loop_probability_l1": 4.102369643987913e-07,
+    "open_loop_value_delta": -0.0036711692810058594,
+    "allocation_red_probability_delta": 1.7181838529722882e-07,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 23,
+    "recipient_profile": [
+      5,
+      0
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 51,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "random",
+    "magnitude": 1.0,
+    "perturb_norm": 0.3679418987217824,
+    "support_distance": 7.824187570343668,
+    "open_loop_probability_l1": 9.321747143076209e-07,
+    "open_loop_value_delta": -0.006504058837890625,
+    "allocation_red_probability_delta": 4.553375561044959e-07,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 23,
+    "recipient_profile": [
+      5,
+      0
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 51,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "nonpartner",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.817342974874941,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": true
+  },
+  {
+    "episode": 23,
+    "recipient_profile": [
+      5,
+      0
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 51,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "nonpartner",
+    "magnitude": 0.25,
+    "perturb_norm": 0.09198547468044556,
+    "support_distance": 7.814914135108018,
+    "open_loop_probability_l1": 2.676316057659278e-08,
+    "open_loop_value_delta": -0.01682424545288086,
+    "allocation_red_probability_delta": -2.676316057659278e-08,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 23,
+    "recipient_profile": [
+      5,
+      0
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 51,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "nonpartner",
+    "magnitude": 0.5,
+    "perturb_norm": 0.18397094936089115,
+    "support_distance": 7.813567517242043,
+    "open_loop_probability_l1": 5.0515822636043595e-08,
+    "open_loop_value_delta": -0.03360605239868164,
+    "allocation_red_probability_delta": -5.0515822636043595e-08,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 23,
+    "recipient_profile": [
+      5,
+      0
+    ],
+    "donor_profile": [
+      2,
+      7
+    ],
+    "history_steps": 51,
+    "donor_history_steps": 170,
+    "donor_kind": "opposite",
+    "kind": "nonpartner",
+    "magnitude": 1.0,
+    "perturb_norm": 0.3679418987217824,
+    "support_distance": 7.814122735572488,
+    "open_loop_probability_l1": 2.1011851458752062e-07,
+    "open_loop_value_delta": -0.0653834342956543,
+    "allocation_red_probability_delta": -9.090922503673937e-08,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 23,
+    "recipient_profile": [
+      5,
+      0
+    ],
+    "donor_profile": [
+      4,
+      1
+    ],
+    "history_steps": 51,
+    "donor_history_steps": 87,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "whole",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.817343235015869,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": true
+  },
+  {
+    "episode": 23,
+    "recipient_profile": [
+      5,
+      0
+    ],
+    "donor_profile": [
+      4,
+      1
+    ],
+    "history_steps": 51,
+    "donor_history_steps": 87,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "whole",
+    "magnitude": 0.25,
+    "perturb_norm": 1.9603943824768066,
+    "support_distance": 5.88118314743042,
+    "open_loop_probability_l1": 3.0062329869906534e-07,
+    "open_loop_value_delta": -0.0889887809753418,
+    "allocation_red_probability_delta": -1.814140091482841e-07,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 23,
+    "recipient_profile": [
+      5,
+      0
+    ],
+    "donor_profile": [
+      4,
+      1
+    ],
+    "history_steps": 51,
+    "donor_history_steps": 87,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "whole",
+    "magnitude": 0.5,
+    "perturb_norm": 3.9207887649536133,
+    "support_distance": 3.9207887649536133,
+    "open_loop_probability_l1": 4.773822865900001e-07,
+    "open_loop_value_delta": -0.15459966659545898,
+    "allocation_red_probability_delta": -2.389637359101471e-07,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 23,
+    "recipient_profile": [
+      5,
+      0
+    ],
+    "donor_profile": [
+      4,
+      1
+    ],
+    "history_steps": 51,
+    "donor_history_steps": 87,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "whole",
+    "magnitude": 1.0,
+    "perturb_norm": 7.841577529907227,
+    "support_distance": 1.8973625515172898e-07,
+    "open_loop_probability_l1": 2.912374839070253e-07,
+    "open_loop_value_delta": -0.3580317497253418,
+    "allocation_red_probability_delta": -1.7202819435624406e-07,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 23,
+    "recipient_profile": [
+      5,
+      0
+    ],
+    "donor_profile": [
+      4,
+      1
+    ],
+    "history_steps": 51,
+    "donor_history_steps": 87,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "partner",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.817342974874941,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": true
+  },
+  {
+    "episode": 23,
+    "recipient_profile": [
+      5,
+      0
+    ],
+    "donor_profile": [
+      4,
+      1
+    ],
+    "history_steps": 51,
+    "donor_history_steps": 87,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "partner",
+    "magnitude": 0.25,
+    "perturb_norm": 0.010898895194560129,
+    "support_distance": 7.817035578772907,
+    "open_loop_probability_l1": 2.769525053736288e-09,
+    "open_loop_value_delta": -0.00047016143798828125,
+    "allocation_red_probability_delta": -2.769525053736288e-09,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 23,
+    "recipient_profile": [
+      5,
+      0
+    ],
+    "donor_profile": [
+      4,
+      1
+    ],
+    "history_steps": 51,
+    "donor_history_steps": 87,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "partner",
+    "magnitude": 0.5,
+    "perturb_norm": 0.021797790389120122,
+    "support_distance": 7.816743366940562,
+    "open_loop_probability_l1": 5.5102304941101465e-09,
+    "open_loop_value_delta": -0.00093841552734375,
+    "allocation_red_probability_delta": -5.5102304941101465e-09,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 23,
+    "recipient_profile": [
+      5,
+      0
+    ],
+    "donor_profile": [
+      4,
+      1
+    ],
+    "history_steps": 51,
+    "donor_history_steps": 87,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "partner",
+    "magnitude": 1.0,
+    "perturb_norm": 0.04359558077824041,
+    "support_distance": 7.816204502808487,
+    "open_loop_probability_l1": 1.0914334325207165e-08,
+    "open_loop_value_delta": -0.0018706321716308594,
+    "allocation_red_probability_delta": -1.0914334325207165e-08,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 23,
+    "recipient_profile": [
+      5,
+      0
+    ],
+    "donor_profile": [
+      4,
+      1
+    ],
+    "history_steps": 51,
+    "donor_history_steps": 87,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "attenuate",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.817342974874941,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": true
+  },
+  {
+    "episode": 23,
+    "recipient_profile": [
+      5,
+      0
+    ],
+    "donor_profile": [
+      4,
+      1
+    ],
+    "history_steps": 51,
+    "donor_history_steps": 87,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "attenuate",
+    "magnitude": 0.25,
+    "perturb_norm": 0.041532310079496336,
+    "support_distance": 7.818810572773008,
+    "open_loop_probability_l1": 1.1257753840254736e-08,
+    "open_loop_value_delta": -0.003795623779296875,
+    "allocation_red_probability_delta": 1.1257753840254736e-08,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 23,
+    "recipient_profile": [
+      5,
+      0
+    ],
+    "donor_profile": [
+      4,
+      1
+    ],
+    "history_steps": 51,
+    "donor_history_steps": 87,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "attenuate",
+    "magnitude": 0.5,
+    "perturb_norm": 0.0830646201589928,
+    "support_distance": 7.820498463943869,
+    "open_loop_probability_l1": 2.2965707557887072e-08,
+    "open_loop_value_delta": -0.0075397491455078125,
+    "allocation_red_probability_delta": 2.2965707557887072e-08,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 23,
+    "recipient_profile": [
+      5,
+      0
+    ],
+    "donor_profile": [
+      4,
+      1
+    ],
+    "history_steps": 51,
+    "donor_history_steps": 87,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "attenuate",
+    "magnitude": 1.0,
+    "perturb_norm": 0.1661292403179855,
+    "support_distance": 7.824534537243386,
+    "open_loop_probability_l1": 1.6700795413271408e-07,
+    "open_loop_value_delta": -0.014872074127197266,
+    "allocation_red_probability_delta": 4.7798664581932826e-08,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 23,
+    "recipient_profile": [
+      5,
+      0
+    ],
+    "donor_profile": [
+      4,
+      1
+    ],
+    "history_steps": 51,
+    "donor_history_steps": 87,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "random",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.817342974874941,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": true
+  },
+  {
+    "episode": 23,
+    "recipient_profile": [
+      5,
+      0
+    ],
+    "donor_profile": [
+      4,
+      1
+    ],
+    "history_steps": 51,
+    "donor_history_steps": 87,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "random",
+    "magnitude": 0.25,
+    "perturb_norm": 0.010898895194560125,
+    "support_distance": 7.818119963983401,
+    "open_loop_probability_l1": 2.0753532226081006e-09,
+    "open_loop_value_delta": 0.0016794204711914062,
+    "allocation_red_probability_delta": 2.0753532226081006e-09,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 23,
+    "recipient_profile": [
+      5,
+      0
+    ],
+    "donor_profile": [
+      4,
+      1
+    ],
+    "history_steps": 51,
+    "donor_history_steps": 87,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "random",
+    "magnitude": 0.5,
+    "perturb_norm": 0.021797790389120133,
+    "support_distance": 7.8189120680231445,
+    "open_loop_probability_l1": 4.174438572590589e-09,
+    "open_loop_value_delta": 0.003360271453857422,
+    "allocation_red_probability_delta": 4.174438572590589e-09,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 23,
+    "recipient_profile": [
+      5,
+      0
+    ],
+    "donor_profile": [
+      4,
+      1
+    ],
+    "history_steps": 51,
+    "donor_history_steps": 87,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "random",
+    "magnitude": 1.0,
+    "perturb_norm": 0.04359558077824035,
+    "support_distance": 7.820541602437842,
+    "open_loop_probability_l1": 8.55453663461958e-09,
+    "open_loop_value_delta": 0.006729602813720703,
+    "allocation_red_probability_delta": 8.55453663461958e-09,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 23,
+    "recipient_profile": [
+      5,
+      0
+    ],
+    "donor_profile": [
+      4,
+      1
+    ],
+    "history_steps": 51,
+    "donor_history_steps": 87,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "nonpartner",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.817342974874941,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": true
+  },
+  {
+    "episode": 23,
+    "recipient_profile": [
+      5,
+      0
+    ],
+    "donor_profile": [
+      4,
+      1
+    ],
+    "history_steps": 51,
+    "donor_history_steps": 87,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "nonpartner",
+    "magnitude": 0.25,
+    "perturb_norm": 0.01089889519456011,
+    "support_distance": 7.816977874882193,
+    "open_loop_probability_l1": 2.5654003366071265e-09,
+    "open_loop_value_delta": -0.003627777099609375,
+    "allocation_red_probability_delta": -2.5654003366071265e-09,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 23,
+    "recipient_profile": [
+      5,
+      0
+    ],
+    "donor_profile": [
+      4,
+      1
+    ],
+    "history_steps": 51,
+    "donor_history_steps": 87,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "nonpartner",
+    "magnitude": 0.5,
+    "perturb_norm": 0.021797790389120143,
+    "support_distance": 7.816627954418823,
+    "open_loop_probability_l1": 5.1016399993386585e-09,
+    "open_loop_value_delta": -0.007254600524902344,
+    "allocation_red_probability_delta": -5.1016399993386585e-09,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 23,
+    "recipient_profile": [
+      5,
+      0
+    ],
+    "donor_profile": [
+      4,
+      1
+    ],
+    "history_steps": 51,
+    "donor_history_steps": 87,
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "nonpartner",
+    "magnitude": 1.0,
+    "perturb_norm": 0.04359558077824035,
+    "support_distance": 7.815973660146809,
+    "open_loop_probability_l1": 9.469147244089982e-09,
+    "open_loop_value_delta": -0.014506340026855469,
+    "allocation_red_probability_delta": -9.469147244089982e-09,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 23,
+    "recipient_profile": [
+      5,
+      0
+    ],
+    "donor_profile": [
+      5,
+      0
+    ],
+    "history_steps": 51,
+    "donor_history_steps": 39,
+    "donor_kind": "same_profile",
+    "kind": "sham",
+    "magnitude": 0,
+    "perturb_norm": 0.0,
+    "support_distance": 7.817342974874941,
+    "open_loop_probability_l1": 0.0,
+    "open_loop_value_delta": 0.0,
+    "allocation_red_probability_delta": 0.0,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": true
+  },
+  {
+    "episode": 23,
+    "recipient_profile": [
+      5,
+      0
+    ],
+    "donor_profile": [
+      5,
+      0
+    ],
+    "history_steps": 51,
+    "donor_history_steps": 39,
+    "donor_kind": "same_profile",
+    "kind": "sham",
+    "magnitude": 0.25,
+    "perturb_norm": 0.021156339688565114,
+    "support_distance": 7.816657341391663,
+    "open_loop_probability_l1": 5.144727310835151e-09,
+    "open_loop_value_delta": 0.0014595985412597656,
+    "allocation_red_probability_delta": -5.144727310835151e-09,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 23,
+    "recipient_profile": [
+      5,
+      0
+    ],
+    "donor_profile": [
+      5,
+      0
+    ],
+    "history_steps": 51,
+    "donor_history_steps": 39,
+    "donor_kind": "same_profile",
+    "kind": "sham",
+    "magnitude": 0.5,
+    "perturb_norm": 0.04231267937713017,
+    "support_distance": 7.816028913716722,
+    "open_loop_probability_l1": 1.01824184639554e-08,
+    "open_loop_value_delta": 0.0029311180114746094,
+    "allocation_red_probability_delta": -1.01824184639554e-08,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  },
+  {
+    "episode": 23,
+    "recipient_profile": [
+      5,
+      0
+    ],
+    "donor_profile": [
+      5,
+      0
+    ],
+    "history_steps": 51,
+    "donor_history_steps": 39,
+    "donor_kind": "same_profile",
+    "kind": "sham",
+    "magnitude": 1.0,
+    "perturb_norm": 0.0846253587542603,
+    "support_distance": 7.814943729737096,
+    "open_loop_probability_l1": 1.991911346976849e-08,
+    "open_loop_value_delta": 0.005909442901611328,
+    "allocation_red_probability_delta": -1.991911346976849e-08,
+    "reward_delta": 0.0,
+    "success_delta": 0,
+    "steps_delta": 0,
+    "switch_delta": 0,
+    "baseline_reward": -0.9999993443489075,
+    "zero_identity": null
+  }
+]

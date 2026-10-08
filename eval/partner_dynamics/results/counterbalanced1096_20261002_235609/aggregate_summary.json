@@ -1,0 +1,254 @@
+[
+  {
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_influence",
+    "scope": "familiar_to_novel",
+    "mae": 1.071229129983379,
+    "prior_mae": 1.3181818181818181,
+    "improvement": {
+      "mean": 0.24695268819843919,
+      "low": 0.17991637664425336,
+      "high": 0.31713391200633645,
+      "n_units": 5
+    },
+    "n_seeds": 5
+  },
+  {
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_influence",
+    "scope": "target_layout",
+    "mae": 1.0004498266645172,
+    "prior_mae": 1.17464408578539,
+    "improvement": {
+      "mean": 0.1741942591208729,
+      "low": 0.13216249227416801,
+      "high": 0.22212360692859642,
+      "n_units": 5
+    },
+    "n_seeds": 5
+  },
+  {
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_influence",
+    "scope": "within_profile",
+    "mae": 1.0312389083234694,
+    "prior_mae": 1.2136105860113422,
+    "improvement": {
+      "mean": 0.1823716776878728,
+      "low": 0.14968578427696314,
+      "high": 0.21505757109878249,
+      "n_units": 5
+    },
+    "n_seeds": 5
+  },
+  {
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_noinfluence",
+    "scope": "familiar_to_novel",
+    "mae": 1.5649113572244295,
+    "prior_mae": 1.3181818181818181,
+    "improvement": {
+      "mean": -0.2467295390426111,
+      "low": -0.7247137471735492,
+      "high": 0.13471502132075197,
+      "n_units": 5
+    },
+    "n_seeds": 5
+  },
+  {
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_noinfluence",
+    "scope": "target_layout",
+    "mae": 1.447217635562137,
+    "prior_mae": 1.17464408578539,
+    "improvement": {
+      "mean": -0.2725735497767468,
+      "low": -0.7891727162662756,
+      "high": 0.1229603902466806,
+      "n_units": 5
+    },
+    "n_seeds": 5
+  },
+  {
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_noinfluence",
+    "scope": "within_profile",
+    "mae": 1.4466297347485317,
+    "prior_mae": 1.2136105860113422,
+    "improvement": {
+      "mean": -0.23301914873718982,
+      "low": -0.7630799487280067,
+      "high": 0.18664843721878133,
+      "n_units": 5
+    },
+    "n_seeds": 5
+  },
+  {
+    "protocol": "fixed_v1",
+    "condition": "rnn_single_influence",
+    "scope": "familiar_to_novel",
+    "mae": 1.4242046543773643,
+    "prior_mae": 1.3181818181818181,
+    "improvement": {
+      "mean": -0.10602283619554605,
+      "low": -0.36264069995351117,
+      "high": 0.0681418250303105,
+      "n_units": 5
+    },
+    "n_seeds": 5
+  },
+  {
+    "protocol": "fixed_v1",
+    "condition": "rnn_single_influence",
+    "scope": "target_layout",
+    "mae": 1.002039106348154,
+    "prior_mae": 1.17464408578539,
+    "improvement": {
+      "mean": 0.1726049794372359,
+      "low": 0.12931099912118407,
+      "high": 0.22124850167559615,
+      "n_units": 5
+    },
+    "n_seeds": 5
+  },
+  {
+    "protocol": "fixed_v1",
+    "condition": "rnn_single_influence",
+    "scope": "within_profile",
+    "mae": 1.0260304032897927,
+    "prior_mae": 1.2136105860113422,
+    "improvement": {
+      "mean": 0.18758018272154942,
+      "low": 0.14129380625102692,
+      "high": 0.23208369449989436,
+      "n_units": 5
+    },
+    "n_seeds": 5
+  },
+  {
+    "protocol": "online_v2",
+    "condition": "rnn_diverse_influence",
+    "scope": "familiar_to_novel",
+    "mae": 1.2316736290658,
+    "prior_mae": 1.3181818181818181,
+    "improvement": {
+      "mean": 0.08650818911601832,
+      "low": -0.038865598048102114,
+      "high": 0.16550082854294973,
+      "n_units": 5
+    },
+    "n_seeds": 5
+  },
+  {
+    "protocol": "online_v2",
+    "condition": "rnn_diverse_influence",
+    "scope": "target_layout",
+    "mae": 1.1166072341234374,
+    "prior_mae": 1.17464408578539,
+    "improvement": {
+      "mean": 0.058036851661952694,
+      "low": -0.18710819047954388,
+      "high": 0.20288822745382343,
+      "n_units": 5
+    },
+    "n_seeds": 5
+  },
+  {
+    "protocol": "online_v2",
+    "condition": "rnn_diverse_influence",
+    "scope": "within_profile",
+    "mae": 1.0906676680841318,
+    "prior_mae": 1.2136105860113422,
+    "improvement": {
+      "mean": 0.12294291792721039,
+      "low": -0.04369442687664516,
+      "high": 0.24025164705801683,
+      "n_units": 5
+    },
+    "n_seeds": 5
+  },
+  {
+    "protocol": "online_v2",
+    "condition": "rnn_diverse_noinfluence",
+    "scope": "familiar_to_novel",
+    "mae": 2.5225808624997703,
+    "prior_mae": 1.3181818181818181,
+    "improvement": {
+      "mean": -1.204399044317952,
+      "low": -1.245755846563513,
+      "high": -1.152840098498846,
+      "n_units": 5
+    },
+    "n_seeds": 5
+  },
+  {
+    "protocol": "online_v2",
+    "condition": "rnn_diverse_noinfluence",
+    "scope": "target_layout",
+    "mae": 2.5855797402352607,
+    "prior_mae": 1.17464408578539,
+    "improvement": {
+      "mean": -1.4109356544498706,
+      "low": -1.4611165232044112,
+      "high": -1.3626262891794139,
+      "n_units": 5
+    },
+    "n_seeds": 5
+  },
+  {
+    "protocol": "online_v2",
+    "condition": "rnn_diverse_noinfluence",
+    "scope": "within_profile",
+    "mae": 2.5514036117439005,
+    "prior_mae": 1.2136105860113422,
+    "improvement": {
+      "mean": -1.3377930257325583,
+      "low": -1.365435142053149,
+      "high": -1.3135295353328187,
+      "n_units": 5
+    },
+    "n_seeds": 5
+  },
+  {
+    "protocol": "online_v2",
+    "condition": "rnn_single_influence",
+    "scope": "familiar_to_novel",
+    "mae": 1.9372243009304326,
+    "prior_mae": 1.3181818181818181,
+    "improvement": {
+      "mean": -0.6190424827486148,
+      "low": -1.1128253910471109,
+      "high": -0.125757912042412,
+      "n_units": 5
+    },
+    "n_seeds": 5
+  },
+  {
+    "protocol": "online_v2",
+    "condition": "rnn_single_influence",
+    "scope": "target_layout",
+    "mae": 1.8565254563562614,
+    "prior_mae": 1.17464408578539,
+    "improvement": {
+      "mean": -0.6818813705708708,
+      "low": -1.2828702701510895,
+      "high": -0.036486669806369075,
+      "n_units": 5
+    },
+    "n_seeds": 5
+  },
+  {
+    "protocol": "online_v2",
+    "condition": "rnn_single_influence",
+    "scope": "within_profile",
+    "mae": 1.8023726829258244,
+    "prior_mae": 1.2136105860113422,
+    "improvement": {
+      "mean": -0.5887620969144826,
+      "low": -1.1406124296169664,
+      "high": -0.036708502471085376,
+      "n_units": 5
+    },
+    "n_seeds": 5
+  }
+]

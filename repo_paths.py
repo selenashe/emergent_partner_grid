@@ -14,7 +14,6 @@ ARCHIVE_RELOCATIONS = (json.loads(ARCHIVE_INDEX.read_text())
 RELOCATIONS = (
     ("dev/grids_capability_selected_balanced_1096", "data_prep/grids_capability_selected_balanced_1096"),
     ("dev/grids_capability_selected_2000", "data_prep/grids_capability_selected_2000"),
-    ("dev/grids_capability_selected", "data_prep/grids_capability_selected"),
     ("dev/train_logs", "train/train_logs"),
     ("dev/eval_out", "eval/eval_out"),
     ("dev/run_snapshots", "train/run_snapshots"),
@@ -37,6 +36,12 @@ def _archive_path(relative):
 
 def resolve_path(value):
     """Return an existing relocated path, leaving unrelated paths untouched."""
+    # Audit guide:
+    # Translate historical experiment paths to current active or archived locations only
+    # for reading. Prefer a path that already exists, and leave unrelated external paths
+    # alone. Preserve original files/config values so their hashes and historical
+    # evidence remain intact.
+    #
     path = Path(value)
     if path.exists():
         return path
@@ -71,6 +76,11 @@ def resolve_path(value):
 
 def resolve_record_paths(record):
     """Resolve recorded path strings without mutating the original record."""
+    # Audit guide:
+    # Return a recursively reconstructed record whose repository path strings resolve to
+    # present locations. Do not mutate the original manifest. This lets current readers
+    # consume immutable records that refer to retired dev/analysis/logs locations.
+    #
     if isinstance(record, dict):
         return {key: resolve_record_paths(value) for key, value in record.items()}
     if isinstance(record, list):

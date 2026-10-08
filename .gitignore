@@ -27,8 +27,6 @@ slurm-*.out
 slurm-*.err
 
 # Capability-corpus derived views (JSON layouts + manifest ARE kept)
-data_prep/grids_capability_selected/renders/
-data_prep/grids_capability_selected/diagnostics/
 
 # W&B
 wandb/

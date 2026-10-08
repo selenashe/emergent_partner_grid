@@ -1,0 +1,14 @@
+{
+  "status": "completed",
+  "policies": 15,
+  "median_test_improvement_over_persistence": 0.6225604449812316,
+  "limitations": [
+    "InputDSA uses pinned official DMDc/controllability components with explicit safe transition pairing.",
+    "Unmodified upstream list concatenation would create cross-trajectory transitions; adapter corrects this boundary assembly.",
+    "Native distance ordering is joint/state/control; exported fields are named explicitly.",
+    "Regime matrices reflect the same nonlinear weights visited in different states.",
+    "Common raw input projection is a fixed lossy basis; inspect its held-out prediction error before cross-policy comparisons.",
+    "Only the prespecified early four-round diagnostic capture is fitted; full late-episode input dynamics require additional collection.",
+    "Bootstrap of paired recipients is shown per policy; effects must also be compared across learner seeds."
+  ]
+}

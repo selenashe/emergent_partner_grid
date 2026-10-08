@@ -58,6 +58,12 @@ DEFAULT_SINGLE_PARTNER: Tuple[int, int] = (1, 4)
 
 
 def _validate() -> None:
+    # Audit guide:
+    # Check the population definition when this module loads. Familiar and novel pairs
+    # must be disjoint, and the novel scalar delays 0, 5, and 6 must occur in the test
+    # population. Lower delay means faster movement; the numerical labels are waiting
+    # times, not speeds.
+    #
     train_set = set(TRAIN_CAPABILITY_PAIRS)
     test_set = set(TEST_CAPABILITY_PAIRS)
     assert train_set.isdisjoint(test_set), (

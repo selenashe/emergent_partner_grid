@@ -22,8 +22,8 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from repo_paths import resolve_path, resolve_record_paths
-BATCH = "balanced1096_20261002_022924"
-AUDIT = ROOT / "eval/protocol_comparison" / BATCH / "final_training_grid_statistics.json"
+BATCH = "counterbalanced1096_20261002_235609"
+DEFAULT_MANIFEST = ROOT / "train/manifests" / f"sbatch_{BATCH}.json"
 OUT = ROOT / "train/training_curves" / BATCH
 CONDITIONS = ["rnn_diverse_influence", "mlp_diverse_influence",
               "rnn_single_influence", "rnn_diverse_noinfluence"]
@@ -44,6 +44,11 @@ FIELDS = ["update", "env_steps", "round_success", "rounds_completed",
 
 def smooth(values, weights=None):
     """Full-width trailing means, preserving early missing episode metrics."""
+    # Audit guide:
+    # Calculate full-width trailing means and preserve missing early episode metrics. A
+    # logging placeholder from an update with no completed episodes must not be
+    # interpreted as a real zero return.
+    #
     valid = np.isfinite(values)
     weights = np.ones_like(values) if weights is None else weights.copy()
     weights = np.where(valid, weights, 0.0)
@@ -61,22 +66,26 @@ def savefig(fig, name):
 
 
 def main(manifest_path=None):
+    # Audit guide:
+    # Parse training stdout identified by manifest job IDs, align logged update indices
+    # with actual environment steps, and plot conditions separately by protocol. Save
+    # numerical summaries with source evidence. Learning curves use training
+    # observations, not held-out performance.
+    #
     global OUT
+    manifest = resolve_record_paths(json.loads(resolve_path(manifest_path or DEFAULT_MANIFEST).read_text()))
+    if manifest.get("sampling_protocol") != "paired_counterbalanced_v1" or manifest.get("action_selection", "categorical") != "categorical":
+        raise ValueError("Expected a categorical counterbalanced batch")
+    OUT = resolve_path(ROOT / "train/training_curves" / manifest["batch"])
     action_selection = "categorical"
-    if manifest_path:
-        manifest = resolve_record_paths(json.loads(resolve_path(manifest_path).read_text()))
-        OUT = resolve_path(ROOT / "train/training_curves" / manifest["batch"])
-        action_selection = manifest.get("action_selection", "categorical")
-        runs = []
-        for job in manifest["training_jobs"]:
-            directory = Path(manifest["versions"][job["version"]]["checkpoint_root"])
-            sampling = json.loads((directory / f"{job['tag']}_sampling_audit.json").read_text())
-            runs.append({**job, "log": str(resolve_path(ROOT / "train/slurm_logs" / f"cg_cap_{job['job_id']}.out")),
-                         "config": str(directory / f"{job['tag']}_config.json"),
-                         "completed_rounds": sampling["rounds_completed"]})
-        audit = {"per_seed_training_rounds": runs}
-    else:
-        audit = resolve_record_paths(json.loads(AUDIT.read_text()))
+    runs = []
+    for job in manifest["training_jobs"]:
+        directory = Path(manifest["versions"][job["version"]]["checkpoint_root"])
+        sampling = json.loads((directory / f"{job['tag']}_sampling_audit.json").read_text())
+        runs.append({**job, "log": str(resolve_path(ROOT / "train/slurm_logs" / f"cg_cap_{job['job_id']}.out")),
+                     "config": str(directory / f"{job['tag']}_config.json"),
+                     "completed_rounds": sampling["rounds_completed"]})
+    audit = {"per_seed_training_rounds": runs}
     OUT.mkdir(parents=True, exist_ok=True)
     plt.rcParams.update({"font.size": 10, "axes.spines.top": False,
                          "axes.spines.right": False})
@@ -187,8 +196,7 @@ def main(manifest_path=None):
             ax.set_xlim(0, 60)
             if row == 1:
                 ax.set_xlabel("Collected environment steps (millions)")
-    fig.suptitle("Learning curves across all five training seeds" +
-                 (" — greedy actions" if action_selection == "greedy_random_ties" else ""), fontsize=16)
+    fig.suptitle("Counterbalanced learning curves across all five training seeds", fontsize=16)
     fig.legend(*axes[0, 0].get_legend_handles_labels(), loc="upper center",
                bbox_to_anchor=(0.5, 0.955), ncol=4, frameon=False)
     fig.text(0.5, 0.015, "Trailing 3.01M-step averages; bands: sample SD across five seeds. "

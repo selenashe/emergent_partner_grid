@@ -51,7 +51,7 @@ from flax.training.train_state import TrainState
 from omegaconf import OmegaConf
 
 import jaxmarl
-from jaxmarl.wrappers.baselines import LogWrapper, save_params, load_params
+from jaxmarl.wrappers.baselines import save_params, load_params
 from jaxmarl.environments.coordination_grid import (
     CoordinationGrid,
     COMM_ACTION_ONLY,
@@ -62,7 +62,6 @@ from jaxmarl.environments.coordination_grid import (
     ALLOCATION_PROTOCOL,
 )
 from episode_scheduler import build_schedule, initial_episode_cursor, summarize_schedule
-from action_selection import select_action
 
 
 # ---------------------------------------------------------------------------
@@ -84,6 +83,12 @@ class ScannedRNN(nn.Module):
     )
     @nn.compact
     def __call__(self, carry, x):
+        # Audit guide:
+        # Process one observation using the previous memory vector. Reset that memory
+        # only when the supplied pre-observation reset flag is true. The enclosing scan
+        # repeats this cell over time; intermediate physical round resets intentionally
+        # retain memory of the same partner.
+        #
         rnn_state = carry
         ins, resets = x
         rnn_state = jnp.where(
@@ -110,6 +115,12 @@ class CNN(nn.Module):
 
     @nn.compact
     def __call__(self, x):
+        # Audit guide:
+        # Convert a grid image into learned visual features with six convolutions and a
+        # final projection. Convolutions apply the same local pattern detector across
+        # the grid. This encoder is shared by the recurrent policy and the memory-
+        # control policy.
+        #
         for feats, k in [(128, 1), (128, 1), (8, 1), (16, 3), (32, 3), (32, 3)]:
             x = nn.Conv(
                 features=feats,
@@ -149,6 +160,11 @@ class CommObsEncoder(nn.Module):
 
     @nn.compact
     def __call__(self, obs):
+        # Audit guide:
+        # Encode the grid and previous allocation separately, concatenate the two
+        # feature vectors, and project them to the network width. The allocation is a
+        # fixed-meaning goal request. No capability label is provided to the encoder.
+        #
         grid = obs["grid"].astype(jnp.float32)
         msg = obs["last_allocation"].astype(jnp.float32)
 
@@ -181,6 +197,12 @@ class ActorCriticCommRNN(nn.Module):
 
     @nn.compact
     def __call__(self, hidden, x):
+        # Audit guide:
+        # Encode and normalize observations, update the GRU memory, then produce action
+        # probabilities and a value estimate through separate heads. The value estimates
+        # future discounted reward for PPO. Mask illegal action logits before
+        # constructing probabilities, including the forced initialization action.
+        #
         obs, dones = x  # obs is a dict of leaves with leading (T, N, ...) shape
         activation = nn.relu if self.config["ACTIVATION"] == "relu" else nn.tanh
 
@@ -242,6 +264,12 @@ class ActorCriticCommMLP(nn.Module):
 
     @nn.compact
     def __call__(self, hidden, x):
+        # Audit guide:
+        # Use the same observation encoder and policy/value heads but replace memory
+        # with a dense feedforward transformation. Keep the call signature compatible
+        # with the RNN so training and evaluation can share code. Its returned carry is
+        # an interface placeholder, not remembered partner experience.
+        #
         obs, dones = x  # dones unused; kept for interface parity
         activation = nn.relu if self.config["ACTIVATION"] == "relu" else nn.tanh
 
@@ -296,6 +324,11 @@ class ActorCriticCommMLP(nn.Module):
 
 def build_network(config, action_dim):
     """Return the (network, initial-hstate factory) pair per MODEL_TYPE."""
+    # Audit guide:
+    # Choose the recurrent or feedforward model from MODEL_TYPE and return a matching
+    # memory-initialization function. Conditions change this choice without changing the
+    # PPO objective. Reject unknown names rather than silently substituting a model.
+    #
     model_type = str(config.get("MODEL_TYPE", "rnn")).lower()
     if model_type == "rnn":
         network = ActorCriticCommRNN(action_dim=action_dim, config=config)
@@ -323,6 +356,12 @@ def resolve_training_capability_pool(config):
     """Return the (K, 2) list-of-lists of training capability pairs
     determined by PARTNER_REGIME.
     """
+    # Audit guide:
+    # Choose either all 24 authoritative training profiles or the configured single
+    # partner. This pool trains the policy; standalone evaluation explicitly replaces it
+    # with familiar and novel populations. A single-partner policy therefore has less
+    # training exposure even when its probe later fits all 46 profiles.
+    #
     regime = str(config.get("PARTNER_REGIME", "diverse")).lower()
     if regime == "diverse":
         return [list(p) for p in TRAIN_CAPABILITY_PAIRS]
@@ -356,6 +395,11 @@ class Transition(NamedTuple):
 # ---------------------------------------------------------------------------
 
 def require_current_protocol(config):
+    # Audit guide:
+    # Guard against evaluating a fixed-v1 checkpoint with online-v2 transition rules.
+    # Saved configurations must name the online_v2 protocol for this active trainer.
+    # Historical evaluation requires the matching frozen source.
+    #
     if config.get("ALLOCATION_PROTOCOL") != ALLOCATION_PROTOCOL:
         raise ValueError(
             f"This implementation requires ALLOCATION_PROTOCOL={ALLOCATION_PROTOCOL!r}. "
@@ -365,6 +409,13 @@ def require_current_protocol(config):
 
 
 def make_train(config):
+    # Audit guide:
+    # Build a complete training function from the resolved configuration. Count one
+    # learned actor per environment because the partner is scripted. Integer division
+    # sets the number of full PPO updates; the nominal 60 million transitions become
+    # 59,965,440. This active source uses the random scheduler; the batch preparer
+    # replaces scheduling in a frozen copy for counterbalanced experiments.
+    #
     require_current_protocol(config)
     # Resolve capability pool from PARTNER_REGIME, then override the pool
     # in the env kwargs so the env sees exactly what we sampled from.
@@ -401,6 +452,12 @@ def make_train(config):
     # episode-return bookkeeping is reimplemented in the trainer directly.
 
     def create_learning_rate_fn():
+        # Audit guide:
+        # Define how the optimizer learning rate changes over gradient updates: first
+        # linear warmup, then cosine decay. Multiply PPO update counts by minibatches
+        # and epochs to express the schedule in optimizer steps. This keeps the schedule
+        # aligned with actual weight updates rather than environment ticks.
+        #
         base_lr = config["LR"]
         update_steps = config["NUM_UPDATES"]
         warmup_steps = int(config["LR_WARMUP"] * update_steps)
@@ -462,6 +519,12 @@ def make_train(config):
 
     def train(rng):
         # INIT NETWORK
+        # Audit guide:
+        # Initialize network weights, optimizer state, parallel environments, per-worker
+        # episode cursors, and zero memory. Repeated PPO updates carry these states
+        # forward. Random initialization and minibatch ordering follow the learner key;
+        # the materialized exposure schedule has its own configured seed.
+        #
         action_dim = env.n_ego_actions
         network, init_hstate_fn, _mtype = build_network(config, action_dim)
 
@@ -513,6 +576,15 @@ def make_train(config):
         def _update_step(runner_state, unused):
             # --------- collect trajectories ---------
             def _env_step(runner_state, unused):
+                # Audit guide:
+                # Collect one transition from each parallel environment with current
+                # policy weights. Record the memory-reset flag used before this
+                # observation separately from the terminal flag produced afterward.
+                # Reset only workers that finished their complete partner episode using
+                # scheduled capabilities/layouts; leave other workers and memories
+                # intact. The stored action, value, log probability, and observation
+                # later reconstruct the PPO comparison.
+                #
                 (train_state, env_state, last_obs, last_done,
                  update_step, hstate, rng,
                  episode_cursor, ep_return_acc, ep_length_acc) = runner_state
@@ -531,7 +603,9 @@ def make_train(config):
                     train_state.params, hstate, (obs_in, dones_in)
                 )
                 rng, _rng = jax.random.split(rng)
-                action = select_action(pi, _rng, config.get("ACTION_SELECTION", "categorical"))  # (1, N)
+                # Draw according to every allowed action's policy probability.
+                # The seeded random draw preserves the original categorical method.
+                action = pi.sample(seed=_rng)  # (1, N)
                 log_prob = pi.log_prob(action)         # (1, N)
 
                 env_act = {"agent_0": action.squeeze(0)}
@@ -646,6 +720,13 @@ def make_train(config):
             last_val = last_val.squeeze(0)
 
             def _calculate_gae(traj_batch, last_val):
+                # Audit guide:
+                # Compute generalized advantage estimates backwards through the rollout.
+                # Advantage measures whether observed reward plus estimated future value
+                # exceeded the old value prediction. The post-transition done flag stops
+                # value bootstrapping across different partners; it is not the GRU
+                # replay reset flag.
+                #
                 def _get_advantages(gae_and_next_value, transition):
                     gae, next_value = gae_and_next_value
                     done, value, reward = (
@@ -671,10 +752,25 @@ def make_train(config):
 
             # --------- PPO update ---------
             def _update_epoch(update_state, unused):
+                # Audit guide:
+                # Shuffle whole environment sequences into minibatches while retaining
+                # their time order. Each sequence starts from its collected memory
+                # state. Reordering individual timesteps would destroy the history
+                # needed to replay a recurrent policy correctly.
+                #
                 def _update_minbatch(train_state, batch_info):
                     init_hstate, traj_batch, advantages, targets = batch_info
 
                     def _loss_fn(params, init_hstate, traj_batch, gae, targets):
+                        # Audit guide:
+                        # Replay stored observations with their original pre-observation
+                        # resets and initial memory. Compare new and collected action
+                        # log probabilities to form the PPO ratio; clip policy and value
+                        # changes, normalize advantages, and add the entropy term. Only
+                        # ego data trains these weights. Greedy collection changes how
+                        # actions were collected, while this probability-based PPO loss
+                        # remains unchanged.
+                        #
                         _, pi, value = network.apply(
                             params,
                             init_hstate.squeeze(0),
@@ -919,6 +1015,13 @@ def make_train(config):
 
             def _log_cb(m):
                 # Cast anything jax-flavoured to python scalars for wandb.
+                # Audit guide:
+                # Print training diagnostics on the host after device computation.
+                # Completed-episode returns are the scores later used for behavior-based
+                # seed selection. These describe the collection rollout before its
+                # associated gradient update, whereas the saved final checkpoint
+                # includes that update.
+                #
                 flat = {k: (float(v) if hasattr(v, "shape") else v)
                         for k, v in m.items()}
                 wandb.log(flat)
@@ -984,6 +1087,13 @@ def evaluate_policy(params, config, layouts_dir, key,
     ``capability_pairs_override`` — evaluate against this explicit pool
     (e.g. training or novel test pairs).
     """
+    # Audit guide:
+    # Evaluate a trained policy with an explicit capability pool and repeated full
+    # partner episodes on familiar layouts. Run a fixed-length scan, then restrict
+    # metrics to each episode first final done. Preserve recurrent memory between its
+    # rounds; this in-process evaluator returns summaries rather than the standalone
+    # HDF5 export.
+    #
     require_current_protocol(config)
     env_kwargs = dict(config["ENV_KWARGS"])
     env_kwargs["layouts_dir"] = layouts_dir
@@ -1033,7 +1143,9 @@ def evaluate_policy(params, config, layouts_dir, key,
             done_in = done_prev[jnp.newaxis, :]
             hstate, pi, _ = network.apply(params, hstate, (obs_in, done_in))
             key, ka, ks = jax.random.split(key, 3)
-            action = select_action(pi, ka, config.get("ACTION_SELECTION", "categorical")).squeeze(0)  # (B,)
+            # Draw according to every allowed action's policy probability.
+            # The seeded random draw preserves the original categorical method.
+            action = pi.sample(seed=ka).squeeze(0)  # (B,)
             step_keys = jax.random.split(ks, B)
             obs, states, reward, done, info = jax.vmap(
                 env_eval.step_env, in_axes=(0, 0, {"agent_0": 0})
@@ -1127,7 +1239,20 @@ def evaluate_policy(params, config, layouts_dir, key,
     config_name="ippo_coordination_grid",
 )
 def main(config):
+    # Audit guide:
+    # Resolve Hydra configuration, create learner keys, train, save weights and the
+    # resolved JSON configuration, then evaluate familiar and novel profiles. Saving
+    # configuration next to the checkpoint makes architecture, influence, reward, and
+    # action-selection settings auditable later.
+    #
     config = OmegaConf.to_container(config)
+    if (config.get("SAMPLING_PROTOCOL") != "paired_counterbalanced_v1"
+            or not config.get("COUNTERBALANCED_SCHEDULE_PATHS")):
+        raise ValueError(
+            "This trainer is a preparation template. Run "
+            "bash/submit_counterbalanced_training.py --prepare and train from "
+            "the resulting counterbalanced snapshot."
+        )
     num_seeds = config["NUM_SEEDS"]
     start_time = datetime.now()
 

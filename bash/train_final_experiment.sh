@@ -31,10 +31,8 @@
 # capability populations are defined in
 # jaxmarl.environments.coordination_grid.capability_populations.
 #
-# Usage examples:
-#   sbatch bash/train_final_experiment.sh                              # main condition, seed 1
-#   SEED=2 sbatch bash/train_final_experiment.sh                       # main condition, seed 2
-#   CONDITION=mlp_diverse_influence sbatch bash/train_final_experiment.sh
+# Prepare and validate a counterbalanced batch with submit_counterbalanced_training.py.
+# Its manifest supplies REPO_ROOT pointing at the matching prepared source snapshot.
 # ---------------------------------------------------------------------------
 set -euo pipefail
 
@@ -50,10 +48,13 @@ REPO_ROOT="${REPO_ROOT:-/juice6/u/jshe/emergent_partner_grid}"
 cd "${REPO_ROOT}" || exit 1
 
 export PYTHONPATH="${REPO_ROOT}${PYTHONPATH:+:${PYTHONPATH}}"
-CHECKPOINT_DIR="${CHECKPOINT_DIR:-${REPO_ROOT}/train/train_logs/online_v2}"
+CHECKPOINT_DIR="${CHECKPOINT_DIR:-${REPO_ROOT}/train/train_logs/counterbalanced}"
 HYDRA_OUTPUT_DIR="${HYDRA_OUTPUT_DIR:-${REPO_ROOT}/train/hydra_outputs}"
 mkdir -p "${CHECKPOINT_DIR}" "${HYDRA_OUTPUT_DIR}"
 
+# Audit guide: translate CONDITION into the three scientific switches below.
+# This case block chooses memory, partner diversity, and causal influence;
+# SEED changes learner randomness. The partner itself remains scripted.
 # --- Condition preset -------------------------------------------------------
 CONDITION="${CONDITION:-rnn_diverse_influence}"
 case "${CONDITION}" in
@@ -72,7 +73,6 @@ esac
 # --- Overridable hyperparameters -------------------------------------------
 SEED="${SEED:-1}"
 NUM_SEEDS="${NUM_SEEDS:-1}"
-ACTION_SELECTION="${ACTION_SELECTION:-greedy_random_ties}"
 NUM_ENVS="${NUM_ENVS:-256}"
 NUM_STEPS="${NUM_STEPS:-256}"
 UPDATE_EPOCHS="${UPDATE_EPOCHS:-4}"
@@ -109,7 +109,6 @@ echo "  max_steps               : ${MAX_STEPS}"
 echo "  step_penalty            : ${STEP_PENALTY}"
 echo "  layouts_dir             : ${LAYOUTS_DIR}  (n=${N_LAYOUTS})"
 echo "  SEED / NUM_SEEDS        : ${SEED} / ${NUM_SEEDS}"
-echo "  ACTION_SELECTION        : ${ACTION_SELECTION}"
 echo "  N_EPS_TOTAL             : ${N_EPS_TOTAL}"
 echo "  TOTAL_TIMESTEPS         : ${TOTAL_TIMESTEPS}"
 echo "  NUM_ENVS / NUM_STEPS    : ${NUM_ENVS} / ${NUM_STEPS}"
@@ -119,6 +118,10 @@ echo "  GPU visible:"
 nvidia-smi -L 2>/dev/null || echo "    (no nvidia-smi)"
 echo
 
+# Audit guide: execute the chosen trainer using explicit Hydra overrides.
+# REPO_ROOT can select an immutable source snapshot; the fallback supports
+# historical paths inside snapshots. The companion saved JSON configuration,
+# rather than these present defaults, identifies an already trained policy.
 TRAIN_SCRIPT="train/ippo_rnn_coordination_grid.py"
 if [[ ! -f "${TRAIN_SCRIPT}" ]]; then
     TRAIN_SCRIPT="baselines/IPPO/ippo_rnn_coordination_grid.py"  # original frozen snapshots
@@ -126,7 +129,6 @@ fi
 python -u "${TRAIN_SCRIPT}" \
     SEED="${SEED}" \
     NUM_SEEDS="${NUM_SEEDS}" \
-    ACTION_SELECTION="${ACTION_SELECTION}" \
     MODEL_TYPE="${MODEL_TYPE}" \
     PARTNER_REGIME="${PARTNER_REGIME}" \
     INFLUENCE="${INFLUENCE}" \

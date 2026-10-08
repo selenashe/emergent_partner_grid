@@ -1,4 +1,5 @@
 # CoordinationGrid IPPO — unified config for the four experimental conditions.
+# Preparation template: train from a counterbalanced snapshot created by the submitter.
 #
 # Switches:
 #   MODEL_TYPE      : "rnn" | "mlp"
@@ -11,7 +12,6 @@
 
 "ENV_NAME": "coordination_grid"
 "ALLOCATION_PROTOCOL": "online_v2"
-"ACTION_SELECTION": "greedy_random_ties"  # exact probability maximum; random ties only
 "ENV_KWARGS":
   # Exact ego-distance marginals: 137 layouts at each distance 1–8 per goal.
   "layouts_dir": "/juice6/u/jshe/emergent_partner_grid/data_prep/grids_capability_selected_balanced_1096/layouts/train"
@@ -44,7 +44,7 @@
 "EVAL_EPISODES_PER_CAPABILITY": 20
 "EVAL_SEED": 12345
 
-"SAVE_PARAMS_PATH": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/online_v2/capability_params.safetensors"
+"SAVE_PARAMS_PATH": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/counterbalanced/capability_params.safetensors"
 
 "SEED": 1
 "NUM_SEEDS": 1

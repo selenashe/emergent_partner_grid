@@ -25,6 +25,12 @@ from scipy.special import expit
 
 def expected_counts(capacities: np.ndarray, quota: int) -> np.ndarray:
     """Maximum-entropy fractional selection with each marginal equal to quota."""
+    # Audit guide:
+    # Find fractional counts for each joint red-distance/blue-distance bin with the same
+    # target in every row and column. A maximum-flow check first proves the requested
+    # quotas are feasible. The entropy solution spreads selection across available
+    # layouts without adding partner distances as a selection criterion.
+    #
     n = capacities.shape[0]
     graph = np.zeros((2 * n + 2, 2 * n + 2), dtype=np.int64)
     graph[0, 1:n + 1] = quota
@@ -79,6 +85,12 @@ def expected_counts(capacities: np.ndarray, quota: int) -> np.ndarray:
 
 
 def _fractional_cycle(counts: np.ndarray):
+    # Audit guide:
+    # Find an alternating loop linking fractional row/column bins. Adjusting opposite
+    # edges of such a loop preserves both marginal totals. This structure lets
+    # round_counts convert fractional selections to integers without independently
+    # rounding away the quotas.
+    #
     n = counts.shape[0]
     adjacent = [[] for _ in range(2 * n)]
     for row, col in np.argwhere(np.abs(counts - np.rint(counts)) > 1e-8):
@@ -114,6 +126,12 @@ def _fractional_cycle(counts: np.ndarray):
 
 def round_counts(counts: np.ndarray, rng: np.random.Generator) -> np.ndarray:
     """Round on alternating cycles, keeping marginal totals and expectations."""
+    # Audit guide:
+    # Move counts along alternating cycles until all are integers. Randomize the
+    # direction using the available upward/downward room, preserving expected counts as
+    # well as exact marginals. Final bin counts say how many distinct layouts to sample,
+    # not how often to repeat layouts.
+    #
     counts = counts.copy()
     while np.any(np.abs(counts - np.rint(counts)) > 1e-8):
         cycle = _fractional_cycle(counts)
@@ -140,6 +158,13 @@ def _write_csv(path: Path, rows: list[dict]) -> None:
 
 
 def main() -> None:
+    # Audit guide:
+    # Exclude layouts whose ego distances fall outside the chosen range, solve
+    # simultaneous marginal quotas, and sample without replacement within each joint
+    # bin. Preserve selected source JSON bytes and IDs. Write exclusion reasons and
+    # counts so an auditor can distinguish the distance cutoff from the random quota
+    # selection.
+    #
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source_dir", type=Path, required=True)
     parser.add_argument("--out_dir", type=Path, required=True)

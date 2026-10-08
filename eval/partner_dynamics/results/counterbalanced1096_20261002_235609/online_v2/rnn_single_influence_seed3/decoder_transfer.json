@@ -1,0 +1,53 @@
+[
+  {
+    "scope": "within_profile",
+    "alpha": 1000.0,
+    "r2": 0.06600025006939103,
+    "mae": 2.419295583761379,
+    "conditional_faster_goal_prior_mae": 1.2136105860113422,
+    "improvement_over_prior": -1.2056849977500372,
+    "permutation_mae": 2.5596382868851446,
+    "n_train": 552,
+    "n_test": 184,
+    "uncertainty": {
+      "mean": -1.2056849977500372,
+      "low": -1.3882826790129628,
+      "high": -1.0340673507417044,
+      "n_units": 184
+    }
+  },
+  {
+    "scope": "familiar_to_novel",
+    "alpha": 1000.0,
+    "r2": -0.07468123848574293,
+    "mae": 2.498134662393771,
+    "conditional_faster_goal_prior_mae": 1.3181818181818181,
+    "improvement_over_prior": -1.1799528442119527,
+    "permutation_mae": 2.507981414964231,
+    "n_train": 288,
+    "n_test": 88,
+    "uncertainty": {
+      "mean": -1.179952844211953,
+      "low": -1.4140585087558015,
+      "high": -0.9768455373857214,
+      "n_units": 88
+    }
+  },
+  {
+    "scope": "target_layout",
+    "alpha": 1000.0,
+    "r2": 0.042946233588119775,
+    "mae": 2.4707973323435484,
+    "conditional_faster_goal_prior_mae": 1.17464408578539,
+    "improvement_over_prior": -1.2961532465581578,
+    "permutation_mae": 2.6006438871987605,
+    "n_train": 436,
+    "n_test": 46,
+    "uncertainty": {
+      "mean": -1.296153246558158,
+      "low": -1.604356764056435,
+      "high": -1.0068518491959242,
+      "n_units": 46
+    }
+  }
+]

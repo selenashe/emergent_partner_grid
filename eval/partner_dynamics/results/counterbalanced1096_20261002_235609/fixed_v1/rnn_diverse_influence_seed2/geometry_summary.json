@@ -1,0 +1,259 @@
+{
+  "pca": {
+    "within_profile_test": {
+      "explained_fraction": 0.593388213336659,
+      "reconstruction_error": {
+        "mean": 0.14792827088011834,
+        "low": 0.14694496866834256,
+        "high": 0.14888857160408633,
+        "n_units": 184
+      }
+    },
+    "familiar_test": {
+      "explained_fraction": 0.5925549373934742,
+      "reconstruction_error": {
+        "mean": 0.145814996738569,
+        "low": 0.14486833129011922,
+        "high": 0.1466244329918438,
+        "n_units": 96
+      }
+    },
+    "novel_test": {
+      "explained_fraction": 0.5942667984403298,
+      "reconstruction_error": {
+        "mean": 0.1502336608527176,
+        "low": 0.14877726937132754,
+        "high": 0.1520073600226714,
+        "n_units": 88
+      }
+    }
+  },
+  "decoder_transfer": [
+    {
+      "scope": "within_profile",
+      "alpha": 100.0,
+      "r2": 0.7860248715939713,
+      "mae": 1.0274600675608891,
+      "conditional_faster_goal_prior_mae": 1.2136105860113422,
+      "improvement_over_prior": 0.1861505184504531,
+      "permutation_mae": 2.668172687138042,
+      "n_train": 552,
+      "n_test": 184,
+      "uncertainty": {
+        "mean": 0.1861505184504531,
+        "low": 0.12134386584471477,
+        "high": 0.26212529654045635,
+        "n_units": 184
+      }
+    },
+    {
+      "scope": "familiar_to_novel",
+      "alpha": 100.0,
+      "r2": 0.783597114098484,
+      "mae": 1.018160502383542,
+      "conditional_faster_goal_prior_mae": 1.3181818181818181,
+      "improvement_over_prior": 0.3000213157982761,
+      "permutation_mae": 2.8544404161549144,
+      "n_train": 288,
+      "n_test": 88,
+      "uncertainty": {
+        "mean": 0.3000213157982761,
+        "low": 0.18595466943599268,
+        "high": 0.4025109901880725,
+        "n_units": 88
+      }
+    },
+    {
+      "scope": "target_layout",
+      "alpha": 1000.0,
+      "r2": 0.7938272931952862,
+      "mae": 1.0244123323057701,
+      "conditional_faster_goal_prior_mae": 1.17464408578539,
+      "improvement_over_prior": 0.1502317534796201,
+      "permutation_mae": 2.593779748566853,
+      "n_train": 436,
+      "n_test": 46,
+      "uncertainty": {
+        "mean": 0.15023175347962003,
+        "low": -0.0029988866821546688,
+        "high": 0.29530733193390185,
+        "n_units": 46
+      }
+    }
+  ],
+  "variance_partition": [
+    {
+      "model": "phase_layout",
+      "test_r2": 0.26733703202924053,
+      "alpha": 100.0,
+      "mean": 1.0121634144764018,
+      "low": 1.0000282803096698,
+      "high": 1.024450026941222,
+      "n_units": 184
+    },
+    {
+      "model": "binary",
+      "test_r2": 0.3614778037288908,
+      "alpha": 1000.0,
+      "mean": 0.8821092844186585,
+      "low": 0.8710032856677956,
+      "high": 0.8948904702640743,
+      "n_units": 184
+    },
+    {
+      "model": "capability",
+      "test_r2": 0.38914146190011645,
+      "alpha": 100.0,
+      "mean": 0.8438923361961393,
+      "low": 0.837464861690588,
+      "high": 0.851838721595914,
+      "n_units": 184
+    },
+    {
+      "model": "interactions",
+      "test_r2": 0.39739927507649764,
+      "alpha": 100.0,
+      "mean": 0.8324842853649856,
+      "low": 0.826322999133655,
+      "high": 0.840723538778313,
+      "n_units": 184
+    }
+  ],
+  "representational_models": [
+    {
+      "model": "binary",
+      "heldout_episode_distance_r2": 0.5976780471253598,
+      "correlation": 0.7742983599343873
+    },
+    {
+      "model": "full_profile",
+      "heldout_episode_distance_r2": 0.597404084080515,
+      "correlation": 0.7740127640504295
+    },
+    {
+      "model": "relative",
+      "heldout_episode_distance_r2": 0.5968196862425262,
+      "correlation": 0.7736220324066718
+    },
+    {
+      "model": "magnitude",
+      "heldout_episode_distance_r2": 0.0029873325329405898,
+      "correlation": 0.0682810966471782
+    },
+    {
+      "model": "overall",
+      "heldout_episode_distance_r2": -0.001354947969791187,
+      "correlation": 0.028379267803186378
+    }
+  ],
+  "within_faster_group_mean_crossvalidated_distance": 0.1659205848678918,
+  "novel_geometry": [
+    {
+      "population": "familiar",
+      "n": 96,
+      "nearest_familiar_distance": 3.291138567806019,
+      "familiar_subspace_residual": 19.221581078289958,
+      "outside_familiar_coordinate_box_fraction": 0.14583333333333334
+    },
+    {
+      "population": "novel",
+      "n": 88,
+      "nearest_familiar_distance": 3.338911871047136,
+      "familiar_subspace_residual": 20.359981421375974,
+      "outside_familiar_coordinate_box_fraction": 0.23863636363636365
+    }
+  ],
+  "temporal_accuracy": [
+    [
+      0.483695652173913,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5
+    ],
+    [
+      0.5054347826086957,
+      0.8913043478260869,
+      0.875,
+      0.967391304347826,
+      0.8641304347826086,
+      0.9891304347826086,
+      0.907608695652174,
+      0.9836956521739131
+    ],
+    [
+      0.5,
+      0.7445652173913043,
+      0.9728260869565217,
+      0.9728260869565217,
+      0.9945652173913043,
+      0.9945652173913043,
+      0.9836956521739131,
+      0.9945652173913043
+    ],
+    [
+      0.5217391304347826,
+      0.6304347826086957,
+      0.9402173913043478,
+      0.9782608695652174,
+      0.9565217391304348,
+      0.9891304347826086,
+      0.9782608695652174,
+      0.9891304347826086
+    ],
+    [
+      0.47282608695652173,
+      0.6630434782608695,
+      0.967391304347826,
+      0.9728260869565217,
+      0.9836956521739131,
+      0.9945652173913043,
+      0.9836956521739131,
+      0.9891304347826086
+    ],
+    [
+      0.5,
+      0.6413043478260869,
+      0.842391304347826,
+      0.9728260869565217,
+      0.8532608695652174,
+      0.9945652173913043,
+      0.8478260869565217,
+      0.9891304347826086
+    ],
+    [
+      0.5,
+      0.7771739130434783,
+      0.9619565217391305,
+      0.9728260869565217,
+      0.9891304347826086,
+      0.9836956521739131,
+      0.9836956521739131,
+      0.9891304347826086
+    ],
+    [
+      0.5,
+      0.7010869565217391,
+      0.967391304347826,
+      0.967391304347826,
+      0.9728260869565217,
+      0.9891304347826086,
+      0.9510869565217391,
+      0.9945652173913043
+    ]
+  ],
+  "n_samples": 55200,
+  "n_episodes": 920,
+  "limitations": [
+    "Distances use training-only diagonal shrinkage, not full-noise whitening.",
+    "RDM model scores generalize over episode repetitions, not independent profile pairs; pairwise correlations are descriptive.",
+    "dPCA replaced by multivariate regression because the 46 x 1096 crossed design is sparse.",
+    "Layout conditioning uses geometry, phase and round; raw current observations were not recorded.",
+    "Target-layout transfer excludes target samples from fitting but preceding histories may include those layouts.",
+    "Post-observation states and remembered histories can mix with action and task state; geometry is not causal evidence.",
+    "Novel coordinate-box support is descriptive and depends on rank; high-dimensional subspace residuals are also reported."
+  ]
+}

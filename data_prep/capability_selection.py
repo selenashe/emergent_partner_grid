@@ -2,7 +2,7 @@
 
 Given a pool of candidate 7x7 grid layouts, analytically evaluate every
 layout against a fixed pool of capability pairs (typically
-``TRAINING_CAPABILITY_PAIRS``) and produce a filtered, stratified,
+``TRAINING_CAPABILITY_PAIRS``) and produce a filtered,
 horizon-controlled final corpus.
 
 The scientific selection criteria are:
@@ -12,11 +12,9 @@ The scientific selection criteria are:
 2. **Allocation balance** — the *optimal* ego allocation genuinely
    depends on partner capability. Non-tied optimum for RED must live in
    ``[min_frac, max_frac]`` of the training capability pool.
-3. **Feasibility** — the analytical oracle can complete essentially
-   every training capability pair under a generous evaluation horizon.
-4. **Delta reward** — expected reward under an oracle-of-capability
+3. **Delta reward** — expected reward under an oracle-of-capability
    policy meaningfully exceeds the best fixed partner-blind allocation.
-5. **Horizon** — layouts whose worst-case oracle completion time is at
+4. **Horizon** — layouts whose worst-case oracle completion time is at
    or beyond ``mean + 3*std`` across the current survivor pool are
    dropped, and a global ``recommended_max_steps`` is derived from what
    remains.
@@ -34,10 +32,8 @@ Public API used by ``data_prep/build_final_corpus.py``:
     * :func:`layout_stats`
     * :func:`passes_observability`
     * :func:`passes_allocation_balance`
-    * :func:`passes_feasibility`
     * :func:`passes_delta_reward`
     * :func:`derive_max_steps`
-    * :func:`stratified_sample`
     * :func:`summarize_stats`
 """
 
@@ -75,6 +71,13 @@ def completion_time(ego_path: int, partner_path: int, partner_delay: int,
     Returns :data:`INFEASIBLE` if either path is unreachable (``< 0``)
     or if the joint completion exceeds ``max_steps``.
     """
+    # Audit guide:
+    # Estimate joint completion for a fixed assignment from two independent shortest
+    # paths. Include the stationary initialization tick; the partner first moves
+    # immediately afterward and inserts delay ticks between later moves. Take the slower
+    # agent completion and mark horizon failures infeasible. This is a static analytical
+    # model: collisions and later reassignment trajectories are not simulated.
+    #
     if ego_path < 0 or partner_path < 0:
         return INFEASIBLE
     ego_step = 1 + ego_path
@@ -95,6 +98,13 @@ def _reward_from_time(completion: int,
     ``step_penalty`` per env step; a timed-out episode grants no success
     reward and pays ``step_penalty * max_steps``.
     """
+    # Audit guide:
+    # Use the historical analytical convention: success_reward minus step_penalty
+    # times the full completion time. step_env instead charges the penalty only on
+    # unsuccessful ticks, so this formula is one penalty lower for successful rounds.
+    # Preserve this distinction when auditing saved corpus statistics. Horizon failures
+    # pay the penalty on every tick.
+    #
     if completion >= INFEASIBLE:
         return -step_penalty * float(max_steps)
     return float(success_reward) - float(step_penalty) * float(completion)
@@ -112,6 +122,12 @@ def layout_bfs_distances(grid: np.ndarray,
     metadata (typical for held-out corpora); ``env_generator.compute_metrics``
     covers the in-pipeline case.
     """
+    # Audit guide:
+    # Recompute the four wall-aware distances from layout contents, instead of trusting
+    # stored metadata. Convert JSON row/column coordinates consistently. The resulting
+    # ego-to-red/blue and partner-to-red/blue distances are inputs to fixed-assignment
+    # calculations.
+    #
     from collections import deque
 
     H, W = grid.shape
@@ -219,6 +235,13 @@ def evaluate_layout(ego_to_red: int, ego_to_blue: int,
     separately from RED-optimal and BLUE-optimal so they cannot bias the
     allocation-balance filter.
     """
+    # Audit guide:
+    # Score both complementary assignments for every capability pair. The capability-
+    # aware oracle chooses the better reward separately for each profile; the blind
+    # baseline chooses one assignment by expected reward across profiles. Count red/blue
+    # optima and ties, then summarize observability, feasibility, and oracle-minus-blind
+    # reward. An oracle is an analytical reference here, not a runnable agent.
+    #
     n_C = len(cap_pairs)
     if n_C == 0:
         raise ValueError("cap_pairs must be non-empty")
@@ -353,6 +376,11 @@ def layout_stats(bfs_metadata: Dict[str, int],
 def passes_observability(stats_or_meta,
                          min_partner_goal_distance: int) -> bool:
     """Partner must be at least this many BFS steps from BOTH goals."""
+    # Audit guide:
+    # Require the partner to travel far enough toward both goals for movement delays to
+    # be observable. This filters static distances, not a demonstrated amount of
+    # information recovered by the learned RNN.
+    #
     if isinstance(stats_or_meta, LayoutStats):
         pr, pb = stats_or_meta.partner_to_red, stats_or_meta.partner_to_blue
     else:
@@ -373,11 +401,27 @@ def passes_allocation_balance(stats: LayoutStats,
     over the *non-tied* subset of the cap pool, AND that ties do not
     dominate (else the balance criterion is not meaningful).
     """
+    # Audit guide:
+    # Check that optimal assignments change across capabilities and are sufficiently
+    # balanced, with ties controlled. The broad screen precedes delta-reward and horizon
+    # thresholds; moving it changes those thresholds input distributions.
+    #
     if stats.fraction_ties > max_tie_fraction:
         return False
     if stats.n_non_tied == 0:
         return False
     return min_frac <= stats.p_opt_red <= max_frac
+
+
+def passes_exact_allocation_balance(stats: LayoutStats) -> bool:
+    """Half of all capability pairs favor each goal, with no tied cases."""
+    # Audit guide:
+    # Require exactly half the supplied profiles to strictly favor each ego goal, with
+    # zero ties. For the 24-profile training pool this means 12 red and 12 blue optima.
+    # This newer final screen is distinct from balancing ego-distance histogram
+    # marginals.
+    #
+    return stats.n_opt_ties == 0 and stats.n_opt_red == stats.n_opt_blue and stats.n_opt_red > 0
 
 
 def passes_feasibility(stats: LayoutStats,
@@ -409,6 +453,12 @@ def horizon_outlier_mask(worst_case: np.ndarray,
     pool statistics. ``worst_case`` should be finite for every entry (we
     treat non-finite values as always rejected).
     """
+    # Audit guide:
+    # Keep worst-case oracle completion times strictly below the survivor mean plus the
+    # configured number of standard deviations. The existing degenerate-distribution
+    # branch handles a common identical value. Calculate this on the intended survivor
+    # pool, not on already selected final layouts.
+    #
     wc = np.asarray(worst_case, dtype=np.float64)
     finite = np.isfinite(wc)
     if not finite.any():
@@ -428,92 +478,16 @@ def horizon_outlier_mask(worst_case: np.ndarray,
 def derive_max_steps(retained_worst_case: np.ndarray,
                      safety_margin: int = 0) -> int:
     """Smallest integer horizon covering every retained worst-case step count."""
+    # Audit guide:
+    # Convert the maximum retained analytical completion to a recommended integer
+    # horizon with margin. The experiment configuration still explicitly sets its
+    # executed horizon; recording a recommendation does not update saved training runs.
+    #
     wc = np.asarray(retained_worst_case, dtype=np.float64)
     finite = wc[np.isfinite(wc)]
     if finite.size == 0:
         raise ValueError("no finite worst-case values")
     return int(np.ceil(finite.max())) + int(safety_margin)
-
-
-# --------------------------------------------------------------------------- #
-# Stratified sampling                                                          #
-# --------------------------------------------------------------------------- #
-
-def _quantile_bin(values: np.ndarray, n_bins: int) -> np.ndarray:
-    """Map each entry to a bin id in ``[0, n_bins)`` using quantile edges.
-
-    Robust to duplicate quantile edges (common on discrete metrics like
-    ``num_junctions``): degenerate bins simply merge.
-    """
-    v = np.asarray(values, dtype=np.float64)
-    if v.size == 0:
-        return np.zeros(0, dtype=np.int64)
-    qs = np.linspace(0.0, 1.0, n_bins + 1)[1:-1]
-    edges = np.quantile(v, qs) if qs.size > 0 else np.array([])
-    return np.searchsorted(edges, v, side="right").astype(np.int64)
-
-
-def stratified_sample(feature_matrix: np.ndarray,
-                      n_target: int,
-                      n_bins_per_feature: int,
-                      seed: int) -> np.ndarray:
-    """Deterministic stratified sample of ``n_target`` row indices.
-
-    ``feature_matrix`` is ``(N, F)`` float array. Each column is binned
-    into ``n_bins_per_feature`` quantile buckets; the composite
-    ``F``-tuple bucket id is used as a stratum. We then round-robin
-    across occupied strata, drawing one deterministic-shuffled member
-    per stratum per cycle until ``n_target`` layouts are selected.
-
-    Falls back to a plain shuffle if ``N <= n_target``.
-    """
-    N = int(feature_matrix.shape[0])
-    if n_target >= N:
-        rng = np.random.default_rng(seed)
-        order = np.arange(N)
-        rng.shuffle(order)
-        return order
-
-    rng = np.random.default_rng(seed)
-    if feature_matrix.shape[1] == 0:
-        order = np.arange(N)
-        rng.shuffle(order)
-        return order[:n_target]
-
-    bins = np.stack([_quantile_bin(feature_matrix[:, f], n_bins_per_feature)
-                     for f in range(feature_matrix.shape[1])], axis=1)
-    # Composite id via structured hashing (row-major with per-feature stride).
-    strides = np.array(
-        [n_bins_per_feature ** f for f in range(feature_matrix.shape[1])],
-        dtype=np.int64,
-    )
-    stratum = (bins * strides[None, :]).sum(axis=1)
-
-    strata_ids, inv = np.unique(stratum, return_inverse=True)
-    # Sort each stratum's members by a per-row hash for deterministic ordering.
-    per_stratum: List[List[int]] = [[] for _ in strata_ids]
-    for i, s in enumerate(inv):
-        per_stratum[int(s)].append(int(i))
-    for lst in per_stratum:
-        rng.shuffle(lst)
-
-    picked: List[int] = []
-    stratum_order = np.arange(len(strata_ids))
-    rng.shuffle(stratum_order)  # deterministic-random stratum visit order
-    cursors = [0] * len(strata_ids)
-    active = list(stratum_order)
-    while len(picked) < n_target and active:
-        next_active = []
-        for s in active:
-            if len(picked) >= n_target:
-                break
-            if cursors[s] < len(per_stratum[s]):
-                picked.append(per_stratum[s][cursors[s]])
-                cursors[s] += 1
-                if cursors[s] < len(per_stratum[s]):
-                    next_active.append(s)
-        active = next_active if next_active else []
-    return np.array(picked, dtype=np.int64)
 
 
 # --------------------------------------------------------------------------- #

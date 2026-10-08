@@ -1,0 +1,29 @@
+{
+  "commit": "25a883c5718e6a62ee5de094bb06cabb23a4644d",
+  "command": [
+    "/juice6/u/jshe/emergent_partner_grid/eval/partner_dynamics/__main__.py",
+    "--phase",
+    "controls",
+    "--smoke"
+  ],
+  "python": "/nlp/scr/jshe/miniconda3/envs/emergent_partner_model/bin/python",
+  "batch_choice": "Completed paired categorical counterbalanced batch",
+  "sources": {
+    "dynamics.py": "b20c8122b62f743cc11214e0ce06701947ead4ef7bf5aac6108f386e19aa6097",
+    "numeric.py": "bee2022d1416a9e9d89ed0c0f3359c0d8925f4b086040841ca2e5c09a132783f",
+    "collect.py": "3f5c7897229d1bfc8b5a313373b4decc3013260d21f476a702b4bd7f20d954d3",
+    "interventions.py": "0afd9263289f544afce51e89ddca59fd2fd4aa190dd5e2af95e46db587c2d7fc",
+    "replay.py": "3c3857740a9c83778910d8107c2cc7191b835fc1f00dcd4c934f9fad18cd7a0f",
+    "rank_controls.py": "4d0b0a3541b0f248d19a177c68b79a13fed0ee37c92aef601cea7c336c411e9e",
+    "data.py": "43e735bbfd0a024305b1310f667ec8ebc6870b92c92747bf346f28e0b5a30d9f",
+    "report.py": "4f55589fd2b2dbc85d2070e0adc022f94439af3a0bce4a3c27b9865f7b3ae17c",
+    "__init__.py": "3d39909b12ed6c185b3cc6e8e8245c97d943d6c7b7a357f54d2c83c181da9fa3",
+    "validate_capture.py": "fd8f265a975ba144dff9ec7d75e435f3a96b2a013b997cde60ec0fc14cbeb74b",
+    "input_dsa.py": "e93eda09682d7251e428a12c62b982ff965ba469c4afd79183d191e7de281546",
+    "geometry.py": "7f8b1cf6c5a4d22543bbd18b308615205a206d91a807582a06c253edea213fab",
+    "adapters.py": "93e41dd60805f3729edab228523633e7ac2d1a905232023dc9c2e4e5ddf5a135",
+    "events.py": "43f16c1a2463d985ac6ddba3d7272001a9770e7082f7e0035f3f7b2f7664b738",
+    "__main__.py": "e01da52bb9a327bb6c7fe865e462064d4b1f29fb96248ce4c9832dbc239d8e9d"
+  },
+  "working_tree_note": "Collection used uncommitted sources. The collection-time source hashes are retained; the historical status listing was removed during the 2026-10-07 cleanup."
+}

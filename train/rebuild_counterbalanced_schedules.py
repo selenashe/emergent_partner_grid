@@ -37,6 +37,11 @@ class OriginalZipInfo(zipfile.ZipInfo):
 def save_original_archive(schedule, path):
     # NumPy 2 uses ZIP64 headers even for small members. NumPy 1 may not;
     # write that wrapper explicitly so recovery preserves the frozen checksum.
+    # Audit guide:
+    # Write arrays using the historical NPZ archive conventions so regeneration can
+    # reproduce exact bytes. Equal numerical arrays alone would not satisfy the manifest
+    # file checksum.
+    #
     with zipfile.ZipFile(path, "w", compression=zipfile.ZIP_STORED) as archive:
         for key in ("layouts", "profile_order", "capability_pairs", "seed",
                     "n_layouts", "passes_per_cycle"):
@@ -50,6 +55,12 @@ def save_original_archive(schedule, path):
 
 
 def rebuild(manifest_path, output_dir=None):
+    # Audit guide:
+    # Load the recorded parameters and frozen scheduler/population source, regenerate
+    # missing schedule arrays, and require original SHA-256 matches. This restores local
+    # ignored arrays for existing experiments without redefining their schedules or
+    # resubmitting jobs.
+    #
     manifest = resolve_record_paths(json.loads(resolve_path(manifest_path).read_text()))
     version = manifest["versions"]["v2"]
     source = Path(version["frozen_source_root"])

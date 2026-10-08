@@ -1,0 +1,53 @@
+{
+  "prediction_target": "Current-state first block of delay embedding; already observed past blocks excluded from score",
+  "equal_episode_error": {
+    "mean": 0.018758198208812842,
+    "low": 0.016230635762807095,
+    "high": 0.021083798052961525,
+    "n_units": 6
+  },
+  "event_evidence": {
+    "observed_movements": 728,
+    "both_goals_observed_fraction": 0.0,
+    "n_event_windows": 4176
+  },
+  "policy": "rnn_single_influence_seed3",
+  "selected_rank": 40,
+  "selected_delay": 2,
+  "test_mse": 0.01711185857809558,
+  "persistence_mse": 0.032775405794382095,
+  "input_omitting_dmd_mse": 0.02916246978444069,
+  "input_only_mse": 0.3062622556825235,
+  "test_improvement_over_persistence": 0.4779055159393738,
+  "short_horizon_mse": [
+    0.054141879714479486,
+    0.05533929399211602,
+    0.06612842344933516,
+    0.0743418433936313
+  ],
+  "spectral_radius": 1.0000505447387695,
+  "design_condition_number": 249.4723358154297,
+  "common_raw_input_mse": 0.07612249889204101,
+  "common_raw_input_persistence_mse": 0.06588193029165268,
+  "dsa_distances": [
+    {
+      "first": "early",
+      "second": "late",
+      "joint": 9.483088493347168,
+      "intrinsic": 2.8132376670837402,
+      "input": 2.2524917311444868
+    },
+    {
+      "first": "faster_red",
+      "second": "faster_blue",
+      "joint": 7.796690940856934,
+      "intrinsic": 2.222763776779175,
+      "input": 1.2476417999021572
+    }
+  ],
+  "n_train_segments": 48,
+  "n_test_segments": 24,
+  "interpretation": "Global linear approximation; regime differences reflect visited states of fixed weights. Similarity and observational fits do not establish causal memory use.",
+  "hidden_training_pca_variance": 0.9825786010882356,
+  "input_training_pca_variance": 0.9203146401750053
+}

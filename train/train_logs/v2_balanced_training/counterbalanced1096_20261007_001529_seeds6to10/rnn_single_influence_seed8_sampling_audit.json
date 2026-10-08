@@ -1,0 +1,30 @@
+{
+  "sampling_protocol": "paired_counterbalanced_v1",
+  "experiment_version": "v2_balanced_training",
+  "allocation_protocol": "online_v2",
+  "schedule_path": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/schedules/single.npz",
+  "schedule_sha256": "359d749df173d1b9afd2dd160fde92bad5e661d61de9011e1cf9452c83efd42b",
+  "allocated_episode_prefix": 61732,
+  "unused_preallocated_episodes": 2938568,
+  "allocated_episode_count_difference": 0,
+  "collected_environment_steps": 59965440,
+  "rounds_started": 1232163,
+  "rounds_completed": 1231918,
+  "profiles": [
+    {
+      "capability": [
+        1,
+        4
+      ],
+      "episodes_allocated": 61732,
+      "episodes_started": 61731,
+      "episodes_completed": 61476,
+      "rounds_started": 1232163,
+      "rounds_completed": 1231918,
+      "environment_steps": 59965440,
+      "unique_layouts_started": 1096
+    }
+  ],
+  "arrays": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261007_001529_seeds6to10/rnn_single_influence_seed8_sampling_audit.npz",
+  "note": "Allocation balance is exact up to one episode. Started/completed exposure can differ at the fixed-step cutoff; full matrices and active episodes are retained."
+}

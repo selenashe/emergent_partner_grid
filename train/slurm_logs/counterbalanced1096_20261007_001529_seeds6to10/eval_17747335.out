@@ -1,0 +1,120 @@
+[evaluation] v1 rnn_diverse_influence_seed6
+[eval] slice=train, |pool|=24, n_eps/cap=20
+    round_success=0.988 reward/round=+0.6495 opt_alloc=0.500 regret=+0.1485
+[eval] slice=test, |pool|=22, n_eps/cap=20
+    round_success=0.987 reward/round=+0.6846 opt_alloc=0.500 regret=+0.1488
+[eval] wrote /juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_balanced_training/counterbalanced1096_20261007_001529_seeds6to10/rnn_diverse_influence_seed6_summary.json
+[evaluation] v1 rnn_diverse_influence_seed7
+[eval] slice=train, |pool|=24, n_eps/cap=20
+    round_success=0.982 reward/round=+0.7433 opt_alloc=0.922 regret=+0.0170
+[eval] slice=test, |pool|=22, n_eps/cap=20
+    round_success=0.978 reward/round=+0.7804 opt_alloc=0.944 regret=+0.0134
+[eval] wrote /juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_balanced_training/counterbalanced1096_20261007_001529_seeds6to10/rnn_diverse_influence_seed7_summary.json
+[evaluation] v1 rnn_diverse_influence_seed8
+[eval] slice=train, |pool|=24, n_eps/cap=20
+    round_success=0.949 reward/round=+0.6373 opt_alloc=0.756 regret=+0.0562
+[eval] slice=test, |pool|=22, n_eps/cap=20
+    round_success=0.935 reward/round=+0.6457 opt_alloc=0.782 regret=+0.0504
+[eval] wrote /juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_balanced_training/counterbalanced1096_20261007_001529_seeds6to10/rnn_diverse_influence_seed8_summary.json
+[evaluation] v1 rnn_diverse_influence_seed9
+[eval] slice=train, |pool|=24, n_eps/cap=20
+    round_success=0.986 reward/round=+0.7498 opt_alloc=0.944 regret=+0.0120
+[eval] slice=test, |pool|=22, n_eps/cap=20
+    round_success=0.982 reward/round=+0.7892 opt_alloc=0.954 regret=+0.0102
+[eval] wrote /juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_balanced_training/counterbalanced1096_20261007_001529_seeds6to10/rnn_diverse_influence_seed9_summary.json
+[evaluation] v1 rnn_diverse_influence_seed10
+[eval] slice=train, |pool|=24, n_eps/cap=20
+    round_success=0.984 reward/round=+0.7438 opt_alloc=0.908 regret=+0.0223
+[eval] slice=test, |pool|=22, n_eps/cap=20
+    round_success=0.976 reward/round=+0.7792 opt_alloc=0.938 regret=+0.0150
+[eval] wrote /juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_balanced_training/counterbalanced1096_20261007_001529_seeds6to10/rnn_diverse_influence_seed10_summary.json
+[evaluation] v1 mlp_diverse_influence_seed6
+[eval] slice=train, |pool|=24, n_eps/cap=20
+    round_success=0.984 reward/round=+0.6420 opt_alloc=0.499 regret=+0.1522
+[eval] slice=test, |pool|=22, n_eps/cap=20
+    round_success=0.982 reward/round=+0.6739 opt_alloc=0.500 regret=+0.1488
+[eval] wrote /juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_balanced_training/counterbalanced1096_20261007_001529_seeds6to10/mlp_diverse_influence_seed6_summary.json
+[evaluation] v1 mlp_diverse_influence_seed7
+[eval] slice=train, |pool|=24, n_eps/cap=20
+    round_success=0.987 reward/round=+0.6485 opt_alloc=0.499 regret=+0.1454
+[eval] slice=test, |pool|=22, n_eps/cap=20
+    round_success=0.989 reward/round=+0.6898 opt_alloc=0.494 regret=+0.1469
+[eval] wrote /juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_balanced_training/counterbalanced1096_20261007_001529_seeds6to10/mlp_diverse_influence_seed7_summary.json
+[evaluation] v1 mlp_diverse_influence_seed8
+[eval] slice=train, |pool|=24, n_eps/cap=20
+    round_success=0.831 reward/round=+0.3432 opt_alloc=0.496 regret=+0.1474
+[eval] slice=test, |pool|=22, n_eps/cap=20
+    round_success=0.839 reward/round=+0.3839 opt_alloc=0.507 regret=+0.1452
+[eval] wrote /juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_balanced_training/counterbalanced1096_20261007_001529_seeds6to10/mlp_diverse_influence_seed8_summary.json
+[evaluation] v1 mlp_diverse_influence_seed9
+[eval] slice=train, |pool|=24, n_eps/cap=20
+    round_success=0.990 reward/round=+0.6532 opt_alloc=0.494 regret=+0.1478
+[eval] slice=test, |pool|=22, n_eps/cap=20
+    round_success=0.990 reward/round=+0.6962 opt_alloc=0.499 regret=+0.1470
+[eval] wrote /juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_balanced_training/counterbalanced1096_20261007_001529_seeds6to10/mlp_diverse_influence_seed9_summary.json
+[evaluation] v1 mlp_diverse_influence_seed10
+[eval] slice=train, |pool|=24, n_eps/cap=20
+    round_success=0.985 reward/round=+0.6381 opt_alloc=0.498 regret=+0.1453
+[eval] slice=test, |pool|=22, n_eps/cap=20
+    round_success=0.987 reward/round=+0.6794 opt_alloc=0.494 regret=+0.1467
+[eval] wrote /juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_balanced_training/counterbalanced1096_20261007_001529_seeds6to10/mlp_diverse_influence_seed10_summary.json
+[evaluation] v1 rnn_single_influence_seed6
+[eval] slice=train, |pool|=24, n_eps/cap=20
+    round_success=0.985 reward/round=+0.6503 opt_alloc=0.500 regret=+0.1485
+[eval] slice=test, |pool|=22, n_eps/cap=20
+    round_success=0.987 reward/round=+0.6919 opt_alloc=0.500 regret=+0.1488
+[eval] wrote /juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_balanced_training/counterbalanced1096_20261007_001529_seeds6to10/rnn_single_influence_seed6_summary.json
+[evaluation] v1 rnn_single_influence_seed7
+[eval] slice=train, |pool|=24, n_eps/cap=20
+    round_success=0.992 reward/round=+0.6643 opt_alloc=0.500 regret=+0.1485
+[eval] slice=test, |pool|=22, n_eps/cap=20
+    round_success=0.993 reward/round=+0.7034 opt_alloc=0.500 regret=+0.1488
+[eval] wrote /juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_balanced_training/counterbalanced1096_20261007_001529_seeds6to10/rnn_single_influence_seed7_summary.json
+[evaluation] v1 rnn_single_influence_seed8
+[eval] slice=train, |pool|=24, n_eps/cap=20
+    round_success=0.993 reward/round=+0.6664 opt_alloc=0.499 regret=+0.1482
+[eval] slice=test, |pool|=22, n_eps/cap=20
+    round_success=0.994 reward/round=+0.7059 opt_alloc=0.502 regret=+0.1481
+[eval] wrote /juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_balanced_training/counterbalanced1096_20261007_001529_seeds6to10/rnn_single_influence_seed8_summary.json
+[evaluation] v1 rnn_single_influence_seed9
+[eval] slice=train, |pool|=24, n_eps/cap=20
+    round_success=0.991 reward/round=+0.6622 opt_alloc=0.500 regret=+0.1485
+[eval] slice=test, |pool|=22, n_eps/cap=20
+    round_success=0.982 reward/round=+0.6804 opt_alloc=0.489 regret=+0.1536
+[eval] wrote /juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_balanced_training/counterbalanced1096_20261007_001529_seeds6to10/rnn_single_influence_seed9_summary.json
+[evaluation] v1 rnn_single_influence_seed10
+[eval] slice=train, |pool|=24, n_eps/cap=20
+    round_success=0.991 reward/round=+0.6638 opt_alloc=0.500 regret=+0.1484
+[eval] slice=test, |pool|=22, n_eps/cap=20
+    round_success=0.987 reward/round=+0.6929 opt_alloc=0.492 regret=+0.1520
+[eval] wrote /juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_balanced_training/counterbalanced1096_20261007_001529_seeds6to10/rnn_single_influence_seed10_summary.json
+[evaluation] v1 rnn_diverse_noinfluence_seed6
+[eval] slice=train, |pool|=24, n_eps/cap=20
+    round_success=0.952 reward/round=+0.5676 opt_alloc=0.493 regret=+0.1524
+[eval] slice=test, |pool|=22, n_eps/cap=20
+    round_success=0.953 reward/round=+0.6055 opt_alloc=0.493 regret=+0.1509
+[eval] wrote /juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_balanced_training/counterbalanced1096_20261007_001529_seeds6to10/rnn_diverse_noinfluence_seed6_summary.json
+[evaluation] v1 rnn_diverse_noinfluence_seed7
+[eval] slice=train, |pool|=24, n_eps/cap=20
+    round_success=0.962 reward/round=+0.5919 opt_alloc=0.494 regret=+0.1518
+[eval] slice=test, |pool|=22, n_eps/cap=20
+    round_success=0.968 reward/round=+0.6400 opt_alloc=0.489 regret=+0.1526
+[eval] wrote /juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_balanced_training/counterbalanced1096_20261007_001529_seeds6to10/rnn_diverse_noinfluence_seed7_summary.json
+[evaluation] v1 rnn_diverse_noinfluence_seed8
+[eval] slice=train, |pool|=24, n_eps/cap=20
+    round_success=0.724 reward/round=+0.1211 opt_alloc=0.496 regret=+0.1501
+[eval] slice=test, |pool|=22, n_eps/cap=20
+    round_success=0.743 reward/round=+0.1711 opt_alloc=0.499 regret=+0.1491
+[eval] wrote /juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_balanced_training/counterbalanced1096_20261007_001529_seeds6to10/rnn_diverse_noinfluence_seed8_summary.json
+[evaluation] v1 rnn_diverse_noinfluence_seed9
+[eval] slice=train, |pool|=24, n_eps/cap=20
+    round_success=0.950 reward/round=+0.5660 opt_alloc=0.497 regret=+0.1505
+[eval] slice=test, |pool|=22, n_eps/cap=20
+    round_success=0.953 reward/round=+0.6065 opt_alloc=0.505 regret=+0.1481
+[eval] wrote /juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_balanced_training/counterbalanced1096_20261007_001529_seeds6to10/rnn_diverse_noinfluence_seed9_summary.json
+[evaluation] v1 rnn_diverse_noinfluence_seed10
+[eval] slice=train, |pool|=24, n_eps/cap=20
+    round_success=0.964 reward/round=+0.5925 opt_alloc=0.504 regret=+0.1472
+[eval] slice=test, |pool|=22, n_eps/cap=20
+    round_success=0.965 reward/round=+0.6330 opt_alloc=0.498 regret=+0.1490
+[eval] wrote /juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_balanced_training/counterbalanced1096_20261007_001529_seeds6to10/rnn_diverse_noinfluence_seed10_summary.json

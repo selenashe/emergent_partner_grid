@@ -59,6 +59,12 @@ def build_schedule(
     training pool and ``rounds_per_episode`` layouts sampled uniformly
     with replacement from ``[0, n_layouts_train)``.
     """
+    # Audit guide:
+    # Materialize one random capability per partner episode and one independently
+    # sampled layout per round. Uniform sampling is a distributional promise, not an
+    # exact count quota. Storing the array and seed makes the draws reproducible;
+    # workers use separate starting cursors into this shared schedule.
+    #
     cap_pairs = np.asarray(
         [[int(a), int(b)] for a, b in partner_capability_pairs],
         dtype=np.int32,
@@ -96,12 +102,23 @@ def initial_episode_cursor(num_envs: int, schedule: EpisodeSchedule) -> np.ndarr
     """Give each vmap slot its own starting cursor, evenly spaced along
     the schedule so slots don't co-visit the same (capability, layout).
     """
+    # Audit guide:
+    # Space worker cursors along the materialized schedule so parallel environments
+    # begin at different entries. A worker advances after its own episode ends. This is
+    # the historical random sampler; it does not have the unique global dispatch
+    # guarantee of the counterbalanced queue.
+    #
     starts = (np.arange(num_envs) * (schedule.n_eps_total // max(num_envs, 1)))
     return (starts % schedule.n_eps_total).astype(np.int32)
 
 
 def summarize_schedule(schedule: EpisodeSchedule, *, verbose: bool = True) -> dict:
     """Report coverage of the original random sampler, without balance quotas."""
+    # Audit guide:
+    # Report observed profile/layout coverage in the random schedule. These counts
+    # diagnose finite sampling variation, rather than enforcing exhaustive profile-by-
+    # layout balance.
+    #
     cap_pool = schedule.partner_capability_pairs
     counts = np.zeros(cap_pool.shape[0], dtype=np.int64)
     for ci, cap in enumerate(cap_pool):

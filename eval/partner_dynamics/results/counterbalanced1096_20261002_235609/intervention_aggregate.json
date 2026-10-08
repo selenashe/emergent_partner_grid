@@ -1,0 +1,1562 @@
+[
+  {
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_influence",
+    "donor_kind": "opposite",
+    "kind": "attenuate",
+    "reward": {
+      "mean": 0.04599998792012532,
+      "low": -0.0039999961853027345,
+      "high": 0.1419999599456787,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": 0.005745088274318277,
+      "low": -5.719300304463104e-07,
+      "high": 0.017235584531634155,
+      "n_units": 5
+    },
+    "probability_l1": 0.0114932460179389,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_influence",
+    "donor_kind": "opposite",
+    "kind": "nonpartner",
+    "reward": {
+      "mean": 0.0,
+      "low": 0.0,
+      "high": 0.0,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": 0.0012909419471346458,
+      "low": -0.00014047634258910574,
+      "high": 0.0040125211801447834,
+      "n_units": 5
+    },
+    "probability_l1": 0.0028620399564982055,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_influence",
+    "donor_kind": "opposite",
+    "kind": "partner",
+    "reward": {
+      "mean": 0.0473333199818929,
+      "low": 0.0,
+      "high": 0.1419999599456787,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": 0.009466623650368433,
+      "low": -1.778898821006199e-05,
+      "high": 0.028416877469804074,
+      "n_units": 5
+    },
+    "probability_l1": 0.018958187289472548,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_influence",
+    "donor_kind": "opposite",
+    "kind": "random",
+    "reward": {
+      "mean": 0.0473333199818929,
+      "low": 0.0,
+      "high": 0.1419999599456787,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": 0.01108218673010081,
+      "low": -5.0004036395516013e-05,
+      "high": 0.03329673684382944,
+      "n_units": 5
+    },
+    "probability_l1": 0.02257139195806866,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_influence",
+    "donor_kind": "opposite",
+    "kind": "rank_matched_nonpartner",
+    "reward": {
+      "mean": 0.0,
+      "low": 0.0,
+      "high": 0.0,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": 0.0014954139329669638,
+      "low": -4.274373186774483e-05,
+      "high": 0.004529215466108857,
+      "n_units": 5
+    },
+    "probability_l1": 0.003251477149880457,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_influence",
+    "donor_kind": "opposite",
+    "kind": "whole",
+    "reward": {
+      "mean": -0.009666637579600013,
+      "low": -0.18234991148114205,
+      "high": 0.20166662335395813,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": 0.7809439917405446,
+      "low": 0.3813706497351329,
+      "high": 0.9994560599327087,
+      "n_units": 5
+    },
+    "probability_l1": 1.5618879796454765,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_influence",
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "attenuate",
+    "reward": {
+      "mean": 0.04599998792012532,
+      "low": -0.0039999961853027345,
+      "high": 0.1419999599456787,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": -0.005745088274318277,
+      "low": -0.017235584531634155,
+      "high": 5.719300304463104e-07,
+      "n_units": 5
+    },
+    "probability_l1": 0.0114932460179389,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_influence",
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "nonpartner",
+    "reward": {
+      "mean": 0.000666666030883789,
+      "low": 0.0,
+      "high": 0.001333332061767578,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": -0.00012167204472603998,
+      "low": -0.0004301263872657539,
+      "high": 6.49247281335382e-05,
+      "n_units": 5
+    },
+    "probability_l1": 0.00041936451309234284,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_influence",
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "partner",
+    "reward": {
+      "mean": -0.001333332061767578,
+      "low": -0.0039999961853027345,
+      "high": 0.0,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": 0.0003962485873321006,
+      "low": -2.567195256801824e-05,
+      "high": 0.0012144698356005772,
+      "n_units": 5
+    },
+    "probability_l1": 0.0015307839102455191,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_influence",
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "random",
+    "reward": {
+      "mean": 4.336808689942018e-20,
+      "low": -0.0016666690508524578,
+      "high": 0.001333338022232056,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": -4.8209731637408974e-05,
+      "low": -0.0002229077853778942,
+      "high": 7.867745622718305e-05,
+      "n_units": 5
+    },
+    "probability_l1": 0.0005120063815372897,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_influence",
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "rank_matched_nonpartner",
+    "reward": {
+      "mean": 0.0,
+      "low": 0.0,
+      "high": 0.0,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": 0.00041255347128128507,
+      "low": -2.9814992501542293e-07,
+      "high": 0.0011614558514985638,
+      "n_units": 5
+    },
+    "probability_l1": 0.0009894887963067573,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_influence",
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "whole",
+    "reward": {
+      "mean": 0.034999988476435345,
+      "low": -0.18966660896937054,
+      "high": 0.2956665714581807,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": -0.03734315123184331,
+      "low": -0.1131443663721721,
+      "high": 0.0011219570177739041,
+      "n_units": 5
+    },
+    "probability_l1": 0.07781759775155105,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_influence",
+    "donor_kind": "same_profile",
+    "kind": "sham",
+    "reward": {
+      "mean": 0.0473333199818929,
+      "low": 0.0,
+      "high": 0.1419999599456787,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": -0.007295309059886772,
+      "low": -0.021857999423809817,
+      "high": 4.353127470343073e-08,
+      "n_units": 5
+    },
+    "probability_l1": 0.01462100283503267,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_noinfluence",
+    "donor_kind": "opposite",
+    "kind": "attenuate",
+    "reward": {
+      "mean": -0.11033329168955486,
+      "low": -0.2263332446416219,
+      "high": 0.0,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": -0.002243480040730598,
+      "low": -0.010747556388378144,
+      "high": 0.0038829887813820567,
+      "n_units": 5
+    },
+    "probability_l1": 0.03445647198338217,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_noinfluence",
+    "donor_kind": "opposite",
+    "kind": "nonpartner",
+    "reward": {
+      "mean": -0.11033329168955486,
+      "low": -0.2263332446416219,
+      "high": 0.0,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": -0.006013841689370262,
+      "low": -0.010842053592205048,
+      "high": -0.001917307753756191,
+      "n_units": 5
+    },
+    "probability_l1": 0.0420347575864677,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_noinfluence",
+    "donor_kind": "opposite",
+    "kind": "partner",
+    "reward": {
+      "mean": -0.1786665916442871,
+      "low": -0.5062498033046722,
+      "high": 0.08466664950052896,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": 0.020098015735857188,
+      "low": 0.0017401343987633786,
+      "high": 0.045097448428471874,
+      "n_units": 5
+    },
+    "probability_l1": 0.055766507767839354,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_noinfluence",
+    "donor_kind": "opposite",
+    "kind": "random",
+    "reward": {
+      "mean": -0.08566661675771078,
+      "low": -0.36933317184448244,
+      "high": 0.18366665045420327,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": -0.005398594724829309,
+      "low": -0.01927250843793445,
+      "high": 0.006876632074515024,
+      "n_units": 5
+    },
+    "probability_l1": 0.044739388817106374,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_noinfluence",
+    "donor_kind": "opposite",
+    "kind": "rank_matched_nonpartner",
+    "reward": {
+      "mean": 0.044999988873799635,
+      "low": -0.1096666256586711,
+      "high": 0.19466660817464193,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": 0.010195318538656769,
+      "low": -0.0001545743570507815,
+      "high": 0.02685693073144648,
+      "n_units": 5
+    },
+    "probability_l1": 0.04287345642320967,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_noinfluence",
+    "donor_kind": "opposite",
+    "kind": "whole",
+    "reward": {
+      "mean": -0.10599996248881023,
+      "low": -0.36499987443288173,
+      "high": 0.10866662661234539,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": -0.017318931734189393,
+      "low": -0.07847875421866773,
+      "high": 0.04138121431072553,
+      "n_units": 5
+    },
+    "probability_l1": 0.6582369011826812,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_noinfluence",
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "attenuate",
+    "reward": {
+      "mean": -0.11033329168955486,
+      "low": -0.2263332446416219,
+      "high": 0.0,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": 0.002243480040730598,
+      "low": -0.0038829887813820584,
+      "high": 0.010747556388378144,
+      "n_units": 5
+    },
+    "probability_l1": 0.03445647198338217,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_noinfluence",
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "nonpartner",
+    "reward": {
+      "mean": 0.0036666711171468103,
+      "low": 0.0,
+      "high": 0.01100001335144043,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": -0.0006518895514697462,
+      "low": -0.019567994285413687,
+      "high": 0.014355284472306568,
+      "n_units": 5
+    },
+    "probability_l1": 0.04730534134723712,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_noinfluence",
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "partner",
+    "reward": {
+      "mean": -0.10666662851969402,
+      "low": -0.2153332551320394,
+      "high": 0.0,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": 0.006946680161248273,
+      "low": -0.00235646246583201,
+      "high": 0.019225162459624696,
+      "n_units": 5
+    },
+    "probability_l1": 0.03604560713865794,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_noinfluence",
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "random",
+    "reward": {
+      "mean": -0.052333315213521324,
+      "low": -0.15699994564056396,
+      "high": 0.0,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": -0.0021661559275041025,
+      "low": -0.0063446775078773495,
+      "high": 0.000711237520057087,
+      "n_units": 5
+    },
+    "probability_l1": 0.039508840781248486,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_noinfluence",
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "rank_matched_nonpartner",
+    "reward": {
+      "mean": 0.0,
+      "low": 0.0,
+      "high": 0.0,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": -0.006837811546089749,
+      "low": -0.03491968361195177,
+      "high": 0.0111705691087991,
+      "n_units": 5
+    },
+    "probability_l1": 0.05857275955107373,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_noinfluence",
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "whole",
+    "reward": {
+      "mean": -0.0609999736150106,
+      "low": -0.2273332436879476,
+      "high": 0.09933330217997231,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": -0.019912697956897322,
+      "low": -0.17466990906589977,
+      "high": 0.13539979656537374,
+      "n_units": 5
+    },
+    "probability_l1": 0.47775134485564197,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_noinfluence",
+    "donor_kind": "same_profile",
+    "kind": "sham",
+    "reward": {
+      "mean": -0.11033329168955486,
+      "low": -0.2263332446416219,
+      "high": 0.0,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": 0.020811583564500323,
+      "low": 0.001503232550264026,
+      "high": 0.04473368227481842,
+      "n_units": 5
+    },
+    "probability_l1": 0.06624604556224464,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "fixed_v1",
+    "condition": "rnn_single_influence",
+    "donor_kind": "opposite",
+    "kind": "attenuate",
+    "reward": {
+      "mean": 0.0,
+      "low": 0.0,
+      "high": 0.0,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": -8.761882781982421e-07,
+      "low": -1.7038981119791667e-05,
+      "high": 1.4434258143107096e-05,
+      "n_units": 5
+    },
+    "probability_l1": 2.1024783412911434e-05,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "fixed_v1",
+    "condition": "rnn_single_influence",
+    "donor_kind": "opposite",
+    "kind": "nonpartner",
+    "reward": {
+      "mean": 0.0,
+      "low": 0.0,
+      "high": 0.0,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": -1.4144182205200196e-05,
+      "low": -3.363887468973795e-05,
+      "high": -3.9736429850260424e-09,
+      "n_units": 5
+    },
+    "probability_l1": 2.8328819462234794e-05,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "fixed_v1",
+    "condition": "rnn_single_influence",
+    "donor_kind": "opposite",
+    "kind": "partner",
+    "reward": {
+      "mean": 0.0,
+      "low": 0.0,
+      "high": 0.0,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": -4.684925079345703e-06,
+      "low": -2.839366594950358e-05,
+      "high": 1.4370779196421305e-05,
+      "n_units": 5
+    },
+    "probability_l1": 2.8563132061928027e-05,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "fixed_v1",
+    "condition": "rnn_single_influence",
+    "donor_kind": "opposite",
+    "kind": "random",
+    "reward": {
+      "mean": 0.0,
+      "low": 0.0,
+      "high": 0.0,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": 3.83456548055013e-06,
+      "low": -1.6129215558369956e-05,
+      "high": 2.769629160563151e-05,
+      "n_units": 5
+    },
+    "probability_l1": 2.9294546592343684e-05,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "fixed_v1",
+    "condition": "rnn_single_influence",
+    "donor_kind": "opposite",
+    "kind": "rank_matched_nonpartner",
+    "reward": {
+      "mean": 0.0,
+      "low": 0.0,
+      "high": 0.0,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": 1.062949498494466e-05,
+      "low": 2.781550089518229e-08,
+      "high": 2.1998087565104166e-05,
+      "n_units": 5
+    },
+    "probability_l1": 2.12798120022617e-05,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "fixed_v1",
+    "condition": "rnn_single_influence",
+    "donor_kind": "opposite",
+    "kind": "whole",
+    "reward": {
+      "mean": -0.0016666670640309658,
+      "low": -0.0063333352406819655,
+      "high": 0.003666667143503824,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": -0.0008434454600016276,
+      "low": -0.0017856677373250325,
+      "high": -5.53131103515625e-06,
+      "n_units": 5
+    },
+    "probability_l1": 0.0016942183029054075,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "fixed_v1",
+    "condition": "rnn_single_influence",
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "attenuate",
+    "reward": {
+      "mean": 0.0,
+      "low": 0.0,
+      "high": 0.0,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": 8.761882781982421e-07,
+      "low": -1.4434258143107096e-05,
+      "high": 1.7038981119791667e-05,
+      "n_units": 5
+    },
+    "probability_l1": 2.1024783412911434e-05,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "fixed_v1",
+    "condition": "rnn_single_influence",
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "nonpartner",
+    "reward": {
+      "mean": 0.0,
+      "low": 0.0,
+      "high": 0.0,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": 7.810195287068686e-06,
+      "low": 0.0,
+      "high": 2.2087494532267252e-05,
+      "n_units": 5
+    },
+    "probability_l1": 1.5621360404294297e-05,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "fixed_v1",
+    "condition": "rnn_single_influence",
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "partner",
+    "reward": {
+      "mean": 0.0,
+      "low": 0.0,
+      "high": 0.0,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": -5.69100261436483e-23,
+      "low": -3.916025161743164e-06,
+      "high": 3.892183303833008e-06,
+      "n_units": 5
+    },
+    "probability_l1": 5.23810263718764e-06,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "fixed_v1",
+    "condition": "rnn_single_influence",
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "random",
+    "reward": {
+      "mean": 0.0,
+      "low": 0.0,
+      "high": 0.0,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": -1.033147176106771e-06,
+      "low": -2.3245811462402344e-06,
+      "high": 7.947285970052083e-09,
+      "n_units": 5
+    },
+    "probability_l1": 2.1004438232719023e-06,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "fixed_v1",
+    "condition": "rnn_single_influence",
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "rank_matched_nonpartner",
+    "reward": {
+      "mean": 0.0,
+      "low": 0.0,
+      "high": 0.0,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": 1.609325408935547e-07,
+      "low": -6.75519307454427e-08,
+      "high": 5.642573038736979e-07,
+      "n_units": 5
+    },
+    "probability_l1": 4.5696747861997026e-07,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "fixed_v1",
+    "condition": "rnn_single_influence",
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "whole",
+    "reward": {
+      "mean": -0.0040000001589457195,
+      "low": -0.0063333352406819655,
+      "high": -0.0016666650772094727,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": 0.0008277257283528646,
+      "low": 6.600220998128256e-06,
+      "high": 0.0017358779907226563,
+      "n_units": 5
+    },
+    "probability_l1": 0.0016922094150942407,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "fixed_v1",
+    "condition": "rnn_single_influence",
+    "donor_kind": "same_profile",
+    "kind": "sham",
+    "reward": {
+      "mean": 0.0,
+      "low": 0.0,
+      "high": 0.0,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": -2.43981679280599e-06,
+      "low": -1.4493862787882486e-05,
+      "high": 7.14262326558431e-06,
+      "n_units": 5
+    },
+    "probability_l1": 1.4459551939416395e-05,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "online_v2",
+    "condition": "rnn_diverse_influence",
+    "donor_kind": "opposite",
+    "kind": "attenuate",
+    "reward": {
+      "mean": 0.09399997393290202,
+      "low": 0.0,
+      "high": 0.28133325576782225,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": 0.002508823152114322,
+      "low": 6.202877548275865e-05,
+      "high": 0.007317698069846302,
+      "n_units": 5
+    },
+    "probability_l1": 0.02703882340574637,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "online_v2",
+    "condition": "rnn_diverse_influence",
+    "donor_kind": "opposite",
+    "kind": "nonpartner",
+    "reward": {
+      "mean": 0.0019999980926513673,
+      "low": 0.0,
+      "high": 0.005333328247070312,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": -0.0031608390785095248,
+      "low": -0.008424900249732066,
+      "high": 6.165054252316313e-05,
+      "n_units": 5
+    },
+    "probability_l1": 0.03131542316720394,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "online_v2",
+    "condition": "rnn_diverse_influence",
+    "donor_kind": "opposite",
+    "kind": "partner",
+    "reward": {
+      "mean": 0.05466664632161459,
+      "low": 0.0,
+      "high": 0.16333327293395997,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": 0.005746624733046701,
+      "low": -0.00019738133219107112,
+      "high": 0.017297776588869357,
+      "n_units": 5
+    },
+    "probability_l1": 0.059697705846823136,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "online_v2",
+    "condition": "rnn_diverse_influence",
+    "donor_kind": "opposite",
+    "kind": "random",
+    "reward": {
+      "mean": 0.11399995485941569,
+      "low": 0.0,
+      "high": 0.34199986457824705,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": 0.004573104027501056,
+      "low": -0.0006736940536939074,
+      "high": 0.014576148013384227,
+      "n_units": 5
+    },
+    "probability_l1": 0.05806952130127078,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "online_v2",
+    "condition": "rnn_diverse_influence",
+    "donor_kind": "opposite",
+    "kind": "rank_matched_nonpartner",
+    "reward": {
+      "mean": -0.041666658719380696,
+      "low": -0.1249999761581421,
+      "high": 0.0,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": 0.0022003177836268147,
+      "low": 0.00024782742654376005,
+      "high": 0.005404404094345712,
+      "n_units": 5
+    },
+    "probability_l1": 0.03133937257419651,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "online_v2",
+    "condition": "rnn_diverse_influence",
+    "donor_kind": "opposite",
+    "kind": "whole",
+    "reward": {
+      "mean": 0.15666661858558656,
+      "low": -0.013666647672653204,
+      "high": 0.32499990463256834,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": 0.223007270382368,
+      "low": 0.1519771881682876,
+      "high": 0.2913435885294651,
+      "n_units": 5
+    },
+    "probability_l1": 1.130020448565483,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "online_v2",
+    "condition": "rnn_diverse_influence",
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "attenuate",
+    "reward": {
+      "mean": 0.09399997393290202,
+      "low": 0.0,
+      "high": 0.28133325576782225,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": -0.002508823152114322,
+      "low": -0.007317698069846302,
+      "high": -6.202877548275865e-05,
+      "n_units": 5
+    },
+    "probability_l1": 0.02703882340574637,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "online_v2",
+    "condition": "rnn_diverse_influence",
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "nonpartner",
+    "reward": {
+      "mean": 0.11333328882853191,
+      "low": 0.0,
+      "high": 0.3386665344238281,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": -0.0018602150598629424,
+      "low": -0.005124313445564137,
+      "high": -0.00012112079757571337,
+      "n_units": 5
+    },
+    "probability_l1": 0.04275979440208175,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "online_v2",
+    "condition": "rnn_diverse_influence",
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "partner",
+    "reward": {
+      "mean": 0.05766664346059164,
+      "low": 0.0,
+      "high": 0.1723332643508911,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": -0.002619488184139603,
+      "low": -0.007263000630246097,
+      "high": -2.402777665035198e-05,
+      "n_units": 5
+    },
+    "probability_l1": 0.03055287332099397,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "online_v2",
+    "condition": "rnn_diverse_influence",
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "random",
+    "reward": {
+      "mean": 0.0016666650772094727,
+      "low": 0.0,
+      "high": 0.004333329200744629,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": 0.00010307169814041115,
+      "low": -0.00014987270095237669,
+      "high": 0.00040678499373522447,
+      "n_units": 5
+    },
+    "probability_l1": 0.02686815489323635,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "online_v2",
+    "condition": "rnn_diverse_influence",
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "rank_matched_nonpartner",
+    "reward": {
+      "mean": 0.03633333047231038,
+      "low": -0.0009999990463256836,
+      "high": 0.10999999046325684,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": -0.002014184563843931,
+      "low": -0.004858252257690766,
+      "high": -0.00017004083135058561,
+      "n_units": 5
+    },
+    "probability_l1": 0.0292546441303178,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "online_v2",
+    "condition": "rnn_diverse_influence",
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "whole",
+    "reward": {
+      "mean": 0.20333327054977418,
+      "low": 0.027333331108093273,
+      "high": 0.3793332099914551,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": -0.10312935101246694,
+      "low": -0.1411081993952394,
+      "high": -0.04056647074709569,
+      "n_units": 5
+    },
+    "probability_l1": 1.083361554145813,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "online_v2",
+    "condition": "rnn_diverse_influence",
+    "donor_kind": "same_profile",
+    "kind": "sham",
+    "reward": {
+      "mean": 0.05566664536794027,
+      "low": 0.0,
+      "high": 0.16633327007293702,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": 0.00012522691554295304,
+      "low": -0.00019030601574020995,
+      "high": 0.0005125161696620731,
+      "n_units": 5
+    },
+    "probability_l1": 0.024934149166620047,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "online_v2",
+    "condition": "rnn_diverse_noinfluence",
+    "donor_kind": "opposite",
+    "kind": "attenuate",
+    "reward": {
+      "mean": -0.051666645208994555,
+      "low": -0.16299993991851808,
+      "high": 0.008000004291534423,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": -0.005388683670510848,
+      "low": -0.015305518933261434,
+      "high": 0.004760438345838317,
+      "n_units": 5
+    },
+    "probability_l1": 0.15094653556896653,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "online_v2",
+    "condition": "rnn_diverse_noinfluence",
+    "donor_kind": "opposite",
+    "kind": "nonpartner",
+    "reward": {
+      "mean": -0.04833331505457561,
+      "low": -0.31899988651275635,
+      "high": 0.17399994134902955,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": 0.017800205635527772,
+      "low": -0.009657312650233509,
+      "high": 0.04739672560244799,
+      "n_units": 5
+    },
+    "probability_l1": 0.19306060097859093,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "online_v2",
+    "condition": "rnn_diverse_noinfluence",
+    "donor_kind": "opposite",
+    "kind": "partner",
+    "reward": {
+      "mean": -0.04799998203913371,
+      "low": -0.17399992942810058,
+      "high": 0.029999983310699464,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": -0.00023521641269326184,
+      "low": -0.007999243587255478,
+      "high": 0.006941763149419153,
+      "n_units": 5
+    },
+    "probability_l1": 0.16413143844733802,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "online_v2",
+    "condition": "rnn_diverse_noinfluence",
+    "donor_kind": "opposite",
+    "kind": "random",
+    "reward": {
+      "mean": -0.09766663312911987,
+      "low": -0.19699993530909218,
+      "high": 0.0,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": 0.00400069341994822,
+      "low": -0.018594361205274863,
+      "high": 0.03238088696574171,
+      "n_units": 5
+    },
+    "probability_l1": 0.1588453833193327,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "online_v2",
+    "condition": "rnn_diverse_noinfluence",
+    "donor_kind": "opposite",
+    "kind": "rank_matched_nonpartner",
+    "reward": {
+      "mean": -0.11099995772043865,
+      "low": -0.3319998741149902,
+      "high": 0.0,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": 0.004445375455543398,
+      "low": -0.005664702847522373,
+      "high": 0.016450633062049747,
+      "n_units": 5
+    },
+    "probability_l1": 0.18815831295882932,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "online_v2",
+    "condition": "rnn_diverse_noinfluence",
+    "donor_kind": "opposite",
+    "kind": "whole",
+    "reward": {
+      "mean": 0.12099995414415995,
+      "low": 0.0063333352406819655,
+      "high": 0.2346665620803833,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": 0.08854654356837273,
+      "low": -0.05378056988120079,
+      "high": 0.22357740104198456,
+      "n_units": 5
+    },
+    "probability_l1": 1.2479586243629455,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "online_v2",
+    "condition": "rnn_diverse_noinfluence",
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "attenuate",
+    "reward": {
+      "mean": -0.051666645208994555,
+      "low": -0.16299993991851808,
+      "high": 0.008000004291534423,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": 0.005388683670510848,
+      "low": -0.004760438345838337,
+      "high": 0.015305518933261434,
+      "n_units": 5
+    },
+    "probability_l1": 0.15094653556896653,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "online_v2",
+    "condition": "rnn_diverse_noinfluence",
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "nonpartner",
+    "reward": {
+      "mean": 0.002999999125798547,
+      "low": -0.16505827724933625,
+      "high": 0.17866660356521608,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": -0.011643891222774982,
+      "low": -0.030350033318003018,
+      "high": 0.004075308976850154,
+      "n_units": 5
+    },
+    "probability_l1": 0.14745089479190104,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "online_v2",
+    "condition": "rnn_diverse_noinfluence",
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "partner",
+    "reward": {
+      "mean": -0.21533325711886087,
+      "low": -0.48566649556159974,
+      "high": 0.0,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": 0.000362266801918546,
+      "low": -0.011311731970248122,
+      "high": 0.010528736064831415,
+      "n_units": 5
+    },
+    "probability_l1": 0.2065330946616882,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "online_v2",
+    "condition": "rnn_diverse_noinfluence",
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "random",
+    "reward": {
+      "mean": -0.08899997075398763,
+      "low": -0.2969998955726624,
+      "high": 0.030666649341583252,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": -0.015304617956280705,
+      "low": -0.04340790960316856,
+      "high": 0.009277711498240632,
+      "n_units": 5
+    },
+    "probability_l1": 0.21664184576567655,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "online_v2",
+    "condition": "rnn_diverse_noinfluence",
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "rank_matched_nonpartner",
+    "reward": {
+      "mean": -0.11566661993662516,
+      "low": -0.3459998607635498,
+      "high": 0.0,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": -0.009731483304252225,
+      "low": -0.0357710724696517,
+      "high": 0.01683327412853638,
+      "n_units": 5
+    },
+    "probability_l1": 0.2317304101937824,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "online_v2",
+    "condition": "rnn_diverse_noinfluence",
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "whole",
+    "reward": {
+      "mean": -0.2789998948574066,
+      "low": -0.6490747624635695,
+      "high": -0.0029999971389770507,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": 0.05295063753922781,
+      "low": -0.05517492820819219,
+      "high": 0.16044495974977813,
+      "n_units": 5
+    },
+    "probability_l1": 1.1140783409277597,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "online_v2",
+    "condition": "rnn_diverse_noinfluence",
+    "donor_kind": "same_profile",
+    "kind": "sham",
+    "reward": {
+      "mean": 0.0029999971389770507,
+      "low": 0.0,
+      "high": 0.0063333272933959964,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": 0.0034943332973246767,
+      "low": -0.006975117263694604,
+      "high": 0.012777763434375325,
+      "n_units": 5
+    },
+    "probability_l1": 0.17291873676523817,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "online_v2",
+    "condition": "rnn_single_influence",
+    "donor_kind": "opposite",
+    "kind": "attenuate",
+    "reward": {
+      "mean": -0.0010000010331471761,
+      "low": -0.003000003099441528,
+      "high": 0.0,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": 0.003014849394094199,
+      "low": -1.4021992683410644e-06,
+      "high": 0.00904566771738852,
+      "n_units": 5
+    },
+    "probability_l1": 0.020507430025809813,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "online_v2",
+    "condition": "rnn_single_influence",
+    "donor_kind": "opposite",
+    "kind": "nonpartner",
+    "reward": {
+      "mean": -0.00033333500226338705,
+      "low": -0.001000005006790161,
+      "high": 0.0,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": 0.0054491358770368,
+      "low": -2.3118918761610986e-07,
+      "high": 0.01633516401052475,
+      "n_units": 5
+    },
+    "probability_l1": 0.03041443933673805,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "online_v2",
+    "condition": "rnn_single_influence",
+    "donor_kind": "opposite",
+    "kind": "partner",
+    "reward": {
+      "mean": 0.0,
+      "low": 0.0,
+      "high": 0.0,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": 0.0036602566833607852,
+      "low": -2.765636115024488e-06,
+      "high": 0.010983494440248856,
+      "n_units": 5
+    },
+    "probability_l1": 0.019544622854088325,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "online_v2",
+    "condition": "rnn_single_influence",
+    "donor_kind": "opposite",
+    "kind": "random",
+    "reward": {
+      "mean": 0.0,
+      "low": 0.0,
+      "high": 0.0,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": -0.0021960975058997667,
+      "low": -0.006582050025463105,
+      "high": -9.65230477352937e-07,
+      "n_units": 5
+    },
+    "probability_l1": 0.011280756308156014,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "online_v2",
+    "condition": "rnn_single_influence",
+    "donor_kind": "opposite",
+    "kind": "rank_matched_nonpartner",
+    "reward": {
+      "mean": 0.002333331108093262,
+      "low": 0.0,
+      "high": 0.006999993324279785,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": -0.004184644389897585,
+      "low": -0.012543341517448426,
+      "high": 4.828597108523051e-07,
+      "n_units": 5
+    },
+    "probability_l1": 0.01086824168351465,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "online_v2",
+    "condition": "rnn_single_influence",
+    "donor_kind": "opposite",
+    "kind": "whole",
+    "reward": {
+      "mean": 0.0029999971389770507,
+      "low": -0.002666664123535156,
+      "high": 0.01099998950958252,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": -0.016363715597738825,
+      "low": -0.05884314328432083,
+      "high": 0.011406246162174854,
+      "n_units": 5
+    },
+    "probability_l1": 0.24577741778387763,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "online_v2",
+    "condition": "rnn_single_influence",
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "attenuate",
+    "reward": {
+      "mean": -0.0010000010331471761,
+      "low": -0.003000003099441528,
+      "high": 0.0,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": -0.003014849394094199,
+      "low": -0.00904566771738852,
+      "high": 1.4021992683410644e-06,
+      "n_units": 5
+    },
+    "probability_l1": 0.020507430025809813,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "online_v2",
+    "condition": "rnn_single_influence",
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "nonpartner",
+    "reward": {
+      "mean": 0.002333331108093262,
+      "low": 0.0,
+      "high": 0.006999993324279785,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": 0.004475095910796275,
+      "low": -8.856256802876791e-07,
+      "high": 0.013426859222818166,
+      "n_units": 5
+    },
+    "probability_l1": 0.014483574364954658,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "online_v2",
+    "condition": "rnn_single_influence",
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "partner",
+    "reward": {
+      "mean": -0.0016666670640309654,
+      "low": -0.0036666691303253174,
+      "high": 0.0,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": -0.003145221756615986,
+      "low": -0.009434352318445841,
+      "high": -3.5729026421904563e-07,
+      "n_units": 5
+    },
+    "probability_l1": 0.020475891309988014,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "online_v2",
+    "condition": "rnn_single_influence",
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "random",
+    "reward": {
+      "mean": 0.002333331108093262,
+      "low": 0.0,
+      "high": 0.006999993324279785,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": 0.0069046369714972885,
+      "low": -5.089716675380865e-07,
+      "high": 0.02071115324894587,
+      "n_units": 5
+    },
+    "probability_l1": 0.01866931926577043,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "online_v2",
+    "condition": "rnn_single_influence",
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "rank_matched_nonpartner",
+    "reward": {
+      "mean": 0.002333331108093262,
+      "low": 0.0,
+      "high": 0.006999993324279785,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": 0.00523982987118264,
+      "low": -1.7890706658363342e-07,
+      "high": 0.01571008612712224,
+      "n_units": 5
+    },
+    "probability_l1": 0.014373698716482863,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "online_v2",
+    "condition": "rnn_single_influence",
+    "donor_kind": "same_orientation_different_delay",
+    "kind": "whole",
+    "reward": {
+      "mean": -0.00033333698908487953,
+      "low": -0.0020000040531158447,
+      "high": 0.000999993085861206,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": -0.04487094281551739,
+      "low": -0.11802750031153361,
+      "high": 0.002668158244341612,
+      "n_units": 5
+    },
+    "probability_l1": 0.22070982343429932,
+    "n_seeds": 5
+  },
+  {
+    "protocol": "online_v2",
+    "condition": "rnn_single_influence",
+    "donor_kind": "same_profile",
+    "kind": "sham",
+    "reward": {
+      "mean": -0.0003333350022633871,
+      "low": -0.003000003099441528,
+      "high": 0.0019999980926513673,
+      "n_units": 5
+    },
+    "allocation": {
+      "mean": -0.0029080009864022333,
+      "low": -0.008721224109952647,
+      "high": -6.4500297109286e-07,
+      "n_units": 5
+    },
+    "probability_l1": 0.02108320604334987,
+    "n_seeds": 5
+  }
+]

@@ -54,6 +54,12 @@ def _csv(out_dir: Path, name: str, rows: list[dict]) -> None:
 
 
 def main() -> None:
+    # Audit guide:
+    # Read saved geometry metadata and plot distance and wall-density distributions plus
+    # balancing feasibility diagnostics. These are descriptive corpus checks, not
+    # another training run. Inspect both goal marginals to verify a simultaneous
+    # distance-balance claim.
+    #
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--corpus_dir", type=Path, required=True)
     parser.add_argument("--output_dir", type=Path)

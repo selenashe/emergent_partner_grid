@@ -1,0 +1,7052 @@
+[
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed1_train.h5",
+    "version": "v1",
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_influence",
+    "seed": 1,
+    "slice": "train",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "capability": [
+        480,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        480
+      ],
+      "capability_pool": [
+        24,
+        2
+      ],
+      "dones": [
+        480,
+        2000
+      ],
+      "ego_alloc_action": [
+        480,
+        2000
+      ],
+      "hidden_state": [
+        480,
+        2000,
+        128
+      ],
+      "is_t0": [
+        480,
+        2000
+      ],
+      "layout_idx": [
+        480,
+        2000
+      ],
+      "partner_assignment": [
+        480,
+        2000
+      ],
+      "partner_goal": [
+        480,
+        2000
+      ],
+      "rewards": [
+        480,
+        2000
+      ],
+      "round_done": [
+        480,
+        2000
+      ],
+      "round_idx": [
+        480,
+        2000
+      ],
+      "round_time": [
+        480,
+        2000
+      ],
+      "success": [
+        480,
+        2000
+      ]
+    },
+    "dtypes": {
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [
+      "assignment_changed",
+      "ego_request_changed"
+    ],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 529930432,
+    "mtime_ns": 1791013633307334005,
+    "fingerprint": "94f84983eb2199d0e46cdaf80354480349424bb963bb13fd0b4003f8896bf311",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed1.safetensors",
+    "checkpoint_sha256": "a885f1ca396365070b322d207cb62147eddbe6159590b094326ade1988dab227",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed1_config.json",
+    "config_sha256": "bbc8ec2aa3fc5d1a9ba6a351bee46824393995c2019e19327a59628378241260",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v1_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed1_test.h5",
+    "version": "v1",
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_influence",
+    "seed": 1,
+    "slice": "test",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "capability": [
+        440,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        440
+      ],
+      "capability_pool": [
+        22,
+        2
+      ],
+      "dones": [
+        440,
+        2000
+      ],
+      "ego_alloc_action": [
+        440,
+        2000
+      ],
+      "hidden_state": [
+        440,
+        2000,
+        128
+      ],
+      "is_t0": [
+        440,
+        2000
+      ],
+      "layout_idx": [
+        440,
+        2000
+      ],
+      "partner_assignment": [
+        440,
+        2000
+      ],
+      "partner_goal": [
+        440,
+        2000
+      ],
+      "rewards": [
+        440,
+        2000
+      ],
+      "round_done": [
+        440,
+        2000
+      ],
+      "round_idx": [
+        440,
+        2000
+      ],
+      "round_time": [
+        440,
+        2000
+      ],
+      "success": [
+        440,
+        2000
+      ]
+    },
+    "dtypes": {
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [
+      "assignment_changed",
+      "ego_request_changed"
+    ],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 485768792,
+    "mtime_ns": 1791013643299264130,
+    "fingerprint": "3faa3b2025c1666e5f04477c775c7eece193b4b2d8e9f1e7725d69eab5cf49eb",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed1.safetensors",
+    "checkpoint_sha256": "a885f1ca396365070b322d207cb62147eddbe6159590b094326ade1988dab227",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed1_config.json",
+    "config_sha256": "bbc8ec2aa3fc5d1a9ba6a351bee46824393995c2019e19327a59628378241260",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v1_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed2_train.h5",
+    "version": "v1",
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_influence",
+    "seed": 2,
+    "slice": "train",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "capability": [
+        480,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        480
+      ],
+      "capability_pool": [
+        24,
+        2
+      ],
+      "dones": [
+        480,
+        2000
+      ],
+      "ego_alloc_action": [
+        480,
+        2000
+      ],
+      "hidden_state": [
+        480,
+        2000,
+        128
+      ],
+      "is_t0": [
+        480,
+        2000
+      ],
+      "layout_idx": [
+        480,
+        2000
+      ],
+      "partner_assignment": [
+        480,
+        2000
+      ],
+      "partner_goal": [
+        480,
+        2000
+      ],
+      "rewards": [
+        480,
+        2000
+      ],
+      "round_done": [
+        480,
+        2000
+      ],
+      "round_idx": [
+        480,
+        2000
+      ],
+      "round_time": [
+        480,
+        2000
+      ],
+      "success": [
+        480,
+        2000
+      ]
+    },
+    "dtypes": {
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [
+      "assignment_changed",
+      "ego_request_changed"
+    ],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 529930432,
+    "mtime_ns": 1791013664591115232,
+    "fingerprint": "beb3f1ccac2b2c50ec1dbe2a994bcfa7d44b255b4e56f59d73a7291caf672a65",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed2.safetensors",
+    "checkpoint_sha256": "e9252861d1ba7ca66278c782aa416200faf1355662329f7524f16e45e93fe0e2",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed2_config.json",
+    "config_sha256": "c44e956c6a844c61576bf7774dfbd20dc646148bbcaa75acdb6421f0d0f3167c",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v1_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed2_test.h5",
+    "version": "v1",
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_influence",
+    "seed": 2,
+    "slice": "test",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "capability": [
+        440,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        440
+      ],
+      "capability_pool": [
+        22,
+        2
+      ],
+      "dones": [
+        440,
+        2000
+      ],
+      "ego_alloc_action": [
+        440,
+        2000
+      ],
+      "hidden_state": [
+        440,
+        2000,
+        128
+      ],
+      "is_t0": [
+        440,
+        2000
+      ],
+      "layout_idx": [
+        440,
+        2000
+      ],
+      "partner_assignment": [
+        440,
+        2000
+      ],
+      "partner_goal": [
+        440,
+        2000
+      ],
+      "rewards": [
+        440,
+        2000
+      ],
+      "round_done": [
+        440,
+        2000
+      ],
+      "round_idx": [
+        440,
+        2000
+      ],
+      "round_time": [
+        440,
+        2000
+      ],
+      "success": [
+        440,
+        2000
+      ]
+    },
+    "dtypes": {
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [
+      "assignment_changed",
+      "ego_request_changed"
+    ],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 485768792,
+    "mtime_ns": 1791013674423046475,
+    "fingerprint": "af4400d3dd8b80934e58496b2d5d5098ff6cd2d3e9a4e20802738ed9f83e1ccc",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed2.safetensors",
+    "checkpoint_sha256": "e9252861d1ba7ca66278c782aa416200faf1355662329f7524f16e45e93fe0e2",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed2_config.json",
+    "config_sha256": "c44e956c6a844c61576bf7774dfbd20dc646148bbcaa75acdb6421f0d0f3167c",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v1_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed3_train.h5",
+    "version": "v1",
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_influence",
+    "seed": 3,
+    "slice": "train",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "capability": [
+        480,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        480
+      ],
+      "capability_pool": [
+        24,
+        2
+      ],
+      "dones": [
+        480,
+        2000
+      ],
+      "ego_alloc_action": [
+        480,
+        2000
+      ],
+      "hidden_state": [
+        480,
+        2000,
+        128
+      ],
+      "is_t0": [
+        480,
+        2000
+      ],
+      "layout_idx": [
+        480,
+        2000
+      ],
+      "partner_assignment": [
+        480,
+        2000
+      ],
+      "partner_goal": [
+        480,
+        2000
+      ],
+      "rewards": [
+        480,
+        2000
+      ],
+      "round_done": [
+        480,
+        2000
+      ],
+      "round_idx": [
+        480,
+        2000
+      ],
+      "round_time": [
+        480,
+        2000
+      ],
+      "success": [
+        480,
+        2000
+      ]
+    },
+    "dtypes": {
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [
+      "assignment_changed",
+      "ego_request_changed"
+    ],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 529930432,
+    "mtime_ns": 1791013695686897771,
+    "fingerprint": "2e0cc76c3ca3ebab7db0a2e6bbc1122f0c07d856fa9b161a6917a25f13c74ca9",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed3.safetensors",
+    "checkpoint_sha256": "daa333e388b705505229212a1c99380b31fef0c6a032544ebe65eaaa29d792d2",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed3_config.json",
+    "config_sha256": "a363985bcd89fd5de921888ba0fb40115765ecd864896664dd3b95c850c578a7",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v1_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed3_test.h5",
+    "version": "v1",
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_influence",
+    "seed": 3,
+    "slice": "test",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "capability": [
+        440,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        440
+      ],
+      "capability_pool": [
+        22,
+        2
+      ],
+      "dones": [
+        440,
+        2000
+      ],
+      "ego_alloc_action": [
+        440,
+        2000
+      ],
+      "hidden_state": [
+        440,
+        2000,
+        128
+      ],
+      "is_t0": [
+        440,
+        2000
+      ],
+      "layout_idx": [
+        440,
+        2000
+      ],
+      "partner_assignment": [
+        440,
+        2000
+      ],
+      "partner_goal": [
+        440,
+        2000
+      ],
+      "rewards": [
+        440,
+        2000
+      ],
+      "round_done": [
+        440,
+        2000
+      ],
+      "round_idx": [
+        440,
+        2000
+      ],
+      "round_time": [
+        440,
+        2000
+      ],
+      "success": [
+        440,
+        2000
+      ]
+    },
+    "dtypes": {
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [
+      "assignment_changed",
+      "ego_request_changed"
+    ],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 485768792,
+    "mtime_ns": 1791013705566828678,
+    "fingerprint": "dcdfc42580e43cdac1a3fb1952961b77f0963d7508c8ca448fc34d10237eed19",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed3.safetensors",
+    "checkpoint_sha256": "daa333e388b705505229212a1c99380b31fef0c6a032544ebe65eaaa29d792d2",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed3_config.json",
+    "config_sha256": "a363985bcd89fd5de921888ba0fb40115765ecd864896664dd3b95c850c578a7",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v1_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed4_train.h5",
+    "version": "v1",
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_influence",
+    "seed": 4,
+    "slice": "train",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "capability": [
+        480,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        480
+      ],
+      "capability_pool": [
+        24,
+        2
+      ],
+      "dones": [
+        480,
+        2000
+      ],
+      "ego_alloc_action": [
+        480,
+        2000
+      ],
+      "hidden_state": [
+        480,
+        2000,
+        128
+      ],
+      "is_t0": [
+        480,
+        2000
+      ],
+      "layout_idx": [
+        480,
+        2000
+      ],
+      "partner_assignment": [
+        480,
+        2000
+      ],
+      "partner_goal": [
+        480,
+        2000
+      ],
+      "rewards": [
+        480,
+        2000
+      ],
+      "round_done": [
+        480,
+        2000
+      ],
+      "round_idx": [
+        480,
+        2000
+      ],
+      "round_time": [
+        480,
+        2000
+      ],
+      "success": [
+        480,
+        2000
+      ]
+    },
+    "dtypes": {
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [
+      "assignment_changed",
+      "ego_request_changed"
+    ],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 529930432,
+    "mtime_ns": 1791013727002678770,
+    "fingerprint": "7da7b6aa214a326035e3b93e6632f93b30a97a83ad06a714f59dbbaddc7d600e",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed4.safetensors",
+    "checkpoint_sha256": "6a49dfbefd622c24e0e5aca4b420d161c7e60f2f799f12a90796ac7d81e2a584",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed4_config.json",
+    "config_sha256": "0656de0feb4fbda115a166b4ae9c0300e54f65ff232819cd590dbd6bac04980a",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v1_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed4_test.h5",
+    "version": "v1",
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_influence",
+    "seed": 4,
+    "slice": "test",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "capability": [
+        440,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        440
+      ],
+      "capability_pool": [
+        22,
+        2
+      ],
+      "dones": [
+        440,
+        2000
+      ],
+      "ego_alloc_action": [
+        440,
+        2000
+      ],
+      "hidden_state": [
+        440,
+        2000,
+        128
+      ],
+      "is_t0": [
+        440,
+        2000
+      ],
+      "layout_idx": [
+        440,
+        2000
+      ],
+      "partner_assignment": [
+        440,
+        2000
+      ],
+      "partner_goal": [
+        440,
+        2000
+      ],
+      "rewards": [
+        440,
+        2000
+      ],
+      "round_done": [
+        440,
+        2000
+      ],
+      "round_idx": [
+        440,
+        2000
+      ],
+      "round_time": [
+        440,
+        2000
+      ],
+      "success": [
+        440,
+        2000
+      ]
+    },
+    "dtypes": {
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [
+      "assignment_changed",
+      "ego_request_changed"
+    ],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 485768792,
+    "mtime_ns": 1791013736678611102,
+    "fingerprint": "16760b974b60340c8134a0f2a26b908cfe79adfafb6837b6d577426594ed1041",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed4.safetensors",
+    "checkpoint_sha256": "6a49dfbefd622c24e0e5aca4b420d161c7e60f2f799f12a90796ac7d81e2a584",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed4_config.json",
+    "config_sha256": "0656de0feb4fbda115a166b4ae9c0300e54f65ff232819cd590dbd6bac04980a",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v1_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed5_train.h5",
+    "version": "v1",
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_influence",
+    "seed": 5,
+    "slice": "train",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "capability": [
+        480,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        480
+      ],
+      "capability_pool": [
+        24,
+        2
+      ],
+      "dones": [
+        480,
+        2000
+      ],
+      "ego_alloc_action": [
+        480,
+        2000
+      ],
+      "hidden_state": [
+        480,
+        2000,
+        128
+      ],
+      "is_t0": [
+        480,
+        2000
+      ],
+      "layout_idx": [
+        480,
+        2000
+      ],
+      "partner_assignment": [
+        480,
+        2000
+      ],
+      "partner_goal": [
+        480,
+        2000
+      ],
+      "rewards": [
+        480,
+        2000
+      ],
+      "round_done": [
+        480,
+        2000
+      ],
+      "round_idx": [
+        480,
+        2000
+      ],
+      "round_time": [
+        480,
+        2000
+      ],
+      "success": [
+        480,
+        2000
+      ]
+    },
+    "dtypes": {
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [
+      "assignment_changed",
+      "ego_request_changed"
+    ],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 529930432,
+    "mtime_ns": 1791013757470465695,
+    "fingerprint": "b9d50813c62bfce85b8cb2be43d697d28d2e9876318ebad47e5bdef91bdf507f",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed5.safetensors",
+    "checkpoint_sha256": "1297323cb8489cc728e108fa54ee56b874932aa09043fd546b07409a33559c0c",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed5_config.json",
+    "config_sha256": "02d0b9ac5c30f706387b6ac0800a8c89717811ba358122d2b5c12ecfe0c6cd2c",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v1_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed5_test.h5",
+    "version": "v1",
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_influence",
+    "seed": 5,
+    "slice": "test",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "capability": [
+        440,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        440
+      ],
+      "capability_pool": [
+        22,
+        2
+      ],
+      "dones": [
+        440,
+        2000
+      ],
+      "ego_alloc_action": [
+        440,
+        2000
+      ],
+      "hidden_state": [
+        440,
+        2000,
+        128
+      ],
+      "is_t0": [
+        440,
+        2000
+      ],
+      "layout_idx": [
+        440,
+        2000
+      ],
+      "partner_assignment": [
+        440,
+        2000
+      ],
+      "partner_goal": [
+        440,
+        2000
+      ],
+      "rewards": [
+        440,
+        2000
+      ],
+      "round_done": [
+        440,
+        2000
+      ],
+      "round_idx": [
+        440,
+        2000
+      ],
+      "round_time": [
+        440,
+        2000
+      ],
+      "success": [
+        440,
+        2000
+      ]
+    },
+    "dtypes": {
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [
+      "assignment_changed",
+      "ego_request_changed"
+    ],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 485768792,
+    "mtime_ns": 1791013767118398223,
+    "fingerprint": "e84b4a540b60120b9032753515514ffa513009eb4c7445e68a2e1f05ccafefa0",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed5.safetensors",
+    "checkpoint_sha256": "1297323cb8489cc728e108fa54ee56b874932aa09043fd546b07409a33559c0c",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed5_config.json",
+    "config_sha256": "02d0b9ac5c30f706387b6ac0800a8c89717811ba358122d2b5c12ecfe0c6cd2c",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v1_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed1_train.h5",
+    "version": "v1",
+    "protocol": "fixed_v1",
+    "condition": "rnn_single_influence",
+    "seed": 1,
+    "slice": "train",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "capability": [
+        480,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        480
+      ],
+      "capability_pool": [
+        24,
+        2
+      ],
+      "dones": [
+        480,
+        2000
+      ],
+      "ego_alloc_action": [
+        480,
+        2000
+      ],
+      "hidden_state": [
+        480,
+        2000,
+        128
+      ],
+      "is_t0": [
+        480,
+        2000
+      ],
+      "layout_idx": [
+        480,
+        2000
+      ],
+      "partner_assignment": [
+        480,
+        2000
+      ],
+      "partner_goal": [
+        480,
+        2000
+      ],
+      "rewards": [
+        480,
+        2000
+      ],
+      "round_done": [
+        480,
+        2000
+      ],
+      "round_idx": [
+        480,
+        2000
+      ],
+      "round_time": [
+        480,
+        2000
+      ],
+      "success": [
+        480,
+        2000
+      ]
+    },
+    "dtypes": {
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [
+      "assignment_changed",
+      "ego_request_changed"
+    ],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 529930432,
+    "mtime_ns": 1791013940669184459,
+    "fingerprint": "06ac926d21b0f5a1c662250928b5330f69bfc9a51b563eafb2769c03a15c5559",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed1.safetensors",
+    "checkpoint_sha256": "e65641799c3d32912d5557071bb5226b7b63590236fb68502d8365d7b30e28ac",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed1_config.json",
+    "config_sha256": "8e2bb1641825d89f1749a07740854b3f75363b947523a18bab0dd1ce5f461085",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v1_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed1_test.h5",
+    "version": "v1",
+    "protocol": "fixed_v1",
+    "condition": "rnn_single_influence",
+    "seed": 1,
+    "slice": "test",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "capability": [
+        440,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        440
+      ],
+      "capability_pool": [
+        22,
+        2
+      ],
+      "dones": [
+        440,
+        2000
+      ],
+      "ego_alloc_action": [
+        440,
+        2000
+      ],
+      "hidden_state": [
+        440,
+        2000,
+        128
+      ],
+      "is_t0": [
+        440,
+        2000
+      ],
+      "layout_idx": [
+        440,
+        2000
+      ],
+      "partner_assignment": [
+        440,
+        2000
+      ],
+      "partner_goal": [
+        440,
+        2000
+      ],
+      "rewards": [
+        440,
+        2000
+      ],
+      "round_done": [
+        440,
+        2000
+      ],
+      "round_idx": [
+        440,
+        2000
+      ],
+      "round_time": [
+        440,
+        2000
+      ],
+      "success": [
+        440,
+        2000
+      ]
+    },
+    "dtypes": {
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [
+      "assignment_changed",
+      "ego_request_changed"
+    ],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 485768792,
+    "mtime_ns": 1791013950461115975,
+    "fingerprint": "c19d326c84a9af5ce43b1b424c5d5cc20e006f35af09f0b2ca8b9d271a164bfe",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed1.safetensors",
+    "checkpoint_sha256": "e65641799c3d32912d5557071bb5226b7b63590236fb68502d8365d7b30e28ac",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed1_config.json",
+    "config_sha256": "8e2bb1641825d89f1749a07740854b3f75363b947523a18bab0dd1ce5f461085",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v1_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed2_train.h5",
+    "version": "v1",
+    "protocol": "fixed_v1",
+    "condition": "rnn_single_influence",
+    "seed": 2,
+    "slice": "train",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "capability": [
+        480,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        480
+      ],
+      "capability_pool": [
+        24,
+        2
+      ],
+      "dones": [
+        480,
+        2000
+      ],
+      "ego_alloc_action": [
+        480,
+        2000
+      ],
+      "hidden_state": [
+        480,
+        2000,
+        128
+      ],
+      "is_t0": [
+        480,
+        2000
+      ],
+      "layout_idx": [
+        480,
+        2000
+      ],
+      "partner_assignment": [
+        480,
+        2000
+      ],
+      "partner_goal": [
+        480,
+        2000
+      ],
+      "rewards": [
+        480,
+        2000
+      ],
+      "round_done": [
+        480,
+        2000
+      ],
+      "round_idx": [
+        480,
+        2000
+      ],
+      "round_time": [
+        480,
+        2000
+      ],
+      "success": [
+        480,
+        2000
+      ]
+    },
+    "dtypes": {
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [
+      "assignment_changed",
+      "ego_request_changed"
+    ],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 529930432,
+    "mtime_ns": 1791013971384969754,
+    "fingerprint": "c6589bd25931c17230acecd6226e85be49c0eefd6a124e501f967907109b3873",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed2.safetensors",
+    "checkpoint_sha256": "8497ee0ff6edd0176f176ba02f98c96acce588583946f9989295ad3802b8fc6d",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed2_config.json",
+    "config_sha256": "b98b2c86740501a8ffa206efec88ee59c82e5fafbdaed1e7667f64b8a9339a26",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v1_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed2_test.h5",
+    "version": "v1",
+    "protocol": "fixed_v1",
+    "condition": "rnn_single_influence",
+    "seed": 2,
+    "slice": "test",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "capability": [
+        440,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        440
+      ],
+      "capability_pool": [
+        22,
+        2
+      ],
+      "dones": [
+        440,
+        2000
+      ],
+      "ego_alloc_action": [
+        440,
+        2000
+      ],
+      "hidden_state": [
+        440,
+        2000,
+        128
+      ],
+      "is_t0": [
+        440,
+        2000
+      ],
+      "layout_idx": [
+        440,
+        2000
+      ],
+      "partner_assignment": [
+        440,
+        2000
+      ],
+      "partner_goal": [
+        440,
+        2000
+      ],
+      "rewards": [
+        440,
+        2000
+      ],
+      "round_done": [
+        440,
+        2000
+      ],
+      "round_idx": [
+        440,
+        2000
+      ],
+      "round_time": [
+        440,
+        2000
+      ],
+      "success": [
+        440,
+        2000
+      ]
+    },
+    "dtypes": {
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [
+      "assignment_changed",
+      "ego_request_changed"
+    ],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 485768792,
+    "mtime_ns": 1791013981024902510,
+    "fingerprint": "81265d76301c7159b722c027b0a165649519f86b992f21d36900111e2c6ac5f3",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed2.safetensors",
+    "checkpoint_sha256": "8497ee0ff6edd0176f176ba02f98c96acce588583946f9989295ad3802b8fc6d",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed2_config.json",
+    "config_sha256": "b98b2c86740501a8ffa206efec88ee59c82e5fafbdaed1e7667f64b8a9339a26",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v1_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed3_train.h5",
+    "version": "v1",
+    "protocol": "fixed_v1",
+    "condition": "rnn_single_influence",
+    "seed": 3,
+    "slice": "train",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "capability": [
+        480,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        480
+      ],
+      "capability_pool": [
+        24,
+        2
+      ],
+      "dones": [
+        480,
+        2000
+      ],
+      "ego_alloc_action": [
+        480,
+        2000
+      ],
+      "hidden_state": [
+        480,
+        2000,
+        128
+      ],
+      "is_t0": [
+        480,
+        2000
+      ],
+      "layout_idx": [
+        480,
+        2000
+      ],
+      "partner_assignment": [
+        480,
+        2000
+      ],
+      "partner_goal": [
+        480,
+        2000
+      ],
+      "rewards": [
+        480,
+        2000
+      ],
+      "round_done": [
+        480,
+        2000
+      ],
+      "round_idx": [
+        480,
+        2000
+      ],
+      "round_time": [
+        480,
+        2000
+      ],
+      "success": [
+        480,
+        2000
+      ]
+    },
+    "dtypes": {
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [
+      "assignment_changed",
+      "ego_request_changed"
+    ],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 529930432,
+    "mtime_ns": 1791014002108755436,
+    "fingerprint": "f67a76982371dffe2836802b91ba821ea607823ebf4090259678892716f37656",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed3.safetensors",
+    "checkpoint_sha256": "edfae1945e12f1e96a3b88804eedd0880a3e0142f4c07b673959544fd2aa2dc5",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed3_config.json",
+    "config_sha256": "b36ee351919f8df8fec2526530c5f5a6fd36ee8bff7d2b9bbc4cdbca7942ea00",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v1_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed3_test.h5",
+    "version": "v1",
+    "protocol": "fixed_v1",
+    "condition": "rnn_single_influence",
+    "seed": 3,
+    "slice": "test",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "capability": [
+        440,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        440
+      ],
+      "capability_pool": [
+        22,
+        2
+      ],
+      "dones": [
+        440,
+        2000
+      ],
+      "ego_alloc_action": [
+        440,
+        2000
+      ],
+      "hidden_state": [
+        440,
+        2000,
+        128
+      ],
+      "is_t0": [
+        440,
+        2000
+      ],
+      "layout_idx": [
+        440,
+        2000
+      ],
+      "partner_assignment": [
+        440,
+        2000
+      ],
+      "partner_goal": [
+        440,
+        2000
+      ],
+      "rewards": [
+        440,
+        2000
+      ],
+      "round_done": [
+        440,
+        2000
+      ],
+      "round_idx": [
+        440,
+        2000
+      ],
+      "round_time": [
+        440,
+        2000
+      ],
+      "success": [
+        440,
+        2000
+      ]
+    },
+    "dtypes": {
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [
+      "assignment_changed",
+      "ego_request_changed"
+    ],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 485768792,
+    "mtime_ns": 1791014011900687129,
+    "fingerprint": "6d79cac62dee20445d95ea6cabad3097cd4c2b37b98d8ee5e8af8e0599b01dbd",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed3.safetensors",
+    "checkpoint_sha256": "edfae1945e12f1e96a3b88804eedd0880a3e0142f4c07b673959544fd2aa2dc5",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed3_config.json",
+    "config_sha256": "b36ee351919f8df8fec2526530c5f5a6fd36ee8bff7d2b9bbc4cdbca7942ea00",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v1_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed4_train.h5",
+    "version": "v1",
+    "protocol": "fixed_v1",
+    "condition": "rnn_single_influence",
+    "seed": 4,
+    "slice": "train",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "capability": [
+        480,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        480
+      ],
+      "capability_pool": [
+        24,
+        2
+      ],
+      "dones": [
+        480,
+        2000
+      ],
+      "ego_alloc_action": [
+        480,
+        2000
+      ],
+      "hidden_state": [
+        480,
+        2000,
+        128
+      ],
+      "is_t0": [
+        480,
+        2000
+      ],
+      "layout_idx": [
+        480,
+        2000
+      ],
+      "partner_assignment": [
+        480,
+        2000
+      ],
+      "partner_goal": [
+        480,
+        2000
+      ],
+      "rewards": [
+        480,
+        2000
+      ],
+      "round_done": [
+        480,
+        2000
+      ],
+      "round_idx": [
+        480,
+        2000
+      ],
+      "round_time": [
+        480,
+        2000
+      ],
+      "success": [
+        480,
+        2000
+      ]
+    },
+    "dtypes": {
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [
+      "assignment_changed",
+      "ego_request_changed"
+    ],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 529930432,
+    "mtime_ns": 1791014033020539797,
+    "fingerprint": "f8a6052962870e5bedf1035444b1d6cce5d50602dc20ec23a177b119c3d26a24",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed4.safetensors",
+    "checkpoint_sha256": "0d5fcfc091a42e422ebc3b19bf65c5a67ae2102468568788683939db2671306a",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed4_config.json",
+    "config_sha256": "cdea1cfb45a295ebd4630c7818620e3427c80fe6e3b02ed0d54392fc2aad8063",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v1_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed4_test.h5",
+    "version": "v1",
+    "protocol": "fixed_v1",
+    "condition": "rnn_single_influence",
+    "seed": 4,
+    "slice": "test",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "capability": [
+        440,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        440
+      ],
+      "capability_pool": [
+        22,
+        2
+      ],
+      "dones": [
+        440,
+        2000
+      ],
+      "ego_alloc_action": [
+        440,
+        2000
+      ],
+      "hidden_state": [
+        440,
+        2000,
+        128
+      ],
+      "is_t0": [
+        440,
+        2000
+      ],
+      "layout_idx": [
+        440,
+        2000
+      ],
+      "partner_assignment": [
+        440,
+        2000
+      ],
+      "partner_goal": [
+        440,
+        2000
+      ],
+      "rewards": [
+        440,
+        2000
+      ],
+      "round_done": [
+        440,
+        2000
+      ],
+      "round_idx": [
+        440,
+        2000
+      ],
+      "round_time": [
+        440,
+        2000
+      ],
+      "success": [
+        440,
+        2000
+      ]
+    },
+    "dtypes": {
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [
+      "assignment_changed",
+      "ego_request_changed"
+    ],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 485768792,
+    "mtime_ns": 1791014042640472686,
+    "fingerprint": "4f929a0298ac366a10dcfce3daa37199d537791bbd923d1f860f75e9154d377a",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed4.safetensors",
+    "checkpoint_sha256": "0d5fcfc091a42e422ebc3b19bf65c5a67ae2102468568788683939db2671306a",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed4_config.json",
+    "config_sha256": "cdea1cfb45a295ebd4630c7818620e3427c80fe6e3b02ed0d54392fc2aad8063",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v1_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed5_train.h5",
+    "version": "v1",
+    "protocol": "fixed_v1",
+    "condition": "rnn_single_influence",
+    "seed": 5,
+    "slice": "train",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "capability": [
+        480,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        480
+      ],
+      "capability_pool": [
+        24,
+        2
+      ],
+      "dones": [
+        480,
+        2000
+      ],
+      "ego_alloc_action": [
+        480,
+        2000
+      ],
+      "hidden_state": [
+        480,
+        2000,
+        128
+      ],
+      "is_t0": [
+        480,
+        2000
+      ],
+      "layout_idx": [
+        480,
+        2000
+      ],
+      "partner_assignment": [
+        480,
+        2000
+      ],
+      "partner_goal": [
+        480,
+        2000
+      ],
+      "rewards": [
+        480,
+        2000
+      ],
+      "round_done": [
+        480,
+        2000
+      ],
+      "round_idx": [
+        480,
+        2000
+      ],
+      "round_time": [
+        480,
+        2000
+      ],
+      "success": [
+        480,
+        2000
+      ]
+    },
+    "dtypes": {
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [
+      "assignment_changed",
+      "ego_request_changed"
+    ],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 529930432,
+    "mtime_ns": 1791014063728325570,
+    "fingerprint": "b8011ed230894835425f7762a2f5094af3cb5663e36e79a378e8ef91046a984c",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed5.safetensors",
+    "checkpoint_sha256": "9e7a0e38b4ae9ffc7c3a6f55a58cafffff48d8cc7c8d0c8188d4953aec51c196",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed5_config.json",
+    "config_sha256": "2df36f2b8408998f74117a5d92e33439bca38b33df131d0f43adb2abe9c00f08",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v1_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed5_test.h5",
+    "version": "v1",
+    "protocol": "fixed_v1",
+    "condition": "rnn_single_influence",
+    "seed": 5,
+    "slice": "test",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "capability": [
+        440,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        440
+      ],
+      "capability_pool": [
+        22,
+        2
+      ],
+      "dones": [
+        440,
+        2000
+      ],
+      "ego_alloc_action": [
+        440,
+        2000
+      ],
+      "hidden_state": [
+        440,
+        2000,
+        128
+      ],
+      "is_t0": [
+        440,
+        2000
+      ],
+      "layout_idx": [
+        440,
+        2000
+      ],
+      "partner_assignment": [
+        440,
+        2000
+      ],
+      "partner_goal": [
+        440,
+        2000
+      ],
+      "rewards": [
+        440,
+        2000
+      ],
+      "round_done": [
+        440,
+        2000
+      ],
+      "round_idx": [
+        440,
+        2000
+      ],
+      "round_time": [
+        440,
+        2000
+      ],
+      "success": [
+        440,
+        2000
+      ]
+    },
+    "dtypes": {
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [
+      "assignment_changed",
+      "ego_request_changed"
+    ],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 485768792,
+    "mtime_ns": 1791014073640256419,
+    "fingerprint": "0f48fe97c7cf61d61045c6cc178a126380eda35e46349d268b4bc92ad8f56a53",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed5.safetensors",
+    "checkpoint_sha256": "9e7a0e38b4ae9ffc7c3a6f55a58cafffff48d8cc7c8d0c8188d4953aec51c196",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed5_config.json",
+    "config_sha256": "2df36f2b8408998f74117a5d92e33439bca38b33df131d0f43adb2abe9c00f08",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v1_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed1_train.h5",
+    "version": "v1",
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_noinfluence",
+    "seed": 1,
+    "slice": "train",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "capability": [
+        480,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        480
+      ],
+      "capability_pool": [
+        24,
+        2
+      ],
+      "dones": [
+        480,
+        2000
+      ],
+      "ego_alloc_action": [
+        480,
+        2000
+      ],
+      "hidden_state": [
+        480,
+        2000,
+        128
+      ],
+      "is_t0": [
+        480,
+        2000
+      ],
+      "layout_idx": [
+        480,
+        2000
+      ],
+      "partner_assignment": [
+        480,
+        2000
+      ],
+      "partner_goal": [
+        480,
+        2000
+      ],
+      "rewards": [
+        480,
+        2000
+      ],
+      "round_done": [
+        480,
+        2000
+      ],
+      "round_idx": [
+        480,
+        2000
+      ],
+      "round_time": [
+        480,
+        2000
+      ],
+      "success": [
+        480,
+        2000
+      ]
+    },
+    "dtypes": {
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [
+      "assignment_changed",
+      "ego_request_changed"
+    ],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 529930432,
+    "mtime_ns": 1791013788182250912,
+    "fingerprint": "241aaa4238305202d0cb659118daddaebb9ce2022234fae7cc25e145a9f78b21",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed1.safetensors",
+    "checkpoint_sha256": "494b68f757f952dcea40c7453a40adaa8b943fe4f0c961d0059601b7b068182b",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed1_config.json",
+    "config_sha256": "b14f9b3e51ec91758fe19681a94977acd39bee6d11804a53b40a2805062a79d2",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v1_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed1_test.h5",
+    "version": "v1",
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_noinfluence",
+    "seed": 1,
+    "slice": "test",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "capability": [
+        440,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        440
+      ],
+      "capability_pool": [
+        22,
+        2
+      ],
+      "dones": [
+        440,
+        2000
+      ],
+      "ego_alloc_action": [
+        440,
+        2000
+      ],
+      "hidden_state": [
+        440,
+        2000,
+        128
+      ],
+      "is_t0": [
+        440,
+        2000
+      ],
+      "layout_idx": [
+        440,
+        2000
+      ],
+      "partner_assignment": [
+        440,
+        2000
+      ],
+      "partner_goal": [
+        440,
+        2000
+      ],
+      "rewards": [
+        440,
+        2000
+      ],
+      "round_done": [
+        440,
+        2000
+      ],
+      "round_idx": [
+        440,
+        2000
+      ],
+      "round_time": [
+        440,
+        2000
+      ],
+      "success": [
+        440,
+        2000
+      ]
+    },
+    "dtypes": {
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [
+      "assignment_changed",
+      "ego_request_changed"
+    ],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 485768792,
+    "mtime_ns": 1791013798202180837,
+    "fingerprint": "d74719daaf5223ada4a479007e3f0199a3525610928741df293adced8c41a320",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed1.safetensors",
+    "checkpoint_sha256": "494b68f757f952dcea40c7453a40adaa8b943fe4f0c961d0059601b7b068182b",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed1_config.json",
+    "config_sha256": "b14f9b3e51ec91758fe19681a94977acd39bee6d11804a53b40a2805062a79d2",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v1_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed2_train.h5",
+    "version": "v1",
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_noinfluence",
+    "seed": 2,
+    "slice": "train",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "capability": [
+        480,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        480
+      ],
+      "capability_pool": [
+        24,
+        2
+      ],
+      "dones": [
+        480,
+        2000
+      ],
+      "ego_alloc_action": [
+        480,
+        2000
+      ],
+      "hidden_state": [
+        480,
+        2000,
+        128
+      ],
+      "is_t0": [
+        480,
+        2000
+      ],
+      "layout_idx": [
+        480,
+        2000
+      ],
+      "partner_assignment": [
+        480,
+        2000
+      ],
+      "partner_goal": [
+        480,
+        2000
+      ],
+      "rewards": [
+        480,
+        2000
+      ],
+      "round_done": [
+        480,
+        2000
+      ],
+      "round_idx": [
+        480,
+        2000
+      ],
+      "round_time": [
+        480,
+        2000
+      ],
+      "success": [
+        480,
+        2000
+      ]
+    },
+    "dtypes": {
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [
+      "assignment_changed",
+      "ego_request_changed"
+    ],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 529930432,
+    "mtime_ns": 1791013819194034029,
+    "fingerprint": "b210f81463edc16978f881d3828d14d93da98070b7f3d4cd4fe613fe06811d62",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed2.safetensors",
+    "checkpoint_sha256": "ccd129943afa62e8ce498ed57e00d8a1f1161cf5b30b2c262204ee9a4ef1b816",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed2_config.json",
+    "config_sha256": "140f23e8dbc93c254c83e79ab858ff3b990aff92270f0c6934b859301bb93c1f",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v1_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed2_test.h5",
+    "version": "v1",
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_noinfluence",
+    "seed": 2,
+    "slice": "test",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "capability": [
+        440,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        440
+      ],
+      "capability_pool": [
+        22,
+        2
+      ],
+      "dones": [
+        440,
+        2000
+      ],
+      "ego_alloc_action": [
+        440,
+        2000
+      ],
+      "hidden_state": [
+        440,
+        2000,
+        128
+      ],
+      "is_t0": [
+        440,
+        2000
+      ],
+      "layout_idx": [
+        440,
+        2000
+      ],
+      "partner_assignment": [
+        440,
+        2000
+      ],
+      "partner_goal": [
+        440,
+        2000
+      ],
+      "rewards": [
+        440,
+        2000
+      ],
+      "round_done": [
+        440,
+        2000
+      ],
+      "round_idx": [
+        440,
+        2000
+      ],
+      "round_time": [
+        440,
+        2000
+      ],
+      "success": [
+        440,
+        2000
+      ]
+    },
+    "dtypes": {
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [
+      "assignment_changed",
+      "ego_request_changed"
+    ],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 485768792,
+    "mtime_ns": 1791013828729967338,
+    "fingerprint": "90b845c331a4c89f113395acbfa34cb1dea49b68cc14617df95a4aad11a7c507",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed2.safetensors",
+    "checkpoint_sha256": "ccd129943afa62e8ce498ed57e00d8a1f1161cf5b30b2c262204ee9a4ef1b816",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed2_config.json",
+    "config_sha256": "140f23e8dbc93c254c83e79ab858ff3b990aff92270f0c6934b859301bb93c1f",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v1_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed3_train.h5",
+    "version": "v1",
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_noinfluence",
+    "seed": 3,
+    "slice": "train",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "capability": [
+        480,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        480
+      ],
+      "capability_pool": [
+        24,
+        2
+      ],
+      "dones": [
+        480,
+        2000
+      ],
+      "ego_alloc_action": [
+        480,
+        2000
+      ],
+      "hidden_state": [
+        480,
+        2000,
+        128
+      ],
+      "is_t0": [
+        480,
+        2000
+      ],
+      "layout_idx": [
+        480,
+        2000
+      ],
+      "partner_assignment": [
+        480,
+        2000
+      ],
+      "partner_goal": [
+        480,
+        2000
+      ],
+      "rewards": [
+        480,
+        2000
+      ],
+      "round_done": [
+        480,
+        2000
+      ],
+      "round_idx": [
+        480,
+        2000
+      ],
+      "round_time": [
+        480,
+        2000
+      ],
+      "success": [
+        480,
+        2000
+      ]
+    },
+    "dtypes": {
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [
+      "assignment_changed",
+      "ego_request_changed"
+    ],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 529930432,
+    "mtime_ns": 1791013849713820584,
+    "fingerprint": "d4da976be8a8bc8eaca3988dc078800fac004ecb73177fb95af3506d0a446e05",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed3.safetensors",
+    "checkpoint_sha256": "de414f26c9e3968659b53e876867acb7332eb49ace862c501982c90d156f45e3",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed3_config.json",
+    "config_sha256": "8c439b6168fa336909d52e6ebcc6004231b0504940f0fb84ea7bfdd035e0810c",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v1_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed3_test.h5",
+    "version": "v1",
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_noinfluence",
+    "seed": 3,
+    "slice": "test",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "capability": [
+        440,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        440
+      ],
+      "capability_pool": [
+        22,
+        2
+      ],
+      "dones": [
+        440,
+        2000
+      ],
+      "ego_alloc_action": [
+        440,
+        2000
+      ],
+      "hidden_state": [
+        440,
+        2000,
+        128
+      ],
+      "is_t0": [
+        440,
+        2000
+      ],
+      "layout_idx": [
+        440,
+        2000
+      ],
+      "partner_assignment": [
+        440,
+        2000
+      ],
+      "partner_goal": [
+        440,
+        2000
+      ],
+      "rewards": [
+        440,
+        2000
+      ],
+      "round_done": [
+        440,
+        2000
+      ],
+      "round_idx": [
+        440,
+        2000
+      ],
+      "round_time": [
+        440,
+        2000
+      ],
+      "success": [
+        440,
+        2000
+      ]
+    },
+    "dtypes": {
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [
+      "assignment_changed",
+      "ego_request_changed"
+    ],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 485768792,
+    "mtime_ns": 1791013859265753781,
+    "fingerprint": "a20e275cdceb6e94b981c655559a1ddd995b87b0eac004fe0b60c0269ea3935f",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed3.safetensors",
+    "checkpoint_sha256": "de414f26c9e3968659b53e876867acb7332eb49ace862c501982c90d156f45e3",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed3_config.json",
+    "config_sha256": "8c439b6168fa336909d52e6ebcc6004231b0504940f0fb84ea7bfdd035e0810c",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v1_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed4_train.h5",
+    "version": "v1",
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_noinfluence",
+    "seed": 4,
+    "slice": "train",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "capability": [
+        480,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        480
+      ],
+      "capability_pool": [
+        24,
+        2
+      ],
+      "dones": [
+        480,
+        2000
+      ],
+      "ego_alloc_action": [
+        480,
+        2000
+      ],
+      "hidden_state": [
+        480,
+        2000,
+        128
+      ],
+      "is_t0": [
+        480,
+        2000
+      ],
+      "layout_idx": [
+        480,
+        2000
+      ],
+      "partner_assignment": [
+        480,
+        2000
+      ],
+      "partner_goal": [
+        480,
+        2000
+      ],
+      "rewards": [
+        480,
+        2000
+      ],
+      "round_done": [
+        480,
+        2000
+      ],
+      "round_idx": [
+        480,
+        2000
+      ],
+      "round_time": [
+        480,
+        2000
+      ],
+      "success": [
+        480,
+        2000
+      ]
+    },
+    "dtypes": {
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [
+      "assignment_changed",
+      "ego_request_changed"
+    ],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 529930432,
+    "mtime_ns": 1791013880125607892,
+    "fingerprint": "bcb0f990e6d18c7e1d3e65cdbb9d832109c6b96f96c5ee27970a52fbb088dd2c",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed4.safetensors",
+    "checkpoint_sha256": "844b1d0e7b852c4840ef49da9b5bc53dab8dd165adbb859df02106a2781162d1",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed4_config.json",
+    "config_sha256": "9f3d4f862f9445844ff99704053b165a782decb27ea0c8c3dfc104fa203a8b2c",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v1_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed4_test.h5",
+    "version": "v1",
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_noinfluence",
+    "seed": 4,
+    "slice": "test",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "capability": [
+        440,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        440
+      ],
+      "capability_pool": [
+        22,
+        2
+      ],
+      "dones": [
+        440,
+        2000
+      ],
+      "ego_alloc_action": [
+        440,
+        2000
+      ],
+      "hidden_state": [
+        440,
+        2000,
+        128
+      ],
+      "is_t0": [
+        440,
+        2000
+      ],
+      "layout_idx": [
+        440,
+        2000
+      ],
+      "partner_assignment": [
+        440,
+        2000
+      ],
+      "partner_goal": [
+        440,
+        2000
+      ],
+      "rewards": [
+        440,
+        2000
+      ],
+      "round_done": [
+        440,
+        2000
+      ],
+      "round_idx": [
+        440,
+        2000
+      ],
+      "round_time": [
+        440,
+        2000
+      ],
+      "success": [
+        440,
+        2000
+      ]
+    },
+    "dtypes": {
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [
+      "assignment_changed",
+      "ego_request_changed"
+    ],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 485768792,
+    "mtime_ns": 1791013889461542599,
+    "fingerprint": "9798cb328122206f022ea1912f0c1a5e2c4615eb8f45699570eb11e05caf0965",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed4.safetensors",
+    "checkpoint_sha256": "844b1d0e7b852c4840ef49da9b5bc53dab8dd165adbb859df02106a2781162d1",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed4_config.json",
+    "config_sha256": "9f3d4f862f9445844ff99704053b165a782decb27ea0c8c3dfc104fa203a8b2c",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v1_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed5_train.h5",
+    "version": "v1",
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_noinfluence",
+    "seed": 5,
+    "slice": "train",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "capability": [
+        480,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        480
+      ],
+      "capability_pool": [
+        24,
+        2
+      ],
+      "dones": [
+        480,
+        2000
+      ],
+      "ego_alloc_action": [
+        480,
+        2000
+      ],
+      "hidden_state": [
+        480,
+        2000,
+        128
+      ],
+      "is_t0": [
+        480,
+        2000
+      ],
+      "layout_idx": [
+        480,
+        2000
+      ],
+      "partner_assignment": [
+        480,
+        2000
+      ],
+      "partner_goal": [
+        480,
+        2000
+      ],
+      "rewards": [
+        480,
+        2000
+      ],
+      "round_done": [
+        480,
+        2000
+      ],
+      "round_idx": [
+        480,
+        2000
+      ],
+      "round_time": [
+        480,
+        2000
+      ],
+      "success": [
+        480,
+        2000
+      ]
+    },
+    "dtypes": {
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [
+      "assignment_changed",
+      "ego_request_changed"
+    ],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 529930432,
+    "mtime_ns": 1791013910057398555,
+    "fingerprint": "c9725d36c6d26cc408e51d8e72c754f3a2b48fcc8639742044bc661b598f0809",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed5.safetensors",
+    "checkpoint_sha256": "13f13cabcfde92c6e16a2d79923dce66a3ac0dd7006eee695cc9d6560365e2ff",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed5_config.json",
+    "config_sha256": "6b0e35386c5a0a8d61e5369523210d36a44a027378e7eb7aa3c1cbf0c5dff7c0",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v1_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed5_test.h5",
+    "version": "v1",
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_noinfluence",
+    "seed": 5,
+    "slice": "test",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "capability": [
+        440,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        440
+      ],
+      "capability_pool": [
+        22,
+        2
+      ],
+      "dones": [
+        440,
+        2000
+      ],
+      "ego_alloc_action": [
+        440,
+        2000
+      ],
+      "hidden_state": [
+        440,
+        2000,
+        128
+      ],
+      "is_t0": [
+        440,
+        2000
+      ],
+      "layout_idx": [
+        440,
+        2000
+      ],
+      "partner_assignment": [
+        440,
+        2000
+      ],
+      "partner_goal": [
+        440,
+        2000
+      ],
+      "rewards": [
+        440,
+        2000
+      ],
+      "round_done": [
+        440,
+        2000
+      ],
+      "round_idx": [
+        440,
+        2000
+      ],
+      "round_time": [
+        440,
+        2000
+      ],
+      "success": [
+        440,
+        2000
+      ]
+    },
+    "dtypes": {
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [
+      "assignment_changed",
+      "ego_request_changed"
+    ],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 485768792,
+    "mtime_ns": 1791013919641331526,
+    "fingerprint": "1d75a508e411234c90a6d5904fa5715f99739b49329949eaa765f8ab9ca36c25",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed5.safetensors",
+    "checkpoint_sha256": "13f13cabcfde92c6e16a2d79923dce66a3ac0dd7006eee695cc9d6560365e2ff",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed5_config.json",
+    "config_sha256": "6b0e35386c5a0a8d61e5369523210d36a44a027378e7eb7aa3c1cbf0c5dff7c0",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v1_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed1_train.h5",
+    "version": "v2",
+    "protocol": "online_v2",
+    "condition": "rnn_diverse_influence",
+    "seed": 1,
+    "slice": "train",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "assignment_changed": [
+        480,
+        2000
+      ],
+      "capability": [
+        480,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        480
+      ],
+      "capability_pool": [
+        24,
+        2
+      ],
+      "dones": [
+        480,
+        2000
+      ],
+      "ego_alloc_action": [
+        480,
+        2000
+      ],
+      "ego_request_changed": [
+        480,
+        2000
+      ],
+      "hidden_state": [
+        480,
+        2000,
+        128
+      ],
+      "is_t0": [
+        480,
+        2000
+      ],
+      "layout_idx": [
+        480,
+        2000
+      ],
+      "partner_assignment": [
+        480,
+        2000
+      ],
+      "partner_goal": [
+        480,
+        2000
+      ],
+      "rewards": [
+        480,
+        2000
+      ],
+      "round_done": [
+        480,
+        2000
+      ],
+      "round_idx": [
+        480,
+        2000
+      ],
+      "round_time": [
+        480,
+        2000
+      ],
+      "success": [
+        480,
+        2000
+      ]
+    },
+    "dtypes": {
+      "assignment_changed": "bool",
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "ego_request_changed": "bool",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 531854400,
+    "mtime_ns": 1791019399251709473,
+    "fingerprint": "5b4ade5f4afb7e9377efd00215096337c5a6eed760af59a612cd504b877c90bd",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed1.safetensors",
+    "checkpoint_sha256": "db64b0aeda40da3efce2b500f872b450708bbcd6b80344658ed8c980187b138a",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed1_config.json",
+    "config_sha256": "cb5ccf67b927ae460088c31bc13618b7cf50cf5d3be530b90f91f774a6159280",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v2_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed1_test.h5",
+    "version": "v2",
+    "protocol": "online_v2",
+    "condition": "rnn_diverse_influence",
+    "seed": 1,
+    "slice": "test",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "assignment_changed": [
+        440,
+        2000
+      ],
+      "capability": [
+        440,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        440
+      ],
+      "capability_pool": [
+        22,
+        2
+      ],
+      "dones": [
+        440,
+        2000
+      ],
+      "ego_alloc_action": [
+        440,
+        2000
+      ],
+      "ego_request_changed": [
+        440,
+        2000
+      ],
+      "hidden_state": [
+        440,
+        2000,
+        128
+      ],
+      "is_t0": [
+        440,
+        2000
+      ],
+      "layout_idx": [
+        440,
+        2000
+      ],
+      "partner_assignment": [
+        440,
+        2000
+      ],
+      "partner_goal": [
+        440,
+        2000
+      ],
+      "rewards": [
+        440,
+        2000
+      ],
+      "round_done": [
+        440,
+        2000
+      ],
+      "round_idx": [
+        440,
+        2000
+      ],
+      "round_time": [
+        440,
+        2000
+      ],
+      "success": [
+        440,
+        2000
+      ]
+    },
+    "dtypes": {
+      "assignment_changed": "bool",
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "ego_request_changed": "bool",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 487534224,
+    "mtime_ns": 1791019409883637570,
+    "fingerprint": "993c56ba60472423d5b3d722c7abcdd20b8d831f924b0cbb54c4c8846cd3e982",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed1.safetensors",
+    "checkpoint_sha256": "db64b0aeda40da3efce2b500f872b450708bbcd6b80344658ed8c980187b138a",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed1_config.json",
+    "config_sha256": "cb5ccf67b927ae460088c31bc13618b7cf50cf5d3be530b90f91f774a6159280",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v2_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed2_train.h5",
+    "version": "v2",
+    "protocol": "online_v2",
+    "condition": "rnn_diverse_influence",
+    "seed": 2,
+    "slice": "train",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "assignment_changed": [
+        480,
+        2000
+      ],
+      "capability": [
+        480,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        480
+      ],
+      "capability_pool": [
+        24,
+        2
+      ],
+      "dones": [
+        480,
+        2000
+      ],
+      "ego_alloc_action": [
+        480,
+        2000
+      ],
+      "ego_request_changed": [
+        480,
+        2000
+      ],
+      "hidden_state": [
+        480,
+        2000,
+        128
+      ],
+      "is_t0": [
+        480,
+        2000
+      ],
+      "layout_idx": [
+        480,
+        2000
+      ],
+      "partner_assignment": [
+        480,
+        2000
+      ],
+      "partner_goal": [
+        480,
+        2000
+      ],
+      "rewards": [
+        480,
+        2000
+      ],
+      "round_done": [
+        480,
+        2000
+      ],
+      "round_idx": [
+        480,
+        2000
+      ],
+      "round_time": [
+        480,
+        2000
+      ],
+      "success": [
+        480,
+        2000
+      ]
+    },
+    "dtypes": {
+      "assignment_changed": "bool",
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "ego_request_changed": "bool",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 531854400,
+    "mtime_ns": 1791019435335465182,
+    "fingerprint": "6340d8ee0c2364a947fb691f143dfe22b72f65362792139efc1f9fc139f46780",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed2.safetensors",
+    "checkpoint_sha256": "f6c11c433ac71e17473a29bcbe7ea78e279c2db629f567c2d5f4fabed4a82639",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed2_config.json",
+    "config_sha256": "d1420fdaf3a738491fae58cdc9fa8fdf79724bad9327ccd534c517297624faa5",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v2_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed2_test.h5",
+    "version": "v2",
+    "protocol": "online_v2",
+    "condition": "rnn_diverse_influence",
+    "seed": 2,
+    "slice": "test",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "assignment_changed": [
+        440,
+        2000
+      ],
+      "capability": [
+        440,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        440
+      ],
+      "capability_pool": [
+        22,
+        2
+      ],
+      "dones": [
+        440,
+        2000
+      ],
+      "ego_alloc_action": [
+        440,
+        2000
+      ],
+      "ego_request_changed": [
+        440,
+        2000
+      ],
+      "hidden_state": [
+        440,
+        2000,
+        128
+      ],
+      "is_t0": [
+        440,
+        2000
+      ],
+      "layout_idx": [
+        440,
+        2000
+      ],
+      "partner_assignment": [
+        440,
+        2000
+      ],
+      "partner_goal": [
+        440,
+        2000
+      ],
+      "rewards": [
+        440,
+        2000
+      ],
+      "round_done": [
+        440,
+        2000
+      ],
+      "round_idx": [
+        440,
+        2000
+      ],
+      "round_time": [
+        440,
+        2000
+      ],
+      "success": [
+        440,
+        2000
+      ]
+    },
+    "dtypes": {
+      "assignment_changed": "bool",
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "ego_request_changed": "bool",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 487534224,
+    "mtime_ns": 1791019446195391522,
+    "fingerprint": "8ba2c747335c0970ca08c655dc4c4487322aa40601a6b0af3eeb12461e357884",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed2.safetensors",
+    "checkpoint_sha256": "f6c11c433ac71e17473a29bcbe7ea78e279c2db629f567c2d5f4fabed4a82639",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed2_config.json",
+    "config_sha256": "d1420fdaf3a738491fae58cdc9fa8fdf79724bad9327ccd534c517297624faa5",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v2_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed3_train.h5",
+    "version": "v2",
+    "protocol": "online_v2",
+    "condition": "rnn_diverse_influence",
+    "seed": 3,
+    "slice": "train",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "assignment_changed": [
+        480,
+        2000
+      ],
+      "capability": [
+        480,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        480
+      ],
+      "capability_pool": [
+        24,
+        2
+      ],
+      "dones": [
+        480,
+        2000
+      ],
+      "ego_alloc_action": [
+        480,
+        2000
+      ],
+      "ego_request_changed": [
+        480,
+        2000
+      ],
+      "hidden_state": [
+        480,
+        2000,
+        128
+      ],
+      "is_t0": [
+        480,
+        2000
+      ],
+      "layout_idx": [
+        480,
+        2000
+      ],
+      "partner_assignment": [
+        480,
+        2000
+      ],
+      "partner_goal": [
+        480,
+        2000
+      ],
+      "rewards": [
+        480,
+        2000
+      ],
+      "round_done": [
+        480,
+        2000
+      ],
+      "round_idx": [
+        480,
+        2000
+      ],
+      "round_time": [
+        480,
+        2000
+      ],
+      "success": [
+        480,
+        2000
+      ]
+    },
+    "dtypes": {
+      "assignment_changed": "bool",
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "ego_request_changed": "bool",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 531854400,
+    "mtime_ns": 1791019470171228696,
+    "fingerprint": "a41021aa4007058d88983eeed68cd9c80c8d382c06b1ee89bd60819760525c10",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed3.safetensors",
+    "checkpoint_sha256": "4fc451e0a637dcd6a7e730f0306f7c981ca0507280ee89329fa2db7864c86629",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed3_config.json",
+    "config_sha256": "5686ce086aba8d1a771c401942db45c9adcfe76fdad56397123576e84ec723a0",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v2_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed3_test.h5",
+    "version": "v2",
+    "protocol": "online_v2",
+    "condition": "rnn_diverse_influence",
+    "seed": 3,
+    "slice": "test",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "assignment_changed": [
+        440,
+        2000
+      ],
+      "capability": [
+        440,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        440
+      ],
+      "capability_pool": [
+        22,
+        2
+      ],
+      "dones": [
+        440,
+        2000
+      ],
+      "ego_alloc_action": [
+        440,
+        2000
+      ],
+      "ego_request_changed": [
+        440,
+        2000
+      ],
+      "hidden_state": [
+        440,
+        2000,
+        128
+      ],
+      "is_t0": [
+        440,
+        2000
+      ],
+      "layout_idx": [
+        440,
+        2000
+      ],
+      "partner_assignment": [
+        440,
+        2000
+      ],
+      "partner_goal": [
+        440,
+        2000
+      ],
+      "rewards": [
+        440,
+        2000
+      ],
+      "round_done": [
+        440,
+        2000
+      ],
+      "round_idx": [
+        440,
+        2000
+      ],
+      "round_time": [
+        440,
+        2000
+      ],
+      "success": [
+        440,
+        2000
+      ]
+    },
+    "dtypes": {
+      "assignment_changed": "bool",
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "ego_request_changed": "bool",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 487534224,
+    "mtime_ns": 1791019481047154749,
+    "fingerprint": "11983e67f1cfa75c426c24910a972cab1ef1f35c0d100690006e6369955f6972",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed3.safetensors",
+    "checkpoint_sha256": "4fc451e0a637dcd6a7e730f0306f7c981ca0507280ee89329fa2db7864c86629",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed3_config.json",
+    "config_sha256": "5686ce086aba8d1a771c401942db45c9adcfe76fdad56397123576e84ec723a0",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v2_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed4_train.h5",
+    "version": "v2",
+    "protocol": "online_v2",
+    "condition": "rnn_diverse_influence",
+    "seed": 4,
+    "slice": "train",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "assignment_changed": [
+        480,
+        2000
+      ],
+      "capability": [
+        480,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        480
+      ],
+      "capability_pool": [
+        24,
+        2
+      ],
+      "dones": [
+        480,
+        2000
+      ],
+      "ego_alloc_action": [
+        480,
+        2000
+      ],
+      "ego_request_changed": [
+        480,
+        2000
+      ],
+      "hidden_state": [
+        480,
+        2000,
+        128
+      ],
+      "is_t0": [
+        480,
+        2000
+      ],
+      "layout_idx": [
+        480,
+        2000
+      ],
+      "partner_assignment": [
+        480,
+        2000
+      ],
+      "partner_goal": [
+        480,
+        2000
+      ],
+      "rewards": [
+        480,
+        2000
+      ],
+      "round_done": [
+        480,
+        2000
+      ],
+      "round_idx": [
+        480,
+        2000
+      ],
+      "round_time": [
+        480,
+        2000
+      ],
+      "success": [
+        480,
+        2000
+      ]
+    },
+    "dtypes": {
+      "assignment_changed": "bool",
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "ego_request_changed": "bool",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 531854400,
+    "mtime_ns": 1791019504678993896,
+    "fingerprint": "2aa96f2c22e3190c3ba615b3feba8fd8cfed4a2774b52a501185efa47fcec659",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed4.safetensors",
+    "checkpoint_sha256": "ab8637197bd9e7f754f22e58d3a8a1d87ce36e0d623caab383b5c8a812b3c6a7",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed4_config.json",
+    "config_sha256": "7c66757b7945251861105b84c85a0abdbcf51061c23c188520817b10ea7969f0",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v2_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed4_test.h5",
+    "version": "v2",
+    "protocol": "online_v2",
+    "condition": "rnn_diverse_influence",
+    "seed": 4,
+    "slice": "test",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "assignment_changed": [
+        440,
+        2000
+      ],
+      "capability": [
+        440,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        440
+      ],
+      "capability_pool": [
+        22,
+        2
+      ],
+      "dones": [
+        440,
+        2000
+      ],
+      "ego_alloc_action": [
+        440,
+        2000
+      ],
+      "ego_request_changed": [
+        440,
+        2000
+      ],
+      "hidden_state": [
+        440,
+        2000,
+        128
+      ],
+      "is_t0": [
+        440,
+        2000
+      ],
+      "layout_idx": [
+        440,
+        2000
+      ],
+      "partner_assignment": [
+        440,
+        2000
+      ],
+      "partner_goal": [
+        440,
+        2000
+      ],
+      "rewards": [
+        440,
+        2000
+      ],
+      "round_done": [
+        440,
+        2000
+      ],
+      "round_idx": [
+        440,
+        2000
+      ],
+      "round_time": [
+        440,
+        2000
+      ],
+      "success": [
+        440,
+        2000
+      ]
+    },
+    "dtypes": {
+      "assignment_changed": "bool",
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "ego_request_changed": "bool",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 487534224,
+    "mtime_ns": 1791019515438920583,
+    "fingerprint": "201a23906fdfa77e9cd5a009308b897d6eb0cac04765ac4171f76db4c8c27ed3",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed4.safetensors",
+    "checkpoint_sha256": "ab8637197bd9e7f754f22e58d3a8a1d87ce36e0d623caab383b5c8a812b3c6a7",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed4_config.json",
+    "config_sha256": "7c66757b7945251861105b84c85a0abdbcf51061c23c188520817b10ea7969f0",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v2_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed5_train.h5",
+    "version": "v2",
+    "protocol": "online_v2",
+    "condition": "rnn_diverse_influence",
+    "seed": 5,
+    "slice": "train",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "assignment_changed": [
+        480,
+        2000
+      ],
+      "capability": [
+        480,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        480
+      ],
+      "capability_pool": [
+        24,
+        2
+      ],
+      "dones": [
+        480,
+        2000
+      ],
+      "ego_alloc_action": [
+        480,
+        2000
+      ],
+      "ego_request_changed": [
+        480,
+        2000
+      ],
+      "hidden_state": [
+        480,
+        2000,
+        128
+      ],
+      "is_t0": [
+        480,
+        2000
+      ],
+      "layout_idx": [
+        480,
+        2000
+      ],
+      "partner_assignment": [
+        480,
+        2000
+      ],
+      "partner_goal": [
+        480,
+        2000
+      ],
+      "rewards": [
+        480,
+        2000
+      ],
+      "round_done": [
+        480,
+        2000
+      ],
+      "round_idx": [
+        480,
+        2000
+      ],
+      "round_time": [
+        480,
+        2000
+      ],
+      "success": [
+        480,
+        2000
+      ]
+    },
+    "dtypes": {
+      "assignment_changed": "bool",
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "ego_request_changed": "bool",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 531854400,
+    "mtime_ns": 1791019539034759660,
+    "fingerprint": "10adeae701ae6588932a297e8e72dba59cd250a7cdf6763ea7e4ef0a742931c0",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed5.safetensors",
+    "checkpoint_sha256": "a705f05bbc263b032ff77ad894ad45c28fe8aaf810cb468056a0a4089e0d130d",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed5_config.json",
+    "config_sha256": "76ef21c9e6c2e6732001a6a024253662ed1d5d3f3dacc3cedea950b224ebd214",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v2_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed5_test.h5",
+    "version": "v2",
+    "protocol": "online_v2",
+    "condition": "rnn_diverse_influence",
+    "seed": 5,
+    "slice": "test",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "assignment_changed": [
+        440,
+        2000
+      ],
+      "capability": [
+        440,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        440
+      ],
+      "capability_pool": [
+        22,
+        2
+      ],
+      "dones": [
+        440,
+        2000
+      ],
+      "ego_alloc_action": [
+        440,
+        2000
+      ],
+      "ego_request_changed": [
+        440,
+        2000
+      ],
+      "hidden_state": [
+        440,
+        2000,
+        128
+      ],
+      "is_t0": [
+        440,
+        2000
+      ],
+      "layout_idx": [
+        440,
+        2000
+      ],
+      "partner_assignment": [
+        440,
+        2000
+      ],
+      "partner_goal": [
+        440,
+        2000
+      ],
+      "rewards": [
+        440,
+        2000
+      ],
+      "round_done": [
+        440,
+        2000
+      ],
+      "round_idx": [
+        440,
+        2000
+      ],
+      "round_time": [
+        440,
+        2000
+      ],
+      "success": [
+        440,
+        2000
+      ]
+    },
+    "dtypes": {
+      "assignment_changed": "bool",
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "ego_request_changed": "bool",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 487534224,
+    "mtime_ns": 1791019549682686978,
+    "fingerprint": "497334ea938f4a2265e47e89bb9ad8394eec3e7c7f02ddb9493a4199d01a482b",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed5.safetensors",
+    "checkpoint_sha256": "a705f05bbc263b032ff77ad894ad45c28fe8aaf810cb468056a0a4089e0d130d",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed5_config.json",
+    "config_sha256": "76ef21c9e6c2e6732001a6a024253662ed1d5d3f3dacc3cedea950b224ebd214",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v2_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed1_train.h5",
+    "version": "v2",
+    "protocol": "online_v2",
+    "condition": "rnn_single_influence",
+    "seed": 1,
+    "slice": "train",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "assignment_changed": [
+        480,
+        2000
+      ],
+      "capability": [
+        480,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        480
+      ],
+      "capability_pool": [
+        24,
+        2
+      ],
+      "dones": [
+        480,
+        2000
+      ],
+      "ego_alloc_action": [
+        480,
+        2000
+      ],
+      "ego_request_changed": [
+        480,
+        2000
+      ],
+      "hidden_state": [
+        480,
+        2000,
+        128
+      ],
+      "is_t0": [
+        480,
+        2000
+      ],
+      "layout_idx": [
+        480,
+        2000
+      ],
+      "partner_assignment": [
+        480,
+        2000
+      ],
+      "partner_goal": [
+        480,
+        2000
+      ],
+      "rewards": [
+        480,
+        2000
+      ],
+      "round_done": [
+        480,
+        2000
+      ],
+      "round_idx": [
+        480,
+        2000
+      ],
+      "round_time": [
+        480,
+        2000
+      ],
+      "success": [
+        480,
+        2000
+      ]
+    },
+    "dtypes": {
+      "assignment_changed": "bool",
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "ego_request_changed": "bool",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 531854400,
+    "mtime_ns": 1791019746957351748,
+    "fingerprint": "14af5d48b4006010480f61eb5a1333efb76e85506d1d669a40d464de6917239e",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed1.safetensors",
+    "checkpoint_sha256": "a50d7624989d2c24087a7ff45a8634d9ba118c330eaa9c9a15b2dc28a8310b0a",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed1_config.json",
+    "config_sha256": "f52782be06224d8f4c7523f7dc706d57c8a0b9055e1c5c081fbf43971c0778ab",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v2_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed1_test.h5",
+    "version": "v2",
+    "protocol": "online_v2",
+    "condition": "rnn_single_influence",
+    "seed": 1,
+    "slice": "test",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "assignment_changed": [
+        440,
+        2000
+      ],
+      "capability": [
+        440,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        440
+      ],
+      "capability_pool": [
+        22,
+        2
+      ],
+      "dones": [
+        440,
+        2000
+      ],
+      "ego_alloc_action": [
+        440,
+        2000
+      ],
+      "ego_request_changed": [
+        440,
+        2000
+      ],
+      "hidden_state": [
+        440,
+        2000,
+        128
+      ],
+      "is_t0": [
+        440,
+        2000
+      ],
+      "layout_idx": [
+        440,
+        2000
+      ],
+      "partner_assignment": [
+        440,
+        2000
+      ],
+      "partner_goal": [
+        440,
+        2000
+      ],
+      "rewards": [
+        440,
+        2000
+      ],
+      "round_done": [
+        440,
+        2000
+      ],
+      "round_idx": [
+        440,
+        2000
+      ],
+      "round_time": [
+        440,
+        2000
+      ],
+      "success": [
+        440,
+        2000
+      ]
+    },
+    "dtypes": {
+      "assignment_changed": "bool",
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "ego_request_changed": "bool",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 487534224,
+    "mtime_ns": 1791019757709279668,
+    "fingerprint": "4eaf714623cd53742ec3704fd6f3bef797b4c9680ad82659548ca8237d8262e7",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed1.safetensors",
+    "checkpoint_sha256": "a50d7624989d2c24087a7ff45a8634d9ba118c330eaa9c9a15b2dc28a8310b0a",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed1_config.json",
+    "config_sha256": "f52782be06224d8f4c7523f7dc706d57c8a0b9055e1c5c081fbf43971c0778ab",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v2_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed2_train.h5",
+    "version": "v2",
+    "protocol": "online_v2",
+    "condition": "rnn_single_influence",
+    "seed": 2,
+    "slice": "train",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "assignment_changed": [
+        480,
+        2000
+      ],
+      "capability": [
+        480,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        480
+      ],
+      "capability_pool": [
+        24,
+        2
+      ],
+      "dones": [
+        480,
+        2000
+      ],
+      "ego_alloc_action": [
+        480,
+        2000
+      ],
+      "ego_request_changed": [
+        480,
+        2000
+      ],
+      "hidden_state": [
+        480,
+        2000,
+        128
+      ],
+      "is_t0": [
+        480,
+        2000
+      ],
+      "layout_idx": [
+        480,
+        2000
+      ],
+      "partner_assignment": [
+        480,
+        2000
+      ],
+      "partner_goal": [
+        480,
+        2000
+      ],
+      "rewards": [
+        480,
+        2000
+      ],
+      "round_done": [
+        480,
+        2000
+      ],
+      "round_idx": [
+        480,
+        2000
+      ],
+      "round_time": [
+        480,
+        2000
+      ],
+      "success": [
+        480,
+        2000
+      ]
+    },
+    "dtypes": {
+      "assignment_changed": "bool",
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "ego_request_changed": "bool",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 531854400,
+    "mtime_ns": 1791019781861117464,
+    "fingerprint": "254ad13db9efad77eb162c8ed9490916a871adbfb1cb1b55240ea414ce71f72a",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed2.safetensors",
+    "checkpoint_sha256": "fe2a0bca8348cc9024a634ce49ba4fded0058566dd11d1446f007660b060d230",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed2_config.json",
+    "config_sha256": "6ac00afe88cc74c38030d2113872f3fdc8858dcf3f4c4c96bb5f616c482dc9c0",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v2_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed2_test.h5",
+    "version": "v2",
+    "protocol": "online_v2",
+    "condition": "rnn_single_influence",
+    "seed": 2,
+    "slice": "test",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "assignment_changed": [
+        440,
+        2000
+      ],
+      "capability": [
+        440,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        440
+      ],
+      "capability_pool": [
+        22,
+        2
+      ],
+      "dones": [
+        440,
+        2000
+      ],
+      "ego_alloc_action": [
+        440,
+        2000
+      ],
+      "ego_request_changed": [
+        440,
+        2000
+      ],
+      "hidden_state": [
+        440,
+        2000,
+        128
+      ],
+      "is_t0": [
+        440,
+        2000
+      ],
+      "layout_idx": [
+        440,
+        2000
+      ],
+      "partner_assignment": [
+        440,
+        2000
+      ],
+      "partner_goal": [
+        440,
+        2000
+      ],
+      "rewards": [
+        440,
+        2000
+      ],
+      "round_done": [
+        440,
+        2000
+      ],
+      "round_idx": [
+        440,
+        2000
+      ],
+      "round_time": [
+        440,
+        2000
+      ],
+      "success": [
+        440,
+        2000
+      ]
+    },
+    "dtypes": {
+      "assignment_changed": "bool",
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "ego_request_changed": "bool",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 487534224,
+    "mtime_ns": 1791019792917043082,
+    "fingerprint": "fb28789faf7b27c9bc3cae5bad332384943b7e5d4d1a417bd768a9673401fe13",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed2.safetensors",
+    "checkpoint_sha256": "fe2a0bca8348cc9024a634ce49ba4fded0058566dd11d1446f007660b060d230",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed2_config.json",
+    "config_sha256": "6ac00afe88cc74c38030d2113872f3fdc8858dcf3f4c4c96bb5f616c482dc9c0",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v2_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed3_train.h5",
+    "version": "v2",
+    "protocol": "online_v2",
+    "condition": "rnn_single_influence",
+    "seed": 3,
+    "slice": "train",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "assignment_changed": [
+        480,
+        2000
+      ],
+      "capability": [
+        480,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        480
+      ],
+      "capability_pool": [
+        24,
+        2
+      ],
+      "dones": [
+        480,
+        2000
+      ],
+      "ego_alloc_action": [
+        480,
+        2000
+      ],
+      "ego_request_changed": [
+        480,
+        2000
+      ],
+      "hidden_state": [
+        480,
+        2000,
+        128
+      ],
+      "is_t0": [
+        480,
+        2000
+      ],
+      "layout_idx": [
+        480,
+        2000
+      ],
+      "partner_assignment": [
+        480,
+        2000
+      ],
+      "partner_goal": [
+        480,
+        2000
+      ],
+      "rewards": [
+        480,
+        2000
+      ],
+      "round_done": [
+        480,
+        2000
+      ],
+      "round_idx": [
+        480,
+        2000
+      ],
+      "round_time": [
+        480,
+        2000
+      ],
+      "success": [
+        480,
+        2000
+      ]
+    },
+    "dtypes": {
+      "assignment_changed": "bool",
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "ego_request_changed": "bool",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 531854400,
+    "mtime_ns": 1791019818272872214,
+    "fingerprint": "4f633ebdf88b0fc429ff5346d0f15ccd091a709526a202cba469e0fb2b3c86ee",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed3.safetensors",
+    "checkpoint_sha256": "74eabcdab41c435436637f5a7ff38422d4674248a21267c649703da110c6bc55",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed3_config.json",
+    "config_sha256": "15928a2f9db52c37c955323d2365344f34b99b390071cf6c23d2d9fd261f06be",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v2_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed3_test.h5",
+    "version": "v2",
+    "protocol": "online_v2",
+    "condition": "rnn_single_influence",
+    "seed": 3,
+    "slice": "test",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "assignment_changed": [
+        440,
+        2000
+      ],
+      "capability": [
+        440,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        440
+      ],
+      "capability_pool": [
+        22,
+        2
+      ],
+      "dones": [
+        440,
+        2000
+      ],
+      "ego_alloc_action": [
+        440,
+        2000
+      ],
+      "ego_request_changed": [
+        440,
+        2000
+      ],
+      "hidden_state": [
+        440,
+        2000,
+        128
+      ],
+      "is_t0": [
+        440,
+        2000
+      ],
+      "layout_idx": [
+        440,
+        2000
+      ],
+      "partner_assignment": [
+        440,
+        2000
+      ],
+      "partner_goal": [
+        440,
+        2000
+      ],
+      "rewards": [
+        440,
+        2000
+      ],
+      "round_done": [
+        440,
+        2000
+      ],
+      "round_idx": [
+        440,
+        2000
+      ],
+      "round_time": [
+        440,
+        2000
+      ],
+      "success": [
+        440,
+        2000
+      ]
+    },
+    "dtypes": {
+      "assignment_changed": "bool",
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "ego_request_changed": "bool",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 487534224,
+    "mtime_ns": 1791019829352797433,
+    "fingerprint": "edad17b55c65d1654f2478ffc489638cff0c2ac9f95620ed5838c4ec17e85e40",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed3.safetensors",
+    "checkpoint_sha256": "74eabcdab41c435436637f5a7ff38422d4674248a21267c649703da110c6bc55",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed3_config.json",
+    "config_sha256": "15928a2f9db52c37c955323d2365344f34b99b390071cf6c23d2d9fd261f06be",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v2_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed4_train.h5",
+    "version": "v2",
+    "protocol": "online_v2",
+    "condition": "rnn_single_influence",
+    "seed": 4,
+    "slice": "train",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "assignment_changed": [
+        480,
+        2000
+      ],
+      "capability": [
+        480,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        480
+      ],
+      "capability_pool": [
+        24,
+        2
+      ],
+      "dones": [
+        480,
+        2000
+      ],
+      "ego_alloc_action": [
+        480,
+        2000
+      ],
+      "ego_request_changed": [
+        480,
+        2000
+      ],
+      "hidden_state": [
+        480,
+        2000,
+        128
+      ],
+      "is_t0": [
+        480,
+        2000
+      ],
+      "layout_idx": [
+        480,
+        2000
+      ],
+      "partner_assignment": [
+        480,
+        2000
+      ],
+      "partner_goal": [
+        480,
+        2000
+      ],
+      "rewards": [
+        480,
+        2000
+      ],
+      "round_done": [
+        480,
+        2000
+      ],
+      "round_idx": [
+        480,
+        2000
+      ],
+      "round_time": [
+        480,
+        2000
+      ],
+      "success": [
+        480,
+        2000
+      ]
+    },
+    "dtypes": {
+      "assignment_changed": "bool",
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "ego_request_changed": "bool",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 531854400,
+    "mtime_ns": 1791019854748625785,
+    "fingerprint": "2b18dbbb18cbc235fb700c08ab7b98cf15940e89e7da8a716c57bb363991c26c",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed4.safetensors",
+    "checkpoint_sha256": "cb7da68007544f53cc58e9e7ca1272bc60d16019d070987ec6789b407757d85c",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed4_config.json",
+    "config_sha256": "3952ec044f62dc0f3d17981063c1d16b1903ecfecbd8b404b2412c9e2ce5faf7",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v2_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed4_test.h5",
+    "version": "v2",
+    "protocol": "online_v2",
+    "condition": "rnn_single_influence",
+    "seed": 4,
+    "slice": "test",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "assignment_changed": [
+        440,
+        2000
+      ],
+      "capability": [
+        440,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        440
+      ],
+      "capability_pool": [
+        22,
+        2
+      ],
+      "dones": [
+        440,
+        2000
+      ],
+      "ego_alloc_action": [
+        440,
+        2000
+      ],
+      "ego_request_changed": [
+        440,
+        2000
+      ],
+      "hidden_state": [
+        440,
+        2000,
+        128
+      ],
+      "is_t0": [
+        440,
+        2000
+      ],
+      "layout_idx": [
+        440,
+        2000
+      ],
+      "partner_assignment": [
+        440,
+        2000
+      ],
+      "partner_goal": [
+        440,
+        2000
+      ],
+      "rewards": [
+        440,
+        2000
+      ],
+      "round_done": [
+        440,
+        2000
+      ],
+      "round_idx": [
+        440,
+        2000
+      ],
+      "round_time": [
+        440,
+        2000
+      ],
+      "success": [
+        440,
+        2000
+      ]
+    },
+    "dtypes": {
+      "assignment_changed": "bool",
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "ego_request_changed": "bool",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 487534224,
+    "mtime_ns": 1791019865492553071,
+    "fingerprint": "e224c835ae849b2873062452c7dcd03131445147a468c8c036b2372894580954",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed4.safetensors",
+    "checkpoint_sha256": "cb7da68007544f53cc58e9e7ca1272bc60d16019d070987ec6789b407757d85c",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed4_config.json",
+    "config_sha256": "3952ec044f62dc0f3d17981063c1d16b1903ecfecbd8b404b2412c9e2ce5faf7",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v2_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed5_train.h5",
+    "version": "v2",
+    "protocol": "online_v2",
+    "condition": "rnn_single_influence",
+    "seed": 5,
+    "slice": "train",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "assignment_changed": [
+        480,
+        2000
+      ],
+      "capability": [
+        480,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        480
+      ],
+      "capability_pool": [
+        24,
+        2
+      ],
+      "dones": [
+        480,
+        2000
+      ],
+      "ego_alloc_action": [
+        480,
+        2000
+      ],
+      "ego_request_changed": [
+        480,
+        2000
+      ],
+      "hidden_state": [
+        480,
+        2000,
+        128
+      ],
+      "is_t0": [
+        480,
+        2000
+      ],
+      "layout_idx": [
+        480,
+        2000
+      ],
+      "partner_assignment": [
+        480,
+        2000
+      ],
+      "partner_goal": [
+        480,
+        2000
+      ],
+      "rewards": [
+        480,
+        2000
+      ],
+      "round_done": [
+        480,
+        2000
+      ],
+      "round_idx": [
+        480,
+        2000
+      ],
+      "round_time": [
+        480,
+        2000
+      ],
+      "success": [
+        480,
+        2000
+      ]
+    },
+    "dtypes": {
+      "assignment_changed": "bool",
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "ego_request_changed": "bool",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 531854400,
+    "mtime_ns": 1791019890072386516,
+    "fingerprint": "0ea61288b5b0ff4181b3f1a26c55bf4d70811062fb6cde35015743cc792fa6bc",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed5.safetensors",
+    "checkpoint_sha256": "8a143db34194ecdf10e150fe2af4c0cc403e80cab9df78c33bf33d1667244b3b",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed5_config.json",
+    "config_sha256": "3d5f4901f242053911d58698696492d2d4cba67ce0892d6e4065a4c028fcf4a6",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v2_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed5_test.h5",
+    "version": "v2",
+    "protocol": "online_v2",
+    "condition": "rnn_single_influence",
+    "seed": 5,
+    "slice": "test",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "assignment_changed": [
+        440,
+        2000
+      ],
+      "capability": [
+        440,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        440
+      ],
+      "capability_pool": [
+        22,
+        2
+      ],
+      "dones": [
+        440,
+        2000
+      ],
+      "ego_alloc_action": [
+        440,
+        2000
+      ],
+      "ego_request_changed": [
+        440,
+        2000
+      ],
+      "hidden_state": [
+        440,
+        2000,
+        128
+      ],
+      "is_t0": [
+        440,
+        2000
+      ],
+      "layout_idx": [
+        440,
+        2000
+      ],
+      "partner_assignment": [
+        440,
+        2000
+      ],
+      "partner_goal": [
+        440,
+        2000
+      ],
+      "rewards": [
+        440,
+        2000
+      ],
+      "round_done": [
+        440,
+        2000
+      ],
+      "round_idx": [
+        440,
+        2000
+      ],
+      "round_time": [
+        440,
+        2000
+      ],
+      "success": [
+        440,
+        2000
+      ]
+    },
+    "dtypes": {
+      "assignment_changed": "bool",
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "ego_request_changed": "bool",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 487534224,
+    "mtime_ns": 1791019900928312873,
+    "fingerprint": "64cfdf9184042e8b9a9a67cf958e7b30c2791e3af155adb3cd9e0110e27c3349",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed5.safetensors",
+    "checkpoint_sha256": "8a143db34194ecdf10e150fe2af4c0cc403e80cab9df78c33bf33d1667244b3b",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed5_config.json",
+    "config_sha256": "3d5f4901f242053911d58698696492d2d4cba67ce0892d6e4065a4c028fcf4a6",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v2_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed1_train.h5",
+    "version": "v2",
+    "protocol": "online_v2",
+    "condition": "rnn_diverse_noinfluence",
+    "seed": 1,
+    "slice": "train",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "assignment_changed": [
+        480,
+        2000
+      ],
+      "capability": [
+        480,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        480
+      ],
+      "capability_pool": [
+        24,
+        2
+      ],
+      "dones": [
+        480,
+        2000
+      ],
+      "ego_alloc_action": [
+        480,
+        2000
+      ],
+      "ego_request_changed": [
+        480,
+        2000
+      ],
+      "hidden_state": [
+        480,
+        2000,
+        128
+      ],
+      "is_t0": [
+        480,
+        2000
+      ],
+      "layout_idx": [
+        480,
+        2000
+      ],
+      "partner_assignment": [
+        480,
+        2000
+      ],
+      "partner_goal": [
+        480,
+        2000
+      ],
+      "rewards": [
+        480,
+        2000
+      ],
+      "round_done": [
+        480,
+        2000
+      ],
+      "round_idx": [
+        480,
+        2000
+      ],
+      "round_time": [
+        480,
+        2000
+      ],
+      "success": [
+        480,
+        2000
+      ]
+    },
+    "dtypes": {
+      "assignment_changed": "bool",
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "ego_request_changed": "bool",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 531854400,
+    "mtime_ns": 1791019573214526220,
+    "fingerprint": "511b2cfc15e148a981c7afc199041027634511c5e0d276d0e17978cbaaa8f1bc",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed1.safetensors",
+    "checkpoint_sha256": "27b0f2b3b8564b9490a10a03be562eb5803e698eacf75bf2db59f041b7bb63f8",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed1_config.json",
+    "config_sha256": "d1e0794d314dd7763c43c071b20719c4eb5a3cfd329b7925dd218ace0c0be9e7",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v2_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed1_test.h5",
+    "version": "v2",
+    "protocol": "online_v2",
+    "condition": "rnn_diverse_noinfluence",
+    "seed": 1,
+    "slice": "test",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "assignment_changed": [
+        440,
+        2000
+      ],
+      "capability": [
+        440,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        440
+      ],
+      "capability_pool": [
+        22,
+        2
+      ],
+      "dones": [
+        440,
+        2000
+      ],
+      "ego_alloc_action": [
+        440,
+        2000
+      ],
+      "ego_request_changed": [
+        440,
+        2000
+      ],
+      "hidden_state": [
+        440,
+        2000,
+        128
+      ],
+      "is_t0": [
+        440,
+        2000
+      ],
+      "layout_idx": [
+        440,
+        2000
+      ],
+      "partner_assignment": [
+        440,
+        2000
+      ],
+      "partner_goal": [
+        440,
+        2000
+      ],
+      "rewards": [
+        440,
+        2000
+      ],
+      "round_done": [
+        440,
+        2000
+      ],
+      "round_idx": [
+        440,
+        2000
+      ],
+      "round_time": [
+        440,
+        2000
+      ],
+      "success": [
+        440,
+        2000
+      ]
+    },
+    "dtypes": {
+      "assignment_changed": "bool",
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "ego_request_changed": "bool",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 487534224,
+    "mtime_ns": 1791019584198451124,
+    "fingerprint": "70b2af4d6526d6fa1e2f405763d6bb6585fba82d37197cb77dfef4a9dce568b3",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed1.safetensors",
+    "checkpoint_sha256": "27b0f2b3b8564b9490a10a03be562eb5803e698eacf75bf2db59f041b7bb63f8",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed1_config.json",
+    "config_sha256": "d1e0794d314dd7763c43c071b20719c4eb5a3cfd329b7925dd218ace0c0be9e7",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v2_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed2_train.h5",
+    "version": "v2",
+    "protocol": "online_v2",
+    "condition": "rnn_diverse_noinfluence",
+    "seed": 2,
+    "slice": "train",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "assignment_changed": [
+        480,
+        2000
+      ],
+      "capability": [
+        480,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        480
+      ],
+      "capability_pool": [
+        24,
+        2
+      ],
+      "dones": [
+        480,
+        2000
+      ],
+      "ego_alloc_action": [
+        480,
+        2000
+      ],
+      "ego_request_changed": [
+        480,
+        2000
+      ],
+      "hidden_state": [
+        480,
+        2000,
+        128
+      ],
+      "is_t0": [
+        480,
+        2000
+      ],
+      "layout_idx": [
+        480,
+        2000
+      ],
+      "partner_assignment": [
+        480,
+        2000
+      ],
+      "partner_goal": [
+        480,
+        2000
+      ],
+      "rewards": [
+        480,
+        2000
+      ],
+      "round_done": [
+        480,
+        2000
+      ],
+      "round_idx": [
+        480,
+        2000
+      ],
+      "round_time": [
+        480,
+        2000
+      ],
+      "success": [
+        480,
+        2000
+      ]
+    },
+    "dtypes": {
+      "assignment_changed": "bool",
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "ego_request_changed": "bool",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 531854400,
+    "mtime_ns": 1791019608066287826,
+    "fingerprint": "4026d667ec34706322e778dd658e47b684bd69e51653446e2a5cd32709e8e886",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed2.safetensors",
+    "checkpoint_sha256": "c063416d67fe202b2cade2c5a1db4fcdfdaef333a3079a2ef3d974063f975176",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed2_config.json",
+    "config_sha256": "85ec79bf8e844f70837a3a827fa532ed03999bef2cf7e09700897225c01b4fc4",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v2_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed2_test.h5",
+    "version": "v2",
+    "protocol": "online_v2",
+    "condition": "rnn_diverse_noinfluence",
+    "seed": 2,
+    "slice": "test",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "assignment_changed": [
+        440,
+        2000
+      ],
+      "capability": [
+        440,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        440
+      ],
+      "capability_pool": [
+        22,
+        2
+      ],
+      "dones": [
+        440,
+        2000
+      ],
+      "ego_alloc_action": [
+        440,
+        2000
+      ],
+      "ego_request_changed": [
+        440,
+        2000
+      ],
+      "hidden_state": [
+        440,
+        2000,
+        128
+      ],
+      "is_t0": [
+        440,
+        2000
+      ],
+      "layout_idx": [
+        440,
+        2000
+      ],
+      "partner_assignment": [
+        440,
+        2000
+      ],
+      "partner_goal": [
+        440,
+        2000
+      ],
+      "rewards": [
+        440,
+        2000
+      ],
+      "round_done": [
+        440,
+        2000
+      ],
+      "round_idx": [
+        440,
+        2000
+      ],
+      "round_time": [
+        440,
+        2000
+      ],
+      "success": [
+        440,
+        2000
+      ]
+    },
+    "dtypes": {
+      "assignment_changed": "bool",
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "ego_request_changed": "bool",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 487534224,
+    "mtime_ns": 1791019618830214131,
+    "fingerprint": "7ef996a408ed16ef7c0c60300555562faf391d5b2994006de358b2def97ab503",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed2.safetensors",
+    "checkpoint_sha256": "c063416d67fe202b2cade2c5a1db4fcdfdaef333a3079a2ef3d974063f975176",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed2_config.json",
+    "config_sha256": "85ec79bf8e844f70837a3a827fa532ed03999bef2cf7e09700897225c01b4fc4",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v2_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed3_train.h5",
+    "version": "v2",
+    "protocol": "online_v2",
+    "condition": "rnn_diverse_noinfluence",
+    "seed": 3,
+    "slice": "train",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "assignment_changed": [
+        480,
+        2000
+      ],
+      "capability": [
+        480,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        480
+      ],
+      "capability_pool": [
+        24,
+        2
+      ],
+      "dones": [
+        480,
+        2000
+      ],
+      "ego_alloc_action": [
+        480,
+        2000
+      ],
+      "ego_request_changed": [
+        480,
+        2000
+      ],
+      "hidden_state": [
+        480,
+        2000,
+        128
+      ],
+      "is_t0": [
+        480,
+        2000
+      ],
+      "layout_idx": [
+        480,
+        2000
+      ],
+      "partner_assignment": [
+        480,
+        2000
+      ],
+      "partner_goal": [
+        480,
+        2000
+      ],
+      "rewards": [
+        480,
+        2000
+      ],
+      "round_done": [
+        480,
+        2000
+      ],
+      "round_idx": [
+        480,
+        2000
+      ],
+      "round_time": [
+        480,
+        2000
+      ],
+      "success": [
+        480,
+        2000
+      ]
+    },
+    "dtypes": {
+      "assignment_changed": "bool",
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "ego_request_changed": "bool",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 531854400,
+    "mtime_ns": 1791019643382047793,
+    "fingerprint": "d0e3712a54bb4d237e6e8af3e11000cc82bb603b7bebbdebfb462c5fd7e40343",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed3.safetensors",
+    "checkpoint_sha256": "2397c5a2441480c1d46263607c90bea5458310a4bd0eded90c7bef6e325cc6e8",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed3_config.json",
+    "config_sha256": "27fe803553afd6fca024210f23efbf772717f574197351cbbb56ea31ee8a0154",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v2_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed3_test.h5",
+    "version": "v2",
+    "protocol": "online_v2",
+    "condition": "rnn_diverse_noinfluence",
+    "seed": 3,
+    "slice": "test",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "assignment_changed": [
+        440,
+        2000
+      ],
+      "capability": [
+        440,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        440
+      ],
+      "capability_pool": [
+        22,
+        2
+      ],
+      "dones": [
+        440,
+        2000
+      ],
+      "ego_alloc_action": [
+        440,
+        2000
+      ],
+      "ego_request_changed": [
+        440,
+        2000
+      ],
+      "hidden_state": [
+        440,
+        2000,
+        128
+      ],
+      "is_t0": [
+        440,
+        2000
+      ],
+      "layout_idx": [
+        440,
+        2000
+      ],
+      "partner_assignment": [
+        440,
+        2000
+      ],
+      "partner_goal": [
+        440,
+        2000
+      ],
+      "rewards": [
+        440,
+        2000
+      ],
+      "round_done": [
+        440,
+        2000
+      ],
+      "round_idx": [
+        440,
+        2000
+      ],
+      "round_time": [
+        440,
+        2000
+      ],
+      "success": [
+        440,
+        2000
+      ]
+    },
+    "dtypes": {
+      "assignment_changed": "bool",
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "ego_request_changed": "bool",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 487534224,
+    "mtime_ns": 1791019653441979804,
+    "fingerprint": "55a7f3dc6bca22191421630021881a3c0a125a0c991c8dcae9668a058b3b6ce8",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed3.safetensors",
+    "checkpoint_sha256": "2397c5a2441480c1d46263607c90bea5458310a4bd0eded90c7bef6e325cc6e8",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed3_config.json",
+    "config_sha256": "27fe803553afd6fca024210f23efbf772717f574197351cbbb56ea31ee8a0154",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v2_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed4_train.h5",
+    "version": "v2",
+    "protocol": "online_v2",
+    "condition": "rnn_diverse_noinfluence",
+    "seed": 4,
+    "slice": "train",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "assignment_changed": [
+        480,
+        2000
+      ],
+      "capability": [
+        480,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        480
+      ],
+      "capability_pool": [
+        24,
+        2
+      ],
+      "dones": [
+        480,
+        2000
+      ],
+      "ego_alloc_action": [
+        480,
+        2000
+      ],
+      "ego_request_changed": [
+        480,
+        2000
+      ],
+      "hidden_state": [
+        480,
+        2000,
+        128
+      ],
+      "is_t0": [
+        480,
+        2000
+      ],
+      "layout_idx": [
+        480,
+        2000
+      ],
+      "partner_assignment": [
+        480,
+        2000
+      ],
+      "partner_goal": [
+        480,
+        2000
+      ],
+      "rewards": [
+        480,
+        2000
+      ],
+      "round_done": [
+        480,
+        2000
+      ],
+      "round_idx": [
+        480,
+        2000
+      ],
+      "round_time": [
+        480,
+        2000
+      ],
+      "success": [
+        480,
+        2000
+      ]
+    },
+    "dtypes": {
+      "assignment_changed": "bool",
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "ego_request_changed": "bool",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 531854400,
+    "mtime_ns": 1791019677393817720,
+    "fingerprint": "4c9332dd7931bc87a5b6d6fd54ceccddbb44cdf90b92c6caff92bc12fd71e1d4",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed4.safetensors",
+    "checkpoint_sha256": "fc83f2adcd0de5274a3d6ec27b4b75692e0d8220b211bfdd277e2772d2db229d",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed4_config.json",
+    "config_sha256": "5552608f2d75c303734bda223681fbb303ea81558dedcd139101106162d0fc03",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v2_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed4_test.h5",
+    "version": "v2",
+    "protocol": "online_v2",
+    "condition": "rnn_diverse_noinfluence",
+    "seed": 4,
+    "slice": "test",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "assignment_changed": [
+        440,
+        2000
+      ],
+      "capability": [
+        440,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        440
+      ],
+      "capability_pool": [
+        22,
+        2
+      ],
+      "dones": [
+        440,
+        2000
+      ],
+      "ego_alloc_action": [
+        440,
+        2000
+      ],
+      "ego_request_changed": [
+        440,
+        2000
+      ],
+      "hidden_state": [
+        440,
+        2000,
+        128
+      ],
+      "is_t0": [
+        440,
+        2000
+      ],
+      "layout_idx": [
+        440,
+        2000
+      ],
+      "partner_assignment": [
+        440,
+        2000
+      ],
+      "partner_goal": [
+        440,
+        2000
+      ],
+      "rewards": [
+        440,
+        2000
+      ],
+      "round_done": [
+        440,
+        2000
+      ],
+      "round_idx": [
+        440,
+        2000
+      ],
+      "round_time": [
+        440,
+        2000
+      ],
+      "success": [
+        440,
+        2000
+      ]
+    },
+    "dtypes": {
+      "assignment_changed": "bool",
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "ego_request_changed": "bool",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 487534224,
+    "mtime_ns": 1791019688281743950,
+    "fingerprint": "c89c4b0b6adb3648cf9aef44c874037cee174db4d9573cbabdddf97610a8b902",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed4.safetensors",
+    "checkpoint_sha256": "fc83f2adcd0de5274a3d6ec27b4b75692e0d8220b211bfdd277e2772d2db229d",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed4_config.json",
+    "config_sha256": "5552608f2d75c303734bda223681fbb303ea81558dedcd139101106162d0fc03",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v2_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed5_train.h5",
+    "version": "v2",
+    "protocol": "online_v2",
+    "condition": "rnn_diverse_noinfluence",
+    "seed": 5,
+    "slice": "train",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "assignment_changed": [
+        480,
+        2000
+      ],
+      "capability": [
+        480,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        480
+      ],
+      "capability_pool": [
+        24,
+        2
+      ],
+      "dones": [
+        480,
+        2000
+      ],
+      "ego_alloc_action": [
+        480,
+        2000
+      ],
+      "ego_request_changed": [
+        480,
+        2000
+      ],
+      "hidden_state": [
+        480,
+        2000,
+        128
+      ],
+      "is_t0": [
+        480,
+        2000
+      ],
+      "layout_idx": [
+        480,
+        2000
+      ],
+      "partner_assignment": [
+        480,
+        2000
+      ],
+      "partner_goal": [
+        480,
+        2000
+      ],
+      "rewards": [
+        480,
+        2000
+      ],
+      "round_done": [
+        480,
+        2000
+      ],
+      "round_idx": [
+        480,
+        2000
+      ],
+      "round_time": [
+        480,
+        2000
+      ],
+      "success": [
+        480,
+        2000
+      ]
+    },
+    "dtypes": {
+      "assignment_changed": "bool",
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "ego_request_changed": "bool",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 531854400,
+    "mtime_ns": 1791019711753587125,
+    "fingerprint": "e9e54bd8ab2db942f9c2b75a736101c4f42e8bf72a0001e8cf1a4ba2d8090fd0",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed5.safetensors",
+    "checkpoint_sha256": "045d41652153c93c646269452e7b2ba7b80eb6d87b19fec41a7e7f3ba3a33a48",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed5_config.json",
+    "config_sha256": "14c9d612dbedae17f4a5ace62c9ec4d4e174b3054f59defbb74febd60f80068b",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v2_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed5_test.h5",
+    "version": "v2",
+    "protocol": "online_v2",
+    "condition": "rnn_diverse_noinfluence",
+    "seed": 5,
+    "slice": "test",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "assignment_changed": [
+        440,
+        2000
+      ],
+      "capability": [
+        440,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        440
+      ],
+      "capability_pool": [
+        22,
+        2
+      ],
+      "dones": [
+        440,
+        2000
+      ],
+      "ego_alloc_action": [
+        440,
+        2000
+      ],
+      "ego_request_changed": [
+        440,
+        2000
+      ],
+      "hidden_state": [
+        440,
+        2000,
+        128
+      ],
+      "is_t0": [
+        440,
+        2000
+      ],
+      "layout_idx": [
+        440,
+        2000
+      ],
+      "partner_assignment": [
+        440,
+        2000
+      ],
+      "partner_goal": [
+        440,
+        2000
+      ],
+      "rewards": [
+        440,
+        2000
+      ],
+      "round_done": [
+        440,
+        2000
+      ],
+      "round_idx": [
+        440,
+        2000
+      ],
+      "round_time": [
+        440,
+        2000
+      ],
+      "success": [
+        440,
+        2000
+      ]
+    },
+    "dtypes": {
+      "assignment_changed": "bool",
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "ego_request_changed": "bool",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 487534224,
+    "mtime_ns": 1791019722645514406,
+    "fingerprint": "0ecd89c504a1e940957124d61409749a80499a309b04fd2d4d3fdfed2029ef3e",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed5.safetensors",
+    "checkpoint_sha256": "045d41652153c93c646269452e7b2ba7b80eb6d87b19fec41a7e7f3ba3a33a48",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed5_config.json",
+    "config_sha256": "14c9d612dbedae17f4a5ace62c9ec4d4e174b3054f59defbb74febd60f80068b",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v2_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  }
+]

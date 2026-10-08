@@ -41,6 +41,13 @@ def write_csv(path, rows):
 
 
 def select_seeds(manifest, window):
+    # Audit guide:
+    # Read complete training logs, validate update counts against saved configurations,
+    # and choose the highest training-return learner per condition/protocol. Exclude
+    # logged updates without completed-episode metrics from a requested trailing window.
+    # Resolve logged score ties deterministically by seed; novel test results never
+    # enter selection.
+    #
     candidates = []
     for job in manifest["training_jobs"]:
         version, condition, seed = job["version"], job["condition"], job["seed"]
@@ -87,6 +94,13 @@ def select_seeds(manifest, window):
 
 
 def held_out_metrics(directory, condition, seed, n_bootstrap, bootstrap_seed):
+    # Audit guide:
+    # After selecting a policy, compute its novel-population outcomes from valid first-
+    # done episode prefixes. Bootstrap whole episodes within each profile, keeping all
+    # twenty rounds together and profile weights equal. These intervals describe
+    # evaluation sampling for this fixed policy, not variation across trained learner
+    # seeds.
+    #
     summary_path = directory / f"{condition}_seed{seed}_summary.json"
     summary_bytes = summary_path.read_bytes()
     summary = json.loads(summary_bytes)["test"]
@@ -147,7 +161,7 @@ def save_figure(fig, out, name):
 
 def make_plots(results, out, window, counterbalanced=True, versions=("v1", "v2"),
                performance_only=False, common_seed=None, axis_limits=None,
-               selection_scope="both experiment sets", action_selection=None):
+               selection_scope="all eight policies in this batch", action_selection=None):
     plt.rcParams.update({"font.size": 10, "axes.spines.top": False,
                          "axes.spines.right": False})
     legend = [Patch(facecolor=COLORS[v], alpha=.85, label=label) for v, label in (
@@ -181,8 +195,7 @@ def make_plots(results, out, window, counterbalanced=True, versions=("v1", "v2")
 
     rule = ("highest final logged training return" if window == 1 else
             f"highest trailing {window}-update training return")
-    corpus_note = ("Same 1096 layouts." if counterbalanced else
-                   "Original random sampling; v1: 1000 layouts; v2: 1096 layouts.")
+    corpus_note = "Same 1096 layouts and counterbalanced schedule."
     selection_note = ("One policy per condition, selected by " + rule + "." if common_seed is None
                      else f"Seed {common_seed} for every condition/version; selected by mean " +
                           ("final logged training return" if window == 1 else f"trailing {window}-update training return") +
@@ -195,11 +208,8 @@ def make_plots(results, out, window, counterbalanced=True, versions=("v1", "v2")
             "Held-out partner round success (%)", "Held-out partner episode return",
             "Mean steps per 20-round episode")):
         metric_plot(ax, metric, scale, label)
-    axes[0].legend(handles=legend,
-                   loc="upper left" if action_selection == "greedy_random_ties" else "lower left", fontsize=9)
-    title = ("Counterbalanced" if counterbalanced else "Original random-sampling")
-    if action_selection == "greedy_random_ties":
-        title += " greedy-action"
+    axes[0].legend(handles=legend, loc="lower left", fontsize=9)
+    title = "Counterbalanced"
     title += " " + ("v1 versus v2" if len(versions) == 2 else versions[0])
     seed_label = "best training seed" if common_seed is None else f"common training seed {common_seed}"
     fig.suptitle(title + ": " + seed_label, fontsize=16)
@@ -238,29 +248,23 @@ def make_plots(results, out, window, counterbalanced=True, versions=("v1", "v2")
 
 
 def load_source(args):
-    if not args.original_versions:
-        path = resolve_path(args.manifest)
-        content = path.read_bytes()
-        return path, content, resolve_record_paths(json.loads(content))
-    # The original v1 runs predate the v2 submission manifest; this audit
-    # records the precise logs/configs of both sets of evaluated checkpoints.
-    batch = "balanced1096_20261002_022924"
-    path = ROOT / "eval/protocol_comparison" / batch / "final_training_grid_statistics.json"
+    """Load the retained categorical counterbalanced experiment."""
+    path = resolve_path(args.manifest)
     content = path.read_bytes()
-    audit = resolve_record_paths(json.loads(content))
-    runs = audit["per_seed_training_rounds"]
-    assert len(runs) == 40 and len({r["steps"] for r in runs}) == 1
-    source = dict(batch=batch, training_jobs=runs,
-        effective_timesteps_per_policy=runs[0]["steps"],
-        sampling_protocol="uniform_with_replacement",
-        corpus_note="Original v1: 1000 layouts; original v2: 1096 layouts. Protocol and other implementation details also differ.",
-        corpora=audit["corpora"],
-        versions={"v1": dict(evaluation_root=str(ROOT / "eval/eval_out")),
-                  "v2": dict(evaluation_root=str(ROOT / "eval/eval_out/online_v2" / batch))})
-    return path, content, source
+    manifest = resolve_record_paths(json.loads(content))
+    if manifest.get("sampling_protocol") != "paired_counterbalanced_v1":
+        raise ValueError("Expected a counterbalanced training manifest")
+    if manifest.get("action_selection", "categorical") != "categorical":
+        raise ValueError("Expected categorical policy sampling")
+    return path, content, manifest
 
 
 def main(args):
+    # Audit guide:
+    # Save training candidates and selections before plotting chosen-policy held-out
+    # outcomes. Provenance records make the figure policy
+    # choices auditable.
+    #
     manifest_path, manifest_bytes, manifest = load_source(args)
     candidates, selected = select_seeds(manifest, args.selection_window_updates)
     # All eight selections are finalized before opening held-out evaluations.
@@ -294,10 +298,10 @@ def main(args):
         selected=results, candidates=candidates)
     (out / "selection.json").write_text(json.dumps(report, indent=2, allow_nan=False) + "\n")
     make_plots(results, out, args.selection_window_updates,
-               counterbalanced=not args.original_versions)
+               counterbalanced=True)
     for version in ("v1", "v2"):
         make_plots(results, out, args.selection_window_updates,
-                   counterbalanced=not args.original_versions, versions=(version,),
+                   counterbalanced=True, versions=(version,),
                    performance_only=True)
     for r in results:
         print(f"{r['version']} {r['condition']}: seed {r['seed']}; "
@@ -309,10 +313,7 @@ def main(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
-    inputs = parser.add_mutually_exclusive_group()
-    inputs.add_argument("--manifest", type=Path, default=ROOT / "train/manifests/sbatch_counterbalanced1096_20261002_235609.json")
-    inputs.add_argument("--original-versions", action="store_true",
-                        help="Use the original random-sampling v1/v2 runs instead of the counterbalanced batch")
+    parser.add_argument("--manifest", type=Path, default=ROOT / "train/manifests/sbatch_counterbalanced1096_20261002_235609.json")
     parser.add_argument("--output-dir", type=Path)
     parser.add_argument("--selection-window-updates", type=int, default=1)
     parser.add_argument("--bootstrap-repetitions", type=int, default=2000)

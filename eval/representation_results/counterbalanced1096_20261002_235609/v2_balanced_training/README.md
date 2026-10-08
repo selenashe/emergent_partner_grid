@@ -36,9 +36,9 @@ The additional selected-policy view reuses the existing common training seed acr
 
 | Condition | Selected seed | Metric | Value |
 | --- | --- | --- | --- |
-| Multi-partner RNN | 5 | final_training.ep_return_mean (common seed selected across experiments) | 12.9980 |
-| Single-partner RNN | 5 | final_training.ep_return_mean (common seed selected across experiments) | 17.4190 |
-| No-influence RNN | 5 | final_training.ep_return_mean (common seed selected across experiments) | 10.6260 |
+| Multi-partner RNN | 5 | final_training.ep_return_mean (common seed selected within counterbalanced batch) | 12.9980 |
+| Single-partner RNN | 5 | final_training.ep_return_mean (common seed selected within counterbalanced batch) | 17.4190 |
+| No-influence RNN | 5 | final_training.ep_return_mean (common seed selected within counterbalanced batch) | 10.6260 |
 
 All candidate values and exact source logs are in `selected_seeds.json`. The selected-seed view is supplementary; the all-five-seed view is the main robustness analysis and retains every policy, including weak policies.
 
@@ -151,7 +151,7 @@ The round-index curve, five-policy-seed confidence intervals, familiar/novel sub
 python -m pip install -r requirements/representation.txt
 python eval/representation_analysis.py --eval-dir eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609 \
   --out-dir eval/representation_results/counterbalanced1096_20261002_235609/v2_balanced_training --analysis-seed 0 \
-  --device cpu --threads 1 --layout-count 1096 --common-seed-record eval/protocol_comparison/common_training_seed/selection.json --umap-all-seeds
+  --device cpu --threads 1 --layout-count 1096 --common-seed-record eval/protocol_comparison/counterbalanced1096_20261002_235609/common_training_seed/selection.json --umap-all-seeds
 ```
 
 Primary CSVs: `probe_timestep_per_seed.csv`, `probe_timestep_summary.csv`, `probe_by_round_per_seed.csv`, `probe_by_round_summary.csv`, `random_baseline.csv`. Additional CSVs: `probe_condition_differences.csv`, `shuffled_label_baseline.csv`, `episode_manifest.csv`, `umap_selected.csv`, and the round-table alias `probe_by_round.csv`. Figures are saved in PNG and PDF; fitted affine parameters and selected final-50 feature matrices are saved in NPZ for inspection.

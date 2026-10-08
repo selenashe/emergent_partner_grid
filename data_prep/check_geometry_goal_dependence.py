@@ -80,6 +80,11 @@ def load_layouts(corpus):
 
 def assignment_times(layouts, profiles):
     """Uncapped times; horizon failures must not create artificial ties."""
+    # Audit guide:
+    # Compute uncapped completion times for the two fixed assignments. Avoid turning two
+    # horizon failures into an artificial tied optimum. These times ignore agent
+    # collisions and online changes of assignment.
+    #
     times = np.empty((len(layouts), len(profiles), 2), dtype=np.int64)
     for i, layout in enumerate(layouts):
         for j, (dr, db) in enumerate(profiles):
@@ -111,6 +116,12 @@ def prediction_limit(labels, keys):
     or an estimate of generalization to unseen grids. Ties are either excluded
     or credited to either goal, explicitly reported as separate accuracies.
     """
+    # Audit guide:
+    # Group records by the information available to a hypothetical geometry-only
+    # classifier and choose the majority optimal goal within each group. This yields an
+    # exact best accuracy for those keys under the evaluated profile weights, without
+    # fitting a classifier.
+    #
     groups = {}
     for row, key in zip(labels, keys):
         groups.setdefault(key, np.zeros(3, dtype=np.int64))
@@ -124,6 +135,12 @@ def prediction_limit(labels, keys):
 
 
 def analyze_pool(layouts, labels, times, max_steps):
+    # Audit guide:
+    # Cross every layout with every profile in the requested pool, compare assignment
+    # times, and measure ties, optimum frequencies, coordinate correlations, and
+    # geometry-only prediction bounds. Independence conclusions apply to this corpus and
+    # weighting rather than arbitrary populations.
+    #
     per_layout = []
     for row, label in zip(layouts, labels):
         red, blue, ties = (int((label == value).sum()) for value in (1, -1, 0))
@@ -268,6 +285,12 @@ def make_figures(layouts, analyses, layout_rows, cell_rows, profiles, labels, ou
 
 
 def main(args):
+    # Audit guide:
+    # Verify the corpus against its frozen training manifest, recompute wall-aware
+    # distances, and run train/test/combined population audits. Save numerical tables,
+    # figures, and provenance so the 50 percent geometry-only ceiling is inspectable
+    # rather than inferred from synthetic examples.
+    #
     corpus = resolve_path(args.corpus_dir)
     output = args.output_dir or corpus / "diagnostics/geometry_goal_dependence"
     layouts, digest = load_layouts(corpus)

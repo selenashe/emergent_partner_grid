@@ -1,0 +1,92 @@
+[
+  {
+    "episode": 3,
+    "jh_direction_relative_error": 0.0014348159210113693,
+    "je_direction_relative_error": 0.0016117046497025804,
+    "jh_gain": 3.0672342777252197,
+    "je_gain": 2.2680089473724365,
+    "spectral_radius": 0.9999228715896606,
+    "partner_gain": 0.8299074981173289,
+    "finite_horizon_gain": [
+      3.0672343599322662,
+      3.8509754250085795,
+      4.38982468077854,
+      4.192464472047282
+    ]
+  },
+  {
+    "episode": 7,
+    "jh_direction_relative_error": 0.000891357436874948,
+    "je_direction_relative_error": 0.0014235313508809554,
+    "jh_gain": 3.49440598487854,
+    "je_gain": 3.4124386310577393,
+    "spectral_radius": 1.0194257497787476,
+    "partner_gain": 1.0693507222407672,
+    "finite_horizon_gain": [
+      3.4944059574273862,
+      5.501696079579321,
+      4.984344096910604,
+      5.142501531895179
+    ]
+  },
+  {
+    "episode": 11,
+    "jh_direction_relative_error": 0.0013401305613976115,
+    "je_direction_relative_error": 0.0014216359024628981,
+    "jh_gain": 3.0288584232330322,
+    "je_gain": 2.2411324977874756,
+    "spectral_radius": 1.100571632385254,
+    "partner_gain": 0.8614816956898684,
+    "finite_horizon_gain": [
+      3.028858358042602,
+      4.7847231334113856,
+      5.252558820953722,
+      5.414554092008982
+    ]
+  },
+  {
+    "episode": 15,
+    "jh_direction_relative_error": 0.0007835342107568603,
+    "je_direction_relative_error": 0.0023994601228874085,
+    "jh_gain": 3.142045259475708,
+    "je_gain": 2.5883874893188477,
+    "spectral_radius": 1.0368558168411255,
+    "partner_gain": 0.5586019946628995,
+    "finite_horizon_gain": [
+      3.1420452372478382,
+      2.743820304116748,
+      3.270549984750762,
+      3.092608574016027
+    ]
+  },
+  {
+    "episode": 19,
+    "jh_direction_relative_error": 0.0008988140886871356,
+    "je_direction_relative_error": 0.002692797350848118,
+    "jh_gain": 3.238929033279419,
+    "je_gain": 2.286684989929199,
+    "spectral_radius": 1.1368739604949951,
+    "partner_gain": 0.7515219413629728,
+    "finite_horizon_gain": [
+      3.23892910746866,
+      3.841172363110112,
+      5.431170765279212,
+      6.056351585857308
+    ]
+  },
+  {
+    "episode": 23,
+    "jh_direction_relative_error": 0.0008108402170419249,
+    "je_direction_relative_error": 0.002744153817636016,
+    "jh_gain": 3.002828598022461,
+    "je_gain": 2.280169725418091,
+    "spectral_radius": 1.042919397354126,
+    "partner_gain": 0.7702798879453379,
+    "finite_horizon_gain": [
+      3.0028285900325,
+      5.266642077867139,
+      4.927490996264346,
+      5.634182322391493
+    ]
+  }
+]

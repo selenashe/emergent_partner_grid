@@ -1,0 +1,47 @@
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+2026-10-07 00:15:01.330897: W external/xla/xla/service/gpu/runtime/support.cc:58] Intercepted XLA runtime error:
+UNKNOWN: CUDNN_STATUS_EXECUTION_FAILED
+in external/xla/xla/stream_executor/cuda/cuda_dnn.cc(8080): 'status'
+2026-10-07 00:15:01.331662: E external/xla/xla/pjrt/pjrt_stream_executor_client.cc:2716] Execution of replica 0 failed: INTERNAL: Failed to execute XLA Runtime executable: run time error: custom call 'xla.gpu.conv.backward.filter' failed: CUDNN_STATUS_EXECUTION_FAILED
+in external/xla/xla/stream_executor/cuda/cuda_dnn.cc(8080): 'status'; current tracing scope: cudnn-conv-bw-filter.6; current profiling annotation: XlaModule:#hlo_module=jit_train,program_id=65#.
+Error executing job with overrides: ['NUM_ENVS=4', 'NUM_STEPS=64', 'TOTAL_TIMESTEPS=256', 'UPDATE_EPOCHS=1', 'NUM_MINIBATCHES=4', 'ENV_KWARGS.max_steps=3', 'EVAL_EPISODES_PER_CAPABILITY=1', 'SAVE_PARAMS_PATH=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261007_001529_seeds6to10/slurm_preflight/v2/rnn_diverse_influence/params.safetensors', 'STDOUT_SUMMARY=false']
+jax.errors.SimplifiedTraceback: For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v2_balanced_training/source/baselines/IPPO/ippo_rnn_coordination_grid.py", line 1281, in <module>
+    main()
+  File "/nlp/scr/jshe/miniconda3/envs/emergent_partner_model/lib/python3.10/site-packages/hydra/main.py", line 94, in decorated_main
+    _run_hydra(
+  File "/nlp/scr/jshe/miniconda3/envs/emergent_partner_model/lib/python3.10/site-packages/hydra/_internal/utils.py", line 394, in _run_hydra
+    _run_app(
+  File "/nlp/scr/jshe/miniconda3/envs/emergent_partner_model/lib/python3.10/site-packages/hydra/_internal/utils.py", line 457, in _run_app
+    run_and_report(
+  File "/nlp/scr/jshe/miniconda3/envs/emergent_partner_model/lib/python3.10/site-packages/hydra/_internal/utils.py", line 223, in run_and_report
+    raise ex
+  File "/nlp/scr/jshe/miniconda3/envs/emergent_partner_model/lib/python3.10/site-packages/hydra/_internal/utils.py", line 220, in run_and_report
+    return func()
+  File "/nlp/scr/jshe/miniconda3/envs/emergent_partner_model/lib/python3.10/site-packages/hydra/_internal/utils.py", line 458, in <lambda>
+    lambda: hydra.run(
+  File "/nlp/scr/jshe/miniconda3/envs/emergent_partner_model/lib/python3.10/site-packages/hydra/_internal/hydra.py", line 132, in run
+    _ = ret.return_value
+  File "/nlp/scr/jshe/miniconda3/envs/emergent_partner_model/lib/python3.10/site-packages/hydra/core/utils.py", line 263, in return_value
+    raise self._return_value
+  File "/nlp/scr/jshe/miniconda3/envs/emergent_partner_model/lib/python3.10/site-packages/hydra/core/utils.py", line 189, in run_job
+    ret.return_value = task_function(task_cfg)
+  File "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v2_balanced_training/source/baselines/IPPO/ippo_rnn_coordination_grid.py", line 1148, in main
+    out = jax.vmap(train_jit)(rngs)
+jaxlib.xla_extension.XlaRuntimeError: INTERNAL: Failed to execute XLA Runtime executable: run time error: custom call 'xla.gpu.conv.backward.filter' failed: CUDNN_STATUS_EXECUTION_FAILED
+in external/xla/xla/stream_executor/cuda/cuda_dnn.cc(8080): 'status'; current tracing scope: cudnn-conv-bw-filter.6; current profiling annotation: XlaModule:#hlo_module=jit_train,program_id=65#.
+Traceback (most recent call last):
+  File "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261007_001529_seeds6to10/infrastructure_launch_v2/bash/extend_counterbalanced_training.py", line 417, in <module>
+    run_training(args.manifest, args.tag, args.version, smoke=args.mode == 'gpu-smoke')
+  File "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261007_001529_seeds6to10/infrastructure_launch_v2/bash/extend_counterbalanced_training.py", line 289, in run_training
+    subprocess.run(command, cwd=source, env=environment(source), check=True)
+  File "/nlp/scr/jshe/miniconda3/envs/emergent_partner_model/lib/python3.10/subprocess.py", line 526, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/nlp/scr/jshe/miniconda3/envs/emergent_partner_model/bin/python', '-u', '/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v2_balanced_training/source/baselines/IPPO/ippo_rnn_coordination_grid.py', '--config-path', '/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261007_001529_seeds6to10/configs/v2', '--config-name', 'rnn_diverse_influence_seed6', 'hydra.run.dir=/juice6/u/jshe/emergent_partner_grid/train/hydra_outputs/counterbalanced1096_20261007_001529_seeds6to10/v2/rnn_diverse_influence_seed6', 'NUM_ENVS=4', 'NUM_STEPS=64', 'TOTAL_TIMESTEPS=256', 'UPDATE_EPOCHS=1', 'NUM_MINIBATCHES=4', 'ENV_KWARGS.max_steps=3', 'EVAL_EPISODES_PER_CAPABILITY=1', 'SAVE_PARAMS_PATH=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261007_001529_seeds6to10/slurm_preflight/v2/rnn_diverse_influence/params.safetensors', 'STDOUT_SUMMARY=false', 'hydra.run.dir=/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261007_001529_seeds6to10/slurm_preflight/v2/rnn_diverse_influence/hydra']' returned non-zero exit status 1.

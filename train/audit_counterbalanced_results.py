@@ -15,6 +15,13 @@ CONDITIONS = ("rnn_diverse_influence", "mlp_diverse_influence",
 
 
 def main(batch):
+    # Audit guide:
+    # Independently reconstruct allocated schedule prefixes for every saved training
+    # run. Subtract each active worker unfinished episode/round tail and compare
+    # predicted starts/completions with saved matrices. Export verification and actual
+    # profile exposure. This validates realized training bookkeeping beyond the sampler
+    # mathematical balance guarantee.
+    #
     manifest = json.loads(resolve_path(ROOT / "train/manifests" / f"sbatch_{batch}.json").read_text())
     plans = {}
     rows = []

@@ -1,0 +1,107 @@
+ENV_NAME: coordination_grid
+ALLOCATION_PROTOCOL: online_v2
+ENV_KWARGS:
+  layouts_dir: /juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/corpus/layouts/train
+  augment_symmetries: false
+  rounds_per_episode: 20
+  max_steps: 100
+  step_penalty: 0.01
+  success_reward: 1.0
+  hide_partner_until_time: 0
+  communication_condition: action_only
+  influence: true
+  partner_capability_pairs:
+  - - 1
+    - 4
+  - - 1
+    - 7
+  - - 1
+    - 8
+  - - 1
+    - 9
+  - - 2
+    - 4
+  - - 2
+    - 7
+  - - 2
+    - 8
+  - - 2
+    - 9
+  - - 3
+    - 4
+  - - 3
+    - 7
+  - - 3
+    - 8
+  - - 3
+    - 9
+  - - 4
+    - 1
+  - - 4
+    - 2
+  - - 4
+    - 3
+  - - 7
+    - 1
+  - - 7
+    - 2
+  - - 7
+    - 3
+  - - 8
+    - 1
+  - - 8
+    - 2
+  - - 8
+    - 3
+  - - 9
+    - 1
+  - - 9
+    - 2
+  - - 9
+    - 3
+MODEL_TYPE: rnn
+PARTNER_REGIME: diverse
+INFLUENCE: true
+SINGLE_PARTNER:
+- 1
+- 4
+EVAL_EPISODES_PER_CAPABILITY: 20
+EVAL_SEED: 12345
+SAVE_PARAMS_PATH: /juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261007_001529_seeds6to10/rnn_diverse_influence_seed6.safetensors
+SEED: 6
+NUM_SEEDS: 1
+LR: 0.0005
+ANNEAL_LR: true
+LR_WARMUP: 0.05
+NUM_ENVS: 256
+NUM_STEPS: 256
+UPDATE_EPOCHS: 4
+NUM_MINIBATCHES: 64
+TOTAL_TIMESTEPS: 60000000
+CLIP_EPS: 0.2
+ENT_COEF: 0.01
+GAMMA: 0.99
+GAE_LAMBDA: 0.95
+VF_COEF: 1.0
+MAX_GRAD_NORM: 0.25
+FC_DIM_SIZE: 128
+GRU_HIDDEN_DIM: 128
+GRID_EMB_DIM: 64
+MSG_EMB_DIM: 8
+ACTIVATION: relu
+N_EPS_TOTAL: 3005232
+SCHEDULE_SEED: 2026
+ENTITY: ''
+PROJECT: coordination_grid
+WANDB_MODE: disabled
+EXPERIMENT_VERSION: v2_balanced_training
+SAMPLING_PROTOCOL: paired_counterbalanced_v1
+COUNTERBALANCED_SCHEDULE_PATHS:
+  diverse: /juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/schedules/diverse.npz
+  single: /juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/schedules/single.npz
+STDOUT_LOG: true
+STDOUT_SUMMARY: true
+NUM_ACTORS: 256
+NUM_UPDATES: 915
+MINIBATCH_SIZE: 1024
+COUNTERBALANCED_SCHEDULE_PATH: /juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/schedules/diverse.npz

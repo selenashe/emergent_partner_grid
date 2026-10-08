@@ -18,6 +18,12 @@ from eval.representation_analysis import CONDITIONS, REPO_ROOT, require
 
 
 def main():
+    # Audit guide:
+    # Count partner red-goal occupancy over all valid non-initialization ticks and
+    # separately at round endings, then join those proportions to round-20 decoding
+    # scores. Occupancy is an exposure proxy, not a count of successful partner moves
+    # or a causal intervention. No new decoder is fitted here.
+    #
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--results-root", default="eval/representation_results/counterbalanced1096_20261002_235609")
     root = Path(parser.parse_args().results_root)

@@ -169,6 +169,13 @@ def ego_action_mask(obs):
     Accepts any leading batch/time dimensions. At t=0 the policy has
     probability one on the supplied assignment, so it cannot choose it.
     """
+    # Audit guide:
+    # Turn the current observation into a yes/no list of allowed actions. At the
+    # initialization tick only STAY with the supplied assignment survives; later, each
+    # movement can accompany RED or BLUE. The five NONE codes remain forbidden even
+    # though the network has 15 outputs. Audit both this mask and step_env: direct
+    # environment calls must obey the initialization rule too.
+    #
     initial_alloc = jnp.maximum(1, jnp.argmax(obs["last_allocation"], axis=-1))
     forced_action = 3 * int(Actions.stay) + initial_alloc
     forced_mask = jnp.arange(N_EGO_ACTIONS) == forced_action[..., None]
@@ -261,6 +268,12 @@ def _load_layout(layout_path: str) -> dict:
 
     Coordinates in the JSON are [row, col]; we convert to (x, y).
     """
+    # Audit guide:
+    # Read wall cells and the two starts/goals from JSON. Stored coordinates are row,
+    # column, while runtime positions are x, y (column, row). This conversion matters:
+    # exchanging the conventions silently changes navigation and all distance
+    # calculations.
+    #
     with open(layout_path, "r") as f:
         raw = json.load(f)
 
@@ -292,6 +305,12 @@ def _bfs_next_actions(wall_map_np: np.ndarray, goal_xy_np: np.ndarray) -> np.nda
     unreachable cells get STAY. Tie-break in the fixed order
     UP, DOWN, RIGHT, LEFT so partner navigation is deterministic.
     """
+    # Audit guide:
+    # Work backwards from the goal with breadth-first search, visiting nearer cells
+    # before farther cells. Then choose a neighboring cell one distance unit closer.
+    # This table scripts the partner; it does not learn a policy or predict ego
+    # behavior. Fixed direction order resolves equally short routes reproducibly.
+    #
     h, w = wall_map_np.shape
     dist = np.full((h, w), -1, dtype=np.int32)
     gx, gy = int(goal_xy_np[0]), int(goal_xy_np[1])
@@ -504,6 +523,12 @@ class CoordinationGrid(MultiAgentEnv):
         partner_z: Optional[float] = None,
         partner_z_values: Optional[Sequence[float]] = None,
     ):
+        # Audit guide:
+        # Load equally sized layouts and stack them into arrays so parallel simulations
+        # can index a layout cheaply. Precompute a red and blue navigation table for
+        # every layout. Configure delays, influence, reward, and round count
+        # independently: the experiment YAML overrides the smaller constructor defaults.
+        #
         super().__init__(num_agents=2)
 
         if partner_z is not None or partner_z_values is not None:
@@ -655,6 +680,12 @@ class CoordinationGrid(MultiAgentEnv):
         round_idx: Optional[chex.Array] = None,
         episode_layout_seq: Optional[chex.Array] = None,
     ) -> "State":
+        # Audit guide:
+        # Start one physical round with both agents back at their starting cells and a
+        # fresh random assignment. A supplied capability and episode layout sequence are
+        # carried forward by callers across rounds. Only physical state and the movement
+        # counter reset here; recurrent policy memory belongs to the trainer.
+        #
         idx = layout_idx.astype(jnp.int32)
         wall_map = self.wall_maps[idx]
         ego_start = self.ego_starts[idx]
@@ -695,6 +726,12 @@ class CoordinationGrid(MultiAgentEnv):
         """Full partner-episode reset: sample capability from the pool AND a
         fresh 20-layout sequence, and start at round 0.
         """
+        # Audit guide:
+        # Start an entirely new partner episode: choose a capability and all round
+        # layouts. The partner keeps this capability through the episode. Training
+        # usually uses reset_from_schedule instead, so the scheduler determines these
+        # draws.
+        #
         key, k_layout, k_cap = jax.random.split(key, 3)
         layout_seq = jax.random.randint(
             k_layout, shape=(self.rounds_per_episode,),
@@ -716,6 +753,12 @@ class CoordinationGrid(MultiAgentEnv):
         self, capability: chex.Array, layout_seq: chex.Array, key: chex.PRNGKey,
     ) -> Tuple[Dict[str, chex.Array], "State"]:
         """Use scheduled capability/layouts and a key for random allocation."""
+        # Audit guide:
+        # Accept a capability and complete round-layout sequence chosen outside the
+        # environment. The random key still chooses the initial assignment. This
+        # separation lets two protocols reuse the same scheduled exposure without
+        # exposing capability to the policy.
+        #
         layout_seq = jnp.asarray(layout_seq, dtype=jnp.int32)
         state = self._build_state_for(
             layout_seq[0],
@@ -772,6 +815,15 @@ class CoordinationGrid(MultiAgentEnv):
         state: State,
         actions: Dict[str, chex.Array],
     ) -> Tuple[Dict[str, chex.Array], State, Dict[str, float], Dict[str, bool], Dict]:
+        # Audit guide:
+        # Apply one simulation tick in order: interpret the ego request, update the
+        # actual assignment if influence allows it, compute the delayed BFS move,
+        # resolve physical movement, then score success and termination. Both agents
+        # stay on tick zero. Intermediate round endings change physical state but keep
+        # capability and do not signal final done; final done after the last round
+        # triggers the trainer memory reset. Info describes the completed transition,
+        # even when the returned state already belongs to the next round.
+        #
         ego_action = jnp.asarray(actions["agent_0"], dtype=jnp.int32)
         ego_move, ego_alloc = decode_ego(ego_action)  # scalars
 
@@ -980,6 +1032,13 @@ class CoordinationGrid(MultiAgentEnv):
         instead supplies the random initial allocation.
         Capability is deliberately absent.
         """
+        # Audit guide:
+        # Construct five image channels: walls, red goal, blue goal, ego, partner. Add
+        # the previous ego request (or initial default) and an initialization flag.
+        # Capability and the internal partner assignment are deliberately absent, so a
+        # learned agent must infer delays from behavior rather than read the answer
+        # directly.
+        #
         h, w = self.height, self.width
         walls = state.wall_map.astype(jnp.float32)
 

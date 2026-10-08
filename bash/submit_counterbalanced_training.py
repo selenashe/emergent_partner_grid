@@ -2,7 +2,8 @@
 
 Preparation never submits jobs. Submission resumes from its durable manifest.
 The v1 source is recovered from the original experiment's Git revision;
-both versions receive the same sampler/action-selection patch and 1096-layout corpus.
+Both versions receive the same sampler patch and 1096-layout corpus.
+Training and evaluation retain original categorical policy sampling.
 """
 from pathlib import Path
 from datetime import datetime, timezone
@@ -38,6 +39,7 @@ V1_FILES = {'jaxmarl/environments/coordination_grid/coordination_grid.py': 'jaxm
 def relocate_v1_imports(text):
     """Relocate imports only; retain the original v1 protocol and PPO functions."""
     return (text.replace('from sweep_scheduler import', 'from episode_scheduler import')
+            .replace('import LogWrapper, save_params, load_params', 'import save_params, load_params')
             .replace('_REPO_ROOT / "baselines" / "IPPO"', '_REPO_ROOT / "train"')
             .replace('_REPO_ROOT / "dev"', '_REPO_ROOT / "data_prep"'))
 
@@ -62,34 +64,15 @@ def replace_once(text, old, new):
     return text.replace(old, new)
 
 
-def patch_action_selection(text):
-    """Apply the requested collector/evaluator change to the recovered v1 trainer."""
-    if 'from action_selection import select_action' not in text:
-        anchor = 'from episode_scheduler import build_schedule, initial_episode_cursor, summarize_schedule'
-        text = replace_once(text, anchor, anchor + '\nfrom action_selection import select_action')
-    matches = re.findall(r'pi\.sample\(seed=([a-z_]+)\)', text)
-    if matches:
-        if matches != ['_rng', 'ka']:
-            raise ValueError('Unexpected trainer policy sample sites: ' + str(matches))
-        text = re.sub(r'pi\.sample\(seed=([a-z_]+)\)',
-            lambda m: f'select_action(pi, {m[1]}, config.get("ACTION_SELECTION", "categorical"))', text)
-    if text.count('select_action(pi, ') != 2:
-        raise ValueError('Expected both training and in-process evaluation to use the shared selector')
-    return text
-
-
-def patch_evaluator_action_selection(text):
-    old = 'pi.sample(seed=ka)'
-    new = 'trainer_mod.select_action(pi, ka, config.get("ACTION_SELECTION", "categorical"))'
-    if old in text:
-        text = replace_once(text, old, new)
-    elif text.count(new) != 1:
-        raise ValueError('Standalone evaluator must use the shared selector')
-    return text
-
-
 def patch_trainer(text):
     """Patch sampling and audit bookkeeping only; preserve each PPO implementation."""
+    # Audit guide:
+    # Transform a recovered trainer source string to use a global counterbalanced queue
+    # and empirical exposure audits. Replace scheduling/reset/audit sites using checked
+    # anchors, while retaining the original network, loss, and protocol logic. Changes
+    # in anchor comments can break this preparer even when Python behavior is unchanged,
+    # so keep those anchors intact.
+    #
     text = replace_once(text, 'from episode_scheduler import build_schedule, initial_episode_cursor, summarize_schedule',
         'from episode_scheduler import build_schedule, initial_episode_cursor, summarize_schedule\n'
         'from counterbalanced_scheduler import (load_schedule, initial_queue, dispatch, lookup,\n'
@@ -139,13 +122,16 @@ def patch_trainer(text):
     return text
 
 
-def prepare(action_selection='greedy_random_ties'):
-    if action_selection not in ('categorical', 'greedy_random_ties'):
-        raise ValueError('Unknown action selection mode')
+def prepare():
+    # Audit guide:
+    # Create a fresh batch snapshot, verify/copy the shared corpus, and save
+    # single/diverse schedules. Recover v1 from its recorded Git revision and copy
+    # active v2, then patch both copies with scheduling. Write
+    # hashes and forty concrete training commands to a manifest; preparation itself does
+    # not submit jobs.
+    #
     now = datetime.now(timezone.utc)
     batch = 'counterbalanced1096_' + now.strftime('%Y%m%d_%H%M%S')
-    if action_selection == 'greedy_random_ties':
-        batch += '_greedy_action_selection'
     batch_root = ROOT / 'train/run_snapshots' / batch
     batch_root.mkdir(parents=True, exist_ok=False)
     corpus = ROOT / 'data_prep/grids_capability_selected_balanced_1096'
@@ -202,15 +188,12 @@ def prepare(action_selection='greedy_random_ties'):
                 (snapshot / target).write_text(relocate_v1_imports(content.decode()))
         trainer = snapshot / 'train/ippo_rnn_coordination_grid.py'
         baseline_trainer_sha = sha(trainer)
-        trainer.write_text(patch_trainer(patch_action_selection(trainer.read_text())))
-        evaluator = snapshot / 'eval/evaluate_partner_modelling.py'
-        evaluator.write_text(patch_evaluator_action_selection(evaluator.read_text()))
+        trainer.write_text(patch_trainer(trainer.read_text()))
         cfg_path = snapshot / 'train/config/ippo_coordination_grid.yaml'
         cfg = yaml.safe_load(cfg_path.read_text())
         protocol = 'fixed_v1' if version == 'v1' else 'online_v2'
         cfg.update({'ALLOCATION_PROTOCOL': protocol, 'EXPERIMENT_VERSION': label,
                     'SAMPLING_PROTOCOL': SAMPLING_PROTOCOL,
-                    'ACTION_SELECTION': action_selection,
                     'COUNTERBALANCED_SCHEDULE_PATHS': schedule_paths})
         cfg['ENV_KWARGS']['layouts_dir'] = str(frozen_corpus / 'layouts/train')
         cfg_path.write_text(yaml.safe_dump(cfg, sort_keys=False))
@@ -231,7 +214,6 @@ def prepare(action_selection='greedy_random_ties'):
                   'HYDRA_OUTPUT_DIR': str(ROOT / 'train/hydra_outputs' / batch),
                   'LAYOUTS_DIR': str(frozen_corpus / 'layouts/train'), 'ALLOCATION_PROTOCOL': protocol,
                   'NUM_SEEDS': '1', 'NUM_ENVS': '256', 'NUM_STEPS': '256',
-                  'ACTION_SELECTION': action_selection,
                   'UPDATE_EPOCHS': '4', 'NUM_MINIBATCHES': '64', 'TOTAL_TIMESTEPS': '60000000',
                   'LR': '5e-4', 'MAX_STEPS': '100', 'STEP_PENALTY': '0.01',
                   'ROUNDS_PER_EPISODE': '20', 'HIDE_PARTNER_UNTIL_TIME': '0',
@@ -244,12 +226,12 @@ def prepare(action_selection='greedy_random_ties'):
                 exports = common | {'CONDITION': condition, 'SEED': str(seed), 'TAG': tag}
                 jobs.append({'version': version, 'condition': condition, 'seed': seed, 'tag': tag,
                              'command': ['sbatch', '--parsable', f'--chdir={snapshot}',
-                                         f'--job-name=cg_{version}_cb_{"greedy_" if action_selection == "greedy_random_ties" else ""}{tag}',
+                                         f'--job-name=cg_{version}_cb_{tag}',
                                          '--export=ALL,' + ','.join(f'{k}={v}' for k, v in exports.items()), str(launcher)]})
     manifest = {'batch': batch, 'status': 'prepared', 'prepared_at_utc': now.isoformat(),
                 'v1_baseline_revision': V1_REVISION, 'sampling_protocol': SAMPLING_PROTOCOL,
-                'action_selection': action_selection,
-                'action_selection_note': 'Unique probability maxima are deterministic; only exact equal maxima use seeded uniform tie-breaking. Training and evaluation use the same rule. PPO objective and entropy coefficient remain unchanged.',
+                'action_selection': 'categorical',
+                'action_selection_note': 'Training and evaluation sample actions from the categorical policy distribution, retaining the original counterbalanced methods.',
                 'source_corpus': str(corpus), 'frozen_layouts_dir': str(frozen_corpus / 'layouts/train'),
                 'layout_files_sha256': digest.hexdigest(), 'n_layouts': 1096,
                 'corpus_note': 'Both versions use 1096 layouts; original v1 used 1000.',
@@ -260,7 +242,7 @@ def prepare(action_selection='greedy_random_ties'):
                     'constraint': '80G', 'memory': '32G', 'cpus': 4, 'time_limit': '08:00:00', 'exclude': 'sphinx9'},
                 'evaluation': {'episodes_per_capability': 20, 'seed': 12345, 'familiar_profiles': 24,
                                'novel_profiles': 22, 'time_limit': '02:00:00',
-                               'action_selection': action_selection},
+                               'action_selection': 'categorical'},
                 'preflight': {}}
     write(manifest_path, manifest)
     print(manifest_path, flush=True)
@@ -268,6 +250,11 @@ def prepare(action_selection='greedy_random_ties'):
 
 
 def verify_manifest(manifest):
+    # Audit guide:
+    # Rehash frozen layouts, schedules, and source files and compare them with the
+    # prepared manifest. Resolve relocated paths in memory first. This detects changes
+    # to the evidence that a submission claims to use.
+    #
     manifest = resolve_record_paths(manifest)
     digest = hashlib.sha256()
     for p in sorted(Path(manifest['frozen_layouts_dir']).glob('*.json')):
@@ -284,6 +271,13 @@ def verify_manifest(manifest):
 
 
 def submit(path):
+    # Audit guide:
+    # Require a passed preflight and intact frozen hashes, then submit only jobs without
+    # recorded IDs. Persist each Slurm ID immediately so submission can resume. Queue
+    # one evaluation per protocol with afterok dependencies on that protocol twenty
+    # training jobs. Executing this function spends cluster resources; reading or
+    # documenting it does not launch an experiment.
+    #
     m = json.loads(path.read_text())
     verify_manifest(m)
     if m.get('status') == 'completed':
@@ -326,10 +320,8 @@ if __name__ == '__main__':
     mode = parser.add_mutually_exclusive_group(required=True)
     mode.add_argument('--prepare', action='store_true')
     mode.add_argument('--submit-manifest', type=Path)
-    parser.add_argument('--action-selection', choices=('greedy_random_ties', 'categorical'),
-                        default='greedy_random_ties', help='Used when preparing a new frozen batch')
     args = parser.parse_args()
     if args.prepare:
-        prepare(args.action_selection)
+        prepare()
     else:
         submit(args.submit_manifest)

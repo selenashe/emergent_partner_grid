@@ -1,0 +1,200 @@
+[
+  {
+    "episode": 3,
+    "donor_kind": "opposite",
+    "input_jacobian_relative_difference": 0.8775780200958252,
+    "hidden_jacobian_relative_difference": 0.8426340222358704,
+    "partner_policy_sensitivity": 0.006799739927160322,
+    "partner_value_sensitivity": 0.08718730366973933,
+    "input_policy_sensitivity": 0.13156883418560028,
+    "input_value_sensitivity": 0.20689459145069122,
+    "protocol_note": "v1 t=0 is a learned allocation"
+  },
+  {
+    "episode": 3,
+    "donor_kind": "same_orientation_different_delay",
+    "input_jacobian_relative_difference": 1.033835530281067,
+    "hidden_jacobian_relative_difference": 1.0437380075454712,
+    "partner_policy_sensitivity": 0.006799739927160322,
+    "partner_value_sensitivity": 0.08718730366973933,
+    "input_policy_sensitivity": 0.13156883418560028,
+    "input_value_sensitivity": 0.20689459145069122,
+    "protocol_note": "v1 t=0 is a learned allocation"
+  },
+  {
+    "episode": 3,
+    "donor_kind": "same_profile",
+    "input_jacobian_relative_difference": 1.0051424503326416,
+    "hidden_jacobian_relative_difference": 1.0229979753494263,
+    "partner_policy_sensitivity": 0.006799739927160322,
+    "partner_value_sensitivity": 0.08718730366973933,
+    "input_policy_sensitivity": 0.13156883418560028,
+    "input_value_sensitivity": 0.20689459145069122,
+    "protocol_note": "v1 t=0 is a learned allocation"
+  },
+  {
+    "episode": 7,
+    "donor_kind": "opposite",
+    "input_jacobian_relative_difference": 1.0072840452194214,
+    "hidden_jacobian_relative_difference": 0.9593391418457031,
+    "partner_policy_sensitivity": 0.0006706109744935394,
+    "partner_value_sensitivity": 0.11672474550756123,
+    "input_policy_sensitivity": 0.003937204834073782,
+    "input_value_sensitivity": 0.1657237857580185,
+    "protocol_note": "v1 t=0 is a learned allocation"
+  },
+  {
+    "episode": 7,
+    "donor_kind": "same_orientation_different_delay",
+    "input_jacobian_relative_difference": 0.8367407321929932,
+    "hidden_jacobian_relative_difference": 0.8470504283905029,
+    "partner_policy_sensitivity": 0.0006706109744935394,
+    "partner_value_sensitivity": 0.11672474550756123,
+    "input_policy_sensitivity": 0.003937204834073782,
+    "input_value_sensitivity": 0.1657237857580185,
+    "protocol_note": "v1 t=0 is a learned allocation"
+  },
+  {
+    "episode": 7,
+    "donor_kind": "same_profile",
+    "input_jacobian_relative_difference": 0.9586477279663086,
+    "hidden_jacobian_relative_difference": 0.9510926604270935,
+    "partner_policy_sensitivity": 0.0006706109744935394,
+    "partner_value_sensitivity": 0.11672474550756123,
+    "input_policy_sensitivity": 0.003937204834073782,
+    "input_value_sensitivity": 0.1657237857580185,
+    "protocol_note": "v1 t=0 is a learned allocation"
+  },
+  {
+    "episode": 11,
+    "donor_kind": "opposite",
+    "input_jacobian_relative_difference": 0.9868006110191345,
+    "hidden_jacobian_relative_difference": 0.9139224290847778,
+    "partner_policy_sensitivity": 0.0004043369244428493,
+    "partner_value_sensitivity": 0.10151773445141395,
+    "input_policy_sensitivity": 0.0017900485545396805,
+    "input_value_sensitivity": 0.285333514213562,
+    "protocol_note": "v1 t=0 is a learned allocation"
+  },
+  {
+    "episode": 11,
+    "donor_kind": "same_orientation_different_delay",
+    "input_jacobian_relative_difference": 0.7309064269065857,
+    "hidden_jacobian_relative_difference": 0.6886568069458008,
+    "partner_policy_sensitivity": 0.0004043369244428493,
+    "partner_value_sensitivity": 0.10151773445141395,
+    "input_policy_sensitivity": 0.0017900485545396805,
+    "input_value_sensitivity": 0.285333514213562,
+    "protocol_note": "v1 t=0 is a learned allocation"
+  },
+  {
+    "episode": 11,
+    "donor_kind": "same_profile",
+    "input_jacobian_relative_difference": 0.8462560772895813,
+    "hidden_jacobian_relative_difference": 0.7725127339363098,
+    "partner_policy_sensitivity": 0.0004043369244428493,
+    "partner_value_sensitivity": 0.10151773445141395,
+    "input_policy_sensitivity": 0.0017900485545396805,
+    "input_value_sensitivity": 0.285333514213562,
+    "protocol_note": "v1 t=0 is a learned allocation"
+  },
+  {
+    "episode": 15,
+    "donor_kind": "opposite",
+    "input_jacobian_relative_difference": 0.9537441730499268,
+    "hidden_jacobian_relative_difference": 0.8978590369224548,
+    "partner_policy_sensitivity": 0.0003616758578208173,
+    "partner_value_sensitivity": 0.1789748969027481,
+    "input_policy_sensitivity": 0.001800835714675486,
+    "input_value_sensitivity": 0.20165801048278809,
+    "protocol_note": "v1 t=0 is a learned allocation"
+  },
+  {
+    "episode": 15,
+    "donor_kind": "same_orientation_different_delay",
+    "input_jacobian_relative_difference": 0.8890003561973572,
+    "hidden_jacobian_relative_difference": 0.8533961772918701,
+    "partner_policy_sensitivity": 0.0003616758578208173,
+    "partner_value_sensitivity": 0.1789748969027481,
+    "input_policy_sensitivity": 0.001800835714675486,
+    "input_value_sensitivity": 0.20165801048278809,
+    "protocol_note": "v1 t=0 is a learned allocation"
+  },
+  {
+    "episode": 15,
+    "donor_kind": "same_profile",
+    "input_jacobian_relative_difference": 0.8559644222259521,
+    "hidden_jacobian_relative_difference": 0.8055114150047302,
+    "partner_policy_sensitivity": 0.0003616758578208173,
+    "partner_value_sensitivity": 0.1789748969027481,
+    "input_policy_sensitivity": 0.001800835714675486,
+    "input_value_sensitivity": 0.20165801048278809,
+    "protocol_note": "v1 t=0 is a learned allocation"
+  },
+  {
+    "episode": 19,
+    "donor_kind": "opposite",
+    "input_jacobian_relative_difference": 0.9616235494613647,
+    "hidden_jacobian_relative_difference": 0.8834965229034424,
+    "partner_policy_sensitivity": 0.017698732622673245,
+    "partner_value_sensitivity": 0.09538695870943721,
+    "input_policy_sensitivity": 0.3621470630168915,
+    "input_value_sensitivity": 0.18421977758407593,
+    "protocol_note": "v1 t=0 is a learned allocation"
+  },
+  {
+    "episode": 19,
+    "donor_kind": "same_orientation_different_delay",
+    "input_jacobian_relative_difference": 1.1391040086746216,
+    "hidden_jacobian_relative_difference": 1.130473017692566,
+    "partner_policy_sensitivity": 0.017698732622673245,
+    "partner_value_sensitivity": 0.09538695870943721,
+    "input_policy_sensitivity": 0.3621470630168915,
+    "input_value_sensitivity": 0.18421977758407593,
+    "protocol_note": "v1 t=0 is a learned allocation"
+  },
+  {
+    "episode": 19,
+    "donor_kind": "same_profile",
+    "input_jacobian_relative_difference": 0.8469191789627075,
+    "hidden_jacobian_relative_difference": 0.7901502251625061,
+    "partner_policy_sensitivity": 0.017698732622673245,
+    "partner_value_sensitivity": 0.09538695870943721,
+    "input_policy_sensitivity": 0.3621470630168915,
+    "input_value_sensitivity": 0.18421977758407593,
+    "protocol_note": "v1 t=0 is a learned allocation"
+  },
+  {
+    "episode": 23,
+    "donor_kind": "opposite",
+    "input_jacobian_relative_difference": 0.7282994389533997,
+    "hidden_jacobian_relative_difference": 0.6567568182945251,
+    "partner_policy_sensitivity": 0.003913826749157295,
+    "partner_value_sensitivity": 0.11086744984555212,
+    "input_policy_sensitivity": 0.02535942569375038,
+    "input_value_sensitivity": 0.19617623090744019,
+    "protocol_note": "v1 t=0 is a learned allocation"
+  },
+  {
+    "episode": 23,
+    "donor_kind": "same_orientation_different_delay",
+    "input_jacobian_relative_difference": 0.7859888076782227,
+    "hidden_jacobian_relative_difference": 0.763850748538971,
+    "partner_policy_sensitivity": 0.003913826749157295,
+    "partner_value_sensitivity": 0.11086744984555212,
+    "input_policy_sensitivity": 0.02535942569375038,
+    "input_value_sensitivity": 0.19617623090744019,
+    "protocol_note": "v1 t=0 is a learned allocation"
+  },
+  {
+    "episode": 23,
+    "donor_kind": "same_profile",
+    "input_jacobian_relative_difference": 0.872219979763031,
+    "hidden_jacobian_relative_difference": 0.861446738243103,
+    "partner_policy_sensitivity": 0.003913826749157295,
+    "partner_value_sensitivity": 0.11086744984555212,
+    "input_policy_sensitivity": 0.02535942569375038,
+    "input_value_sensitivity": 0.19617623090744019,
+    "protocol_note": "v1 t=0 is a learned allocation"
+  }
+]

@@ -1,0 +1,46 @@
+[validate] rnn_diverse_influence seed 1
+[validate] rnn_diverse_influence seed 2
+[validate] rnn_diverse_influence seed 3
+[validate] rnn_diverse_influence seed 4
+[validate] rnn_diverse_influence seed 5
+[validate] rnn_single_influence seed 1
+[validate] rnn_single_influence seed 2
+[validate] rnn_single_influence seed 3
+[validate] rnn_single_influence seed 4
+[validate] rnn_single_influence seed 5
+[validate] rnn_diverse_noinfluence seed 1
+[validate] rnn_diverse_noinfluence seed 2
+[validate] rnn_diverse_noinfluence seed 3
+[validate] rnn_diverse_noinfluence seed 4
+[validate] rnn_diverse_noinfluence seed 5
+[time probes] rnn_diverse_influence seed 1: 9 cutoffs x 3 heads
+[time probes] rnn_diverse_influence seed 2: 9 cutoffs x 3 heads
+[time probes] rnn_diverse_influence seed 3: 9 cutoffs x 3 heads
+[time probes] rnn_diverse_influence seed 4: 9 cutoffs x 3 heads
+[time probes] rnn_diverse_influence seed 5: 9 cutoffs x 3 heads
+[time probes] rnn_single_influence seed 1: 9 cutoffs x 3 heads
+[time probes] rnn_single_influence seed 2: 9 cutoffs x 3 heads
+[time probes] rnn_single_influence seed 3: 9 cutoffs x 3 heads
+[time probes] rnn_single_influence seed 4: 9 cutoffs x 3 heads
+[time probes] rnn_single_influence seed 5: 9 cutoffs x 3 heads
+[time probes] rnn_diverse_noinfluence seed 1: 9 cutoffs x 3 heads
+[time probes] rnn_diverse_noinfluence seed 2: 9 cutoffs x 3 heads
+[time probes] rnn_diverse_noinfluence seed 3: 9 cutoffs x 3 heads
+[time probes] rnn_diverse_noinfluence seed 4: 9 cutoffs x 3 heads
+[time probes] rnn_diverse_noinfluence seed 5: 9 cutoffs x 3 heads
+[round probes] rnn_diverse_influence seed 1: 20 rounds x 3 heads
+[round probes] rnn_diverse_influence seed 2: 20 rounds x 3 heads
+[round probes] rnn_diverse_influence seed 3: 20 rounds x 3 heads
+[round probes] rnn_diverse_influence seed 4: 20 rounds x 3 heads
+[round probes] rnn_diverse_influence seed 5: 20 rounds x 3 heads
+[round probes] rnn_single_influence seed 1: 20 rounds x 3 heads
+[round probes] rnn_single_influence seed 2: 20 rounds x 3 heads
+[round probes] rnn_single_influence seed 3: 20 rounds x 3 heads
+[round probes] rnn_single_influence seed 4: 20 rounds x 3 heads
+[round probes] rnn_single_influence seed 5: 20 rounds x 3 heads
+[round probes] rnn_diverse_noinfluence seed 1: 20 rounds x 3 heads
+[round probes] rnn_diverse_noinfluence seed 2: 20 rounds x 3 heads
+[round probes] rnn_diverse_noinfluence seed 3: 20 rounds x 3 heads
+[round probes] rnn_diverse_noinfluence seed 4: 20 rounds x 3 heads
+[round probes] rnn_diverse_noinfluence seed 5: 20 rounds x 3 heads
+[done] all 15 checkpoints saved to /juice6/u/jshe/emergent_partner_grid/eval/representation_results/counterbalanced1096_20261002_235609_strict_replication_of_covercooked/v1_balanced_training

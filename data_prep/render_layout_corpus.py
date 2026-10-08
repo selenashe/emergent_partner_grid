@@ -15,6 +15,11 @@ from env_generator import GridEnv, render_env
 
 
 def render_one(task):
+    # Audit guide:
+    # Render walls, both colored goals, and both starting positions for a saved layout.
+    # Coordinate placement follows the JSON row/column convention. A visual check can
+    # reveal swapped starts/goals that a distribution plot would miss.
+    #
     source, destination = map(Path, task)
     d = json.loads(source.read_text())
     grid = np.asarray(d["grid"])
@@ -34,6 +39,10 @@ def digest(paths):
 
 
 def contact_sheet(files, destination, columns, thumb_size=180):
+    # Audit guide:
+    # Combine existing layout pictures into a labeled overview. The labels identify
+    # source layouts for manual review; rendering does not alter training geometry.
+    #
     rows = (len(files) + columns - 1) // columns
     canvas = Image.new("RGB", (columns * thumb_size, rows * (thumb_size + 25) + 45), "white")
     draw = ImageDraw.Draw(canvas)
@@ -50,6 +59,11 @@ def contact_sheet(files, destination, columns, thumb_size=180):
 
 
 def main():
+    # Audit guide:
+    # Choose saved layouts, write individual renders and contact sheets, and record file
+    # digests. This is an inspection utility; it does not regenerate or filter the
+    # corpus.
+    #
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("corpus", type=Path)
     parser.add_argument("--workers", type=int, default=4)

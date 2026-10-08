@@ -1,0 +1,44 @@
+[
+  {
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_influence",
+    "scope": "familiar_to_novel",
+    "mae": 0.8741447041075476,
+    "prior_mae": 0.875,
+    "improvement": {
+      "mean": 0.0008552958924524234,
+      "low": 0.0008552958924524234,
+      "high": 0.0008552958924524234,
+      "n_units": 1
+    },
+    "n_seeds": 1
+  },
+  {
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_influence",
+    "scope": "target_layout",
+    "mae": 1.0507778676526383,
+    "prior_mae": 0.636285836542576,
+    "improvement": {
+      "mean": -0.4144920311100623,
+      "low": -0.4144920311100623,
+      "high": -0.4144920311100623,
+      "n_units": 1
+    },
+    "n_seeds": 1
+  },
+  {
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_influence",
+    "scope": "within_profile",
+    "mae": 0.6903031749816173,
+    "prior_mae": 0.625,
+    "improvement": {
+      "mean": -0.06530317498161732,
+      "low": -0.06530317498161732,
+      "high": -0.06530317498161732,
+      "n_units": 1
+    },
+    "n_seeds": 1
+  }
+]

@@ -1,0 +1,200 @@
+[
+  {
+    "episode": 3,
+    "donor_kind": "opposite",
+    "input_jacobian_relative_difference": 1.120489478111267,
+    "hidden_jacobian_relative_difference": 1.0966923236846924,
+    "partner_policy_sensitivity": 0.0,
+    "partner_value_sensitivity": 0.03287543136635168,
+    "input_policy_sensitivity": 0.0,
+    "input_value_sensitivity": 0.19688104093074799,
+    "protocol_note": "v2 t=0 policy allocation derivatives are zero by forced mask; learned t=1 effects are in open-loop replay"
+  },
+  {
+    "episode": 3,
+    "donor_kind": "same_orientation_different_delay",
+    "input_jacobian_relative_difference": 0.9968035221099854,
+    "hidden_jacobian_relative_difference": 0.9664662480354309,
+    "partner_policy_sensitivity": 0.0,
+    "partner_value_sensitivity": 0.03287543136635168,
+    "input_policy_sensitivity": 0.0,
+    "input_value_sensitivity": 0.19688104093074799,
+    "protocol_note": "v2 t=0 policy allocation derivatives are zero by forced mask; learned t=1 effects are in open-loop replay"
+  },
+  {
+    "episode": 3,
+    "donor_kind": "same_profile",
+    "input_jacobian_relative_difference": 1.0009397268295288,
+    "hidden_jacobian_relative_difference": 0.9783244729042053,
+    "partner_policy_sensitivity": 0.0,
+    "partner_value_sensitivity": 0.03287543136635168,
+    "input_policy_sensitivity": 0.0,
+    "input_value_sensitivity": 0.19688104093074799,
+    "protocol_note": "v2 t=0 policy allocation derivatives are zero by forced mask; learned t=1 effects are in open-loop replay"
+  },
+  {
+    "episode": 7,
+    "donor_kind": "opposite",
+    "input_jacobian_relative_difference": 0.8907399773597717,
+    "hidden_jacobian_relative_difference": 0.9471529722213745,
+    "partner_policy_sensitivity": 0.0,
+    "partner_value_sensitivity": 0.022356665700931245,
+    "input_policy_sensitivity": 0.0,
+    "input_value_sensitivity": 0.21123802661895752,
+    "protocol_note": "v2 t=0 policy allocation derivatives are zero by forced mask; learned t=1 effects are in open-loop replay"
+  },
+  {
+    "episode": 7,
+    "donor_kind": "same_orientation_different_delay",
+    "input_jacobian_relative_difference": 1.0013896226882935,
+    "hidden_jacobian_relative_difference": 1.0925309658050537,
+    "partner_policy_sensitivity": 0.0,
+    "partner_value_sensitivity": 0.022356665700931245,
+    "input_policy_sensitivity": 0.0,
+    "input_value_sensitivity": 0.21123802661895752,
+    "protocol_note": "v2 t=0 policy allocation derivatives are zero by forced mask; learned t=1 effects are in open-loop replay"
+  },
+  {
+    "episode": 7,
+    "donor_kind": "same_profile",
+    "input_jacobian_relative_difference": 0.9910718202590942,
+    "hidden_jacobian_relative_difference": 1.0622512102127075,
+    "partner_policy_sensitivity": 0.0,
+    "partner_value_sensitivity": 0.022356665700931245,
+    "input_policy_sensitivity": 0.0,
+    "input_value_sensitivity": 0.21123802661895752,
+    "protocol_note": "v2 t=0 policy allocation derivatives are zero by forced mask; learned t=1 effects are in open-loop replay"
+  },
+  {
+    "episode": 11,
+    "donor_kind": "opposite",
+    "input_jacobian_relative_difference": 1.0350017547607422,
+    "hidden_jacobian_relative_difference": 1.0503000020980835,
+    "partner_policy_sensitivity": 0.0,
+    "partner_value_sensitivity": 0.036112721495483106,
+    "input_policy_sensitivity": 0.0,
+    "input_value_sensitivity": 0.2543243169784546,
+    "protocol_note": "v2 t=0 policy allocation derivatives are zero by forced mask; learned t=1 effects are in open-loop replay"
+  },
+  {
+    "episode": 11,
+    "donor_kind": "same_orientation_different_delay",
+    "input_jacobian_relative_difference": 0.9660137891769409,
+    "hidden_jacobian_relative_difference": 0.9465447068214417,
+    "partner_policy_sensitivity": 0.0,
+    "partner_value_sensitivity": 0.036112721495483106,
+    "input_policy_sensitivity": 0.0,
+    "input_value_sensitivity": 0.2543243169784546,
+    "protocol_note": "v2 t=0 policy allocation derivatives are zero by forced mask; learned t=1 effects are in open-loop replay"
+  },
+  {
+    "episode": 11,
+    "donor_kind": "same_profile",
+    "input_jacobian_relative_difference": 1.0436060428619385,
+    "hidden_jacobian_relative_difference": 1.0186318159103394,
+    "partner_policy_sensitivity": 0.0,
+    "partner_value_sensitivity": 0.036112721495483106,
+    "input_policy_sensitivity": 0.0,
+    "input_value_sensitivity": 0.2543243169784546,
+    "protocol_note": "v2 t=0 policy allocation derivatives are zero by forced mask; learned t=1 effects are in open-loop replay"
+  },
+  {
+    "episode": 15,
+    "donor_kind": "opposite",
+    "input_jacobian_relative_difference": 0.856462836265564,
+    "hidden_jacobian_relative_difference": 0.8272030353546143,
+    "partner_policy_sensitivity": 0.0,
+    "partner_value_sensitivity": 0.03550225317143085,
+    "input_policy_sensitivity": 0.0,
+    "input_value_sensitivity": 0.26560062170028687,
+    "protocol_note": "v2 t=0 policy allocation derivatives are zero by forced mask; learned t=1 effects are in open-loop replay"
+  },
+  {
+    "episode": 15,
+    "donor_kind": "same_orientation_different_delay",
+    "input_jacobian_relative_difference": 0.9216859340667725,
+    "hidden_jacobian_relative_difference": 0.9158419370651245,
+    "partner_policy_sensitivity": 0.0,
+    "partner_value_sensitivity": 0.03550225317143085,
+    "input_policy_sensitivity": 0.0,
+    "input_value_sensitivity": 0.26560062170028687,
+    "protocol_note": "v2 t=0 policy allocation derivatives are zero by forced mask; learned t=1 effects are in open-loop replay"
+  },
+  {
+    "episode": 15,
+    "donor_kind": "same_profile",
+    "input_jacobian_relative_difference": 0.9503205418586731,
+    "hidden_jacobian_relative_difference": 0.9579101800918579,
+    "partner_policy_sensitivity": 0.0,
+    "partner_value_sensitivity": 0.03550225317143085,
+    "input_policy_sensitivity": 0.0,
+    "input_value_sensitivity": 0.26560062170028687,
+    "protocol_note": "v2 t=0 policy allocation derivatives are zero by forced mask; learned t=1 effects are in open-loop replay"
+  },
+  {
+    "episode": 19,
+    "donor_kind": "opposite",
+    "input_jacobian_relative_difference": 1.119838833808899,
+    "hidden_jacobian_relative_difference": 1.122565746307373,
+    "partner_policy_sensitivity": 0.0,
+    "partner_value_sensitivity": 0.025167646701910254,
+    "input_policy_sensitivity": 0.0,
+    "input_value_sensitivity": 0.21302057802677155,
+    "protocol_note": "v2 t=0 policy allocation derivatives are zero by forced mask; learned t=1 effects are in open-loop replay"
+  },
+  {
+    "episode": 19,
+    "donor_kind": "same_orientation_different_delay",
+    "input_jacobian_relative_difference": 1.047885775566101,
+    "hidden_jacobian_relative_difference": 1.0376145839691162,
+    "partner_policy_sensitivity": 0.0,
+    "partner_value_sensitivity": 0.025167646701910254,
+    "input_policy_sensitivity": 0.0,
+    "input_value_sensitivity": 0.21302057802677155,
+    "protocol_note": "v2 t=0 policy allocation derivatives are zero by forced mask; learned t=1 effects are in open-loop replay"
+  },
+  {
+    "episode": 19,
+    "donor_kind": "same_profile",
+    "input_jacobian_relative_difference": 1.0726364850997925,
+    "hidden_jacobian_relative_difference": 1.065054178237915,
+    "partner_policy_sensitivity": 0.0,
+    "partner_value_sensitivity": 0.025167646701910254,
+    "input_policy_sensitivity": 0.0,
+    "input_value_sensitivity": 0.21302057802677155,
+    "protocol_note": "v2 t=0 policy allocation derivatives are zero by forced mask; learned t=1 effects are in open-loop replay"
+  },
+  {
+    "episode": 23,
+    "donor_kind": "opposite",
+    "input_jacobian_relative_difference": 0.8511813879013062,
+    "hidden_jacobian_relative_difference": 0.8180453777313232,
+    "partner_policy_sensitivity": 0.0,
+    "partner_value_sensitivity": 0.0382445904715872,
+    "input_policy_sensitivity": 0.0,
+    "input_value_sensitivity": 0.25273555517196655,
+    "protocol_note": "v2 t=0 policy allocation derivatives are zero by forced mask; learned t=1 effects are in open-loop replay"
+  },
+  {
+    "episode": 23,
+    "donor_kind": "same_orientation_different_delay",
+    "input_jacobian_relative_difference": 0.9422216415405273,
+    "hidden_jacobian_relative_difference": 0.954775869846344,
+    "partner_policy_sensitivity": 0.0,
+    "partner_value_sensitivity": 0.0382445904715872,
+    "input_policy_sensitivity": 0.0,
+    "input_value_sensitivity": 0.25273555517196655,
+    "protocol_note": "v2 t=0 policy allocation derivatives are zero by forced mask; learned t=1 effects are in open-loop replay"
+  },
+  {
+    "episode": 23,
+    "donor_kind": "same_profile",
+    "input_jacobian_relative_difference": 1.1911026239395142,
+    "hidden_jacobian_relative_difference": 1.123928189277649,
+    "partner_policy_sensitivity": 0.0,
+    "partner_value_sensitivity": 0.0382445904715872,
+    "input_policy_sensitivity": 0.0,
+    "input_value_sensitivity": 0.25273555517196655,
+    "protocol_note": "v2 t=0 policy allocation derivatives are zero by forced mask; learned t=1 effects are in open-loop replay"
+  }
+]

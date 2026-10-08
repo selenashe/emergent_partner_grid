@@ -1,0 +1,366 @@
+"""Run the released Overcooked probe routine on frozen CoordinationGrid states.
+
+The four requested fitting choices, Flax initialization, update count and tie
+handling come from the pinned upstream functions, not a PyTorch translation.
+Only source definitions are loaded; upstream artifact-loading code is not run.
+"""
+
+import argparse
+import ast
+from collections import Counter
+from datetime import datetime, timezone
+import functools
+import hashlib
+import importlib.metadata
+import json
+from pathlib import Path
+import sys
+import time
+
+import numpy as np
+import pandas as pd
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from eval import representation_analysis as rep
+
+UPSTREAM_COMMIT = "35a8430046531bd4b62e923d7507ee9f02fd97ea"
+UPSTREAM_SHA256 = "5e547d6788471624c3db36ea19eab9317e9ab372c2b844d5178c178fc64deefd"
+UPSTREAM_FILE = rep.REPO_ROOT / "eval/reference_code/overcooked_do_ablation_plots.py.txt"
+DEFINITIONS = {"LinearProbe", "train_step", "do_eval", "shuffle", "split", "train_probe"}
+HEADS = ("larger_delay_task", "d_R", "d_B")
+DEFAULT_ROOT = "eval/representation_results/counterbalanced1096_20261002_235609_strict_replication_of_covercooked"
+
+
+def load_upstream():
+    # Audit guide:
+    # Load pinned local upstream probe code and verify its expected source hash. This
+    # analysis reproduces that released implementation rather than the primary written-
+    # protocol probe. The checked-in reference remains untouched.
+    #
+    import jax
+    import jax.numpy as jnp
+    import optax
+    from flax import linen as nn
+    from flax.training.train_state import TrainState
+    source = UPSTREAM_FILE.read_bytes()
+    rep.require(hashlib.sha256(source).hexdigest() == UPSTREAM_SHA256, "Pinned upstream source changed")
+    tree = ast.parse(source)
+    nodes = [n for n in tree.body if isinstance(n, (ast.FunctionDef, ast.ClassDef)) and n.name in DEFINITIONS]
+    rep.require({n.name for n in nodes} == DEFINITIONS, "Missing upstream definitions")
+    namespace = dict(Counter=Counter, functools=functools, np=np, jax=jax, jnp=jnp,
+                     optax=optax, nn=nn, TrainState=TrainState)
+    exec(compile(ast.Module(body=nodes, type_ignores=[]), str(UPSTREAM_FILE), "exec"), namespace)
+    return namespace
+
+
+class RecordedUpstreamProbe:
+    """Observe splits and checks without changing source RNG or fitted models."""
+
+    def __init__(self, analysis_seed=0):
+        self.namespace = load_upstream()
+        self.original_split = self.namespace["split"]
+        self.original_eval = self.namespace["do_eval"]
+        self.analysis_seed = analysis_seed
+        self.namespace["split"] = self.record_split
+        self.namespace["do_eval"] = self.record_eval
+
+    def record_split(self, features, labels, frac=.8):
+        before = np.random.get_state()
+        result = self.original_split(features, labels, frac)
+        after = np.random.get_state()
+        # Replay only the split on episode IDs, then restore the state reached
+        # by the original call. Subsequent source splits remain identical.
+        np.random.set_state(before)
+        ids_train, y_train, ids_test, y_test = self.original_split(self.permutation[:, None], labels, frac)
+        np.random.set_state(after)
+        rep.require(np.array_equal(y_train, result[1]) and np.array_equal(y_test, result[3]),
+                    "Recorded split differs from upstream")
+        self.train_ids, self.test_ids = ids_train[:, 0], ids_test[:, 0]
+        return result
+
+    def record_eval(self, state, features, labels):
+        score = self.original_eval(state, features, labels)
+        self.checks.append((int(state.step), float(score)))
+        return score
+
+    def fit(self, features, labels, params=None, n_iterations=1000):
+        # Audit guide:
+        # Wrap the released fitter to record its split and checkpoint evaluations
+        # without changing source RNG behavior or learned weights. The released routine
+        # chooses weights by test accuracy; its test score therefore also participates
+        # in model selection.
+        #
+        jax = self.namespace["jax"]
+        key = jax.random.PRNGKey(self.analysis_seed)
+        self.permutation = np.asarray(jax.random.permutation(key, len(labels)))
+        self.checks = []
+        state, loss, score = self.namespace["train_probe"](
+            key, features, labels, n_iterations=n_iterations, lr=.01, train_frac=.8,
+            return_best=True, params=params)
+        predictions = np.asarray(state.apply_fn(state.params, features)).argmax(axis=1)
+        width = int(np.ptp(labels[self.test_ids]))
+        measured = np.mean(1 - np.abs(predictions[self.test_ids] - labels[self.test_ids]) / width)
+        rep.require(abs(measured - float(score)) < 1e-6, "Recorded score differs from upstream")
+        return state.params, predictions, {
+            "train_ids": self.train_ids.copy(), "test_ids": self.test_ids.copy(),
+            "selected_update": int(state.step), "checks": self.checks.copy(),
+            "upstream_best_score": float(score), "last_update_loss": float(loss),
+            "normalization_range": width,
+        }
+
+
+def score_subset(labels, predictions, mask, width):
+    rep.require(mask.any(), "Empty strict probe test subset")
+    errors = np.abs(labels[mask] - predictions[mask])
+    return {"n_test": int(mask.sum()), "distance_accuracy": float(np.mean(1 - errors / width)),
+            "exact_accuracy": float(np.mean(errors == 0)), "mae": float(errors.mean())}
+
+
+def run_sequence(runner, data, axis, condition, seed, out_dir):
+    # Audit guide:
+    # Run cutoffs sequentially using the released scalar-label-stratified splits and
+    # selected-weight warm starts. Record split membership and overlap with earlier
+    # fitting examples. Changing splits while carrying weights across cutoffs means a
+    # later test example may already have trained earlier weights.
+    #
+    times = rep.REFERENCE_TIMES if axis == "reference_t" else np.arange(20)
+    features = data.timestep_features if axis == "reference_t" else data.round_features
+    params = [None, None, None]
+    previously_trained = [np.zeros(920, bool) for _ in HEADS]
+    rows, orientation_rows, states, traces, split_rows = [], [], [], [], []
+    for step, x in zip(times, features):
+        labels_by_head = (data.labels.argmax(axis=1), data.labels[:, 0], data.labels[:, 1])
+        for k, (target, labels) in enumerate(zip(HEADS, labels_by_head)):
+            params[k], predictions, info = runner.fit(x, labels, params[k])
+            test = np.zeros(920, bool); test[info["test_ids"]] = True
+            train = np.zeros(920, bool); train[info["train_ids"]] = True
+            rep.require(not (test & train).any() and (test | train).all(), "Within-fit split overlap")
+            rep.require(train.sum() == 736 and test.sum() == 184, "Unexpected real-label split sizes")
+            prior_count = int((previously_trained[k] & test).sum())
+            previously_trained[k] |= train
+            base = {"condition": condition, "training_seed": seed, "target": target, axis: int(step),
+                    "n_train": 736, "selected_update": info["selected_update"],
+                    "final_train_loss": info["last_update_loss"], "normalization_range": info["normalization_range"],
+                    "n_test_previously_used_for_training": prior_count}
+            for subset in ("all", "familiar", "novel"):
+                mask = test.copy()
+                if subset != "all":
+                    mask &= data.capability_slice == ("train" if subset == "familiar" else "test")
+                row = {**base, "capability_subset": subset,
+                       **score_subset(labels, predictions, mask, info["normalization_range"])}
+                if axis == "reference_t":
+                    population = np.ones(920, bool) if subset == "all" else (
+                        data.capability_slice == ("train" if subset == "familiar" else "test"))
+                    row["fraction_episodes_complete"] = float(np.mean(data.lengths[population] <= step))
+                (orientation_rows if k == 0 else rows).append(row)
+            dense = params[k]["params"]["Dense_0"]
+            states.append((target, int(step), np.asarray(dense["kernel"]), np.asarray(dense["bias"])))
+            split_rows.append((target, int(step), train, test, predictions))
+            traces.extend({**base, "checked_update": update, "checked_score": score,
+                           "selected": update == info["selected_update"]} for update, score in info["checks"])
+    stem = f"{condition}_seed{seed}_{axis}"
+    for k, target in enumerate(HEADS):
+        group = [s for s in states if s[0] == target]
+        np.savez_compressed(out_dir / "probe_models" / f"{stem}_{target}.npz",
+                            step=[s[1] for s in group], weight=np.stack([s[2] for s in group]),
+                            bias=np.stack([s[3] for s in group]))
+    np.savez_compressed(out_dir / "probe_splits" / f"{stem}.npz",
+                        target=[r[0] for r in split_rows], step=[r[1] for r in split_rows],
+                        train_mask=np.stack([r[2] for r in split_rows]),
+                        test_mask=np.stack([r[3] for r in split_rows]),
+                        predictions=np.stack([r[4] for r in split_rows]))
+    pd.DataFrame(traces).to_csv(out_dir / "checkpoint_traces" / f"{stem}.csv", index=False)
+    return rows, orientation_rows
+
+
+def run_baselines(runner, data, out_dir):
+    # Audit guide:
+    # Reproduce the released Normal-feature/random-label baseline and save a separate
+    # true-label supplementary control. Their targets differ, so label them separately
+    # in comparison plots.
+    #
+    jax = runner.namespace["jax"]
+    key = jax.random.PRNGKey(runner.analysis_seed)
+    x = np.asarray(jax.random.normal(key, (920, 128)))
+    y = np.asarray(jax.random.randint(key, (920,), 0, 10))
+    params, predictions, info = runner.fit(x, y)
+    mask = np.zeros(920, bool); mask[info["test_ids"]] = True
+    exact = {"random_vector_seed": 0, "label_source": "random integer labels, exactly as released code",
+             "selected_update": info["selected_update"], **score_subset(y, predictions, mask, info["normalization_range"])}
+    rep.write_json(out_dir / "released_code_random_baseline.json", exact)
+    np.savez_compressed(out_dir / "probe_models/released_code_random_baseline.npz",
+                        weight=np.asarray(params["params"]["Dense_0"]["kernel"]),
+                        bias=np.asarray(params["params"]["Dense_0"]["bias"]),
+                        features=x, labels=y, train_ids=info["train_ids"], test_ids=info["test_ids"])
+    # A single baseline is drawn across both panels in the released figure.
+    random = pd.DataFrame([{**exact, "target": target, "capability_subset": subset}
+                           for target in rep.TARGETS for subset in ("all", "familiar", "novel")])
+    random.to_csv(out_dir / "random_baseline.csv", index=False)
+    extra = []
+    for k, target in enumerate(rep.TARGETS):
+        _, pred, info = runner.fit(x, data.labels[:, k])
+        mask = np.zeros(920, bool); mask[info["test_ids"]] = True
+        extra.append({"target": target, "label_source": "true capability labels, supplemental control",
+                      "selected_update": info["selected_update"],
+                      **score_subset(data.labels[:, k], pred, mask, info["normalization_range"])})
+    pd.DataFrame(extra).to_csv(out_dir / "true_label_random_baseline.csv", index=False)
+    return random
+
+
+def main():
+    # Audit guide:
+    # Reuse evaluated RNN hidden features, run the pinned released fitter for both
+    # targets and axes, and write all traces and metadata separately from primary
+    # analysis. NumPy seeding is an explicit reproducibility addition. A closer source-
+    # code reproduction does not make test-selected scores an independent generalization
+    # estimate.
+    #
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--eval-dir", required=True)
+    parser.add_argument("--out-dir", required=True)
+    parser.add_argument("--analysis-seed", type=int, default=0)
+    parser.add_argument("--common-seed-record", default="eval/protocol_comparison/counterbalanced1096_20261002_235609/common_training_seed/selection.json")
+    args = parser.parse_args()
+    out = Path(args.out_dir).resolve()
+    rep.require(out.parent.name.endswith("_strict_replication_of_covercooked"), "Use the separately labeled strict root")
+    rep.require(not (out / "analysis_metadata.json").exists(), "Completed strict results already exist; choose a fresh output directory")
+    for folder in (out, out / "probe_models", out / "probe_splits", out / "checkpoint_traces"):
+        folder.mkdir(parents=True, exist_ok=True)
+    started = time.time()
+    files = rep.discover_rollout_files(Path(args.eval_dir).resolve())
+    args.allocation_protocol = rep.validate_allocation_protocols(files)
+    args.probe_protocol = "strict_released_code"
+    runner = RecordedUpstreamProbe(args.analysis_seed)
+    np.random.seed(args.analysis_seed)  # Upstream left NumPy RNG unseeded; make this replication replayable.
+    selected = rep.select_recorded_common_seed(Path(args.eval_dir).resolve(), Path(args.common_seed_record).resolve())
+    rep.write_json(out / "selected_seeds.json", selected)
+    data_by_policy, validation, episodes = {}, [], []
+    for (condition, seed), paths in files.items():
+        print(f"[validate] {condition} seed {seed}", flush=True)
+        data = rep.load_checkpoint_rollouts(paths)
+        data_by_policy[condition, seed] = data
+        validation.append({"condition": condition, "training_seed": seed, **data.validation})
+        manifest = data.episodes.copy(); manifest.insert(0, "training_seed", seed); manifest.insert(0, "condition", condition)
+        episodes.append(manifest)
+    rep.write_json(out / "validation.json", {"checkpoints": validation})
+    pd.concat(episodes, ignore_index=True).to_csv(out / "episode_manifest.csv", index=False)
+    time_rows, round_rows, orientations = [], [], []
+    # The primary order mirrors the released condition/layout/time/head loop;
+    # our five policy seeds replace its five layout-specific networks.
+    for (condition, seed), data in data_by_policy.items():
+        print(f"[time probes] {condition} seed {seed}: 9 cutoffs x 3 heads", flush=True)
+        rows, extra = run_sequence(runner, data, "reference_t", condition, seed, out)
+        time_rows.extend(rows); orientations.extend(extra)
+        pd.DataFrame(time_rows).to_csv(out / "probe_timestep_per_seed.csv", index=False)
+    baseline = run_baselines(runner, next(iter(data_by_policy.values())), out)
+    # This is a grid-specific extension. Use a separate, replayable RNG stream
+    # so adding rounds never changes the primary source timepoint analysis.
+    np.random.seed(args.analysis_seed + 100_000)
+    for (condition, seed), data in data_by_policy.items():
+        print(f"[round probes] {condition} seed {seed}: 20 rounds x 3 heads", flush=True)
+        rows, extra = run_sequence(runner, data, "round_idx", condition, seed, out)
+        round_rows.extend(rows); orientations.extend(extra)
+        pd.DataFrame(round_rows).to_csv(out / "probe_by_round_per_seed.csv", index=False)
+    times, rounds = pd.DataFrame(time_rows), pd.DataFrame(round_rows)
+    rep.require(len(times) == 810 and len(rounds) == 1800, "Incomplete strict outputs")
+    pd.DataFrame(orientations).to_csv(out / "orientation_probe_per_seed.csv", index=False)
+    time_summary = rep.summarize_probes(times, "reference_t", 30_000)
+    round_summary = rep.summarize_probes(rounds, "round_idx", 30_000)
+    time_summary.to_csv(out / "probe_timestep_summary.csv", index=False)
+    round_summary.to_csv(out / "probe_by_round_summary.csv", index=False)
+    contrasts = pd.concat([rep.summarize_condition_differences(times, "reference_t", 30_000),
+                           rep.summarize_condition_differences(rounds, "round_idx", 30_000)], ignore_index=True)
+    contrasts.to_csv(out / "probe_condition_differences.csv", index=False)
+    split_hash = hashlib.sha256()
+    for file in sorted((out / "probe_splits").glob("*.npz")):
+        with np.load(file) as values:
+            split_hash.update(file.name.encode()); split_hash.update(values["train_mask"].tobytes())
+    rep.write_json(out / "probe_split.json", {
+        "algorithm": "unchanged upstream split: Counter(label), NumPy permutation per class, floor(.8*n)",
+        "analysis_seed": args.analysis_seed, "round_extension_seed": args.analysis_seed + 100_000,
+        "draw_fresh_split_per_fit": True, "split_masks_sha256": split_hash.hexdigest(),
+        "call_order": "condition, policy seed, timestep, orientation/red/blue; baseline; separate round sequence"})
+    rep.make_probe_figures(times, time_summary, round_summary, baseline, selected, out,
+                           baseline_label="Released-code random baseline")
+    metadata = {
+        "completed_utc": datetime.now(timezone.utc).isoformat(), "elapsed_seconds": time.time() - started,
+        "entrypoint_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(), "arguments": vars(args),
+        "n_checkpoints": 15, "training_seeds": list(range(1, 6)), "validation": validation,
+        "upstream": {"commit": UPSTREAM_COMMIT, "source_sha256": UPSTREAM_SHA256,
+                     "url": f"https://github.com/ruaridhmon/emergent_partner_modelling/blob/{UPSTREAM_COMMIT}/analysis/do_ablation_plots.py"},
+        "versions": {p: importlib.metadata.version(p) for p in ("jax", "jaxlib", "flax", "optax", "numpy", "pandas", "h5py")},
+        "probe": {"optimizer": "upstream Optax AdamW", "learning_rate": .01, "weight_decay": .001,
+                  "updates": 1001, "checks_after_updates": list(range(1, 1002, 20)),
+                  "checkpoint_selection": "highest current-test score; first checkpoint wins ties",
+                  "initialization": "upstream Flax nn.Dense defaults, JAX PRNGKey(analysis_seed)",
+                  "warm_start": "previous selected weights, new optimizer state at every cutoff",
+                  "split": "fresh scalar-label-stratified NumPy split at every fit",
+                  "numpy_seed_addition": "explicit seed for reproducibility; upstream left it unseeded",
+                  "orientation_head": "upstream labels.argmax fitted before red and blue at every cutoff"},
+        "same_split_across_networks_targets_and_times": False,
+        "unchanged_inputs": "frozen policy checkpoints and saved evaluation states; terminal-inclusive valid steps only",
+        "extensions": "all five policy seeds, round-index probes, supplemental true-label baseline",
+    }
+    rep.write_json(out / "analysis_metadata.json", metadata)
+    write_report(out, metadata, time_summary, round_summary)
+    print(f"[done] all 15 checkpoints saved to {out}", flush=True)
+
+
+def write_report(out, metadata, times, rounds):
+    # Audit guide:
+    # Write the strict-method report including checkpoint selection, warm starts, split
+    # overlap, and baseline differences. These disclosures explain how its
+    # interpretation differs from the independent written-protocol fits.
+    #
+    args = metadata["arguments"]
+    lines = ["# Strict replication of the released Overcooked probe routine", "",
+             f"Inputs: `{args['eval_dir']}`; allocation protocol `{args['allocation_protocol']}`.", "",
+             f"[Pinned upstream source]({metadata['upstream']['url']}) is loaded directly for the affine "
+             "layer, AdamW updates, label-stratified splitting, shuffled full batches, and best-test-checkpoint "
+             "selection. All three RNN conditions and all five policy seeds are included (15 networks).", "",
+             "Every fit runs 1,001 updates at lr=0.01 and weight decay=0.001. Test scores are checked after "
+             "updates 1,21,...,1001; the first highest-scoring checkpoint is retained. The selected weights "
+             "warm-start the next cutoff, with fresh optimizer state. An orientation head is fitted first, "
+             "matching the source call order, followed by red and blue heads.", "",
+             "Splits are drawn afresh for each fit, stratified by the scalar target label. NumPy MT19937 "
+             "seed 0 is an explicit reproducibility addition; upstream does not set that seed. Primary "
+             "time probes and the released baseline follow the source loop order. The round-index extension "
+             "uses its own NumPy stream (seed 100000), starts new warm-start chains, and does not change "
+             "the primary analysis.", "",
+             "The released baseline fits random Normal features to random integer labels; it is reproduced "
+             "as the dashed line. `true_label_random_baseline.csv` separately reports a supplemental "
+             "random-feature control using actual capability labels. These are distinct controls.", "",
+             "The metric remains `mean(1 - abs(prediction - label)/9)` for red and blue. The primary "
+             "curves average all five policy seeds; bootstrap intervals resample those five policies. "
+             "Supplementary selected-policy plots retain the previously chosen common seed 5.", "",
+             "## Interpretation limits", "",
+             "The source selects checkpoints using the reported test scores and changes the test split "
+             "at later cutoffs while retaining weights trained on earlier splits. Later test episodes "
+             "can therefore have supplied training labels to earlier probes. "
+             "`n_test_previously_used_for_training` records that overlap. These scores reproduce the "
+             "released procedure and should not be described as a fully independent hold-out estimate. "
+             "Probe fitting includes all 46 capability profiles, even profiles novel to policy training.", "",
+             "The grid trajectories and 20-round episodes differ from the Overcooked environment. The "
+             "strict label applies to the released fitting procedure, not to recreating its task or "
+             "reported scores. UMAPs depend on unchanged hidden states and remain available in the "
+             "preceding analysis; they are not regenerated here.", "",
+             "## Mean endpoint scores", "", "| Condition | Target | t=400 | Round 20 |",
+             "| --- | --- | --- | --- |"]
+    for condition in rep.CONDITIONS:
+        for target in rep.TARGETS:
+            t = times[(times.condition == condition) & (times.target == target)
+                      & (times.capability_subset == "all") & (times.reference_t == 400)].iloc[0]
+            r = rounds[(rounds.condition == condition) & (rounds.target == target)
+                       & (rounds.capability_subset == "all") & (rounds.round_idx == 19)].iloc[0]
+            lines.append(f"| {rep.CONDITION_LABELS[condition]} | {target} | {t.distance_accuracy_mean:.3f} | {r.distance_accuracy_mean:.3f} |")
+    lines.extend(["", "All actual train/test masks and canonical predictions are in `probe_splits/`; "
+                  "the episode manifest maps those indices to the source HDF5 files. Per-fit test-score "
+                  "traces and selected update numbers are in `checkpoint_traces/`. Fitted parameters "
+                  "are in `probe_models/`. CSVs preserve all five policies and exact-class accuracy.", "",
+                  "```bash", f"JAX_PLATFORMS=cpu python eval/representation_analysis_strict.py --eval-dir {args['eval_dir']} \\",
+                  f"  --out-dir {args['out_dir']} --analysis-seed {args['analysis_seed']}", "```", ""])
+    (out / "README.md").write_text("\n".join(lines))
+
+
+if __name__ == "__main__":
+    main()

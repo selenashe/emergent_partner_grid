@@ -1,0 +1,25 @@
+{
+  "policies": 30,
+  "historical_episodes": 27600,
+  "historical_valid_steps": 20041530,
+  "diagnostic_histories": 720,
+  "diagnostic_valid_steps": 113475,
+  "intervention_branches": 9360,
+  "local_derivative_samples": 180,
+  "geometry_samples": 1656000,
+  "original_replay_max_error": 0.0,
+  "zero_identity": true,
+  "projector_validation_failures": [
+    "fixed_v1/rnn_diverse_noinfluence_seed3",
+    "fixed_v1/rnn_diverse_noinfluence_seed4",
+    "fixed_v1/rnn_diverse_noinfluence_seed5",
+    "online_v2/rnn_diverse_influence_seed2",
+    "online_v2/rnn_diverse_influence_seed3",
+    "online_v2/rnn_diverse_noinfluence_seed1",
+    "online_v2/rnn_diverse_noinfluence_seed2",
+    "online_v2/rnn_diverse_noinfluence_seed4",
+    "online_v2/rnn_single_influence_seed2",
+    "online_v2/rnn_single_influence_seed3",
+    "online_v2/rnn_single_influence_seed4"
+  ]
+}

@@ -1,0 +1,120 @@
+[evaluation] v2 rnn_diverse_influence_seed6
+[eval] slice=train, |pool|=24, n_eps/cap=20
+    round_success=0.983 reward/round=+0.6309 faster_goal=0.340 switches/round=1.48
+[eval] slice=test, |pool|=22, n_eps/cap=20
+    round_success=0.980 reward/round=+0.6664 faster_goal=0.307 switches/round=2.01
+[eval] wrote /juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261007_001529_seeds6to10/rnn_diverse_influence_seed6_summary.json
+[evaluation] v2 rnn_diverse_influence_seed7
+[eval] slice=train, |pool|=24, n_eps/cap=20
+    round_success=0.979 reward/round=+0.7152 faster_goal=0.750 switches/round=0.92
+[eval] slice=test, |pool|=22, n_eps/cap=20
+    round_success=0.972 reward/round=+0.7515 faster_goal=0.768 switches/round=1.14
+[eval] wrote /juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261007_001529_seeds6to10/rnn_diverse_influence_seed7_summary.json
+[evaluation] v2 rnn_diverse_influence_seed8
+[eval] slice=train, |pool|=24, n_eps/cap=20
+    round_success=0.865 reward/round=+0.3810 faster_goal=0.368 switches/round=1.48
+[eval] slice=test, |pool|=22, n_eps/cap=20
+    round_success=0.870 reward/round=+0.4221 faster_goal=0.362 switches/round=1.44
+[eval] wrote /juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261007_001529_seeds6to10/rnn_diverse_influence_seed8_summary.json
+[evaluation] v2 rnn_diverse_influence_seed9
+[eval] slice=train, |pool|=24, n_eps/cap=20
+    round_success=0.990 reward/round=+0.6609 faster_goal=0.396 switches/round=0.94
+[eval] slice=test, |pool|=22, n_eps/cap=20
+    round_success=0.985 reward/round=+0.6992 faster_goal=0.357 switches/round=1.17
+[eval] wrote /juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261007_001529_seeds6to10/rnn_diverse_influence_seed9_summary.json
+[evaluation] v2 rnn_diverse_influence_seed10
+[eval] slice=train, |pool|=24, n_eps/cap=20
+    round_success=0.993 reward/round=+0.7624 faster_goal=0.846 switches/round=0.94
+[eval] slice=test, |pool|=22, n_eps/cap=20
+    round_success=0.987 reward/round=+0.7985 faster_goal=0.850 switches/round=1.22
+[eval] wrote /juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261007_001529_seeds6to10/rnn_diverse_influence_seed10_summary.json
+[evaluation] v2 mlp_diverse_influence_seed6
+[eval] slice=train, |pool|=24, n_eps/cap=20
+    round_success=0.987 reward/round=+0.6370 faster_goal=0.301 switches/round=0.73
+[eval] slice=test, |pool|=22, n_eps/cap=20
+    round_success=0.986 reward/round=+0.6771 faster_goal=0.281 switches/round=0.83
+[eval] wrote /juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261007_001529_seeds6to10/mlp_diverse_influence_seed6_summary.json
+[evaluation] v2 mlp_diverse_influence_seed7
+[eval] slice=train, |pool|=24, n_eps/cap=20
+    round_success=0.990 reward/round=+0.6385 faster_goal=0.296 switches/round=0.98
+[eval] slice=test, |pool|=22, n_eps/cap=20
+    round_success=0.989 reward/round=+0.6793 faster_goal=0.267 switches/round=1.20
+[eval] wrote /juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261007_001529_seeds6to10/mlp_diverse_influence_seed7_summary.json
+[evaluation] v2 mlp_diverse_influence_seed8
+[eval] slice=train, |pool|=24, n_eps/cap=20
+    round_success=0.872 reward/round=+0.4077 faster_goal=0.367 switches/round=2.37
+[eval] slice=test, |pool|=22, n_eps/cap=20
+    round_success=0.865 reward/round=+0.4238 faster_goal=0.376 switches/round=2.64
+[eval] wrote /juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261007_001529_seeds6to10/mlp_diverse_influence_seed8_summary.json
+[evaluation] v2 mlp_diverse_influence_seed9
+[eval] slice=train, |pool|=24, n_eps/cap=20
+    round_success=0.989 reward/round=+0.6398 faster_goal=0.297 switches/round=0.78
+[eval] slice=test, |pool|=22, n_eps/cap=20
+    round_success=0.989 reward/round=+0.6786 faster_goal=0.273 switches/round=0.98
+[eval] wrote /juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261007_001529_seeds6to10/mlp_diverse_influence_seed9_summary.json
+[evaluation] v2 mlp_diverse_influence_seed10
+[eval] slice=train, |pool|=24, n_eps/cap=20
+    round_success=0.987 reward/round=+0.6361 faster_goal=0.299 switches/round=1.00
+[eval] slice=test, |pool|=22, n_eps/cap=20
+    round_success=0.985 reward/round=+0.6713 faster_goal=0.277 switches/round=1.27
+[eval] wrote /juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261007_001529_seeds6to10/mlp_diverse_influence_seed10_summary.json
+[evaluation] v2 rnn_single_influence_seed6
+[eval] slice=train, |pool|=24, n_eps/cap=20
+    round_success=0.952 reward/round=+0.5760 faster_goal=0.282 switches/round=2.34
+[eval] slice=test, |pool|=22, n_eps/cap=20
+    round_success=0.956 reward/round=+0.6239 faster_goal=0.252 switches/round=1.90
+[eval] wrote /juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261007_001529_seeds6to10/rnn_single_influence_seed6_summary.json
+[evaluation] v2 rnn_single_influence_seed7
+[eval] slice=train, |pool|=24, n_eps/cap=20
+    round_success=0.868 reward/round=+0.3849 faster_goal=0.346 switches/round=8.57
+[eval] slice=test, |pool|=22, n_eps/cap=20
+    round_success=0.853 reward/round=+0.4088 faster_goal=0.347 switches/round=9.61
+[eval] wrote /juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261007_001529_seeds6to10/rnn_single_influence_seed7_summary.json
+[evaluation] v2 rnn_single_influence_seed8
+[eval] slice=train, |pool|=24, n_eps/cap=20
+    round_success=0.490 reward/round=-0.2426 faster_goal=0.413 switches/round=29.25
+[eval] slice=test, |pool|=22, n_eps/cap=20
+    round_success=0.500 reward/round=-0.1826 faster_goal=0.387 switches/round=27.16
+[eval] wrote /juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261007_001529_seeds6to10/rnn_single_influence_seed8_summary.json
+[evaluation] v2 rnn_single_influence_seed9
+[eval] slice=train, |pool|=24, n_eps/cap=20
+    round_success=0.953 reward/round=+0.5802 faster_goal=0.282 switches/round=2.39
+[eval] slice=test, |pool|=22, n_eps/cap=20
+    round_success=0.954 reward/round=+0.6206 faster_goal=0.254 switches/round=2.20
+[eval] wrote /juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261007_001529_seeds6to10/rnn_single_influence_seed9_summary.json
+[evaluation] v2 rnn_single_influence_seed10
+[eval] slice=train, |pool|=24, n_eps/cap=20
+    round_success=0.990 reward/round=+0.6397 faster_goal=0.335 switches/round=1.01
+[eval] slice=test, |pool|=22, n_eps/cap=20
+    round_success=0.991 reward/round=+0.6924 faster_goal=0.311 switches/round=1.08
+[eval] wrote /juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261007_001529_seeds6to10/rnn_single_influence_seed10_summary.json
+[evaluation] v2 rnn_diverse_noinfluence_seed6
+[eval] slice=train, |pool|=24, n_eps/cap=20
+    round_success=0.937 reward/round=+0.5368 faster_goal=0.348 switches/round=0.00
+[eval] slice=test, |pool|=22, n_eps/cap=20
+    round_success=0.942 reward/round=+0.5782 faster_goal=0.311 switches/round=0.00
+[eval] wrote /juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261007_001529_seeds6to10/rnn_diverse_noinfluence_seed6_summary.json
+[evaluation] v2 rnn_diverse_noinfluence_seed7
+[eval] slice=train, |pool|=24, n_eps/cap=20
+    round_success=0.811 reward/round=+0.2940 faster_goal=0.396 switches/round=0.00
+[eval] slice=test, |pool|=22, n_eps/cap=20
+    round_success=0.825 reward/round=+0.3437 faster_goal=0.381 switches/round=0.00
+[eval] wrote /juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261007_001529_seeds6to10/rnn_diverse_noinfluence_seed7_summary.json
+[evaluation] v2 rnn_diverse_noinfluence_seed8
+[eval] slice=train, |pool|=24, n_eps/cap=20
+    round_success=0.929 reward/round=+0.5159 faster_goal=0.340 switches/round=0.00
+[eval] slice=test, |pool|=22, n_eps/cap=20
+    round_success=0.934 reward/round=+0.5626 faster_goal=0.329 switches/round=0.00
+[eval] wrote /juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261007_001529_seeds6to10/rnn_diverse_noinfluence_seed8_summary.json
+[evaluation] v2 rnn_diverse_noinfluence_seed9
+[eval] slice=train, |pool|=24, n_eps/cap=20
+    round_success=0.942 reward/round=+0.5469 faster_goal=0.335 switches/round=0.00
+[eval] slice=test, |pool|=22, n_eps/cap=20
+    round_success=0.950 reward/round=+0.5916 faster_goal=0.310 switches/round=0.00
+[eval] wrote /juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261007_001529_seeds6to10/rnn_diverse_noinfluence_seed9_summary.json
+[evaluation] v2 rnn_diverse_noinfluence_seed10
+[eval] slice=train, |pool|=24, n_eps/cap=20
+    round_success=0.934 reward/round=+0.5300 faster_goal=0.339 switches/round=0.00
+[eval] slice=test, |pool|=22, n_eps/cap=20
+    round_success=0.937 reward/round=+0.5700 faster_goal=0.324 switches/round=0.00
+[eval] wrote /juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261007_001529_seeds6to10/rnn_diverse_noinfluence_seed10_summary.json

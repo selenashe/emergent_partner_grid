@@ -86,6 +86,11 @@ def per_layout_bfs(env: CoordinationGrid) -> Dict[str, np.ndarray]:
     """Precompute BFS distances per loaded layout, per goal, from the
     ego and partner starts. Returns four (n_layouts,) int arrays.
     """
+    # Audit guide:
+    # Precompute four wall-aware distances for historical analytical allocation scoring.
+    # Distances reflect static start positions. They cannot be used as an online oracle
+    # after the agents move or assignments switch.
+    #
     N = env.n_layouts
     e2r = np.zeros(N, dtype=np.int64)
     e2b = np.zeros(N, dtype=np.int64)
@@ -121,6 +126,11 @@ def analytical_alloc_rewards(
     of allocation A (ego RED, partner BLUE) and B (ego BLUE, partner RED)
     for every (layout, capability) row.
     """
+    # Audit guide:
+    # Compute fixed-assignment rewards for ego-red/partner-blue and its complement over
+    # each layout. These helpers remain for historical validation; online-v2 headline
+    # metrics use actual decisions and realized outcomes instead.
+    #
     M = layout_idx.shape[0]
     reward_A = np.empty(M, dtype=np.float64)
     reward_B = np.empty(M, dtype=np.float64)
@@ -153,6 +163,12 @@ def optimal_allocation_and_regret(
     regret is 0. Downstream metrics exclude ties from optimal-fraction
     accuracy while still counting them in regret (which is 0 there).
     """
+    # Audit guide:
+    # Compare a proposed fixed allocation with the analytical better alternative and
+    # record reward regret plus ties. This is meaningful under the fixed-role model. In
+    # a no-influence control the ego request can be hypothetical rather than the actual
+    # partner assignment.
+    #
     reward_chosen = np.where(chosen_alloc == int(Allocations.red), reward_A, reward_B)
     reward_opt = np.maximum(reward_A, reward_B)
     regret = reward_opt - reward_chosen
@@ -174,6 +190,13 @@ def rollout_condition(
     seed: int,
     save_hidden: bool,
 ) -> Dict[str, np.ndarray]:
+    # Audit guide:
+    # Load one policy and run repeated partner episodes with an explicit capability
+    # pool. Save post-observation hidden states, the state used for the current action,
+    # along with pre-step context and post-step outcomes. The fixed-length scan can
+    # continue after final done, so every downstream statistic must use a first-done
+    # mask.
+    #
     trainer_mod.require_current_protocol(config)
     env_kwargs = dict(config["ENV_KWARGS"])
     env_kwargs["layouts_dir"] = layouts_dir
@@ -214,6 +237,12 @@ def rollout_condition(
     done_prev = jnp.zeros((B,), dtype=bool)
 
     def body(carry, _):
+        # Audit guide:
+        # Advance observation, policy memory, action, and physical state in time order.
+        # Pair hidden state with the observation just processed, while round_time is the
+        # post-transition time. Logging both requested and actual assignment is
+        # necessary when influence is disabled.
+        #
         obs, states, hstate, done_prev, key = carry
         obs_a = obs["agent_0"]
         obs_in = jax.tree_util.tree_map(lambda x: x[jnp.newaxis, :], obs_a)
@@ -224,7 +253,9 @@ def rollout_condition(
         # representation the policy was actually acting from.
         new_hstate, pi, _v = network.apply(params, hstate, (obs_in, done_in))
         key, ka, ks = jax.random.split(key, 3)
-        action = trainer_mod.select_action(pi, ka, config.get("ACTION_SELECTION", "categorical")).squeeze(0)
+        # Draw according to every allowed action's policy probability.
+        # The seeded random draw preserves the original categorical method.
+        action = pi.sample(seed=ka).squeeze(0)
         step_keys = jax.random.split(ks, B)
         obs2, states2, reward, done, info = jax.vmap(
             env.step_env, in_axes=(0, 0, {"agent_0": 0})
@@ -280,6 +311,11 @@ def rollout_condition(
 
 def _first_done_alive_mask(dones: np.ndarray) -> np.ndarray:
     """(B, T) dones -> (B, T) alive mask up to and including first done."""
+    # Audit guide:
+    # Mark all steps up to and including the first episode-ending transition. Exclude
+    # later fixed-scan padding while retaining the terminal success/reward. Removing the
+    # terminal tick would bias success, return, and hidden-state features.
+    #
     B, T = dones.shape
     first = np.argmax(dones.astype(np.int32), axis=1)
     never = ~dones.any(axis=1)
@@ -298,6 +334,12 @@ def summarize(
     step_penalty: float,
     success_reward: float,
 ) -> Dict:
+    # Audit guide:
+    # Calculate realized returns, success, completion times, and online assignment
+    # diagnostics only on valid prefixes. Exclude initialization from learned allocation
+    # decisions and exclude equal-delay profiles from faster-goal comparisons. Faster-
+    # goal adherence describes speed matching, not an optimal online allocation policy.
+    #
     alive = _first_done_alive_mask(record["dones"])
     rd = record["round_done"] & alive
     succ = record["success"] & rd
@@ -373,6 +415,11 @@ def summarize(
 
 
 def _save_hdf5(path: str, record: Dict[str, np.ndarray]) -> None:
+    # Audit guide:
+    # Write rollout arrays and configuration/protocol metadata to one HDF5 file. Arrays
+    # are evidence for downstream analysis; attributes identify which condition and
+    # environment generated them.
+    #
     import h5py
     os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
     with h5py.File(path, "w") as f:
@@ -382,6 +429,12 @@ def _save_hdf5(path: str, record: Dict[str, np.ndarray]) -> None:
 
 
 def main():
+    # Audit guide:
+    # Load saved weights and their resolved configuration, restore influence explicitly,
+    # and evaluate familiar and novel profile slices separately. Request hidden export
+    # only for recurrent policies. The active implementation rejects a protocol mismatch
+    # instead of silently changing historical checkpoints.
+    #
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--config", required=True,
                    help="JSON dump of the training config (from training run).")

@@ -85,6 +85,12 @@ class GridEnv:
 
 def bfs_distances(grid: np.ndarray, src: Tuple[int, int]) -> np.ndarray:
     """4-connected shortest-path distances from `src`. Unreachable cells are -1."""
+    # Audit guide:
+    # Measure shortest walking distances with walls respected, visiting cells in
+    # increasing distance order. Unreachable cells remain -1. These graph distances,
+    # rather than straight-line coordinate distances, feed layout geometry and
+    # feasibility checks.
+    #
     H, W = grid.shape
     dist = -np.ones_like(grid, dtype=np.int32)
     dist[src] = 0
@@ -235,6 +241,12 @@ def _switching_cost(grid: np.ndarray,
 
 
 def compute_metrics(env: GridEnv, switching_k: int) -> Dict[str, float]:
+    # Audit guide:
+    # Measure geometry for a generated grid: ego/partner goal distances and structural
+    # path features. Attach these values as metadata for later filters and plots. These
+    # metrics describe static layouts; they are not learned-policy performance
+    # measurements.
+    #
     grid = env.grid
     E, P, R, B = env.ego_start, env.partner_start, env.red_goal, env.blue_goal
 
@@ -317,6 +329,12 @@ def _sample_env(rng: random.Random,
                 switching_k: int,
                 max_attempts: int) -> GridEnv:
     """Rejection-sample one valid environment; attach metrics to `env.metadata`."""
+    # Audit guide:
+    # Repeatedly propose walls, starts, and goals until reachability and configured
+    # geometric requirements pass. Rejected proposals never enter the candidate corpus.
+    # Attach metrics to each accepted layout so downstream selection can be audited
+    # independently of generation.
+    #
     for _ in range(max_attempts):
         grid, wall_prob = _sample_grid(rng, grid_size, wall_density)
 
@@ -387,6 +405,12 @@ def generate_envs(n: int,
                   geometric_pref_threshold: int,
                   switching_k: int,
                   max_attempts: int) -> List[GridEnv]:
+    # Audit guide:
+    # Generate a reproducible collection using the configured seed and geometric
+    # rejection rules. Capability-sensitive selection happens later in
+    # build_final_corpus; a geometrically valid candidate need not yet provide useful
+    # partner-modelling pressure.
+    #
     master_rng = random.Random(master_seed)
     envs: List[GridEnv] = []
     for _ in range(n):
@@ -411,6 +435,11 @@ def generate_envs(n: int,
 
 def encode_env(env: GridEnv) -> np.ndarray:
     """Compile a GridEnv into a single (H, W) int8 array with cell codes 0-5."""
+    # Audit guide:
+    # Encode one layout as an integer grid suitable for a compiled NPZ corpus.
+    # Wall/start/goal codes describe geometry only; they do not encode hidden
+    # capability. JSON retains the accompanying metadata.
+    #
     coded = env.grid.astype(np.int8).copy()
     coded[env.red_goal] = RED
     coded[env.blue_goal] = BLUE
@@ -519,6 +548,11 @@ def _split_indices(n: int, ratio: Sequence[float]) -> Dict[str, range]:
 
 def save_split(envs: List[GridEnv], split: str, indices: range,
                out_dir: Path) -> None:
+    # Audit guide:
+    # Write selected layouts, compiled arrays, and optional renders for a named split.
+    # Split sizes describe saved data; actual training/evaluation coverage is controlled
+    # by configurations and schedules.
+    #
     layouts_dir = out_dir / "layouts" / split
     renders_dir = out_dir / "renders" / split
     layouts_dir.mkdir(parents=True, exist_ok=True)
@@ -600,6 +634,11 @@ def _parse_args() -> argparse.Namespace:
 
 
 def main() -> None:
+    # Audit guide:
+    # Parse generator options, generate candidates, partition them, and write geometry
+    # artifacts. This standalone generator lacks the capability-dependent filters used
+    # by the final-corpus builder.
+    #
     args = _parse_args()
 
     envs = generate_envs(n=args.n,

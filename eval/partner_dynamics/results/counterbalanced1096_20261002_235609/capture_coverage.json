@@ -1,0 +1,1742 @@
+[
+  {
+    "protocol": "fixed_v1",
+    "policy": "rnn_diverse_influence_seed1",
+    "episodes": 24,
+    "valid_steps": 2614,
+    "profiles": [
+      [
+        1,
+        4
+      ],
+      [
+        4,
+        1
+      ],
+      [
+        2,
+        7
+      ],
+      [
+        7,
+        2
+      ],
+      [
+        0,
+        5
+      ],
+      [
+        5,
+        0
+      ]
+    ],
+    "history_rounds": 4,
+    "layout_indices": [
+      527,
+      754,
+      1045,
+      890,
+      388,
+      371,
+      836,
+      445
+    ],
+    "max_replay_error": 5.736947059631348e-07,
+    "sampled_action_replay": true,
+    "zero_intervention_identity": true,
+    "projector_validation_accuracy": 1.0,
+    "projector_rank": 3,
+    "jacobian_samples": 6,
+    "intervention_branches": 264,
+    "split": "repetitions 0,1 discovery; 2 validation; 3 held-out test",
+    "limits": [
+      "4-round histories are targeted early-experience diagnostics, not all 20 rounds.",
+      "Whole-carry swaps can change nuisance memories; projector is label-predictive and needs control comparisons for causal specificity.",
+      "History durations vary by capability and performance; matched round exposure is not matched step exposure.",
+      "v2 first learned allocation follows forced t=0, so its closed-loop t=1 observations can diverge across arms.",
+      "Current input-matched test measures t=0 network/value response; forced v2 allocation probabilities require a later replay test."
+    ]
+  },
+  {
+    "protocol": "fixed_v1",
+    "policy": "rnn_diverse_influence_seed2",
+    "episodes": 24,
+    "valid_steps": 2435,
+    "profiles": [
+      [
+        1,
+        4
+      ],
+      [
+        4,
+        1
+      ],
+      [
+        2,
+        7
+      ],
+      [
+        7,
+        2
+      ],
+      [
+        0,
+        5
+      ],
+      [
+        5,
+        0
+      ]
+    ],
+    "history_rounds": 4,
+    "layout_indices": [
+      527,
+      754,
+      1045,
+      890,
+      388,
+      371,
+      836,
+      445
+    ],
+    "max_replay_error": 1.0728836059570312e-06,
+    "sampled_action_replay": true,
+    "zero_intervention_identity": true,
+    "projector_validation_accuracy": 0.6666666666666666,
+    "projector_rank": 3,
+    "jacobian_samples": 6,
+    "intervention_branches": 264,
+    "split": "repetitions 0,1 discovery; 2 validation; 3 held-out test",
+    "limits": [
+      "4-round histories are targeted early-experience diagnostics, not all 20 rounds.",
+      "Whole-carry swaps can change nuisance memories; projector is label-predictive and needs control comparisons for causal specificity.",
+      "History durations vary by capability and performance; matched round exposure is not matched step exposure.",
+      "v2 first learned allocation follows forced t=0, so its closed-loop t=1 observations can diverge across arms.",
+      "Current input-matched test measures t=0 network/value response; forced v2 allocation probabilities require a later replay test."
+    ]
+  },
+  {
+    "protocol": "fixed_v1",
+    "policy": "rnn_diverse_influence_seed3",
+    "episodes": 24,
+    "valid_steps": 2552,
+    "profiles": [
+      [
+        1,
+        4
+      ],
+      [
+        4,
+        1
+      ],
+      [
+        2,
+        7
+      ],
+      [
+        7,
+        2
+      ],
+      [
+        0,
+        5
+      ],
+      [
+        5,
+        0
+      ]
+    ],
+    "history_rounds": 4,
+    "layout_indices": [
+      527,
+      754,
+      1045,
+      890,
+      388,
+      371,
+      836,
+      445
+    ],
+    "max_replay_error": 1.2516975402832031e-06,
+    "sampled_action_replay": true,
+    "zero_intervention_identity": true,
+    "projector_validation_accuracy": 0.8333333333333334,
+    "projector_rank": 3,
+    "jacobian_samples": 6,
+    "intervention_branches": 264,
+    "split": "repetitions 0,1 discovery; 2 validation; 3 held-out test",
+    "limits": [
+      "4-round histories are targeted early-experience diagnostics, not all 20 rounds.",
+      "Whole-carry swaps can change nuisance memories; projector is label-predictive and needs control comparisons for causal specificity.",
+      "History durations vary by capability and performance; matched round exposure is not matched step exposure.",
+      "v2 first learned allocation follows forced t=0, so its closed-loop t=1 observations can diverge across arms.",
+      "Current input-matched test measures t=0 network/value response; forced v2 allocation probabilities require a later replay test."
+    ]
+  },
+  {
+    "protocol": "fixed_v1",
+    "policy": "rnn_diverse_influence_seed4",
+    "episodes": 24,
+    "valid_steps": 3606,
+    "profiles": [
+      [
+        1,
+        4
+      ],
+      [
+        4,
+        1
+      ],
+      [
+        2,
+        7
+      ],
+      [
+        7,
+        2
+      ],
+      [
+        0,
+        5
+      ],
+      [
+        5,
+        0
+      ]
+    ],
+    "history_rounds": 4,
+    "layout_indices": [
+      527,
+      754,
+      1045,
+      890,
+      388,
+      371,
+      836,
+      445
+    ],
+    "max_replay_error": 1.9064173102378845e-06,
+    "sampled_action_replay": true,
+    "zero_intervention_identity": true,
+    "projector_validation_accuracy": 0.6666666666666666,
+    "projector_rank": 3,
+    "jacobian_samples": 6,
+    "intervention_branches": 264,
+    "split": "repetitions 0,1 discovery; 2 validation; 3 held-out test",
+    "limits": [
+      "4-round histories are targeted early-experience diagnostics, not all 20 rounds.",
+      "Whole-carry swaps can change nuisance memories; projector is label-predictive and needs control comparisons for causal specificity.",
+      "History durations vary by capability and performance; matched round exposure is not matched step exposure.",
+      "v2 first learned allocation follows forced t=0, so its closed-loop t=1 observations can diverge across arms.",
+      "Current input-matched test measures t=0 network/value response; forced v2 allocation probabilities require a later replay test."
+    ]
+  },
+  {
+    "protocol": "fixed_v1",
+    "policy": "rnn_diverse_influence_seed5",
+    "episodes": 24,
+    "valid_steps": 2619,
+    "profiles": [
+      [
+        1,
+        4
+      ],
+      [
+        4,
+        1
+      ],
+      [
+        2,
+        7
+      ],
+      [
+        7,
+        2
+      ],
+      [
+        0,
+        5
+      ],
+      [
+        5,
+        0
+      ]
+    ],
+    "history_rounds": 4,
+    "layout_indices": [
+      527,
+      754,
+      1045,
+      890,
+      388,
+      371,
+      836,
+      445
+    ],
+    "max_replay_error": 1.7285346984863281e-06,
+    "sampled_action_replay": true,
+    "zero_intervention_identity": true,
+    "projector_validation_accuracy": 1.0,
+    "projector_rank": 3,
+    "jacobian_samples": 6,
+    "intervention_branches": 264,
+    "split": "repetitions 0,1 discovery; 2 validation; 3 held-out test",
+    "limits": [
+      "4-round histories are targeted early-experience diagnostics, not all 20 rounds.",
+      "Whole-carry swaps can change nuisance memories; projector is label-predictive and needs control comparisons for causal specificity.",
+      "History durations vary by capability and performance; matched round exposure is not matched step exposure.",
+      "v2 first learned allocation follows forced t=0, so its closed-loop t=1 observations can diverge across arms.",
+      "Current input-matched test measures t=0 network/value response; forced v2 allocation probabilities require a later replay test."
+    ]
+  },
+  {
+    "protocol": "fixed_v1",
+    "policy": "rnn_diverse_noinfluence_seed1",
+    "episodes": 24,
+    "valid_steps": 5491,
+    "profiles": [
+      [
+        1,
+        4
+      ],
+      [
+        4,
+        1
+      ],
+      [
+        2,
+        7
+      ],
+      [
+        7,
+        2
+      ],
+      [
+        0,
+        5
+      ],
+      [
+        5,
+        0
+      ]
+    ],
+    "history_rounds": 4,
+    "layout_indices": [
+      527,
+      754,
+      1045,
+      890,
+      388,
+      371,
+      836,
+      445
+    ],
+    "max_replay_error": 8.344650268554688e-07,
+    "sampled_action_replay": true,
+    "zero_intervention_identity": true,
+    "projector_validation_accuracy": 0.8333333333333334,
+    "projector_rank": 3,
+    "jacobian_samples": 6,
+    "intervention_branches": 264,
+    "split": "repetitions 0,1 discovery; 2 validation; 3 held-out test",
+    "limits": [
+      "4-round histories are targeted early-experience diagnostics, not all 20 rounds.",
+      "Whole-carry swaps can change nuisance memories; projector is label-predictive and needs control comparisons for causal specificity.",
+      "History durations vary by capability and performance; matched round exposure is not matched step exposure.",
+      "v2 first learned allocation follows forced t=0, so its closed-loop t=1 observations can diverge across arms.",
+      "Current input-matched test measures t=0 network/value response; forced v2 allocation probabilities require a later replay test."
+    ]
+  },
+  {
+    "protocol": "fixed_v1",
+    "policy": "rnn_diverse_noinfluence_seed2",
+    "episodes": 24,
+    "valid_steps": 3727,
+    "profiles": [
+      [
+        1,
+        4
+      ],
+      [
+        4,
+        1
+      ],
+      [
+        2,
+        7
+      ],
+      [
+        7,
+        2
+      ],
+      [
+        0,
+        5
+      ],
+      [
+        5,
+        0
+      ]
+    ],
+    "history_rounds": 4,
+    "layout_indices": [
+      527,
+      754,
+      1045,
+      890,
+      388,
+      371,
+      836,
+      445
+    ],
+    "max_replay_error": 9.238719940185547e-07,
+    "sampled_action_replay": true,
+    "zero_intervention_identity": true,
+    "projector_validation_accuracy": 0.8333333333333334,
+    "projector_rank": 3,
+    "jacobian_samples": 6,
+    "intervention_branches": 264,
+    "split": "repetitions 0,1 discovery; 2 validation; 3 held-out test",
+    "limits": [
+      "4-round histories are targeted early-experience diagnostics, not all 20 rounds.",
+      "Whole-carry swaps can change nuisance memories; projector is label-predictive and needs control comparisons for causal specificity.",
+      "History durations vary by capability and performance; matched round exposure is not matched step exposure.",
+      "v2 first learned allocation follows forced t=0, so its closed-loop t=1 observations can diverge across arms.",
+      "Current input-matched test measures t=0 network/value response; forced v2 allocation probabilities require a later replay test."
+    ]
+  },
+  {
+    "protocol": "fixed_v1",
+    "policy": "rnn_diverse_noinfluence_seed3",
+    "episodes": 24,
+    "valid_steps": 3664,
+    "profiles": [
+      [
+        1,
+        4
+      ],
+      [
+        4,
+        1
+      ],
+      [
+        2,
+        7
+      ],
+      [
+        7,
+        2
+      ],
+      [
+        0,
+        5
+      ],
+      [
+        5,
+        0
+      ]
+    ],
+    "history_rounds": 4,
+    "layout_indices": [
+      527,
+      754,
+      1045,
+      890,
+      388,
+      371,
+      836,
+      445
+    ],
+    "max_replay_error": 8.940696716308594e-07,
+    "sampled_action_replay": true,
+    "zero_intervention_identity": true,
+    "projector_validation_accuracy": 0.0,
+    "projector_rank": 3,
+    "jacobian_samples": 6,
+    "intervention_branches": 264,
+    "split": "repetitions 0,1 discovery; 2 validation; 3 held-out test",
+    "limits": [
+      "4-round histories are targeted early-experience diagnostics, not all 20 rounds.",
+      "Whole-carry swaps can change nuisance memories; projector is label-predictive and needs control comparisons for causal specificity.",
+      "History durations vary by capability and performance; matched round exposure is not matched step exposure.",
+      "v2 first learned allocation follows forced t=0, so its closed-loop t=1 observations can diverge across arms.",
+      "Current input-matched test measures t=0 network/value response; forced v2 allocation probabilities require a later replay test."
+    ]
+  },
+  {
+    "protocol": "fixed_v1",
+    "policy": "rnn_diverse_noinfluence_seed4",
+    "episodes": 24,
+    "valid_steps": 4227,
+    "profiles": [
+      [
+        1,
+        4
+      ],
+      [
+        4,
+        1
+      ],
+      [
+        2,
+        7
+      ],
+      [
+        7,
+        2
+      ],
+      [
+        0,
+        5
+      ],
+      [
+        5,
+        0
+      ]
+    ],
+    "history_rounds": 4,
+    "layout_indices": [
+      527,
+      754,
+      1045,
+      890,
+      388,
+      371,
+      836,
+      445
+    ],
+    "max_replay_error": 8.344650268554688e-07,
+    "sampled_action_replay": true,
+    "zero_intervention_identity": true,
+    "projector_validation_accuracy": 0.3333333333333333,
+    "projector_rank": 3,
+    "jacobian_samples": 6,
+    "intervention_branches": 264,
+    "split": "repetitions 0,1 discovery; 2 validation; 3 held-out test",
+    "limits": [
+      "4-round histories are targeted early-experience diagnostics, not all 20 rounds.",
+      "Whole-carry swaps can change nuisance memories; projector is label-predictive and needs control comparisons for causal specificity.",
+      "History durations vary by capability and performance; matched round exposure is not matched step exposure.",
+      "v2 first learned allocation follows forced t=0, so its closed-loop t=1 observations can diverge across arms.",
+      "Current input-matched test measures t=0 network/value response; forced v2 allocation probabilities require a later replay test."
+    ]
+  },
+  {
+    "protocol": "fixed_v1",
+    "policy": "rnn_diverse_noinfluence_seed5",
+    "episodes": 24,
+    "valid_steps": 3803,
+    "profiles": [
+      [
+        1,
+        4
+      ],
+      [
+        4,
+        1
+      ],
+      [
+        2,
+        7
+      ],
+      [
+        7,
+        2
+      ],
+      [
+        0,
+        5
+      ],
+      [
+        5,
+        0
+      ]
+    ],
+    "history_rounds": 4,
+    "layout_indices": [
+      527,
+      754,
+      1045,
+      890,
+      388,
+      371,
+      836,
+      445
+    ],
+    "max_replay_error": 1.1324882507324219e-06,
+    "sampled_action_replay": true,
+    "zero_intervention_identity": true,
+    "projector_validation_accuracy": 0.5,
+    "projector_rank": 3,
+    "jacobian_samples": 6,
+    "intervention_branches": 264,
+    "split": "repetitions 0,1 discovery; 2 validation; 3 held-out test",
+    "limits": [
+      "4-round histories are targeted early-experience diagnostics, not all 20 rounds.",
+      "Whole-carry swaps can change nuisance memories; projector is label-predictive and needs control comparisons for causal specificity.",
+      "History durations vary by capability and performance; matched round exposure is not matched step exposure.",
+      "v2 first learned allocation follows forced t=0, so its closed-loop t=1 observations can diverge across arms.",
+      "Current input-matched test measures t=0 network/value response; forced v2 allocation probabilities require a later replay test."
+    ]
+  },
+  {
+    "protocol": "fixed_v1",
+    "policy": "rnn_single_influence_seed1",
+    "episodes": 24,
+    "valid_steps": 3251,
+    "profiles": [
+      [
+        1,
+        4
+      ],
+      [
+        4,
+        1
+      ],
+      [
+        2,
+        7
+      ],
+      [
+        7,
+        2
+      ],
+      [
+        0,
+        5
+      ],
+      [
+        5,
+        0
+      ]
+    ],
+    "history_rounds": 4,
+    "layout_indices": [
+      527,
+      754,
+      1045,
+      890,
+      388,
+      371,
+      836,
+      445
+    ],
+    "max_replay_error": 1.300126314163208e-06,
+    "sampled_action_replay": true,
+    "zero_intervention_identity": true,
+    "projector_validation_accuracy": 1.0,
+    "projector_rank": 3,
+    "jacobian_samples": 6,
+    "intervention_branches": 264,
+    "split": "repetitions 0,1 discovery; 2 validation; 3 held-out test",
+    "limits": [
+      "4-round histories are targeted early-experience diagnostics, not all 20 rounds.",
+      "Whole-carry swaps can change nuisance memories; projector is label-predictive and needs control comparisons for causal specificity.",
+      "History durations vary by capability and performance; matched round exposure is not matched step exposure.",
+      "v2 first learned allocation follows forced t=0, so its closed-loop t=1 observations can diverge across arms.",
+      "Current input-matched test measures t=0 network/value response; forced v2 allocation probabilities require a later replay test."
+    ]
+  },
+  {
+    "protocol": "fixed_v1",
+    "policy": "rnn_single_influence_seed2",
+    "episodes": 24,
+    "valid_steps": 3499,
+    "profiles": [
+      [
+        1,
+        4
+      ],
+      [
+        4,
+        1
+      ],
+      [
+        2,
+        7
+      ],
+      [
+        7,
+        2
+      ],
+      [
+        0,
+        5
+      ],
+      [
+        5,
+        0
+      ]
+    ],
+    "history_rounds": 4,
+    "layout_indices": [
+      527,
+      754,
+      1045,
+      890,
+      388,
+      371,
+      836,
+      445
+    ],
+    "max_replay_error": 4.76837158203125e-07,
+    "sampled_action_replay": true,
+    "zero_intervention_identity": true,
+    "projector_validation_accuracy": 1.0,
+    "projector_rank": 3,
+    "jacobian_samples": 6,
+    "intervention_branches": 264,
+    "split": "repetitions 0,1 discovery; 2 validation; 3 held-out test",
+    "limits": [
+      "4-round histories are targeted early-experience diagnostics, not all 20 rounds.",
+      "Whole-carry swaps can change nuisance memories; projector is label-predictive and needs control comparisons for causal specificity.",
+      "History durations vary by capability and performance; matched round exposure is not matched step exposure.",
+      "v2 first learned allocation follows forced t=0, so its closed-loop t=1 observations can diverge across arms.",
+      "Current input-matched test measures t=0 network/value response; forced v2 allocation probabilities require a later replay test."
+    ]
+  },
+  {
+    "protocol": "fixed_v1",
+    "policy": "rnn_single_influence_seed3",
+    "episodes": 24,
+    "valid_steps": 3323,
+    "profiles": [
+      [
+        1,
+        4
+      ],
+      [
+        4,
+        1
+      ],
+      [
+        2,
+        7
+      ],
+      [
+        7,
+        2
+      ],
+      [
+        0,
+        5
+      ],
+      [
+        5,
+        0
+      ]
+    ],
+    "history_rounds": 4,
+    "layout_indices": [
+      527,
+      754,
+      1045,
+      890,
+      388,
+      371,
+      836,
+      445
+    ],
+    "max_replay_error": 9.5367431640625e-07,
+    "sampled_action_replay": true,
+    "zero_intervention_identity": true,
+    "projector_validation_accuracy": 1.0,
+    "projector_rank": 3,
+    "jacobian_samples": 6,
+    "intervention_branches": 264,
+    "split": "repetitions 0,1 discovery; 2 validation; 3 held-out test",
+    "limits": [
+      "4-round histories are targeted early-experience diagnostics, not all 20 rounds.",
+      "Whole-carry swaps can change nuisance memories; projector is label-predictive and needs control comparisons for causal specificity.",
+      "History durations vary by capability and performance; matched round exposure is not matched step exposure.",
+      "v2 first learned allocation follows forced t=0, so its closed-loop t=1 observations can diverge across arms.",
+      "Current input-matched test measures t=0 network/value response; forced v2 allocation probabilities require a later replay test."
+    ]
+  },
+  {
+    "protocol": "fixed_v1",
+    "policy": "rnn_single_influence_seed4",
+    "episodes": 24,
+    "valid_steps": 3244,
+    "profiles": [
+      [
+        1,
+        4
+      ],
+      [
+        4,
+        1
+      ],
+      [
+        2,
+        7
+      ],
+      [
+        7,
+        2
+      ],
+      [
+        0,
+        5
+      ],
+      [
+        5,
+        0
+      ]
+    ],
+    "history_rounds": 4,
+    "layout_indices": [
+      527,
+      754,
+      1045,
+      890,
+      388,
+      371,
+      836,
+      445
+    ],
+    "max_replay_error": 6.556510925292969e-07,
+    "sampled_action_replay": true,
+    "zero_intervention_identity": true,
+    "projector_validation_accuracy": 1.0,
+    "projector_rank": 3,
+    "jacobian_samples": 6,
+    "intervention_branches": 264,
+    "split": "repetitions 0,1 discovery; 2 validation; 3 held-out test",
+    "limits": [
+      "4-round histories are targeted early-experience diagnostics, not all 20 rounds.",
+      "Whole-carry swaps can change nuisance memories; projector is label-predictive and needs control comparisons for causal specificity.",
+      "History durations vary by capability and performance; matched round exposure is not matched step exposure.",
+      "v2 first learned allocation follows forced t=0, so its closed-loop t=1 observations can diverge across arms.",
+      "Current input-matched test measures t=0 network/value response; forced v2 allocation probabilities require a later replay test."
+    ]
+  },
+  {
+    "protocol": "fixed_v1",
+    "policy": "rnn_single_influence_seed5",
+    "episodes": 24,
+    "valid_steps": 3690,
+    "profiles": [
+      [
+        1,
+        4
+      ],
+      [
+        4,
+        1
+      ],
+      [
+        2,
+        7
+      ],
+      [
+        7,
+        2
+      ],
+      [
+        0,
+        5
+      ],
+      [
+        5,
+        0
+      ]
+    ],
+    "history_rounds": 4,
+    "layout_indices": [
+      527,
+      754,
+      1045,
+      890,
+      388,
+      371,
+      836,
+      445
+    ],
+    "max_replay_error": 1.2814998626708984e-06,
+    "sampled_action_replay": true,
+    "zero_intervention_identity": true,
+    "projector_validation_accuracy": 0.8333333333333334,
+    "projector_rank": 3,
+    "jacobian_samples": 6,
+    "intervention_branches": 264,
+    "split": "repetitions 0,1 discovery; 2 validation; 3 held-out test",
+    "limits": [
+      "4-round histories are targeted early-experience diagnostics, not all 20 rounds.",
+      "Whole-carry swaps can change nuisance memories; projector is label-predictive and needs control comparisons for causal specificity.",
+      "History durations vary by capability and performance; matched round exposure is not matched step exposure.",
+      "v2 first learned allocation follows forced t=0, so its closed-loop t=1 observations can diverge across arms.",
+      "Current input-matched test measures t=0 network/value response; forced v2 allocation probabilities require a later replay test."
+    ]
+  },
+  {
+    "protocol": "online_v2",
+    "policy": "rnn_diverse_influence_seed1",
+    "episodes": 24,
+    "valid_steps": 3047,
+    "profiles": [
+      [
+        1,
+        4
+      ],
+      [
+        4,
+        1
+      ],
+      [
+        2,
+        7
+      ],
+      [
+        7,
+        2
+      ],
+      [
+        0,
+        5
+      ],
+      [
+        5,
+        0
+      ]
+    ],
+    "history_rounds": 4,
+    "layout_indices": [
+      527,
+      754,
+      1045,
+      890,
+      388,
+      371,
+      836,
+      445
+    ],
+    "max_replay_error": 1.043081283569336e-06,
+    "sampled_action_replay": true,
+    "zero_intervention_identity": true,
+    "projector_validation_accuracy": 0.8333333333333334,
+    "projector_rank": 3,
+    "jacobian_samples": 6,
+    "intervention_branches": 264,
+    "split": "repetitions 0,1 discovery; 2 validation; 3 held-out test",
+    "limits": [
+      "4-round histories are targeted early-experience diagnostics, not all 20 rounds.",
+      "Whole-carry swaps can change nuisance memories; projector is label-predictive and needs control comparisons for causal specificity.",
+      "History durations vary by capability and performance; matched round exposure is not matched step exposure.",
+      "v2 first learned allocation follows forced t=0, so its closed-loop t=1 observations can diverge across arms.",
+      "Current input-matched test measures t=0 network/value response; forced v2 allocation probabilities require a later replay test."
+    ]
+  },
+  {
+    "protocol": "online_v2",
+    "policy": "rnn_diverse_influence_seed2",
+    "episodes": 24,
+    "valid_steps": 3167,
+    "profiles": [
+      [
+        1,
+        4
+      ],
+      [
+        4,
+        1
+      ],
+      [
+        2,
+        7
+      ],
+      [
+        7,
+        2
+      ],
+      [
+        0,
+        5
+      ],
+      [
+        5,
+        0
+      ]
+    ],
+    "history_rounds": 4,
+    "layout_indices": [
+      527,
+      754,
+      1045,
+      890,
+      388,
+      371,
+      836,
+      445
+    ],
+    "max_replay_error": 9.5367431640625e-07,
+    "sampled_action_replay": true,
+    "zero_intervention_identity": true,
+    "projector_validation_accuracy": 0.3333333333333333,
+    "projector_rank": 3,
+    "jacobian_samples": 6,
+    "intervention_branches": 264,
+    "split": "repetitions 0,1 discovery; 2 validation; 3 held-out test",
+    "limits": [
+      "4-round histories are targeted early-experience diagnostics, not all 20 rounds.",
+      "Whole-carry swaps can change nuisance memories; projector is label-predictive and needs control comparisons for causal specificity.",
+      "History durations vary by capability and performance; matched round exposure is not matched step exposure.",
+      "v2 first learned allocation follows forced t=0, so its closed-loop t=1 observations can diverge across arms.",
+      "Current input-matched test measures t=0 network/value response; forced v2 allocation probabilities require a later replay test."
+    ]
+  },
+  {
+    "protocol": "online_v2",
+    "policy": "rnn_diverse_influence_seed3",
+    "episodes": 24,
+    "valid_steps": 3592,
+    "profiles": [
+      [
+        1,
+        4
+      ],
+      [
+        4,
+        1
+      ],
+      [
+        2,
+        7
+      ],
+      [
+        7,
+        2
+      ],
+      [
+        0,
+        5
+      ],
+      [
+        5,
+        0
+      ]
+    ],
+    "history_rounds": 4,
+    "layout_indices": [
+      527,
+      754,
+      1045,
+      890,
+      388,
+      371,
+      836,
+      445
+    ],
+    "max_replay_error": 7.152557373046875e-07,
+    "sampled_action_replay": true,
+    "zero_intervention_identity": true,
+    "projector_validation_accuracy": 0.16666666666666666,
+    "projector_rank": 3,
+    "jacobian_samples": 6,
+    "intervention_branches": 264,
+    "split": "repetitions 0,1 discovery; 2 validation; 3 held-out test",
+    "limits": [
+      "4-round histories are targeted early-experience diagnostics, not all 20 rounds.",
+      "Whole-carry swaps can change nuisance memories; projector is label-predictive and needs control comparisons for causal specificity.",
+      "History durations vary by capability and performance; matched round exposure is not matched step exposure.",
+      "v2 first learned allocation follows forced t=0, so its closed-loop t=1 observations can diverge across arms.",
+      "Current input-matched test measures t=0 network/value response; forced v2 allocation probabilities require a later replay test."
+    ]
+  },
+  {
+    "protocol": "online_v2",
+    "policy": "rnn_diverse_influence_seed4",
+    "episodes": 24,
+    "valid_steps": 4063,
+    "profiles": [
+      [
+        1,
+        4
+      ],
+      [
+        4,
+        1
+      ],
+      [
+        2,
+        7
+      ],
+      [
+        7,
+        2
+      ],
+      [
+        0,
+        5
+      ],
+      [
+        5,
+        0
+      ]
+    ],
+    "history_rounds": 4,
+    "layout_indices": [
+      527,
+      754,
+      1045,
+      890,
+      388,
+      371,
+      836,
+      445
+    ],
+    "max_replay_error": 1.0132789611816406e-06,
+    "sampled_action_replay": true,
+    "zero_intervention_identity": true,
+    "projector_validation_accuracy": 0.8333333333333334,
+    "projector_rank": 3,
+    "jacobian_samples": 6,
+    "intervention_branches": 264,
+    "split": "repetitions 0,1 discovery; 2 validation; 3 held-out test",
+    "limits": [
+      "4-round histories are targeted early-experience diagnostics, not all 20 rounds.",
+      "Whole-carry swaps can change nuisance memories; projector is label-predictive and needs control comparisons for causal specificity.",
+      "History durations vary by capability and performance; matched round exposure is not matched step exposure.",
+      "v2 first learned allocation follows forced t=0, so its closed-loop t=1 observations can diverge across arms.",
+      "Current input-matched test measures t=0 network/value response; forced v2 allocation probabilities require a later replay test."
+    ]
+  },
+  {
+    "protocol": "online_v2",
+    "policy": "rnn_diverse_influence_seed5",
+    "episodes": 24,
+    "valid_steps": 3179,
+    "profiles": [
+      [
+        1,
+        4
+      ],
+      [
+        4,
+        1
+      ],
+      [
+        2,
+        7
+      ],
+      [
+        7,
+        2
+      ],
+      [
+        0,
+        5
+      ],
+      [
+        5,
+        0
+      ]
+    ],
+    "history_rounds": 4,
+    "layout_indices": [
+      527,
+      754,
+      1045,
+      890,
+      388,
+      371,
+      836,
+      445
+    ],
+    "max_replay_error": 9.5367431640625e-07,
+    "sampled_action_replay": true,
+    "zero_intervention_identity": true,
+    "projector_validation_accuracy": 0.8333333333333334,
+    "projector_rank": 3,
+    "jacobian_samples": 6,
+    "intervention_branches": 264,
+    "split": "repetitions 0,1 discovery; 2 validation; 3 held-out test",
+    "limits": [
+      "4-round histories are targeted early-experience diagnostics, not all 20 rounds.",
+      "Whole-carry swaps can change nuisance memories; projector is label-predictive and needs control comparisons for causal specificity.",
+      "History durations vary by capability and performance; matched round exposure is not matched step exposure.",
+      "v2 first learned allocation follows forced t=0, so its closed-loop t=1 observations can diverge across arms.",
+      "Current input-matched test measures t=0 network/value response; forced v2 allocation probabilities require a later replay test."
+    ]
+  },
+  {
+    "protocol": "online_v2",
+    "policy": "rnn_diverse_noinfluence_seed1",
+    "episodes": 24,
+    "valid_steps": 4581,
+    "profiles": [
+      [
+        1,
+        4
+      ],
+      [
+        4,
+        1
+      ],
+      [
+        2,
+        7
+      ],
+      [
+        7,
+        2
+      ],
+      [
+        0,
+        5
+      ],
+      [
+        5,
+        0
+      ]
+    ],
+    "history_rounds": 4,
+    "layout_indices": [
+      527,
+      754,
+      1045,
+      890,
+      388,
+      371,
+      836,
+      445
+    ],
+    "max_replay_error": 1.6391277313232422e-06,
+    "sampled_action_replay": true,
+    "zero_intervention_identity": true,
+    "projector_validation_accuracy": 0.5,
+    "projector_rank": 3,
+    "jacobian_samples": 6,
+    "intervention_branches": 264,
+    "split": "repetitions 0,1 discovery; 2 validation; 3 held-out test",
+    "limits": [
+      "4-round histories are targeted early-experience diagnostics, not all 20 rounds.",
+      "Whole-carry swaps can change nuisance memories; projector is label-predictive and needs control comparisons for causal specificity.",
+      "History durations vary by capability and performance; matched round exposure is not matched step exposure.",
+      "v2 first learned allocation follows forced t=0, so its closed-loop t=1 observations can diverge across arms.",
+      "Current input-matched test measures t=0 network/value response; forced v2 allocation probabilities require a later replay test."
+    ]
+  },
+  {
+    "protocol": "online_v2",
+    "policy": "rnn_diverse_noinfluence_seed2",
+    "episodes": 24,
+    "valid_steps": 3878,
+    "profiles": [
+      [
+        1,
+        4
+      ],
+      [
+        4,
+        1
+      ],
+      [
+        2,
+        7
+      ],
+      [
+        7,
+        2
+      ],
+      [
+        0,
+        5
+      ],
+      [
+        5,
+        0
+      ]
+    ],
+    "history_rounds": 4,
+    "layout_indices": [
+      527,
+      754,
+      1045,
+      890,
+      388,
+      371,
+      836,
+      445
+    ],
+    "max_replay_error": 1.2218952178955078e-06,
+    "sampled_action_replay": true,
+    "zero_intervention_identity": true,
+    "projector_validation_accuracy": 0.16666666666666666,
+    "projector_rank": 3,
+    "jacobian_samples": 6,
+    "intervention_branches": 264,
+    "split": "repetitions 0,1 discovery; 2 validation; 3 held-out test",
+    "limits": [
+      "4-round histories are targeted early-experience diagnostics, not all 20 rounds.",
+      "Whole-carry swaps can change nuisance memories; projector is label-predictive and needs control comparisons for causal specificity.",
+      "History durations vary by capability and performance; matched round exposure is not matched step exposure.",
+      "v2 first learned allocation follows forced t=0, so its closed-loop t=1 observations can diverge across arms.",
+      "Current input-matched test measures t=0 network/value response; forced v2 allocation probabilities require a later replay test."
+    ]
+  },
+  {
+    "protocol": "online_v2",
+    "policy": "rnn_diverse_noinfluence_seed3",
+    "episodes": 24,
+    "valid_steps": 3753,
+    "profiles": [
+      [
+        1,
+        4
+      ],
+      [
+        4,
+        1
+      ],
+      [
+        2,
+        7
+      ],
+      [
+        7,
+        2
+      ],
+      [
+        0,
+        5
+      ],
+      [
+        5,
+        0
+      ]
+    ],
+    "history_rounds": 4,
+    "layout_indices": [
+      527,
+      754,
+      1045,
+      890,
+      388,
+      371,
+      836,
+      445
+    ],
+    "max_replay_error": 1.3709068298339844e-06,
+    "sampled_action_replay": true,
+    "zero_intervention_identity": true,
+    "projector_validation_accuracy": 0.6666666666666666,
+    "projector_rank": 3,
+    "jacobian_samples": 6,
+    "intervention_branches": 264,
+    "split": "repetitions 0,1 discovery; 2 validation; 3 held-out test",
+    "limits": [
+      "4-round histories are targeted early-experience diagnostics, not all 20 rounds.",
+      "Whole-carry swaps can change nuisance memories; projector is label-predictive and needs control comparisons for causal specificity.",
+      "History durations vary by capability and performance; matched round exposure is not matched step exposure.",
+      "v2 first learned allocation follows forced t=0, so its closed-loop t=1 observations can diverge across arms.",
+      "Current input-matched test measures t=0 network/value response; forced v2 allocation probabilities require a later replay test."
+    ]
+  },
+  {
+    "protocol": "online_v2",
+    "policy": "rnn_diverse_noinfluence_seed4",
+    "episodes": 24,
+    "valid_steps": 6429,
+    "profiles": [
+      [
+        1,
+        4
+      ],
+      [
+        4,
+        1
+      ],
+      [
+        2,
+        7
+      ],
+      [
+        7,
+        2
+      ],
+      [
+        0,
+        5
+      ],
+      [
+        5,
+        0
+      ]
+    ],
+    "history_rounds": 4,
+    "layout_indices": [
+      527,
+      754,
+      1045,
+      890,
+      388,
+      371,
+      836,
+      445
+    ],
+    "max_replay_error": 1.1920928955078125e-06,
+    "sampled_action_replay": true,
+    "zero_intervention_identity": true,
+    "projector_validation_accuracy": 0.5,
+    "projector_rank": 3,
+    "jacobian_samples": 6,
+    "intervention_branches": 264,
+    "split": "repetitions 0,1 discovery; 2 validation; 3 held-out test",
+    "limits": [
+      "4-round histories are targeted early-experience diagnostics, not all 20 rounds.",
+      "Whole-carry swaps can change nuisance memories; projector is label-predictive and needs control comparisons for causal specificity.",
+      "History durations vary by capability and performance; matched round exposure is not matched step exposure.",
+      "v2 first learned allocation follows forced t=0, so its closed-loop t=1 observations can diverge across arms.",
+      "Current input-matched test measures t=0 network/value response; forced v2 allocation probabilities require a later replay test."
+    ]
+  },
+  {
+    "protocol": "online_v2",
+    "policy": "rnn_diverse_noinfluence_seed5",
+    "episodes": 24,
+    "valid_steps": 4084,
+    "profiles": [
+      [
+        1,
+        4
+      ],
+      [
+        4,
+        1
+      ],
+      [
+        2,
+        7
+      ],
+      [
+        7,
+        2
+      ],
+      [
+        0,
+        5
+      ],
+      [
+        5,
+        0
+      ]
+    ],
+    "history_rounds": 4,
+    "layout_indices": [
+      527,
+      754,
+      1045,
+      890,
+      388,
+      371,
+      836,
+      445
+    ],
+    "max_replay_error": 7.748603820800781e-07,
+    "sampled_action_replay": true,
+    "zero_intervention_identity": true,
+    "projector_validation_accuracy": 0.8333333333333334,
+    "projector_rank": 3,
+    "jacobian_samples": 6,
+    "intervention_branches": 264,
+    "split": "repetitions 0,1 discovery; 2 validation; 3 held-out test",
+    "limits": [
+      "4-round histories are targeted early-experience diagnostics, not all 20 rounds.",
+      "Whole-carry swaps can change nuisance memories; projector is label-predictive and needs control comparisons for causal specificity.",
+      "History durations vary by capability and performance; matched round exposure is not matched step exposure.",
+      "v2 first learned allocation follows forced t=0, so its closed-loop t=1 observations can diverge across arms.",
+      "Current input-matched test measures t=0 network/value response; forced v2 allocation probabilities require a later replay test."
+    ]
+  },
+  {
+    "protocol": "online_v2",
+    "policy": "rnn_single_influence_seed1",
+    "episodes": 24,
+    "valid_steps": 3279,
+    "profiles": [
+      [
+        1,
+        4
+      ],
+      [
+        4,
+        1
+      ],
+      [
+        2,
+        7
+      ],
+      [
+        7,
+        2
+      ],
+      [
+        0,
+        5
+      ],
+      [
+        5,
+        0
+      ]
+    ],
+    "history_rounds": 4,
+    "layout_indices": [
+      527,
+      754,
+      1045,
+      890,
+      388,
+      371,
+      836,
+      445
+    ],
+    "max_replay_error": 9.5367431640625e-07,
+    "sampled_action_replay": true,
+    "zero_intervention_identity": true,
+    "projector_validation_accuracy": 0.8333333333333334,
+    "projector_rank": 3,
+    "jacobian_samples": 6,
+    "intervention_branches": 264,
+    "split": "repetitions 0,1 discovery; 2 validation; 3 held-out test",
+    "limits": [
+      "4-round histories are targeted early-experience diagnostics, not all 20 rounds.",
+      "Whole-carry swaps can change nuisance memories; projector is label-predictive and needs control comparisons for causal specificity.",
+      "History durations vary by capability and performance; matched round exposure is not matched step exposure.",
+      "v2 first learned allocation follows forced t=0, so its closed-loop t=1 observations can diverge across arms.",
+      "Current input-matched test measures t=0 network/value response; forced v2 allocation probabilities require a later replay test."
+    ]
+  },
+  {
+    "protocol": "online_v2",
+    "policy": "rnn_single_influence_seed2",
+    "episodes": 24,
+    "valid_steps": 3486,
+    "profiles": [
+      [
+        1,
+        4
+      ],
+      [
+        4,
+        1
+      ],
+      [
+        2,
+        7
+      ],
+      [
+        7,
+        2
+      ],
+      [
+        0,
+        5
+      ],
+      [
+        5,
+        0
+      ]
+    ],
+    "history_rounds": 4,
+    "layout_indices": [
+      527,
+      754,
+      1045,
+      890,
+      388,
+      371,
+      836,
+      445
+    ],
+    "max_replay_error": 5.036592483520508e-06,
+    "sampled_action_replay": true,
+    "zero_intervention_identity": true,
+    "projector_validation_accuracy": 0.5,
+    "projector_rank": 3,
+    "jacobian_samples": 6,
+    "intervention_branches": 264,
+    "split": "repetitions 0,1 discovery; 2 validation; 3 held-out test",
+    "limits": [
+      "4-round histories are targeted early-experience diagnostics, not all 20 rounds.",
+      "Whole-carry swaps can change nuisance memories; projector is label-predictive and needs control comparisons for causal specificity.",
+      "History durations vary by capability and performance; matched round exposure is not matched step exposure.",
+      "v2 first learned allocation follows forced t=0, so its closed-loop t=1 observations can diverge across arms.",
+      "Current input-matched test measures t=0 network/value response; forced v2 allocation probabilities require a later replay test."
+    ]
+  },
+  {
+    "protocol": "online_v2",
+    "policy": "rnn_single_influence_seed3",
+    "episodes": 24,
+    "valid_steps": 6094,
+    "profiles": [
+      [
+        1,
+        4
+      ],
+      [
+        4,
+        1
+      ],
+      [
+        2,
+        7
+      ],
+      [
+        7,
+        2
+      ],
+      [
+        0,
+        5
+      ],
+      [
+        5,
+        0
+      ]
+    ],
+    "history_rounds": 4,
+    "layout_indices": [
+      527,
+      754,
+      1045,
+      890,
+      388,
+      371,
+      836,
+      445
+    ],
+    "max_replay_error": 7.264316082000732e-07,
+    "sampled_action_replay": true,
+    "zero_intervention_identity": true,
+    "projector_validation_accuracy": 0.5,
+    "projector_rank": 3,
+    "jacobian_samples": 6,
+    "intervention_branches": 264,
+    "split": "repetitions 0,1 discovery; 2 validation; 3 held-out test",
+    "limits": [
+      "4-round histories are targeted early-experience diagnostics, not all 20 rounds.",
+      "Whole-carry swaps can change nuisance memories; projector is label-predictive and needs control comparisons for causal specificity.",
+      "History durations vary by capability and performance; matched round exposure is not matched step exposure.",
+      "v2 first learned allocation follows forced t=0, so its closed-loop t=1 observations can diverge across arms.",
+      "Current input-matched test measures t=0 network/value response; forced v2 allocation probabilities require a later replay test."
+    ]
+  },
+  {
+    "protocol": "online_v2",
+    "policy": "rnn_single_influence_seed4",
+    "episodes": 24,
+    "valid_steps": 5854,
+    "profiles": [
+      [
+        1,
+        4
+      ],
+      [
+        4,
+        1
+      ],
+      [
+        2,
+        7
+      ],
+      [
+        7,
+        2
+      ],
+      [
+        0,
+        5
+      ],
+      [
+        5,
+        0
+      ]
+    ],
+    "history_rounds": 4,
+    "layout_indices": [
+      527,
+      754,
+      1045,
+      890,
+      388,
+      371,
+      836,
+      445
+    ],
+    "max_replay_error": 7.003545761108398e-07,
+    "sampled_action_replay": true,
+    "zero_intervention_identity": true,
+    "projector_validation_accuracy": 0.3333333333333333,
+    "projector_rank": 3,
+    "jacobian_samples": 6,
+    "intervention_branches": 264,
+    "split": "repetitions 0,1 discovery; 2 validation; 3 held-out test",
+    "limits": [
+      "4-round histories are targeted early-experience diagnostics, not all 20 rounds.",
+      "Whole-carry swaps can change nuisance memories; projector is label-predictive and needs control comparisons for causal specificity.",
+      "History durations vary by capability and performance; matched round exposure is not matched step exposure.",
+      "v2 first learned allocation follows forced t=0, so its closed-loop t=1 observations can diverge across arms.",
+      "Current input-matched test measures t=0 network/value response; forced v2 allocation probabilities require a later replay test."
+    ]
+  },
+  {
+    "protocol": "online_v2",
+    "policy": "rnn_single_influence_seed5",
+    "episodes": 24,
+    "valid_steps": 3244,
+    "profiles": [
+      [
+        1,
+        4
+      ],
+      [
+        4,
+        1
+      ],
+      [
+        2,
+        7
+      ],
+      [
+        7,
+        2
+      ],
+      [
+        0,
+        5
+      ],
+      [
+        5,
+        0
+      ]
+    ],
+    "history_rounds": 4,
+    "layout_indices": [
+      527,
+      754,
+      1045,
+      890,
+      388,
+      371,
+      836,
+      445
+    ],
+    "max_replay_error": 9.5367431640625e-07,
+    "sampled_action_replay": true,
+    "zero_intervention_identity": true,
+    "projector_validation_accuracy": 0.6666666666666666,
+    "projector_rank": 3,
+    "jacobian_samples": 6,
+    "intervention_branches": 264,
+    "split": "repetitions 0,1 discovery; 2 validation; 3 held-out test",
+    "limits": [
+      "4-round histories are targeted early-experience diagnostics, not all 20 rounds.",
+      "Whole-carry swaps can change nuisance memories; projector is label-predictive and needs control comparisons for causal specificity.",
+      "History durations vary by capability and performance; matched round exposure is not matched step exposure.",
+      "v2 first learned allocation follows forced t=0, so its closed-loop t=1 observations can diverge across arms.",
+      "Current input-matched test measures t=0 network/value response; forced v2 allocation probabilities require a later replay test."
+    ]
+  }
+]

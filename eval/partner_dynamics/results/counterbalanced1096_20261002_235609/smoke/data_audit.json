@@ -1,0 +1,230 @@
+[
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed1_train.h5",
+    "version": "v1",
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_influence",
+    "seed": 1,
+    "slice": "train",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "capability": [
+        480,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        480
+      ],
+      "capability_pool": [
+        24,
+        2
+      ],
+      "dones": [
+        480,
+        2000
+      ],
+      "ego_alloc_action": [
+        480,
+        2000
+      ],
+      "hidden_state": [
+        480,
+        2000,
+        128
+      ],
+      "is_t0": [
+        480,
+        2000
+      ],
+      "layout_idx": [
+        480,
+        2000
+      ],
+      "partner_assignment": [
+        480,
+        2000
+      ],
+      "partner_goal": [
+        480,
+        2000
+      ],
+      "rewards": [
+        480,
+        2000
+      ],
+      "round_done": [
+        480,
+        2000
+      ],
+      "round_idx": [
+        480,
+        2000
+      ],
+      "round_time": [
+        480,
+        2000
+      ],
+      "success": [
+        480,
+        2000
+      ]
+    },
+    "dtypes": {
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [
+      "assignment_changed",
+      "ego_request_changed"
+    ],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 529930432,
+    "mtime_ns": 1791013633307334005,
+    "fingerprint": "94f84983eb2199d0e46cdaf80354480349424bb963bb13fd0b4003f8896bf311",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed1.safetensors",
+    "checkpoint_sha256": "a885f1ca396365070b322d207cb62147eddbe6159590b094326ade1988dab227",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed1_config.json",
+    "config_sha256": "bbc8ec2aa3fc5d1a9ba6a351bee46824393995c2019e19327a59628378241260",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v1_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  },
+  {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed1_test.h5",
+    "version": "v1",
+    "protocol": "fixed_v1",
+    "condition": "rnn_diverse_influence",
+    "seed": 1,
+    "slice": "test",
+    "batch": "counterbalanced1096_20261002_235609",
+    "action_selection": "categorical",
+    "shapes": {
+      "capability": [
+        440,
+        2000,
+        2
+      ],
+      "capability_index_per_ep": [
+        440
+      ],
+      "capability_pool": [
+        22,
+        2
+      ],
+      "dones": [
+        440,
+        2000
+      ],
+      "ego_alloc_action": [
+        440,
+        2000
+      ],
+      "hidden_state": [
+        440,
+        2000,
+        128
+      ],
+      "is_t0": [
+        440,
+        2000
+      ],
+      "layout_idx": [
+        440,
+        2000
+      ],
+      "partner_assignment": [
+        440,
+        2000
+      ],
+      "partner_goal": [
+        440,
+        2000
+      ],
+      "rewards": [
+        440,
+        2000
+      ],
+      "round_done": [
+        440,
+        2000
+      ],
+      "round_idx": [
+        440,
+        2000
+      ],
+      "round_time": [
+        440,
+        2000
+      ],
+      "success": [
+        440,
+        2000
+      ]
+    },
+    "dtypes": {
+      "capability": "int32",
+      "capability_index_per_ep": "int32",
+      "capability_pool": "int32",
+      "dones": "bool",
+      "ego_alloc_action": "int32",
+      "hidden_state": "float32",
+      "is_t0": "bool",
+      "layout_idx": "int32",
+      "partner_assignment": "int32",
+      "partner_goal": "int32",
+      "rewards": "float32",
+      "round_done": "bool",
+      "round_idx": "int32",
+      "round_time": "int32",
+      "success": "bool"
+    },
+    "missing_fields": [
+      "assignment_changed",
+      "ego_request_changed"
+    ],
+    "missing_rich_fields": [
+      "observation",
+      "encoded_input",
+      "carry_before",
+      "logits",
+      "flat_action",
+      "pre_state",
+      "step_key"
+    ],
+    "size_bytes": 485768792,
+    "mtime_ns": 1791013643299264130,
+    "fingerprint": "3faa3b2025c1666e5f04477c775c7eece193b4b2d8e9f1e7725d69eab5cf49eb",
+    "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed1.safetensors",
+    "checkpoint_sha256": "a885f1ca396365070b322d207cb62147eddbe6159590b094326ade1988dab227",
+    "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed1_config.json",
+    "config_sha256": "bbc8ec2aa3fc5d1a9ba6a351bee46824393995c2019e19327a59628378241260",
+    "source": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/v1_balanced_training/source",
+    "source_hashes_verified": true,
+    "manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_counterbalanced1096_20261002_235609.json",
+    "manifest_sha256": "450a7c7ee83cd6e8707d1e56044952ef1c922166a08fb7e3a7c69628df935711"
+  }
+]

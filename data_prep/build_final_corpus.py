@@ -2,37 +2,24 @@
 
 Pipeline (see ``data_prep/capability_selection.py`` for the science):
 
-    1.  Generate ``--n_candidates`` base 7x7 layouts using
-        ``env_generator.generate_envs`` (basic validity + geometric checks).
-    2.  Deduplicate.
-    3.  For each candidate compute ``LayoutStats`` over
-        ``TRAIN_CAPABILITY_PAIRS`` under a generous evaluation horizon.
-    4.  Filter on partner observability (Filter C).
-    5.  Filter on capability-dependent allocation balance (Filter A).
-    6.  Filter on oracle feasibility (near-full coverage).
-    7.  Compute ``delta_reward`` distribution; keep everything at or above
-        ``--min_delta_reward`` (or ``--delta_reward_quantile``).
-    8.  Horizon-outlier pass: reject layouts whose per-cap worst-case oracle
-        completion is at or beyond ``mean + n_sigma * std``.
-    9.  Derive ``recommended_max_steps`` from the retained pool.
-    10. Select ``--n_final`` survivors by centroid ranking when requested,
-        otherwise stratify on geometric + collaborative-pressure descriptors.
-    11. Apply balanced D4 symmetries (one per layout, ``n_final / 8`` each).
-    12. Recompute BFS + LayoutStats on the transformed layout and assert
-        selection invariance under D4 (BFS distances are exactly invariant;
-        anything else is flagged).
-    13. Deterministic shuffle + train/val/test split.
-    14. Save JSONs, NPZs, renders, per-candidate audit CSV, diagnostic
-        plots, and manifest.
+    1. Generate geometrically valid candidates and deduplicate them.
+    2. Evaluate each candidate over TRAIN_CAPABILITY_PAIRS.
+    3. Filter on observability and capability-dependent allocation balance.
+    4. Filter on the oracle-versus-fixed delta reward.
+    5. Reject horizon outliers (worst case >= mean + n_sigma * std).
+    6. Retain all exact 50/50 survivors without ties by default. An explicit
+       --n_final with --centroid_p_opt_red_target enables capped centroid ranking.
+    7. Apply D4 symmetries with counts differing by at most one, verify
+       invariance, shuffle, split, and save layouts and audits.
 
-Output goes to ``data_prep/grids_capability_selected`` by default. Choose a
+Output goes to ``data_prep/grids_capability_selected_exact_balanced`` by default. Choose a
 new ``--out_dir`` when generating a new corpus. This script prepares data
 without changing the training algorithm or environment.
 
 Example usage:
     python data_prep/build_final_corpus.py \\
-        --n_candidates 20000 --n_final 1600 \\
-        --n_train 1280 --n_val 160 --n_test 160 \\
+        --n_candidates 20000 \\
+        --train_val_test_ratio 1 0 0 \\
         --master_seed 2026
 """
 
@@ -68,10 +55,9 @@ from capability_selection import (
     horizon_outlier_mask,
     layout_bfs_distances,
     passes_allocation_balance,
+    passes_exact_allocation_balance,
     passes_delta_reward,
-    passes_feasibility,
     passes_observability,
-    stratified_sample,
     summarize_distribution,
     summarize_stats,
     worst_case_oracle_steps,
@@ -100,6 +86,12 @@ def _xy_to_rc(xy) -> Tuple[int, int]:
 
 
 def apply_sym_to_env(env: GridEnv, g: int, switching_k: int = 2) -> GridEnv:
+    # Audit guide:
+    # Rotate/reflect walls, starts, and both goal positions together using one of eight
+    # square symmetries. Recompute metadata afterward. Geometry should preserve BFS
+    # distances and capability-selection statistics; main checks that invariance after
+    # transformation.
+    #
     n = env.grid.shape[0]
     new_wall = _sym_wall(g, env.grid.astype(np.bool_)).astype(env.grid.dtype)
     new_ego     = _xy_to_rc(_sym_position(g, _rc_to_xy(env.ego_start),     n))
@@ -114,6 +106,12 @@ def apply_sym_to_env(env: GridEnv, g: int, switching_k: int = 2) -> GridEnv:
 
 
 def _env_fingerprint(env: GridEnv) -> str:
+    # Audit guide:
+    # Hash geometry including both starts and colored goals so duplicate candidate
+    # layouts can be recognized. The same fingerprint is used to verify split
+    # uniqueness. This exact geometry deduplication is distinct from canonicalizing
+    # every rotation/reflection into one equivalence class.
+    #
     h = hashlib.sha1()
     h.update(np.ascontiguousarray(env.grid).tobytes())
     h.update(np.array([env.ego_start, env.partner_start,
@@ -162,15 +160,25 @@ def _write_candidate_csv(rows: List[Dict[str, object]], out_path: Path) -> None:
 # --------------------------------------------------------------------------- #
 
 def main() -> None:
+    # Audit guide:
+    # Run the entire selection pipeline and save a per-candidate audit. Generate valid
+    # candidates, deduplicate, compute training-capability statistics, screen
+    # observability/allocation balance, apply delta-reward and horizon filters, select
+    # final survivors, apply balanced D4 transforms, shuffle/split, and save. With no
+    # n_final, retain all survivors with exact 50/50 optima and no ties; explicit
+    # n_final selects the capped branch. Historical numbered headings contain gaps
+    # because separate basic-validity and feasibility stages were removed from the
+    # current pipeline.
+    #
     p = argparse.ArgumentParser(
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter,
     )
     # ----- corpus sizes -----
     p.add_argument("--n_candidates", type=int, default=20000,
                    help="Number of raw candidate layouts to generate.")
-    p.add_argument("--n_final", type=int, default=1600,
-                   help="Number of layouts in the final corpus (train+val+test). "
-                        "Must be divisible by 8 for balanced D4 assignment.")
+    p.add_argument("--n_final", type=int, default=None,
+                   help="Optional fixed corpus size; requires --centroid_p_opt_red_target. "
+                        "By default retain all exact 50/50 survivors, without ties.")
     p.add_argument("--n_train", type=int, default=None)
     p.add_argument("--n_val",   type=int, default=None)
     p.add_argument("--n_test",  type=int, default=None)
@@ -182,7 +190,6 @@ def main() -> None:
     # ----- seeds -----
     p.add_argument("--master_seed",  type=int, default=2026)
     p.add_argument("--shuffle_seed", type=int, default=2026)
-    p.add_argument("--stratify_seed", type=int, default=2026)
 
     # ----- env-generator passthrough (basic validity) -----
     p.add_argument("--grid_size",   type=int, default=7)
@@ -213,56 +220,48 @@ def main() -> None:
     p.add_argument("--max_tie_fraction", type=float, default=0.5,
                    help="Reject layouts where more than this fraction of cap "
                         "pairs are ties (allocation balance is ill-defined).")
-    p.add_argument("--min_oracle_success", type=float, default=0.99,
-                   help="Fraction of cap pairs the oracle must complete within eval_max_steps.")
     p.add_argument("--min_delta_reward", type=float, default=None,
                    help="Absolute cutoff on oracle-vs-blind reward gap.")
     p.add_argument("--delta_reward_quantile", type=float, default=0.25,
                    help="Alternative to --min_delta_reward: keep layouts whose "
                         "delta_reward is at or above this quantile of the "
-                        "post-Filter-A/C/feasibility survivor distribution.")
+                        "post-Filter-A/C survivor distribution.")
 
     # ----- horizon -----
     p.add_argument("--horizon_n_sigma", type=float, default=3.0)
     p.add_argument("--horizon_safety_margin", type=int, default=0,
                    help="Optional extra steps added to recommended_max_steps.")
 
-    # ----- stratification -----
-    p.add_argument("--n_bins_per_feature", type=int, default=3,
-                   help="Number of quantile bins per stratification feature.")
-
     # ----- optional centroid balance filter -----
     p.add_argument("--centroid_p_opt_red_target", type=float, default=None,
                    help="If set, after all other filters keep only the n_final "
                         "layouts whose p_opt_red is closest to this target. "
-                        "Bypasses stratified sampling. Typical value: 0.5.")
+                        "Required with --n_final. Typical value: 0.5.")
 
     # ----- I/O -----
     p.add_argument("--out_dir", type=Path,
-                   default=Path("/juice6/u/jshe/emergent_partner_grid/data_prep/grids_capability_selected"))
+                   default=_THIS_DIR / "grids_capability_selected_exact_balanced")
     p.add_argument("--skip_render", action="store_true")
     p.add_argument("--skip_plots",  action="store_true")
     args = p.parse_args()
 
-    # ---------------- resolve split sizes ----------------
-    if args.n_train is None and args.n_val is None and args.n_test is None:
-        r_train, r_val, r_test = args.train_val_test_ratio
-        args.n_train = int(round(args.n_final * r_train))
-        args.n_val   = int(round(args.n_final * r_val))
-        args.n_test  = args.n_final - args.n_train - args.n_val
-    if args.n_train is None or args.n_val is None or args.n_test is None:
-        raise SystemExit("Provide either all three of --n_train/--n_val/--n_test or none.")
-    if args.n_train + args.n_val + args.n_test != args.n_final:
-        raise SystemExit(
-            f"split counts {args.n_train}+{args.n_val}+{args.n_test} "
-            f"!= --n_final={args.n_final}"
-        )
-    if args.n_final % N_SYMMETRIES != 0:
-        raise SystemExit(
-            f"--n_final={args.n_final} must be divisible by {N_SYMMETRIES} "
-            f"for balanced D4 assignment"
-        )
-    per_sym = args.n_final // N_SYMMETRIES
+    retain_all_exact = args.n_final is None
+    if retain_all_exact and args.centroid_p_opt_red_target is not None:
+        p.error("--centroid_p_opt_red_target requires an explicit --n_final")
+    if args.n_final is not None and args.n_final < 1:
+        p.error("--n_final must be positive")
+    if not retain_all_exact and args.centroid_p_opt_red_target is None:
+        p.error("--n_final requires --centroid_p_opt_red_target for capped selection")
+    explicit_splits = (args.n_train, args.n_val, args.n_test)
+    if any(x is not None for x in explicit_splits) and any(x is None for x in explicit_splits):
+        p.error("Provide either all three of --n_train/--n_val/--n_test or none")
+    ratios = np.asarray(args.train_val_test_ratio)
+    if np.any(ratios < 0) or not np.isclose(ratios.sum(), 1.0):
+        p.error("--train_val_test_ratio must be nonnegative and sum to 1")
+    if args.out_dir.exists():
+        p.error(f"Output already exists: {args.out_dir}; choose a new --out_dir")
+    # Preserve requested arguments before uncapped selection resolves the sizes.
+    reproduce_command = _reproduce_command(args)
 
     cap_pairs = list(TRAIN_CAPABILITY_PAIRS)
     print(f"[cfg] capability pool: {len(cap_pairs)} training pairs; "
@@ -297,13 +296,13 @@ def main() -> None:
             continue
         seen.add(fp)
         unique_candidates.append(env)
-    n_after_basic = len(unique_candidates)
-    print(f"       {n_after_basic}/{n_generated} unique after basic validity")
+    n_unique = len(unique_candidates)
+    print(f"       {n_unique}/{n_generated} unique after deduplication")
 
     # ================================================================
     # Step 3: evaluate each candidate over TRAINING capability pool
     # ================================================================
-    print(f"[3/13] Evaluating {n_after_basic} candidates over "
+    print(f"[3/13] Evaluating {n_unique} candidates over "
           f"{len(cap_pairs)} training capabilities ...")
     all_stats: List[LayoutStats] = []
     for env in unique_candidates:
@@ -321,8 +320,7 @@ def main() -> None:
         all_stats.append(stats)
 
     # ================================================================
-    # Steps 4-6: apply Filters C (observability), A (alloc balance),
-    #            and feasibility.
+    # Apply Filters C (observability) and A (allocation balance).
     # ================================================================
     print(f"[4/13] Filter C: observability "
           f"(partner_to_{{red,blue}} >= {args.min_partner_goal_distance}) ...")
@@ -330,7 +328,7 @@ def main() -> None:
         passes_observability(s, args.min_partner_goal_distance) for s in all_stats
     ], dtype=bool)
     n_after_obs = int(pass_obs.sum())
-    print(f"       {n_after_obs}/{n_after_basic} pass observability")
+    print(f"       {n_after_obs}/{n_unique} pass observability")
 
     print(f"[5/13] Filter A: allocation balance "
           f"[{args.min_optimal_alloc_fraction}, {args.max_optimal_alloc_fraction}] "
@@ -344,24 +342,17 @@ def main() -> None:
         ) for s in all_stats
     ], dtype=bool)
     n_after_alloc = int((pass_obs & pass_alloc).sum())
-    print(f"       {n_after_alloc}/{n_after_basic} pass observability AND balance")
+    print(f"       {n_after_alloc}/{n_unique} pass observability AND balance")
 
-    print(f"[6/13] Feasibility filter: oracle_success_fraction >= "
-          f"{args.min_oracle_success} ...")
-    pass_feas = np.array([
-        passes_feasibility(s, args.min_oracle_success) for s in all_stats
-    ], dtype=bool)
-    survive_abc = pass_obs & pass_alloc & pass_feas
-    n_after_feas = int(survive_abc.sum())
-    print(f"       {n_after_feas}/{n_after_basic} pass A + C + feasibility")
+    survive_obs_alloc = pass_obs & pass_alloc
 
     # ================================================================
     # Step 7: delta_reward distribution -> Filter B threshold
     # ================================================================
-    print(f"[7/13] Delta-reward distribution over {n_after_feas} "
-          f"post-A/C/feasibility survivors ...")
+    print(f"[7/13] Delta-reward distribution over {n_after_alloc} "
+          f"post-A/C survivors ...")
     delta_vals = np.array([s.delta_reward for s in all_stats], dtype=np.float64)
-    survivor_deltas = delta_vals[survive_abc]
+    survivor_deltas = delta_vals[survive_obs_alloc]
     delta_dist_pre = summarize_distribution(survivor_deltas)
     print(f"       delta_reward distribution:")
     for k, v in delta_dist_pre.items():
@@ -383,11 +374,11 @@ def main() -> None:
     pass_delta = np.array([
         passes_delta_reward(s, delta_threshold) for s in all_stats
     ], dtype=bool)
-    survive_abcd = survive_abc & pass_delta
-    n_after_delta = int(survive_abcd.sum())
-    print(f"       {n_after_delta}/{n_after_basic} pass Filter B (delta_reward)")
+    survive_delta = survive_obs_alloc & pass_delta
+    n_after_delta = int(survive_delta.sum())
+    print(f"       {n_after_delta}/{n_unique} pass Filter B (delta_reward)")
 
-    if n_after_delta < args.n_final:
+    if args.n_final is not None and n_after_delta < args.n_final:
         raise SystemExit(
             f"Only {n_after_delta} survivors after Filter B, need >= "
             f"{args.n_final}. Increase --n_candidates or relax filters."
@@ -399,23 +390,23 @@ def main() -> None:
     print(f"[8/13] Horizon-outlier pass "
           f"(reject worst_case_steps >= mean + {args.horizon_n_sigma}*std) ...")
     worst_case = np.array([
-        worst_case_oracle_steps(all_stats[i]) if survive_abcd[i] else np.nan
-        for i in range(n_after_basic)
+        worst_case_oracle_steps(all_stats[i]) if survive_delta[i] else np.nan
+        for i in range(n_unique)
     ], dtype=np.float64)
-    wc_survivors = worst_case[survive_abcd]
+    wc_survivors = worst_case[survive_delta]
     keep_wc, horizon_diag = horizon_outlier_mask(wc_survivors,
                                                  n_sigma=args.horizon_n_sigma)
     # Fold keep_wc back into a full-length mask.
-    survivor_idx = np.flatnonzero(survive_abcd)
-    pass_horizon = np.zeros(n_after_basic, dtype=bool)
+    survivor_idx = np.flatnonzero(survive_delta)
+    pass_horizon = np.zeros(n_unique, dtype=bool)
     pass_horizon[survivor_idx[keep_wc]] = True
-    survive_all = survive_abcd & pass_horizon
+    survive_all = survive_delta & pass_horizon
     n_after_horizon = int(survive_all.sum())
     print(f"       horizon pool: mu={horizon_diag['mean']:.2f} "
           f"sd={horizon_diag['std']:.2f} upper={horizon_diag['upper_bound']:.2f} "
           f"-> kept {horizon_diag['n_kept']}/{horizon_diag['n_input']}")
 
-    if n_after_horizon < args.n_final:
+    if args.n_final is not None and n_after_horizon < args.n_final:
         raise SystemExit(
             f"Only {n_after_horizon} survivors after horizon prune, need "
             f">= {args.n_final}. Increase --n_candidates or relax filters."
@@ -424,6 +415,8 @@ def main() -> None:
     # ================================================================
     # Step 9: derive recommended_max_steps
     # ================================================================
+    if not n_after_horizon:
+        raise SystemExit("No layouts survive the horizon filter")
     retained_wc = worst_case[survive_all]
     recommended_max_steps = derive_max_steps(retained_wc, args.horizon_safety_margin)
     max_observed_retained = int(np.nanmax(retained_wc))
@@ -432,11 +425,19 @@ def main() -> None:
           f"{recommended_max_steps}")
 
     # ================================================================
-    # Step 10: select n_final layouts (centroid filter OR stratified sample)
+    # Step 10: retain exact survivors or select n_final by centroid ranking
     # ================================================================
     survivor_indices = np.flatnonzero(survive_all)
     centroid_diag: Optional[Dict[str, float]] = None
-    if args.centroid_p_opt_red_target is not None:
+    if retain_all_exact:
+        picked_global = survivor_indices[
+            [passes_exact_allocation_balance(all_stats[i]) for i in survivor_indices]
+        ]
+        if not len(picked_global):
+            raise SystemExit("No surviving layouts have exact 50/50 allocation balance without ties")
+        args.n_final = len(picked_global)
+        print(f"[10/13] Retaining all {args.n_final} exact 50/50 survivors (no ties)")
+    else:
         target = float(args.centroid_p_opt_red_target)
         print(f"[10/13] Centroid filter: keeping the {args.n_final} survivors "
               f"whose p_opt_red is closest to {target} ...")
@@ -467,40 +468,27 @@ def main() -> None:
               f"{centroid_diag['p_opt_red_max']:.4f}] "
               f"(mean={centroid_diag['p_opt_red_mean']:.4f}, "
               f"std={centroid_diag['p_opt_red_std']:.4f})")
-    else:
-        print(f"[10/13] Stratified sampling {args.n_final} from "
-              f"{n_after_horizon} survivors ...")
-        feats = []
-        for i in survivor_indices:
-            env = unique_candidates[i]
-            m = env.metadata
-            s = all_stats[i]
-            mean_sp = float(np.mean([m["ego_to_red"], m["ego_to_blue"],
-                                     m["partner_to_red"], m["partner_to_blue"]]))
-            mean_overlap = float(np.mean([m["shortest_path_overlap_assignment_1"],
-                                          m["shortest_path_overlap_assignment_2"]]))
-            feats.append([
-                float(m["realized_wall_density"]),
-                mean_sp,
-                float(m["num_junctions"]),
-                mean_overlap,
-                float(s.delta_reward),
-                float(s.p_opt_red),
-            ])
-        feat_mat = np.asarray(feats, dtype=np.float64)
-        picked_local = stratified_sample(feat_mat, args.n_final,
-                                         args.n_bins_per_feature, args.stratify_seed)
-        picked_global = survivor_indices[picked_local]
-        print(f"       selected {len(picked_global)} layouts")
     selected_envs = [unique_candidates[i] for i in picked_global]
     selected_stats = [all_stats[i] for i in picked_global]
+    retained_wc = worst_case[picked_global]
+    recommended_max_steps = derive_max_steps(retained_wc, args.horizon_safety_margin)
+    max_observed_retained = int(np.max(retained_wc))
 
     # ================================================================
     # Step 11: apply balanced D4 symmetries
     # ================================================================
-    print(f"[11/13] Applying balanced D4 symmetries "
-          f"({per_sym} of each of {N_SYMMETRIES}) ...")
-    sym_assignment = np.repeat(np.arange(N_SYMMETRIES, dtype=np.int32), per_sym)
+    if all(x is None for x in explicit_splits):
+        args.n_train = int(round(args.n_final * ratios[0]))
+        args.n_val = int(round(args.n_final * ratios[1]))
+        args.n_test = args.n_final - args.n_train - args.n_val
+    if min(args.n_train, args.n_val, args.n_test) < 0 or args.n_train + args.n_val + args.n_test != args.n_final:
+        raise SystemExit(f"Split counts must be nonnegative and sum to the selected size {args.n_final}")
+    # Retain every layout even when the selected size is not divisible by eight.
+    per_sym, remainder = divmod(args.n_final, N_SYMMETRIES)
+    sym_counts = np.full(N_SYMMETRIES, per_sym, dtype=np.int32)
+    sym_counts[:remainder] += 1
+    print(f"[11/13] Applying D4 symmetries with counts {sym_counts.tolist()} ...")
+    sym_assignment = np.repeat(np.arange(N_SYMMETRIES, dtype=np.int32), sym_counts)
     assert sym_assignment.shape == (args.n_final,)
     transformed_envs: List[GridEnv] = []
     for base_env, sym_idx in zip(selected_envs, sym_assignment):
@@ -618,7 +606,6 @@ def main() -> None:
             d["metadata"]["selection"] = stat.to_metadata_dict()
             d["metadata"]["selection_pass_observability"]      = True
             d["metadata"]["selection_pass_allocation_balance"] = True
-            d["metadata"]["selection_pass_feasibility"]        = True
             d["metadata"]["selection_pass_delta_reward"]       = True
             d["metadata"]["selection_pass_horizon"]            = True
             with open(layouts_dir / f"{layout_id}.json", "w") as f:
@@ -656,7 +643,6 @@ def main() -> None:
             "partner_to_blue": s.partner_to_blue,
             "pass_observability":      bool(pass_obs[i]),
             "pass_allocation_balance": bool(pass_alloc[i]),
-            "pass_feasibility":        bool(pass_feas[i]),
             "pass_delta_reward":       bool(pass_delta[i]),
             "pass_horizon":            bool(pass_horizon[i]),
             "selected_final":          bool(i in selected_indices),
@@ -664,25 +650,25 @@ def main() -> None:
     _write_candidate_csv(audit_rows, diag_dir / "candidates.csv")
 
     # Cumulative counts and candidate membership after each criterion.
+    if retain_all_exact:
+        final_criterion = "Retain all exact 50/50 survivors across the full capability pool; no ties"
+    else:
+        final_criterion = (f"Rank by distance to p_opt_red={args.centroid_p_opt_red_target}; "
+                           "tie-break by delta_reward descending, candidate index ascending")
     stage_masks = [
-        ("unique_basic_validity", np.ones(n_after_basic, dtype=bool),
-         "Reachable goals; agent/goal separation; enabled geometric checks; deduplication"),
+        ("deduplication", np.ones(n_unique, dtype=bool),
+         "Unique candidates; geometric validity is enforced during generation"),
         ("observability", pass_obs,
          f"Partner distance to both goals >= {args.min_partner_goal_distance}"),
         ("allocation_balance", pass_obs & pass_alloc,
          f"Non-tied p_opt_red in [{args.min_optimal_alloc_fraction}, "
          f"{args.max_optimal_alloc_fraction}]; tie fraction <= {args.max_tie_fraction}"),
-        ("feasibility", survive_abc,
-         f"Fixed-allocation analytical oracle success fraction >= {args.min_oracle_success}"),
-        ("delta_reward", survive_abcd,
+        ("delta_reward", survive_delta,
          f"Oracle minus best fixed expected reward >= {delta_threshold:.17g} ({threshold_source})"),
         ("horizon", survive_all,
          f"Worst-case oracle steps < {horizon_diag['upper_bound']:.17g} "
          f"(mean + {args.horizon_n_sigma} SD)"),
-        ("final_selection", np.isin(np.arange(n_after_basic), picked_global),
-         (f"Rank by distance to p_opt_red={args.centroid_p_opt_red_target}; "
-          "tie-break by delta_reward descending, candidate index ascending"
-          if args.centroid_p_opt_red_target is not None else "Stratified sampling")),
+        ("final_selection", np.isin(np.arange(n_unique), picked_global), final_criterion),
     ]
     filter_stages = []
     survivor_indices_by_stage = {}
@@ -731,13 +717,12 @@ def main() -> None:
     # ---- rejection table ----
     reject_lines = [
         f"generated                          {n_generated}",
-        f"unique (basic validity)            {n_after_basic}",
+        f"unique after deduplication         {n_unique}",
         f"pass observability                 {int(pass_obs.sum())}",
         f"pass allocation balance            {int(pass_alloc.sum())}",
-        f"pass feasibility                   {int(pass_feas.sum())}",
-        f"survive A+C+feasibility            {n_after_feas}",
+        f"survive A+C                        {n_after_alloc}",
         f"pass delta_reward filter           {int(pass_delta.sum())}",
-        f"survive A+C+feas+delta             {n_after_delta}",
+        f"survive A+C+delta                  {n_after_delta}",
         f">= mean+{args.horizon_n_sigma}SD horizon outliers   "
         f"{n_after_delta - n_after_horizon}",
         f"eligible after all filters         {n_after_horizon}",
@@ -752,10 +737,9 @@ def main() -> None:
     # ---- manifest ----
     manifest = {
         "n_candidates_generated":      n_generated,
-        "n_after_basic_validity":      n_after_basic,
+        "n_unique_candidates":         n_unique,
         "n_after_observability":       int(pass_obs.sum()),
         "n_after_allocation_balance":  n_after_alloc,
-        "n_after_feasibility":         n_after_feas,
         "n_after_delta_filter":        n_after_delta,
         "n_after_horizon_filter":      n_after_horizon,
         "n_final":                     args.n_final,
@@ -765,14 +749,12 @@ def main() -> None:
         "seeds": {
             "master_seed":   args.master_seed,
             "shuffle_seed":  args.shuffle_seed,
-            "stratify_seed": args.stratify_seed,
         },
         "thresholds": {
             "min_partner_goal_distance":    args.min_partner_goal_distance,
             "min_optimal_alloc_fraction":   args.min_optimal_alloc_fraction,
             "max_optimal_alloc_fraction":   args.max_optimal_alloc_fraction,
             "max_tie_fraction":             args.max_tie_fraction,
-            "min_oracle_success":           args.min_oracle_success,
             "delta_reward_threshold":       delta_threshold,
             "delta_reward_threshold_source": threshold_source,
             "horizon_n_sigma":              args.horizon_n_sigma,
@@ -783,6 +765,7 @@ def main() -> None:
             "step_penalty":    args.step_penalty,
             "success_reward":  args.success_reward,
         },
+        "selection_mode": "all_exact_50_50_no_ties" if retain_all_exact else "capped",
         "centroid_p_opt_red":       centroid_diag,
         "horizon_pre_prune":        horizon_diag,
         "delta_reward_distribution_survivors_pre_delta_filter": delta_dist_pre,
@@ -791,7 +774,8 @@ def main() -> None:
         "max_observed_retained_oracle_completion": int(max_observed_retained),
         "selected_layout_stats":    summarize_stats(selected_stats),
         "d4_symmetries":            list(SYMMETRY_NAMES),
-        "per_sym":                  per_sym,
+        "per_sym":                  per_sym if remainder == 0 else None,
+        "symmetry_counts":          dict(zip(SYMMETRY_NAMES, map(int, sym_counts))),
         "d4_invariance_flagged":    int(sum(invariance_flags)),
         "capability_pool":          [list(map(int, c)) for c in cap_pairs],
         "capability_pool_source": "jaxmarl.environments.coordination_grid.capability_populations.TRAIN_CAPABILITY_PAIRS",
@@ -820,7 +804,7 @@ def main() -> None:
             "switching_k":               args.switching_k,
             "max_attempts":              args.max_attempts,
         },
-        "reproduce_command": _reproduce_command(args),
+        "reproduce_command": reproduce_command,
     }
     with open(args.out_dir / "manifest.json", "w") as f:
         json.dump(manifest, f, indent=2)
@@ -833,6 +817,11 @@ def main() -> None:
 
 
 def _reproduce_command(args) -> str:
+    # Audit guide:
+    # Record the actual generator/selection settings in a rerunnable command. Omit
+    # optional settings that were not supplied so the manifest distinguishes uncapped
+    # exact selection from historical capped sampling.
+    #
     parts = ["python data_prep/build_final_corpus.py"]
     for k, v in vars(args).items():
         if v is None:

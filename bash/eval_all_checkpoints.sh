@@ -37,6 +37,10 @@ if [[ "${EXPECTED_CHECKPOINTS:-0}" -gt 0 && "${#configs[@]}" -ne "${EXPECTED_CHE
     echo "Expected ${EXPECTED_CHECKPOINTS} configs, found ${#configs[@]} in ${CHECKPOINT_DIR}" >&2
     exit 1
 fi
+# Audit guide: evaluate every saved configuration with its companion weights.
+# A summary file causes this loop to skip a policy; it does not prove both HDF5
+# slices are intact. Repair a missing/malformed slice with an explicit evaluator
+# call. Filename-based RNN detection requests hidden-state export for RNNs.
 for cfg in "${configs[@]}"; do
     base=$(basename "$cfg" _config.json)
     params="${CHECKPOINT_DIR}/${base}.safetensors"

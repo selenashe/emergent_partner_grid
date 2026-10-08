@@ -1,0 +1,8 @@
+{
+  "algorithm": "unchanged upstream split: Counter(label), NumPy permutation per class, floor(.8*n)",
+  "analysis_seed": 0,
+  "round_extension_seed": 100000,
+  "draw_fresh_split_per_fit": true,
+  "split_masks_sha256": "b2dd7176f9d8a46934f62fccc8137aaa085e4e4cdb5d60a1ae57e707aa227f89",
+  "call_order": "condition, policy seed, timestep, orientation/red/blue; baseline; separate round sequence"
+}

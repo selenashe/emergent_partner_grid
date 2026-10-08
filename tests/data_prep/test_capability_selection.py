@@ -28,7 +28,6 @@ from capability_selection import (
     passes_delta_reward,
     passes_feasibility,
     passes_observability,
-    stratified_sample,
 )
 
 # Synthetic capability pool for the analytical selection tests; this is not
@@ -151,20 +150,6 @@ def test_derive_max_steps_covers_worst_case():
     assert ms2 == 15
 
 
-# -------------------------------------------------------------- determinism +
-
-def test_stratified_sample_deterministic():
-    rng = np.random.default_rng(7)
-    feats = rng.uniform(size=(300, 4))
-    a = stratified_sample(feats, 40, 3, seed=123)
-    b = stratified_sample(feats, 40, 3, seed=123)
-    c = stratified_sample(feats, 40, 3, seed=124)
-    assert np.array_equal(a, b)
-    assert not np.array_equal(a, c)
-    assert len(set(a.tolist())) == len(a)  # no duplicates
-    assert len(a) == 40
-
-
 # ------------------------------------------------------ layout_bfs_distances
 
 def test_layout_bfs_distances_matches_expectation():
@@ -188,13 +173,13 @@ def test_end_to_end_build_small(tmp_path, monkeypatch):
         sys.executable, str(Path(__file__).resolve().parents[2] / "data_prep/build_final_corpus.py"),
         "--n_candidates", "2000",
         "--n_final", "16",
+        "--centroid_p_opt_red_target", "0.5",
         "--n_train", "8", "--n_val", "4", "--n_test", "4",
         "--master_seed", "1",
         "--min_partner_goal_distance", "3",
         "--min_optimal_alloc_fraction", "0.20",
         "--max_optimal_alloc_fraction", "0.80",
         "--delta_reward_quantile", "0.10",
-        "--min_oracle_success", "0.99",
         "--out_dir", str(out),
         "--skip_render", "--skip_plots",
     ]

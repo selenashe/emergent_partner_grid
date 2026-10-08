@@ -85,6 +85,11 @@ def discover_rollout_files(eval_dir: Path) -> dict[tuple[str, int], dict[str, Pa
 
 
 def episode_valid_length(dones: np.ndarray) -> int:
+    # Audit guide:
+    # Find the first final done and include that transition in the valid length. A file
+    # with no final done is incomplete and rejected. All feature averages must use this
+    # valid prefix rather than the whole fixed scan.
+    #
     terminal = np.flatnonzero(dones)
     require(len(terminal) > 0, "Episode has no final done; cannot infer a valid trajectory")
     return int(terminal[0]) + 1
@@ -92,6 +97,12 @@ def episode_valid_length(dones: np.ndarray) -> int:
 
 def validate_allocation_protocols(files: dict) -> str:
     """Reject combined fixed-allocation and online-allocation experiments."""
+    # Audit guide:
+    # Read HDF5 protocol attributes and require every input file in an analysis to
+    # belong to one allocation design. Historical files without the attribute are
+    # classified fixed_v1. Separate output folders protect interpretation of results
+    # from different protocols.
+    #
     protocols = set()
     for slices in files.values():
         for path in slices.values():
@@ -109,6 +120,12 @@ def validate_allocation_protocols(files: dict) -> str:
 
 
 def prefix_mean_hidden(hidden: np.ndarray, cutoffs: np.ndarray) -> np.ndarray:
+    # Audit guide:
+    # Average the hidden vectors from episode start through each requested time cutoff.
+    # Clip the cutoff to the valid episode length; later cutoffs of a completed episode
+    # reuse its complete valid history. This is one feature vector per episode/cutoff,
+    # not independent observations at every tick.
+    #
     require(hidden.ndim == 2 and len(hidden) > 0, "Empty/invalid hidden trajectory")
     cutoffs = np.minimum(np.asarray(cutoffs, dtype=int), len(hidden))
     require(bool(np.all(cutoffs > 0)), "Prefix cutoffs must be positive")
@@ -118,6 +135,11 @@ def prefix_mean_hidden(hidden: np.ndarray, cutoffs: np.ndarray) -> np.ndarray:
 
 def round_prefix_mean_hidden(hidden: np.ndarray, round_idx: np.ndarray,
                              round_done: np.ndarray) -> np.ndarray:
+    # Audit guide:
+    # Locate all 20 ordered round endings and average the whole episode prefix through
+    # each ending. These are cumulative history features, not averages of only the named
+    # round. Check the final round endpoint against the first final done.
+    #
     require(len(round_idx) == len(hidden) == len(round_done), "Round/hidden lengths differ")
     ends = np.flatnonzero(round_done)
     require(len(ends) == N_ROUNDS, f"Expected 20 valid round ends; found {len(ends)}")
@@ -130,6 +152,11 @@ def round_prefix_mean_hidden(hidden: np.ndarray, round_idx: np.ndarray,
 
 
 def final50_mean_hidden(hidden: np.ndarray) -> np.ndarray:
+    # Audit guide:
+    # Average at most the last 50 valid states of a partner episode for UMAP. Short
+    # episodes contribute all their states. This final-history view is distinct from
+    # prefix-mean probe features.
+    #
     require(len(hidden) > 0, "Cannot average an empty episode")
     return hidden[-50:].mean(axis=0, dtype=np.float64).astype(np.float32)
 
@@ -167,6 +194,12 @@ def validate_rollout_dataset(data: RolloutDataset) -> None:
 
 def load_checkpoint_rollouts(paths: dict[str, Path]) -> RolloutDataset:
     """Read in small batches, check full scans, retain only valid prefix means."""
+    # Audit guide:
+    # Validate episode counts, capability constancy, terminal flags, hidden dimensions,
+    # and round boundaries while reading HDF5 in small batches. Retain feature means
+    # rather than every full trajectory. Order episodes by capability and repetition so
+    # one shared split applies consistently across policy seeds.
+    #
     population = capability_populations()
     labels, reps, slices, lengths, time_features, round_features, final_features = [], [], [], [], [], [], []
     rows, sources = [], []
@@ -250,6 +283,12 @@ def load_checkpoint_rollouts(paths: dict[str, Path]) -> RolloutDataset:
 
 
 def make_probe_split(analysis_seed: int) -> dict:
+    # Audit guide:
+    # Permute the 20 repetition indices once and reuse 16 for fitting and four for
+    # testing within every profile. This holds out episodes, not capability profiles.
+    # Repetition indices describe source order rather than twenty globally shared
+    # environment seeds.
+    #
     permutation = np.random.default_rng(analysis_seed).permutation(N_REPS)
     return {"analysis_seed": analysis_seed, "rng": "numpy.default_rng (PCG64)",
             "permutation": permutation.tolist(), "train_reps": permutation[:16].tolist(),
@@ -259,6 +298,11 @@ def make_probe_split(analysis_seed: int) -> dict:
 
 
 def split_masks(data: RolloutDataset, split: dict) -> tuple[np.ndarray, np.ndarray]:
+    # Audit guide:
+    # Translate the saved repetition split into episode masks and verify 16/4 coverage
+    # for every profile. A novel policy-test profile is still represented in probe
+    # training here; this analysis does not claim novel-profile transfer by the probe.
+    #
     train = np.isin(data.rollout_rep, split["train_reps"])
     test = np.isin(data.rollout_rep, split["test_reps"])
     require(not np.any(train & test) and bool(np.all(train | test)), "Probe split overlaps or omits rollouts")
@@ -279,6 +323,13 @@ def train_linear_probe(features: np.ndarray, labels: np.ndarray, train: np.ndarr
     No standardization, regularization, hidden layers, minibatch randomness,
     validation-based tuning, or early stopping is applied.
     """
+    # Audit guide:
+    # Fit separate affine hidden-state-to-delay classifiers with independent weights and
+    # optimizer moments, even though computation is batched. Train for a fixed 1000 Adam
+    # steps on the training mask. Use no test-based checkpoint selection, warm starts
+    # across cutoffs, scaling, or regularization in this written-protocol
+    # implementation.
+    #
     import torch
     require(features.ndim == 3 and features.shape[2] == HIDDEN_DIM, "Probe inputs must be averaged 128-D states only")
     P, N, H = features.shape
@@ -316,6 +367,11 @@ def train_linear_probe(features: np.ndarray, labels: np.ndarray, train: np.ndarr
 
 
 def distance_aware_accuracy(truth: np.ndarray, predictions: np.ndarray) -> float:
+    # Audit guide:
+    # Score a predicted delay by 1 minus its absolute error divided by nine. A near miss
+    # gets partial credit, so a high score is not a high exact ten-class accuracy. Lower
+    # delay labels represent faster partners.
+    #
     return float(np.mean(1.0 - np.abs(predictions - truth) / 9.0))
 
 
@@ -329,6 +385,12 @@ def evaluate_probe(truth: np.ndarray, predictions: np.ndarray, mask: np.ndarray)
 
 def run_probes(data: RolloutDataset, split: dict, condition: str, seed: int,
                analysis_seed: int, device: str, out_dir: Path) -> tuple[list, list, list]:
+    # Audit guide:
+    # Fit independent red and blue probes for every timestep/round feature set and save
+    # models and scores. Test the same fitted probe on all, familiar, and novel episode
+    # subsets. Also shuffle paired delay labels at the last timestep as a diagnostic
+    # that breaks their association with real hidden states.
+    #
     train, test = split_masks(data, split)
     specs, features, labels, init_seeds = [], [], [], []
     for axis, values, feature_set in (("reference_t", REFERENCE_TIMES, data.timestep_features),
@@ -375,6 +437,12 @@ def run_probes(data: RolloutDataset, split: dict, condition: str, seed: int,
 
 def run_random_baseline(data: RolloutDataset, split: dict, device: str,
                         analysis_seed: int, out_dir: Path) -> pd.DataFrame:
+    # Audit guide:
+    # Replace hidden states with independent Normal features while retaining true
+    # capability labels and the shared episode split. Fit with identical probe settings.
+    # This baseline controls for label frequencies and forgiving distance-aware scoring
+    # rather than testing a recurrent policy.
+    #
     train, test = split_masks(data, split)
     features, labels, seeds, specs = [], [], [], []
     for random_seed in range(5):
@@ -403,6 +471,11 @@ def run_random_baseline(data: RolloutDataset, split: dict, device: str,
 
 def summarize_probes(table: pd.DataFrame, axis: str, bootstrap_seed: int) -> pd.DataFrame:
     # The same resampled policy indices are used at every time, task and condition.
+    # Audit guide:
+    # Aggregate fitted-probe scores across learner seeds with means, sample standard
+    # deviations, and bootstrap intervals. The resampling unit is the trained policy
+    # seed; repeated rollout examples are not independent trained models.
+    #
     indices = np.random.default_rng(bootstrap_seed).integers(0, 5, (BOOTSTRAP_RESAMPLES, 5))
     rows = []
     for keys, group in table.groupby(["condition", "target", axis, "capability_subset"], sort=True):
@@ -423,6 +496,12 @@ def summarize_probes(table: pd.DataFrame, axis: str, bootstrap_seed: int) -> pd.
 
 def summarize_condition_differences(table: pd.DataFrame, axis: str, bootstrap_seed: int) -> pd.DataFrame:
     """Paired descriptive contrasts against the diverse/influence condition."""
+    # Audit guide:
+    # Compare each control with the diverse influence-enabled RNN using matched nominal
+    # learner-seed IDs. Save descriptive paired contrasts and uncertainty. Pairing seed
+    # IDs is useful bookkeeping, not proof that every policy received identical
+    # experiences.
+    #
     indices = np.random.default_rng(bootstrap_seed).integers(0, 5, (BOOTSTRAP_RESAMPLES, 5))
     rows = []
     for (target, step, subset), group in table.groupby(["target", axis, "capability_subset"]):
@@ -442,6 +521,12 @@ def summarize_condition_differences(table: pd.DataFrame, axis: str, bootstrap_se
 
 def select_paper_style_seed(eval_dir: Path, logs_dir: Path) -> dict:
     """Use final stdout training summaries only from logs that saved this policy."""
+    # Audit guide:
+    # Choose a representative policy using training return evidence associated with its
+    # checkpoint, with an explicit familiar-evaluation fallback if complete logs are
+    # unavailable. Probe scores and novel evaluation scores do not choose the policy.
+    # Save the candidate scores and selection source.
+    #
     candidates = {}
     for path in sorted(logs_dir.glob("*.out")):
         text = path.read_text(errors="replace")
@@ -487,6 +572,12 @@ def select_paper_style_seed(eval_dir: Path, logs_dir: Path) -> dict:
 
 
 def run_umap(features: np.ndarray) -> tuple[np.ndarray, dict]:
+    # Audit guide:
+    # Fit a separate two-dimensional embedding to one network episode-level final-50
+    # features. Use the prescribed neighborhood and reproducibility settings.
+    # Coordinates from independently trained networks are separate fitted spaces and
+    # should not be pooled or interpreted as causal capability use.
+    #
     from umap import UMAP
     require(features.shape == (N_EPISODES, HIDDEN_DIM), "UMAP must receive exactly 920 final-50 vectors from ONE network")
     reducer = UMAP(min_dist=1.0, n_neighbors=len(features) - 1, random_state=42)
@@ -499,6 +590,11 @@ def run_umap(features: np.ndarray) -> tuple[np.ndarray, dict]:
 
 def select_recorded_common_seed(eval_dir: Path, record_path: Path) -> dict:
     """Reuse a behavior-only common seed, scoped to the evaluated experiment."""
+    # Audit guide:
+    # Reuse the behavior-only common-seed selection record only when its experiment
+    # provenance matches these rollout files. Reject a record from another batch. This
+    # separates selecting a policy from evaluating its representation.
+    #
     record = json.loads(record_path.read_text())
     seed = record["common_seed"]
     require(seed in range(1, 6), "Recorded common seed must be one of 1..5")
@@ -519,7 +615,7 @@ def select_recorded_common_seed(eval_dir: Path, record_path: Path) -> dict:
         best = next(r for r in options if r["seed"] == seed)
         selected[condition] = {
             "condition": condition, "selected_seed": seed,
-            "selection_metric": "final_training.ep_return_mean (common seed selected across experiments)",
+            "selection_metric": "final_training.ep_return_mean (common seed selected within counterbalanced batch)",
             "metric_value": best["training_return"],
             "exact_paper_style_final_training_return": False, "eval_return_proxy": False,
             "source": best["training_log"], "common_seed_record": str(record_path.resolve()),
@@ -545,7 +641,8 @@ def plotting_style():
 
 
 def make_probe_figures(per_seed: pd.DataFrame, summary: pd.DataFrame, round_summary: pd.DataFrame,
-                       random: pd.DataFrame, selected: dict, out_dir: Path) -> None:
+                       random: pd.DataFrame, selected: dict, out_dir: Path,
+                       baseline_label: str | None = None) -> None:
     plt = plotting_style()
     colors = ("#0072B2", "#D55E00", "#009E73")
     for name, axis, source, selected_view in (
@@ -573,7 +670,7 @@ def make_probe_figures(per_seed: pd.DataFrame, summary: pd.DataFrame, round_summ
             if selected_view:
                 baseline = baseline[baseline.random_vector_seed == 0]
             ax.axhline(baseline.distance_accuracy.mean(), color="#555555", ls="--", lw=1.7,
-                       label="Random Normal (seed 0)" if selected_view else "Random Normal (5 vector seeds)")
+                       label=baseline_label or ("Random Normal (seed 0)" if selected_view else "Random Normal (5 vector seeds)"))
             ax.set_title(f"{task}-task cooldown {target}")
             ax.set_xlabel("Episode timestep" if axis == "reference_t" else "Interaction round")
             ax.set_xticks(REFERENCE_TIMES if axis == "reference_t" else np.arange(0, 20, 2))
@@ -663,15 +760,21 @@ def write_metadata(out_dir: Path, args, validation: list[dict], selected: dict,
 
 
 def main() -> None:
+    # Audit guide:
+    # Discover all three recurrent conditions and five learner seeds, validate
+    # protocols, compute feature/probe analyses, and save provenance, figures, and
+    # reports. MLPs lack recurrent hidden states and are excluded from this analysis.
+    # Reuse existing evaluated trajectories rather than retraining policies.
+    #
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--eval-dir", default="eval/eval_out")
-    parser.add_argument("--out-dir", default="eval/representation_results")
+    parser.add_argument("--eval-dir", required=True, help="One counterbalanced protocol evaluation directory")
+    parser.add_argument("--out-dir", required=True, help="Directory for this protocol representation results")
     parser.add_argument("--logs-dir", default="train/slurm_logs", help="Completed Slurm stdout training logs for behavior selection")
     parser.add_argument("--analysis-seed", type=int, default=0)
     parser.add_argument("--device", default="cpu", choices=("cpu", "cuda"))
     parser.add_argument("--threads", type=int, default=1, help="CPU threads (small matrix products usually favor one)")
     parser.add_argument("--common-seed-record", help="Reuse an existing behavior-only common-seed selection JSON")
-    parser.add_argument("--layout-count", type=int, default=1000, help="Training corpus size, recorded in the report")
+    parser.add_argument("--layout-count", type=int, default=1096, help="Training corpus size, recorded in the report")
     parser.add_argument("--umap-all-seeds", action="store_true", help="Embed every policy separately, in addition to the selected view")
     args = parser.parse_args()
     require(args.analysis_seed >= 0 and args.threads >= 1, "Seed must be nonnegative and threads positive")
@@ -687,9 +790,8 @@ def main() -> None:
     eval_dir, out_dir = Path(args.eval_dir).resolve(), Path(args.out_dir).resolve()
     files = discover_rollout_files(eval_dir)
     allocation_protocol = validate_allocation_protocols(files)
-    if allocation_protocol == "online_v2":
-        require(out_dir != (REPO_ROOT / "eval/representation_results").resolve(),
-                "Use a separate --out-dir for online_v2; representation_results contains historical results.")
+    require(out_dir != (REPO_ROOT / "eval/representation_results").resolve(),
+            "Use a protocol-specific --out-dir so v1/v2 results remain separate.")
     args.allocation_protocol = allocation_protocol
     # Fail before fitting if plotting/embedding dependencies are unavailable.
     for module in ("umap", "matplotlib"):

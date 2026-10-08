@@ -10,18 +10,23 @@ import sys
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from bash.submit_counterbalanced_training import (ROOT, V1_REVISION, CONDITIONS, verify_manifest,
-    write, relocate_v1_imports, patch_action_selection, patch_evaluator_action_selection)
+    write, relocate_v1_imports)
 from repo_paths import resolve_record_paths
 
 
 def check_preserved_implementation(snapshot, version):
+    # Audit guide:
+    # Compare selected syntax trees in frozen/recovered sources to check that scheduling
+    # patches retained the intended protocol and network behavior. Comments do not
+    # appear in syntax trees. This guards against changing the scientific condition
+    # while patching exposure bookkeeping.
+    #
     relative = 'train/ippo_rnn_coordination_grid.py'
     old_relative = 'baselines/IPPO/ippo_rnn_coordination_grid.py'
     baseline = (subprocess.check_output(['git', 'show', f'{V1_REVISION}:{old_relative}'], cwd=ROOT).decode()
                 if version == 'v1' else (ROOT / relative).read_text())
     if version == 'v1':
         baseline = relocate_v1_imports(baseline)
-    baseline = patch_action_selection(baseline)
     current = (snapshot / relative).read_text()
     def nodes(text):
         return {n.name: ast.dump(n, include_attributes=False) for n in ast.parse(text).body
@@ -40,11 +45,16 @@ def check_preserved_implementation(snapshot, version):
         if version == 'v1' else (ROOT / eval_relative).read_text())
     if version == 'v1':
         expected_eval = relocate_v1_imports(expected_eval)
-    assert (snapshot / eval_relative).read_text() == patch_evaluator_action_selection(expected_eval)
-    assert (snapshot / 'train/action_selection.py').read_bytes() == (ROOT / 'train/action_selection.py').read_bytes()
+    assert (snapshot / eval_relative).read_text() == expected_eval
 
 
 def validate(path):
+    # Audit guide:
+    # Verify sources/schedules, run sampler/protocol regressions and bounded
+    # train/evaluation smoke checks, and record preflight results in the manifest. This
+    # is preparation validation, not sixty-million-step training or a scientific result.
+    # It can write temporary/check artifacts but does not submit Slurm jobs.
+    #
     m = resolve_record_paths(json.loads(path.read_text()))
     verify_manifest(m)
     output = ROOT / 'train/run_snapshots' / m['batch'] / 'preflight'
@@ -99,8 +109,8 @@ def validate(path):
             print(f'[preflight passed] {version} {condition}', flush=True)
     verify_manifest(m)
     m['preflight'].update({'passed': True, 'source_and_corpus_hashes_verified': True,
-                          'network_and_environment_unchanged_except_authorized_action_selection': True,
-                          'training_and_evaluation_share_action_selection': True,
+                          'network_and_environment_unchanged': True,
+                          'training_and_evaluation_use_categorical_sampling': True,
                           'launcher_bash_syntax_verified': True,
                           'completed_at_utc': datetime.now(timezone.utc).isoformat()})
     write(path, m)

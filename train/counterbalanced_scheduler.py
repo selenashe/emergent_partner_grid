@@ -48,6 +48,13 @@ class BalancedSchedule:
 
 
 def build_schedule(capability_pairs, n_layouts, rounds, minimum_episodes, seed=2026):
+    # Audit guide:
+    # Create shuffled, without-replacement layout passes and cut their concatenation
+    # into full round packets. Assign each packet once to every profile before moving
+    # on. Separate random generators for layouts and profile order let the single and
+    # diverse controls share layout prefixes. The gcd calculation chooses enough passes
+    # to close a cycle without padding: 1096 layouts and 20 rounds need five passes.
+    #
     pairs = np.asarray(capability_pairs, dtype=np.int32)
     if pairs.ndim != 2 or pairs.shape[1] != 2 or len(pairs) == 0:
         raise ValueError("Expected nonempty (C,2) capability pairs")
@@ -72,6 +79,11 @@ def build_schedule(capability_pairs, n_layouts, rounds, minimum_episodes, seed=2
 
 
 def save_schedule(schedule, path):
+    # Audit guide:
+    # Save the numerical plan as NPZ and write a JSON description with its SHA-256
+    # checksum. The checksum identifies exact bytes, not just equivalent array values.
+    # The rebuild utility preserves the original archive format for this reason.
+    #
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     np.savez(path, layouts=schedule.layouts, profile_order=schedule.profile_order,
@@ -105,6 +117,12 @@ def initial_queue(num_envs, n_profiles, n_layouts):
 
 def dispatch(queue, done):
     """One fresh, unique episode per terminal worker, in stable slot order."""
+    # Audit guide:
+    # Give each finished worker the next unused global episode ID. A cumulative count
+    # orders simultaneous completions by worker slot. Workers with unfinished episodes
+    # keep their IDs; this avoids overlapping independent cursors and bounds allocated
+    # profile imbalance by one.
+    #
     import jax.numpy as jnp
     ranks = jnp.cumsum(done.astype(jnp.int32)) - 1
     slots = jnp.where(done, queue.next_episode + ranks, queue.slot_episode)
@@ -113,6 +131,11 @@ def dispatch(queue, done):
 
 
 def lookup(episode_ids, shared_layouts, profile_order, capability_pairs):
+    # Audit guide:
+    # Translate each global episode ID into a packet index and a position in that packet
+    # shuffled profile order. Return the matching fixed capability and shared round
+    # layouts. This connects the asynchronous queue to the precomputed balanced design.
+    #
     c = capability_pairs.shape[0]
     packets = episode_ids // c
     profiles = profile_order[packets, episode_ids % c]
@@ -120,6 +143,12 @@ def lookup(episode_ids, shared_layouts, profile_order, capability_pairs):
 
 
 def accumulate_audit(queue, info, times, episode_done, capability_pairs):
+    # Audit guide:
+    # Count actual profile-by-layout exposure from collected transitions: starts when
+    # pre-step time is zero, completions when round_done is true, and one environment
+    # step for every transition. Count episode starts/completions separately. These
+    # empirical counts include unfinished work at the fixed training cutoff.
+    #
     import jax.numpy as jnp
     caps = info['capability'].reshape(-1, 2)
     profile = jnp.argmax(jnp.all(caps[:, None, :] == capability_pairs[None, :, :], axis=-1), axis=1)
@@ -138,6 +167,13 @@ def accumulate_audit(queue, info, times, episode_done, capability_pairs):
 
 def write_audit(queue, env_state, schedule_path, config, checkpoint_path):
     """Persist empirical exposure, including the unfinished tail at 60M steps."""
+    # Audit guide:
+    # Persist actual counts together with active worker IDs and their partial-round
+    # states. Reconstruct the allocated prefix separately and check total collected
+    # steps against the PPO budget. Exact allocation balance does not imply equal
+    # completed rounds or equal time exposure, because profiles and policies finish at
+    # different speeds.
+    #
     schedule = load_schedule(schedule_path)
     base = Path(checkpoint_path).with_suffix('')
     for seed_index in range(int(config['NUM_SEEDS'])):

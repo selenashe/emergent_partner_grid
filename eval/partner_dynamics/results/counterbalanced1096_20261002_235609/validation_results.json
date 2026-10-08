@@ -1,0 +1,19 @@
+{
+  "new_scientific_tests": {
+    "command": "python -m pytest tests/analysis/test_partner_dynamics.py -q",
+    "passed": 10
+  },
+  "existing_regression_tests": {
+    "command": "python -m pytest tests/analysis/test_representation_analysis.py tests/analysis/test_representation_analysis_strict.py tests/coordination_grid/test_online_allocation.py tests/coordination_grid/test_evaluation_layouts.py tests/data_prep/test_geometry_goal_dependence.py -q",
+    "passed": 37
+  },
+  "original_network_replay_policies": 30,
+  "input_matched_replay_policies": 30,
+  "rank_control_identity_policies": 30,
+  "derivative_checked_policies": 30,
+  "optional_not_run": [
+    "fixed/slow-point optimization",
+    "archived greedy replication"
+  ],
+  "targeted_history_limit_rounds": 4
+}

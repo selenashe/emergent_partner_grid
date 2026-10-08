@@ -34,10 +34,10 @@ on the TRAINING pool (test-pool numbers are reported for context only).
 
 Usage:
     python data_prep/capability_validation.py \\
-        --layouts_dir data_prep/grids_capability_selected/layouts/train \\
+        --layouts_dir data_prep/grids_capability_selected_balanced_1096/layouts/train \\
         --max_steps 100 \\
         --step_penalty 0.01 \\
-        --out data_prep/grids_capability_selected/diagnostics/capability_validation.json
+        --out data_prep/grids_capability_selected_balanced_1096/diagnostics/capability_validation.json
 """
 
 from __future__ import annotations
@@ -71,6 +71,11 @@ def load_layouts(layouts_dir: str) -> List[dict]:
     """Load layout JSONs and precompute BFS distances from ego_start /
     partner_start to each of the two goals.
     """
+    # Audit guide:
+    # Read each saved grid and recompute BFS distances from geometry. This checks the
+    # actual corpus rather than relying on a generator settings description. The
+    # distances are cached for the analytical profile-by-layout calculations.
+    #
     paths = sorted(glob.glob(os.path.join(layouts_dir, "*.json")))
     if not paths:
         raise FileNotFoundError(f"No *.json under {layouts_dir}")
@@ -108,6 +113,13 @@ def _cap_pool_analysis(layouts: List[dict],
                        step_penalty: float = 0.01,
                        success_reward: float = 1.0) -> Dict:
     """Analytical per-(layout, capability, allocation) evaluation."""
+    # Audit guide:
+    # Compare capability-aware and fixed partner-blind assignments over every layout and
+    # profile in a population. Choose the blind allocation by expected reward, not
+    # success rate, because a generous horizon can make success rates almost identical.
+    # Report feasibility, reward gaps, allocation flips, and completion bounds under the
+    # static model.
+    #
     n_L = len(layouts)
     n_C = len(cap_pairs)
     # times[i, j, 0] = allocation A completion; times[i, j, 1] = allocation B.
@@ -259,9 +271,15 @@ def _per_cap_success_breakdown(layouts, cap_pairs, max_steps):
 
 
 def main():
+    # Audit guide:
+    # Run the analytical validation separately for familiar and novel capability pools,
+    # with explicitly supplied horizon and reward settings. Save JSON evidence. This
+    # checks fixed-assignment task pressure and feasibility; it does not evaluate
+    # learned behavior or a dynamic switching oracle.
+    #
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--layouts_dir",
-                   default="data_prep/grids_capability_selected/layouts/train")
+                   default="data_prep/grids_capability_selected_balanced_1096/layouts/train")
     p.add_argument("--max_steps", type=int, default=100)
     p.add_argument("--step_penalty", type=float, default=0.01)
     p.add_argument("--success_reward", type=float, default=1.0)

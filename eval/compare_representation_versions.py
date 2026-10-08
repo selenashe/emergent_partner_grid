@@ -22,6 +22,12 @@ VERSION_LABELS = ("v1: commit at round start", "v2: random start, can switch")
 
 
 def main():
+    # Audit guide:
+    # Read separately computed v1/v2 probe tables and compare matched conditions,
+    # targets, and history axes. Preserve individual-seed curves alongside aggregate
+    # curves and endpoint contrasts. This is descriptive comparison of existing fits,
+    # not new probe training or evidence of causal representation use.
+    #
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--results-root", default="eval/representation_results/counterbalanced1096_20261002_235609")
     args = parser.parse_args()
@@ -29,10 +35,11 @@ def main():
     out_dir = root / "comparison"
     out_dir.mkdir(parents=True, exist_ok=True)
     plt = plotting_style()
-    inputs, splits = {}, []
+    inputs, splits, protocols = {}, [], []
     for version in VERSIONS:
         folder = root / version
         metadata = json.loads((folder / "analysis_metadata.json").read_text())
+        protocols.append(metadata["arguments"].get("probe_protocol", "written_methods"))
         require(metadata["n_checkpoints"] == 15 and metadata["training_seeds"] == list(range(1, 6)),
                 "Each version must include all fifteen RNN checkpoints")
         expected_protocol = "fixed_v1" if version.startswith("v1") else "online_v2"
@@ -47,6 +54,9 @@ def main():
             "random": pd.read_csv(folder / "random_baseline.csv"),
         }
     require(splits[0] == splits[1], "Versions must use the same probe train/test split")
+    require(protocols[0] == protocols[1], "Versions use different probe-fitting protocols")
+    strict = protocols[0] == "strict_released_code"
+    baseline_label = "Released-code random baseline" if strict else "Random Normal baseline"
     endpoints = []
     for axis, x, start, end, xlabel in (
         ("time", "reference_t", 1, 400, "Episode timestep"),
@@ -71,7 +81,7 @@ def main():
                 baseline = tables["random"]
                 baseline = baseline[(baseline.target == target) & (baseline.capability_subset == "all")]
                 ax.axhline(baseline.distance_accuracy.mean(), ls="--", color="#555555", lw=1.5,
-                           label="Random Normal baseline")
+                           label=baseline_label)
                 ax.set(title=f"{version_label}\n{'Red' if target == 'd_R' else 'Blue'} delay ({target})",
                        xlabel=xlabel, ylim=(.45, 1.01))
                 ax.grid(axis="y", alpha=.2)
@@ -95,7 +105,7 @@ def main():
                     baseline = tables["random"]
                     baseline = baseline[(baseline.target == target) & (baseline.capability_subset == "all")]
                     ax.axhline(baseline.distance_accuracy.mean(), ls="--", color="#555555", lw=1.3,
-                               label="Random Normal baseline")
+                               label=baseline_label)
                     ax.set(title=f"Seed {seed}: {'red' if target == 'd_R' else 'blue'} delay", ylim=(.45, 1.01))
                     ax.grid(axis="y", alpha=.2)
                     if col == 0:
@@ -112,7 +122,8 @@ def main():
             endpoint.rename(columns={x: "step"}, inplace=True)
             endpoints.append(endpoint)
         axes[0, 1].legend(fontsize=8, loc="lower right", frameon=False)
-        fig.suptitle("All five training seeds: mean and 95% bootstrap CI", fontsize=13)
+        fig.suptitle(("Strict released-code probes — " if strict else "")
+                     + "All five training seeds: mean and 95% bootstrap CI", fontsize=13)
         save_figure(fig, out_dir, f"v1_v2_{axis}_all_seeds")
         plt.close(fig)
     endpoint_table = pd.concat(endpoints, ignore_index=True)
@@ -130,12 +141,21 @@ def main():
                             "v2_minus_v1_mean": delta.mean(), "difference_ci_low": low,
                             "difference_ci_high": high, "n_training_seeds": 5})
     pd.DataFrame(differences).to_csv(out_dir / "version_endpoint_differences.csv", index=False)
+    split_description = (
+        "The pinned upstream JAX/Flax routine fits AdamW probes using fresh scalar-label-stratified "
+        "splits, best-test-checkpoint selection, and warm starts. Corresponding fits have identical "
+        "split masks across v1/v2, but splits change across targets, networks and cutoffs. The dashed "
+        "line reproduces the released random-feature/random-label baseline."
+        if strict else
+        "Probes, preprocessing and the shared 16/4-per-profile split match the earlier analysis. "
+        "The dashed baseline uses five independent random Normal representations."
+    )
     lines = ["# Counterbalanced v1/v2 representation comparison", "",
              "All three RNN conditions and all five trained seeds are included for each version. "
-             "Probes, preprocessing and the shared 16/4-per-profile split match the earlier analysis. "
+             + split_description + " "
              "Only linear readouts are trained; policy weights and evaluation rollouts are unchanged.", "",
              "The score is `1 − mean(abs(predicted_delay − actual_delay))/9`, rather than exact-class accuracy. "
-             "The dashed baseline uses five independent random Normal representations. Shading resamples "
+             "Shading resamples "
              "the five policy seeds, using 10,000 percentile bootstrap draws. Version differences pair "
              "nominal seed numbers; the episode trajectories are not paired. These are descriptive comparisons.", "",
              "Probe training includes all 46 capability profiles. Probe testing holds out episodes within "
@@ -151,10 +171,18 @@ def main():
                          f"{row['difference_ci_high']:+.3f}] |")
     lines.extend(["", "`v1_v2_time_all_seeds` and `v1_v2_round_all_seeds` compare version means. "
                   "The four `*_every_seed` figures expose all individual policy curves. "
-                  "PNG and PDF versions are saved. Every network's UMAP figures and fitted probes "
-                  "are in the adjacent version directories. Decoding establishes recoverable information, "
+                  "PNG and PDF versions are saved. Fitted probes "
+                  "are in the adjacent version directories. "
+                  + ("UMAPs use unchanged features and remain in the preceding analysis. " if strict else
+                     "Every network's UMAP figures are in the adjacent version directories. ")
+                  + "Decoding establishes recoverable information, "
                   "not causal use of that information by the actor.", "", "Reproduce after completing both version analyses:",
                   "", "```bash", f"python eval/compare_representation_versions.py --results-root {root}", "```", ""])
+    if strict:
+        lines.extend(["The released routine selects on test scores and resamples splits while carrying "
+                      "previously fitted weights. Some later test episodes were training examples at "
+                      "earlier cutoffs. These are source-replication scores, not fully independent "
+                      "hold-out estimates. The per-version reports and checkpoint traces document this.", ""])
     (out_dir / "README.md").write_text("\n".join(lines))
     print(f"Saved comparison, all-seed figures and endpoint tables to {out_dir}")
 

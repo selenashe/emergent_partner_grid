@@ -1,0 +1,34 @@
+{
+  "files": [
+    {
+      "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed3_train.h5",
+      "episodes": 480,
+      "valid_steps": 392142,
+      "scan_padding_steps": 567858,
+      "length_min": 433,
+      "length_max": 1252,
+      "all_episodes_complete": true,
+      "ordered_rounds_verified": true,
+      "capability_verified": true,
+      "finite_verified": true,
+      "time_alignment_verified": true
+    },
+    {
+      "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed3_test.h5",
+      "episodes": 440,
+      "valid_steps": 327695,
+      "scan_padding_steps": 552305,
+      "length_min": 413,
+      "length_max": 1174,
+      "all_episodes_complete": true,
+      "ordered_rounds_verified": true,
+      "capability_verified": true,
+      "finite_verified": true,
+      "time_alignment_verified": true
+    }
+  ],
+  "corpus_audit_verified_rule": {
+    "rule": "Ego takes the partner's slower goal; partner takes its faster goal",
+    "matches_all_cases": true
+  }
+}

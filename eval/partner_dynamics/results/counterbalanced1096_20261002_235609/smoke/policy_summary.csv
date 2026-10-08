@@ -1,0 +1,4 @@
+protocol,policy,condition,seed,scope,mae,prior_mae,improvement,r2,n_test,n_episodes
+fixed_v1,rnn_diverse_influence_seed1,rnn_diverse_influence,1,within_profile,0.6903031749816173,0.625,-0.06530317498161732,0.8285626049081446,32,160
+fixed_v1,rnn_diverse_influence_seed1,rnn_diverse_influence,1,familiar_to_novel,0.8741447041075476,0.875,0.0008552958924524234,0.8389834949887991,16,160
+fixed_v1,rnn_diverse_influence_seed1,rnn_diverse_influence,1,target_layout,1.0507778676526383,0.636285836542576,-0.4144920311100623,0.7357403321862924,9,160

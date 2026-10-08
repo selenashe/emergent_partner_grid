@@ -50,7 +50,7 @@ from jaxmarl.environments.coordination_grid.capability_populations import (
 )
 
 
-LAYOUTS_DIR = str(_REPO_ROOT / "data_prep" / "grids_capability_selected" / "layouts" / "train")
+LAYOUTS_DIR = str(_REPO_ROOT / "data_prep" / "grids_capability_selected_balanced_1096" / "layouts" / "train")
 
 _FAILS: List[Tuple[str, str]] = []
 
