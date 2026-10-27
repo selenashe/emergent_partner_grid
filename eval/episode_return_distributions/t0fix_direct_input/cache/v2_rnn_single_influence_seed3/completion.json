@@ -1,0 +1,64 @@
+{
+  "version": "v2",
+  "condition": "rnn_single_influence",
+  "seed": 3,
+  "status": "completed",
+  "episodes": 920,
+  "rounds": 18400,
+  "tail_episodes": 92,
+  "checkpoint_sha256": "126ce178614e7a2ac4a061faf283197127eb3b0865978be84a29c11b283f1b1b",
+  "config_sha256": "f01c244ea5c259f23721ac0180fc9a27772f3aad94597818370d29887ecbaf8e",
+  "producer_sha256": "0470a471612fa3872560deceab67c9bab2d2dac59f75f504aa83e18fe1d2020a",
+  "sources": [
+    {
+      "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed3_t0fix_direct_input_train.h5",
+      "physical_path": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed3_t0fix_direct_input_train.h5",
+      "size": 531854400,
+      "mtime_ns": 1792680276795357452,
+      "scalar_sha256": {
+        "dones": "787f2b040bf6317607741868b7671ed6a739f2f8a79d99e6728c20d142e24fb2",
+        "round_done": "b248caffe6b9867e9c7ebbbf684eef8ff10da0f55806913e6c606bbc9498c0c2",
+        "round_idx": "6dc885bcca2f7e5d4620e5cb2308b0b0e93acd78cb30758ffd7438308b5eb44b",
+        "round_time": "82b21a66ec10a4574196ad52109a7d2ebf0c08d5abc0ddfd0c9cc9b65bb5346c",
+        "is_t0": "cfdb64f3a9e00c6c71bf1b6fc1908c5dbf9cbe9e1bdd10063bb858b70efd6720",
+        "rewards": "2160903491db757747c50386bedc5d3177a5d682c00be033bb4d9642ee148261",
+        "success": "1b3fda189141618969397be75cdae1155b0a496da5259ee619c6918bb7853d28",
+        "partner_assignment": "ba891e0b264ca5832c6e7f7af5a469fe9f986fa1b1d57664bde675a99768ee0e",
+        "partner_goal": "9f5b5c5ee242564f961bce062ae84619dfb37c7236a6540e672dcd3ab41bdaa9",
+        "ego_alloc_action": "ba891e0b264ca5832c6e7f7af5a469fe9f986fa1b1d57664bde675a99768ee0e",
+        "layout_idx": "c1d77525d9e34b3325acefbc29c14d3f111fab9337f6f733fde5d5d41e45bd1a"
+      }
+    },
+    {
+      "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed3_t0fix_direct_input_test.h5",
+      "physical_path": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed3_t0fix_direct_input_test.h5",
+      "size": 487534224,
+      "mtime_ns": 1792680284711301736,
+      "scalar_sha256": {
+        "dones": "d3550a5deacbd16991e7782086f755804ba620867c9e1aa695b930b34c5e37e8",
+        "round_done": "442dfe53f7bb0571c22e54ce005661d81b64a5a4f49feb82c859d052f24debd0",
+        "round_idx": "1f6feb92c5f7978833e0f689d42523387d900e17d0aba057e52a2634c7e38fae",
+        "round_time": "419cd7324f0716a9ff4d0e5f1fc7a26b941274b17e479b5d1374efb1dff22d81",
+        "is_t0": "b4d9c345b0b9ddc5de5e02e56162bfb0dbe8594d318e899785d251659a4db0f1",
+        "rewards": "9edbc5bc32816f25bcf92438ec6140ffa1ac91731952a038bfc9a5b03d008123",
+        "success": "31b584da8a0bb84226affa30bdb2882081a2a226744c582998baa3b53e297657",
+        "partner_assignment": "3c99cc034226a6f811a917ecdaa6284fb77f736fca8a0614542866ce788ee2a5",
+        "partner_goal": "b8c5260c2d6c373a5f0f050ec67da6f7f2776e3c9ff0307d384c4b54ff76faf1",
+        "ego_alloc_action": "3c99cc034226a6f811a917ecdaa6284fb77f736fca8a0614542866ce788ee2a5",
+        "layout_idx": "e2734be40d7592e86029f6f58e66e289e34b9a32b39fea52a0f799751c1449b0"
+      }
+    }
+  ],
+  "oracles": [
+    {
+      "path": "/juice6/u/jshe/emergent_partner_grid/eval/training_return_ceiling/v1_matched_v2_v3/per_layout_profile.csv",
+      "sha256": "5f845f57a7f78be804638064d106e7b830087e518a2e64582693cfe8e73f1005"
+    },
+    {
+      "path": "/juice6/u/jshe/emergent_partner_grid/eval/heldout_return_ceiling/v1_matched_v2_v3/per_layout_profile.csv",
+      "sha256": "5f7d17259bef62b5a4391f7af6919d65ba706fda6e2bc00914f8c1ed6a7c2eca"
+    }
+  ],
+  "method": "first-done inclusive; recorded reward ledger; effective within-round switches; exact conditional geometry bounds",
+  "new_rollouts": false
+}

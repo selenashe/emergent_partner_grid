@@ -14,7 +14,7 @@ import math
 
 import numpy as np
 
-SAMPLING_PROTOCOL = "paired_counterbalanced_v1"
+SAMPLING_PROTOCOL = "paired_counterbalanced"
 
 
 @dataclass
@@ -86,7 +86,8 @@ def save_schedule(schedule, path):
     #
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
-    np.savez(path, layouts=schedule.layouts, profile_order=schedule.profile_order,
+    from repo_paths import save_numpy_archive
+    save_numpy_archive(path, layouts=schedule.layouts, profile_order=schedule.profile_order,
              capability_pairs=schedule.capability_pairs, seed=schedule.seed,
              n_layouts=schedule.n_layouts, passes_per_cycle=schedule.passes_per_cycle)
     summary = schedule.summary()
@@ -185,7 +186,8 @@ def write_audit(queue, env_state, schedule_path, config, checkpoint_path):
         allocation_counts = np.full(c, full, dtype=np.int64)
         if tail:
             allocation_counts[schedule.profile_order[full, :tail]] += 1
-        assert int(counts[2].sum()) == config['NUM_UPDATES'] * config['NUM_ENVS'] * config['NUM_STEPS']
+        # A pilot executes a prefix of the full optimizer schedule.
+        assert int(counts[2].sum()) == config.get('RUN_UPDATES', config['NUM_UPDATES']) * config['NUM_ENVS'] * config['NUM_STEPS']
         assert int(eps[1].sum()) * schedule.rounds <= int(counts[1].sum())
         assert allocation_counts.max() - allocation_counts.min() <= 1
         ids = np.asarray(queue.slot_episode)[seed_index]
@@ -193,7 +195,8 @@ def write_audit(queue, env_state, schedule_path, config, checkpoint_path):
         suffix = '' if int(config['NUM_SEEDS']) == 1 else f'_seed{seed_index}'
         prefix = str(base) + suffix + '_sampling_audit'
         layout_ids = [p.stem for p in sorted(Path(config['ENV_KWARGS']['layouts_dir']).glob('*.json'))]
-        np.savez(prefix + '.npz', capability_pairs=schedule.capability_pairs,
+        from repo_paths import save_numpy_archive
+        save_numpy_archive(prefix + '.npz', capability_pairs=schedule.capability_pairs,
                  layout_ids=np.asarray(layout_ids), rounds_started=counts[0],
                  rounds_completed=counts[1], environment_steps=counts[2],
                  episodes_started=eps[0], episodes_completed=eps[1],
@@ -208,7 +211,7 @@ def write_audit(queue, env_state, schedule_path, config, checkpoint_path):
                  "unique_layouts_started": int(np.count_nonzero(counts[0, i]))}
                 for i, pair in enumerate(schedule.capability_pairs)]
         report = {"sampling_protocol": SAMPLING_PROTOCOL, "experiment_version": config['EXPERIMENT_VERSION'],
-                  "allocation_protocol": config.get('ALLOCATION_PROTOCOL', 'fixed_v1'),
+                  "allocation_protocol": config.get('ALLOCATION_PROTOCOL', 'fixed_allocation'),
                   "schedule_path": str(schedule_path),
                   "schedule_sha256": hashlib.sha256(Path(schedule_path).read_bytes()).hexdigest(),
                   "allocated_episode_prefix": allocated, "unused_preallocated_episodes": schedule.n_episodes - allocated,

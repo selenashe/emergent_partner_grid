@@ -1,0 +1,5 @@
+[eval] slice=train, |pool|=24, n_eps/cap=20
+    round_success=0.986 reward/round=+0.6436 opt_alloc=0.500 regret=+0.1518
+[eval] slice=test, |pool|=22, n_eps/cap=20
+    round_success=0.985 reward/round=+0.6819 opt_alloc=0.500 regret=+0.1488
+[eval] wrote /juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/mlp_diverse_influence_seed2_t0fix_direct_input_summary.json

@@ -14,7 +14,7 @@ import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from repo_paths import resolve_path, resolve_record_paths
+from repo_paths import resolve_path, resolve_record_paths, prepare_artifact_path, link_artifact
 
 
 def sha(path):
@@ -62,8 +62,8 @@ def rebuild(manifest_path, output_dir=None):
     # resubmitting jobs.
     #
     manifest = resolve_record_paths(json.loads(resolve_path(manifest_path).read_text()))
-    version = manifest["versions"]["v2"]
-    source = Path(version["frozen_source_root"])
+    variant = manifest["source_variants"]["v2"]
+    source = Path(variant["frozen_source_root"])
     scheduler = next((source / name for name in (
         "train/counterbalanced_scheduler.py", "baselines/IPPO/counterbalanced_scheduler.py")
         if (source / name).is_file()), None)
@@ -72,7 +72,7 @@ def rebuild(manifest_path, output_dir=None):
     population = source / "jaxmarl/environments/coordination_grid/capability_populations.py"
     for path in (scheduler, population):
         relative = str(path.relative_to(source))
-        if sha(path) != version["source_sha256"][relative]:
+        if sha(path) != variant["source_sha256"][relative]:
             raise ValueError(f"Frozen source checksum mismatch: {relative}")
     spec = importlib.util.spec_from_file_location("_frozen_counterbalanced_sampler", scheduler)
     module = importlib.util.module_from_spec(spec)
@@ -95,12 +95,14 @@ def rebuild(manifest_path, output_dir=None):
         schedule = module.build_schedule(pairs, summary["n_layouts"],
             summary["rounds_per_episode"], summary["preallocated_episodes"], summary["seed"])
         destination.parent.mkdir(parents=True, exist_ok=True)
-        temporary = destination.with_name(f".rebuild-{regime}-{uuid.uuid4().hex}.npz")
+        stored = prepare_artifact_path(destination)
+        temporary = stored.with_name(f".rebuild-{regime}-{uuid.uuid4().hex}.npz")
         try:
             generated = save_original_archive(schedule, temporary)
             if generated != summary:
                 raise ValueError(f"Regenerated parameters/checksum differ for {regime}; original files were preserved")
-            temporary.replace(destination)
+            temporary.replace(stored)
+            link_artifact(destination)
             metadata = destination.with_suffix(".json")
             if not metadata.exists():
                 metadata.write_text(json.dumps(summary, indent=2) + "\n")

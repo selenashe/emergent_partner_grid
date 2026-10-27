@@ -1,0 +1,80 @@
+--- eval/round_state_prediction_comparison.py
++++ eval/round_state_prediction_comparison.py
+@@ -203,16 +203,16 @@
+ 
+ def summarize(table):
+     keys = ["version", "condition", "feature_type", "round", "ground_truth_class", "predicted_class"]
+-    resamples = np.random.default_rng(30000).integers(0, 10, size=(10000, 10))
++    resamples = np.random.default_rng(30000).integers(0, 5, size=(10000, 5))
+     rows = []
+     for group_keys, group in table.groupby(keys, sort=True):
+-        if len(group) != 10 or set(group.training_seed) != set(range(1, 11)):
+-            raise ValueError("Every summary must include all ten seeds")
++        if len(group) != 5 or set(group.training_seed) != set(range(1, 6)):
++            raise ValueError("Every summary must include all five seeds")
+         values = group.sort_values("training_seed").prediction_fraction.to_numpy()
+         boot = values[resamples].mean(axis=1)
+         low, high = np.quantile(boot, [.025, .975])
+         rows.append(dict(zip(keys, group_keys), mean=float(values.mean()), sd=float(values.std(ddof=1)),
+-                         ci_low=float(low), ci_high=float(high), n_seeds=10))
++                         ci_low=float(low), ci_high=float(high), n_seeds=5))
+     return pd.DataFrame(rows)
+ 
+ 
+@@ -241,7 +241,7 @@
+             panel(axes[row, col], selected[selected.feature_type == feature], actual, aggregated=seed is None)
+         axes[row, 0].set_ylabel(FEATURE_NAMES[feature] + "\nFraction predicted as each class")
+     title = f"{version} · {CONDITIONS[condition]}"
+-    title += " · all 10 seeds (95% CI across seeds)" if seed is None else f" · seed {seed}"
++    title += " · all 5 seeds (95% CI across seeds)" if seed is None else f" · seed {seed}"
+     fig.suptitle(title, y=.98, fontsize=12)
+     handles, labels = axes[0, 0].get_legend_handles_labels()
+     fig.legend(handles, labels, loc="lower center", bbox_to_anchor=(.5, .035), ncol=2, frameon=False)
+@@ -291,17 +291,17 @@
+                 plt.close(fig)
+         with PdfPages(folder / "comparison_individual_seeds.pdf") as book:
+             for version in VERSIONS:
+-                for seed in range(1, 11):
++                for seed in range(1, 6):
+                     fig = comparison_figure(table, version, condition, seed=seed)
+                     book.savefig(fig)
+                     fig.savefig(folder / f"comparison_{version}_seed{seed}.png", dpi=110)
+                     figures["individual_seed_png"] += 1; figures["individual_seed_pages"] += 1
+                     plt.close(fig)
+-    write(root / "completion_audit.json", dict(status="completed", n_policy_entries=90,
++    write(root / "completion_audit.json", dict(status="completed", n_policy_entries=45,
+         n_new_discrete_state_probes=1800, n_cumulative_round_probes_reused=1800, n_per_seed_rows=14400,
+         n_summary_rows=len(summary), per_subset_solid_line_sums="verified equal to 1", figures=figures,
+         completed_utc=datetime.now(timezone.utc).isoformat()))
+-    (root / "README.md").write_text("# Specialist-only prediction fractions: mean versus discrete GRU states\n\nThis is the reference visualization for v1_matched, v2, and v3, three RNN conditions and all ten learner seeds (90 policies).\nOnly the original 46 specialist profiles are included: 920 episodes per policy, 736 fitting and 184 held out. Each class has 368 fitting and 92 test episodes.\n\nClasses: red faster (d_red<d_blue, label 0) and blue faster (d_blue<d_red, label 1).\nEach figure has two ground-truth panels. Lines show P(predicted class=k | true class=g) using argmax predictions, conditional on that panel's 92 held-out episodes. Both lines sum to one. Matching line=recall; other line=misclassification frequency. Dashed chance guide=1/2.\n\nCumulative means average post-observation GRU states from episode start through the final valid transition of each round. Discrete features use the single state at that same endpoint, before its action/outcome. Include terminal transitions; exclude padding. Each policy/round has an independent affine 128→2 softmax probe, full-batch Adam lr=.01, 1000 updates, initialization seed 10000. Primary class weights are exactly 1. No scaling, regularization, early stopping, or test-based selection.\n\nAggregate means and 95% percentile-bootstrap intervals use ten policy seeds, 10000 shared resamples, RNG 30000. Individual-seed plots have no between-seed interval. Each condition contains comparison_all_versions.png (six rows × two columns), comparison_<version>.png/pdf, and all thirty individual-seed PNGs plus a PDF book. Models/features/episode splits are retained under policies/; frozen sources under source/ and reference_source/.\n")
++    (root / "README.md").write_text("# Specialist-only prediction fractions: mean versus discrete GRU states\n\nThis is the reference visualization for v1_matched, v2, and v3, three RNN conditions and all five learner seeds (45 policies).\nOnly the original 46 specialist profiles are included: 920 episodes per policy, 736 fitting and 184 held out. Each class has 368 fitting and 92 test episodes.\n\nClasses: red faster (d_red<d_blue, label 0) and blue faster (d_blue<d_red, label 1).\nEach figure has two ground-truth panels. Lines show P(predicted class=k | true class=g) using argmax predictions, conditional on that panel's 92 held-out episodes. Both lines sum to one. Matching line=recall; other line=misclassification frequency. Dashed chance guide=1/2.\n\nCumulative means average post-observation GRU states from episode start through the final valid transition of each round. Discrete features use the single state at that same endpoint, before its action/outcome. Include terminal transitions; exclude padding. Each policy/round has an independent affine 128→2 softmax probe, full-batch Adam lr=.01, 1000 updates, initialization seed 10000. Primary class weights are exactly 1. No scaling, regularization, early stopping, or test-based selection.\n\nAggregate means and 95% percentile-bootstrap intervals use five policy seeds, 10000 shared resamples, RNG 30000. Individual-seed plots have no between-seed interval. Each condition contains comparison_all_versions.png (six rows × two columns), comparison_<version>.png/pdf, and all fifteen individual-seed PNGs plus a PDF book. Models/features/episode splits are retained under policies/; frozen sources under source/ and reference_source/.\n")
+     manifest["status"], manifest["completed_utc"] = "completed", datetime.now(timezone.utc).isoformat()
+     write(root / "analysis_run.json", manifest)
+     print(f"[completed] {root}", flush=True)
+@@ -310,7 +310,7 @@
+ def prepare(source, out):
+     source, out = Path(source).resolve(), Path(out).resolve()
+     prior = json.loads((source / "analysis_run.json").read_text())
+-    if (prior["status"] != "completed" or len(prior["policies"]) != 90
++    if (prior["status"] != "completed" or len(prior["policies"]) != 45
+             or prior["episodes_per_policy"] != 920 or len(prior["classes"]) != 2):
+         raise ValueError("Require completed source analysis")
+     if out.exists():
+@@ -331,7 +331,7 @@
+         python=prior["analysis_python"], prepared_utc=datetime.now(timezone.utc).isoformat(),
+         metric="P(predicted class=k | ground-truth class=g)",
+         discrete_state="post-observation h_t at the final valid transition of each round, before action/outcome",
+-        n_policy_entries=90, n_rounds=20, processes=[])
++        n_policy_entries=45, n_rounds=20, processes=[])
+     write(out / "analysis_run.json", manifest)
+     return out
+ 
+@@ -365,7 +365,7 @@
+             if any(p.poll() not in (None, 0) for p in processes):
+                 raise RuntimeError("A comparison worker failed; inspect logs")
+             done = sum((policy_folder(root, r) / "completion.json").exists() for r in manifest["policies"])
+-            print(f"[progress] discrete-state fits {done}/90", flush=True)
++            print(f"[progress] discrete-state fits {done}/45", flush=True)
+             time.sleep(30)
+         if any(p.returncode != 0 for p in processes):
+             raise RuntimeError("A comparison worker failed")

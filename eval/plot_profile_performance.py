@@ -1,4 +1,4 @@
-"""Plot every partner profile using equally weighted original/new learner seeds.
+"""Plot every partner profile for the maintained five-seed direct-input cohort.
 
 Read only small scalar fields from saved rollouts, leaving large hidden-state and
 observation arrays on disk. The existing pooled summaries and figures are intact.
@@ -23,10 +23,11 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from repo_paths import resolve_record_paths
 from eval.compare_allocation_protocols import CONDITIONS
+from train.experiment import TRAINING_MANIFEST, SEEDS
 
 METRICS = ('success', 'episode_return', 'episode_steps')
-VERSIONS = ('v1', 'v2')
-VERSION_COLORS = {'v1': '#5979ad', 'v2': '#de8845', 'v3': '#29936b'}
+VERSIONS = ('v1_matched', 'v2', 'v3')
+VERSION_COLORS = {'v1_matched': '#9470bb', 'v2': '#de8845', 'v3': '#29936b'}
 CONDITION_COLORS = ('#0072b2', '#e69f00', '#009e73', '#cc79a7')
 SHORT_LABELS = ('RNN\ndiverse', 'MLP\ndiverse', 'RNN\nsingle', 'RNN diverse\nno influence')
 
@@ -129,7 +130,7 @@ def aggregate_profiles(rows, seeds, profiles, conditions=tuple(CONDITIONS), vers
 
     Episodes are repeated observations of one trained policy. First average
     within that policy/profile, then average across policies. Do not pretend
-    the 200 episodes pooled from ten policies are 200 independent policy seeds.
+    the 100 episodes pooled from five policies are 100 independent policy seeds.
     Missing, duplicate or additional policy/profile rows are explicit errors.
     """
     if len(seeds) < 2 or len(set(seeds)) != len(seeds):
@@ -265,7 +266,7 @@ def plot_round_profiles(aggregates, profiles, seeds, directory, population, vers
 
 
 def run(manifest_path, populations=('test', 'train'), output_root=None):
-    """Read the explicit original/extension seed mapping and export reproducible plots.
+    """Read current job tags and export reproducible per-profile plots.
 
     Validation happens before each population's plots are saved. No training,
     re-evaluation, best-seed selection or hidden-state analysis is performed.
@@ -273,26 +274,29 @@ def run(manifest_path, populations=('test', 'train'), output_root=None):
     """
     manifest_path = Path(manifest_path).resolve()
     m = resolve_record_paths(json.loads(manifest_path.read_text()))
-    if m.get('action_selection', 'categorical') != 'categorical':
-        raise ValueError('Use the original categorical counterbalanced methods')
-    seeds = m['evaluation_seeds']
-    versions = tuple(m['evaluation_inputs'])
-    if not versions or any(v not in VERSION_COLORS for v in versions):
-        raise ValueError('Expected evaluation inputs for v1, v2 or v3')
+    seeds = m['seeds']
+    versions = tuple(m['versions'])
+    if seeds != list(SEEDS) or set(versions) != set(VERSIONS):
+        raise ValueError('Expected v1_matched/v2/v3 with five learner seeds')
+    jobs = {(j['version'], j['condition'], j['seed']): j for j in m['training_jobs']}
+    expected = {(v,c,s) for v in versions for c in CONDITIONS for s in seeds}
+    if set(jobs) != expected or len(m['training_jobs']) != len(expected):
+        raise ValueError('Missing, duplicate or unexpected current policy')
     # Import the frozen population constants without importing the JAX package.
     source = next(iter(m['versions'].values()))['frozen_source_root']
     population_file = Path(source) / 'jaxmarl/environments/coordination_grid/capability_populations.py'
     pools = runpy.run_path(str(population_file))
-    output_root = Path(output_root) if output_root else Path(m['aggregate_root'])
+    output_root = Path(output_root) if output_root else Path(m['comparison_root']) / 'all_5_seeds'
     for population in populations:
         profiles = sorted(pools['TEST_CAPABILITY_PAIRS' if population == 'test' else 'TRAIN_CAPABILITY_PAIRS'])
         rows, sources = [], []
         for version in versions:
             for condition in CONDITIONS:
                 for seed in seeds:
-                    directory = Path(m['evaluation_inputs'][version][str(seed)])
-                    rollout = directory / f'{condition}_seed{seed}_{population}.h5'
-                    summary_path = directory / f'{condition}_seed{seed}_summary.json'
+                    directory = Path(m['versions'][version]['evaluation_root'])
+                    tag = jobs[(version,condition,seed)]['tag']
+                    rollout = directory / f'{tag}_{population}.h5'
+                    summary_path = directory / f'{tag}_summary.json'
                     print(f'[profile metrics] {population} {version} {condition} seed {seed}', flush=True)
                     measured = profile_metrics(rollout, profiles)
                     check_pooled_summary(measured, json.loads(summary_path.read_text())[population], rollout)
@@ -324,8 +328,8 @@ def run(manifest_path, populations=('test', 'train'), output_root=None):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--extension-manifest', required=True, type=Path)
+    parser.add_argument('--manifest', default=TRAINING_MANIFEST, type=Path)
     parser.add_argument('--population', choices=('test', 'train', 'both'), default='both')
     parser.add_argument('--out-dir', type=Path, help='Alternative root; writes novel/familiar subfolders')
     args = parser.parse_args()
-    run(args.extension_manifest, ('test', 'train') if args.population == 'both' else (args.population,), args.out_dir)
+    run(args.manifest, ('test', 'train') if args.population == 'both' else (args.population,), args.out_dir)

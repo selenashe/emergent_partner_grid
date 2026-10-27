@@ -48,8 +48,11 @@ REPO_ROOT="${REPO_ROOT:-/juice6/u/jshe/emergent_partner_grid}"
 cd "${REPO_ROOT}" || exit 1
 
 export PYTHONPATH="${REPO_ROOT}${PYTHONPATH:+:${PYTHONPATH}}"
-CHECKPOINT_DIR="${CHECKPOINT_DIR:-${REPO_ROOT}/train/train_logs/counterbalanced}"
-HYDRA_OUTPUT_DIR="${HYDRA_OUTPUT_DIR:-${REPO_ROOT}/train/hydra_outputs}"
+export GRID_ARTIFACT_ROOT="${GRID_ARTIFACT_ROOT:-/juice6/scr6/nlp/interp-models/emergent_partner_grid}"
+CHECKPOINT_DIR="${CHECKPOINT_DIR:-${GRID_ARTIFACT_ROOT}/train/train_logs/counterbalanced}"
+HYDRA_OUTPUT_DIR="${HYDRA_OUTPUT_DIR:-${GRID_ARTIFACT_ROOT}/train/hydra_outputs}"
+export WANDB_DIR="${WANDB_DIR:-${GRID_ARTIFACT_ROOT}/wandb}"
+mkdir -p "${WANDB_DIR}"
 mkdir -p "${CHECKPOINT_DIR}" "${HYDRA_OUTPUT_DIR}"
 
 # Audit guide: translate CONDITION into the three scientific switches below.

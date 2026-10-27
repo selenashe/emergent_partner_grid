@@ -1,0 +1,26 @@
+--- diagnostics/verify_relative_speed_results.py
++++ diagnostics/verify_relative_speed_results.py
+@@ -15,7 +15,7 @@
+     manifest=json.loads((root/'analysis_run.json').read_text())
+     assert partial or manifest['status']=='completed'
+     assert manifest['schema_version']==2 and manifest['episodes_per_policy']==920
+-    assert len(manifest['classes'])==2 and len(manifest['policies'])==90
++    assert len(manifest['classes'])==2 and len(manifest['policies'])==45
+     identities=set();checks=[]
+     for record in manifest['policies']:
+         out=Path(record['analysis_dir'])
+@@ -93,11 +93,11 @@
+         np.testing.assert_array_equal(embedding['class'],truth)
+         np.testing.assert_array_equal(embedding[['d_R','d_B']],pairs)
+         checks.append(dict(version=identity[0],condition=identity[1],seed=identity[2],status='passed'))
+-    expected={(v,c,s) for v in manifest['versions'] for c in manifest['conditions'] for s in range(1,11)}
++    expected={(v,c,s) for v in manifest['versions'] for c in manifest['conditions'] for s in range(1,6)}
+     if not partial:
+         assert identities==expected
+-        assert len(pd.read_csv(root/'probe_per_seed.csv'))==8100
+-        assert len(pd.read_csv(root/'umap_all_seeds.csv'))==82800
++        assert len(pd.read_csv(root/'probe_per_seed.csv'))==4050
++        assert len(pd.read_csv(root/'umap_all_seeds.csv'))==41400
+     for relative,digest in manifest['source_sha256'].items():
+         assert hashlib.sha256((root/'source'/relative).read_bytes()).hexdigest()==digest
+     result=dict(status='passed_partial' if partial else 'passed',n_policies=len(checks),verified_utc=datetime.now(timezone.utc).isoformat(),

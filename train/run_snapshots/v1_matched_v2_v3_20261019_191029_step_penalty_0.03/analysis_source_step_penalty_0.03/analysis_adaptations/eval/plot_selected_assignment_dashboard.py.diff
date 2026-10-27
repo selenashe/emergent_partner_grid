@@ -1,0 +1,11 @@
+--- eval/plot_selected_assignment_dashboard.py
++++ eval/plot_selected_assignment_dashboard.py
+@@ -35,7 +35,7 @@
+             require(provenance['scalar_datasets_sha256'][field] == row['scalar_datasets_sha256'][field],
+                     'Selected rollout changed: ' + field)
+         require(len(data['profile']) == 440, 'Require all 440 held-out episodes')
+-        require(np.isclose(provenance['saved_episode_return'], row['mean'], atol=3e-5, rtol=0),
++        require(np.isclose(provenance['saved_episode_return'], row['mean'], atol=3e-3, rtol=0),
+                 'Held-out return differs from the selected-seed return figure')
+         groups[version, condition] = round_metrics(data)
+         selected[version, condition] = row

@@ -1,0 +1,25 @@
+[eval] slice=train, |pool|=24, n_eps/cap=20
+    round_success=0.989 reward/round=-0.0006 opt_alloc=0.500 regret=+0.4323
+[eval] slice=test, |pool|=22, n_eps/cap=20
+    round_success=0.990 reward/round=+0.1106 opt_alloc=0.498 regret=+0.4427
+[eval] wrote /juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_single_influence_seed1_step_penalty_0.03_summary.json
+[eval] slice=train, |pool|=24, n_eps/cap=20
+    round_success=0.993 reward/round=+0.0116 opt_alloc=0.499 regret=+0.4320
+[eval] slice=test, |pool|=22, n_eps/cap=20
+    round_success=0.992 reward/round=+0.1257 opt_alloc=0.500 regret=+0.4410
+[eval] wrote /juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_single_influence_seed2_step_penalty_0.03_summary.json
+[eval] slice=train, |pool|=24, n_eps/cap=20
+    round_success=0.993 reward/round=+0.0131 opt_alloc=0.500 regret=+0.4318
+[eval] slice=test, |pool|=22, n_eps/cap=20
+    round_success=0.986 reward/round=+0.0990 opt_alloc=0.491 regret=+0.4495
+[eval] wrote /juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_single_influence_seed3_step_penalty_0.03_summary.json
+[eval] slice=train, |pool|=24, n_eps/cap=20
+    round_success=0.962 reward/round=-0.1100 opt_alloc=0.495 regret=+0.4315
+[eval] slice=test, |pool|=22, n_eps/cap=20
+    round_success=0.964 reward/round=+0.0006 opt_alloc=0.492 regret=+0.4438
+[eval] wrote /juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_single_influence_seed4_step_penalty_0.03_summary.json
+[eval] slice=train, |pool|=24, n_eps/cap=20
+    round_success=0.992 reward/round=+0.0073 opt_alloc=0.501 regret=+0.4304
+[eval] slice=test, |pool|=22, n_eps/cap=20
+    round_success=0.994 reward/round=+0.1305 opt_alloc=0.501 regret=+0.4386
+[eval] wrote /juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_single_influence_seed5_step_penalty_0.03_summary.json

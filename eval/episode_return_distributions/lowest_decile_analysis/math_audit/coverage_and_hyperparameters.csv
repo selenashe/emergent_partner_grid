@@ -1,0 +1,13 @@
+version,condition,seed,saved_hidden_states_analyzed,maximum_start_hidden_reconstruction_error,observation_probes,mlp_start_observations,GAMMA,GAE_LAMBDA,CLIP_EPS,ENT_COEF,VF_COEF,MAX_GRAD_NORM,LR,full_training_trace,step_penalty
+v1_matched,rnn_diverse_influence,5,456019,0.0009975209832191467,36800,0,0.99,0.95,0.2,0.01,1.0,0.25,0.0005,False,0.01
+v1_matched,mlp_diverse_influence,1,0,0.0,0,36800,0.99,0.95,0.2,0.01,1.0,0.25,0.0005,False,0.01
+v1_matched,rnn_single_influence,5,599492,0.0010556131601333618,36800,0,0.99,0.95,0.2,0.01,1.0,0.25,0.0005,False,0.01
+v1_matched,rnn_diverse_noinfluence,3,683033,0.0009606033563613892,36800,0,0.99,0.95,0.2,0.01,1.0,0.25,0.0005,False,0.01
+v2,rnn_diverse_influence,2,487653,0.0013125613331794739,36800,0,0.99,0.95,0.2,0.01,1.0,0.25,0.0005,False,0.01
+v2,mlp_diverse_influence,4,0,0.0,0,36800,0.99,0.95,0.2,0.01,1.0,0.25,0.0005,False,0.01
+v2,rnn_single_influence,4,642964,0.0011920938268303871,36800,0,0.99,0.95,0.2,0.01,1.0,0.25,0.0005,False,0.01
+v2,rnn_diverse_noinfluence,5,704774,0.0011330246925354004,36800,0,0.99,0.95,0.2,0.01,1.0,0.25,0.0005,False,0.01
+v3,rnn_diverse_influence,3,446946,0.0010052099823951721,36800,0,0.99,0.95,0.2,0.01,1.0,0.25,0.0005,False,0.01
+v3,mlp_diverse_influence,4,0,0.0,0,36800,0.99,0.95,0.2,0.01,1.0,0.25,0.0005,False,0.01
+v3,rnn_single_influence,5,602082,0.0012524127960205078,36800,0,0.99,0.95,0.2,0.01,1.0,0.25,0.0005,False,0.01
+v3,rnn_diverse_noinfluence,5,704774,0.0011330246925354004,36800,0,0.99,0.95,0.2,0.01,1.0,0.25,0.0005,False,0.01

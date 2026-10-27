@@ -1,0 +1,25 @@
+[eval] slice=train, |pool|=24, n_eps/cap=20
+    round_success=0.951 reward/round=-0.2134 faster_goal=0.331 switches/round=0.00
+[eval] slice=test, |pool|=22, n_eps/cap=20
+    round_success=0.952 reward/round=-0.1085 faster_goal=0.297 switches/round=0.00
+[eval] wrote /juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_diverse_noinfluence_seed1_step_penalty_0.03_summary.json
+[eval] slice=train, |pool|=24, n_eps/cap=20
+    round_success=0.954 reward/round=-0.2090 faster_goal=0.327 switches/round=0.00
+[eval] slice=test, |pool|=22, n_eps/cap=20
+    round_success=0.957 reward/round=-0.0994 faster_goal=0.310 switches/round=0.00
+[eval] wrote /juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_diverse_noinfluence_seed2_step_penalty_0.03_summary.json
+[eval] slice=train, |pool|=24, n_eps/cap=20
+    round_success=0.957 reward/round=-0.1752 faster_goal=0.331 switches/round=0.00
+[eval] slice=test, |pool|=22, n_eps/cap=20
+    round_success=0.957 reward/round=-0.0679 faster_goal=0.297 switches/round=0.00
+[eval] wrote /juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_diverse_noinfluence_seed3_step_penalty_0.03_summary.json
+[eval] slice=train, |pool|=24, n_eps/cap=20
+    round_success=0.812 reward/round=-0.7439 faster_goal=0.392 switches/round=0.00
+[eval] slice=test, |pool|=22, n_eps/cap=20
+    round_success=0.818 reward/round=-0.6407 faster_goal=0.377 switches/round=0.00
+[eval] wrote /juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_diverse_noinfluence_seed4_step_penalty_0.03_summary.json
+[eval] slice=train, |pool|=24, n_eps/cap=20
+    round_success=0.950 reward/round=-0.2167 faster_goal=0.331 switches/round=0.00
+[eval] slice=test, |pool|=22, n_eps/cap=20
+    round_success=0.954 reward/round=-0.0983 faster_goal=0.303 switches/round=0.00
+[eval] wrote /juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_diverse_noinfluence_seed5_step_penalty_0.03_summary.json

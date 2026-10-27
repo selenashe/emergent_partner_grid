@@ -74,8 +74,8 @@ def test_malformed_profile_records_fail(rollout, problem):
 def policy_rows():
     rows = []
     for version in plots.VERSIONS:
-        for seed in range(1, 11):
-            value = float(seed > 5)
+        for seed in range(1, 6):
+            value = seed / 5
             for red, blue in [(1, 4), (4, 1)]:
                 rows.append(dict(version=version, condition='condition', seed=seed,
                     delay_red=red, delay_blue=blue, success=value, episode_return=value,
@@ -83,15 +83,15 @@ def policy_rows():
     return rows
 
 
-def test_all_ten_seed_profile_means_and_sample_sd():
-    result = plots.aggregate_profiles(policy_rows(), list(range(1, 11)), [(1, 4), (4, 1)], ('condition',))
-    assert len(result) == 4
+def test_all_five_seed_profile_means_and_sample_sd():
+    result = plots.aggregate_profiles(policy_rows(), list(range(1, 6)), [(1, 4), (4, 1)], ('condition',))
+    assert len(result) == 6
     for row in result:
-        assert row['n_seeds'] == 10
-        assert row['success_mean'] == .5
-        assert row['success_sd'] == pytest.approx(np.std([0] * 5 + [1] * 5, ddof=1))
-        assert row['episode_steps_mean'] == 10.5
-        assert row['per_round_success_mean'] == [.5, .5]
+        assert row['n_seeds'] == 5
+        assert row['success_mean'] == pytest.approx(.6)
+        assert row['success_sd'] == pytest.approx(np.std(np.arange(1, 6) / 5, ddof=1))
+        assert row['episode_steps_mean'] == pytest.approx(10.6)
+        assert row['per_round_success_mean'] == pytest.approx([.6, .6])
 
 
 @pytest.mark.parametrize('problem', ['missing', 'duplicate'])
@@ -102,7 +102,7 @@ def test_incomplete_seed_profile_grid_cannot_be_averaged(problem):
     else:
         rows.append(rows[-1])
     with pytest.raises(ValueError, match='Missing, duplicate'):
-        plots.aggregate_profiles(rows, list(range(1, 11)), [(1, 4), (4, 1)], ('condition',))
+        plots.aggregate_profiles(rows, list(range(1, 6)), [(1, 4), (4, 1)], ('condition',))
 
 
 def test_split_profiles_reconstruct_pooled_summary_and_reject_mismatch(rollout):
@@ -116,19 +116,19 @@ def test_split_profiles_reconstruct_pooled_summary_and_reject_mismatch(rollout):
 
 
 def test_third_protocol_is_averaged_and_missing_v3_seed_is_rejected():
-    rows = policy_rows()
+    rows = [row for row in policy_rows() if row['version'] != 'v3']
     rows += [dict(row, version='v3', success=.75) for row in rows if row['version'] == 'v2']
-    result = plots.aggregate_profiles(rows, list(range(1, 11)), [(1, 4), (4, 1)],
-                                     ('condition',), versions=('v1', 'v2', 'v3'))
+    result = plots.aggregate_profiles(rows, list(range(1, 6)), [(1, 4), (4, 1)],
+                                     ('condition',), versions=('v1_matched', 'v2', 'v3'))
     assert len(result) == 6
-    assert all(a['success_mean'] == .75 and a['n_seeds'] == 10 for a in result if a['version'] == 'v3')
+    assert all(a['success_mean'] == .75 and a['n_seeds'] == 5 for a in result if a['version'] == 'v3')
     rows.pop()
     with pytest.raises(ValueError, match='Missing, duplicate'):
-        plots.aggregate_profiles(rows, list(range(1, 11)), [(1, 4), (4, 1)],
-                                 ('condition',), versions=('v1', 'v2', 'v3'))
+        plots.aggregate_profiles(rows, list(range(1, 6)), [(1, 4), (4, 1)],
+                                 ('condition',), versions=('v1_matched', 'v2', 'v3'))
 
 
-def test_v3_manifest_with_only_v3_source_renders_all_protocol_profile_plots(tmp_path):
+def test_current_job_tags_render_all_protocol_profile_plots(tmp_path):
     source = tmp_path / 'frozen_v3'
     pool_file = source / 'jaxmarl/environments/coordination_grid/capability_populations.py'
     pool_file.parent.mkdir(parents=True)
@@ -136,16 +136,19 @@ def test_v3_manifest_with_only_v3_source_renders_all_protocol_profile_plots(tmp_
     pool = np.array([[1, 4], [4, 1]], np.int32)
     indices = np.repeat(np.arange(2), 20)
     inputs = {}
-    for version in ('v1', 'v2', 'v3'):
+    jobs = []
+    for version in ('v1_matched', 'v2', 'v3'):
         inputs[version] = {}
-        for seed in (1, 2):
-            directory = tmp_path / 'inputs' / version / str(seed)
-            directory.mkdir(parents=True)
+        for seed in range(1, 6):
+            directory = tmp_path / 'inputs' / version
+            directory.mkdir(parents=True,exist_ok=True)
             inputs[version][str(seed)] = str(directory)
-            success = np.broadcast_to(np.arange(20) < seed * 5, (40, 20))
+            success = np.broadcast_to(np.arange(20) < seed * 3, (40, 20))
             rewards = np.where(success, 1., -.01)
             for condition in plots.CONDITIONS:
-                prefix = directory / f'{condition}_seed{seed}'
+                tag = f'{condition}_seed{seed}_t0fix_direct_input'
+                jobs.append(dict(version=version,condition=condition,seed=seed,tag=tag))
+                prefix = directory / tag
                 with h5py.File(str(prefix) + '_test.h5', 'w') as f:
                     for key, value in dict(capability_pool=pool, capability_index_per_ep=indices,
                             capability=np.repeat(pool[indices, None, :], 20, axis=1),
@@ -159,17 +162,18 @@ def test_v3_manifest_with_only_v3_source_renders_all_protocol_profile_plots(tmp_
                 Path(str(prefix) + '_summary.json').write_text(json.dumps({'test': summary}))
     output = tmp_path / 'plots'
     manifest = tmp_path / 'manifest.json'
-    manifest.write_text(json.dumps(dict(action_selection='categorical', evaluation_seeds=[1, 2],
-        versions={'v3': {'frozen_source_root': str(source)}}, evaluation_inputs=inputs,
-        aggregate_root=str(output))))
+    manifest.write_text(json.dumps(dict(seeds=list(range(1,6)), training_jobs=jobs,
+        versions={v: {'frozen_source_root': str(source),
+                      'evaluation_root': str(tmp_path/'inputs'/v)} for v in plots.VERSIONS},
+        comparison_root=str(output))))
     plots.run(manifest, populations=('test',))
-    directory = output / 'novel/per_profile'
+    directory = output / 'all_5_seeds/novel/per_profile'
     report = json.loads((directory / 'profile_comparison.json').read_text())
-    assert report['versions'] == ['v1', 'v2', 'v3']
+    assert report['versions'] == ['v1_matched', 'v2', 'v3']
     assert len(report['aggregates']) == 24
-    assert len(report['sources']) == 48
-    assert all(a['n_seeds'] == 2 for a in report['aggregates'])
+    assert len(report['sources']) == 120
+    assert all(a['n_seeds'] == 5 for a in report['aggregates'])
     for name in ('profile_success', 'profile_episode_return', 'profile_episode_steps',
-                 'profile_round_success_v1', 'profile_round_success_v2', 'profile_round_success_v3'):
+                 'profile_round_success_v1_matched', 'profile_round_success_v2', 'profile_round_success_v3'):
         assert (directory / f'{name}.png').is_file()
         assert (directory / f'{name}.pdf').is_file()

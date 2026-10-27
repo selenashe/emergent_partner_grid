@@ -663,7 +663,7 @@
     "layout_files_sha256": "a5703edfe289b601df176938ed888b68da3d61c8f7d2c23ad5baaaea9a9f8ecc",
     "frozen_corpus_hash_verified": true,
     "capability_source": "/juice6/u/jshe/emergent_partner_grid/jaxmarl/environments/coordination_grid/capability_populations.py",
-    "capability_source_sha256": "89c05bcf10f3eb53ec2423574d86e9a22fe7b449b5371246607fcbf68a0113dd",
+    "capability_source_sha256": "2bfb7e8e9bfca175f23a2c43ae932fed609c9e1a8090b53523904dc6904a3552",
     "script_sha256": "71310fc08120c8e1a43beaea45d14ce281cce5bb5ae891a9d35319a762fe8a7c"
   },
   "definitions": {
@@ -679,7 +679,7 @@
   "limitations": [
     "Uses the established corpus-selection analytical convention, not an exact environment trajectory oracle.",
     "Shortest paths are independent: agent collisions and v2 switching/destination cooldown changes are not simulated.",
-    "This common static assignment target is shared by the v1/v2 corpus; it is not a separate optimal switching policy for v2.",
+    "This common static assignment target is shared by the fixed-allocation/v2 corpus; it is not a separate optimal switching policy for v2.",
     "Uniform profile weighting does not reproduce small unfinished-episode exposure differences at the fixed training-step cutoff.",
     "Zero coordinate correlation alone cannot rule out nonlinear geometry information; full-grid prediction limits address the finite enumerated population.",
     "Tied assignments permit either goal; their tie-credited accuracy must not be mistaken for prediction of a uniquely correct goal.",

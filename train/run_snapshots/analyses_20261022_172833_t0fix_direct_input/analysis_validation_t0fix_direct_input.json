@@ -1,0 +1,26 @@
+{
+  "status": "passed",
+  "checks": [
+    "five-seed cumulative-probe aggregation and bootstrap",
+    "five-seed discrete-state aggregation and incomplete-cohort rejection",
+    "all 60 training logs read and 12 best-seed selections match existing dot plots",
+    "all 45 real policy/config/evaluator hashes and 90 saved rollout inputs verified",
+    "45-policy preparation retains 920 episodes and 736/184 within-profile probe split",
+    "state-comparison preparation accepts exactly the same 45 policies",
+    "45-policy state tables require 7200 rows and 15 individual figures per condition"
+  ],
+  "policies": 60,
+  "representation_policies": 45,
+  "step_penalty": 0.01,
+  "scientific_parameters": {
+    "rounds": 20,
+    "hidden_dimension": 128,
+    "profiles": 46,
+    "episodes_per_profile": 20,
+    "primary_probes_per_policy": 29,
+    "probe_steps": 1000,
+    "probe_lr": 0.01,
+    "umap_neighbors": 919,
+    "umap_min_dist": 1.0
+  }
+}

@@ -75,7 +75,8 @@ def test_jitted_asynchronous_dispatch_never_reuses_or_skips_an_episode():
     assert allocated == list(range(int(q.next_episode)))
 
 
-def test_audit_conserves_steps_and_distinguishes_started_from_completed(tmp_path):
+@pytest.mark.parametrize("pilot", [False, True])
+def test_audit_conserves_steps_and_distinguishes_started_from_completed(tmp_path, pilot):
     pairs = np.array([(1, 4), (4, 1)])
     info = {'capability': jnp.asarray(np.broadcast_to(pairs, (3, 2, 2))),
             'layout_idx': jnp.array([[0, 1], [0, 1], [2, 3]]),
@@ -96,6 +97,8 @@ def test_audit_conserves_steps_and_distinguishes_started_from_completed(tmp_path
                           capability=jnp.array([pairs]))
     config = {'NUM_SEEDS': 1, 'NUM_UPDATES': 1, 'NUM_ENVS': 2, 'NUM_STEPS': 3,
               'EXPERIMENT_VERSION': 'test', 'ENV_KWARGS': {'layouts_dir': str(tmp_path)}}
+    if pilot:
+        config.update(NUM_UPDATES=915, RUN_UPDATES=1)
     write_audit(vmapped, env, path, config, tmp_path / 'policy.safetensors')
     report = json.loads((tmp_path / 'policy_sampling_audit.json').read_text())
     assert report['collected_environment_steps'] == 6

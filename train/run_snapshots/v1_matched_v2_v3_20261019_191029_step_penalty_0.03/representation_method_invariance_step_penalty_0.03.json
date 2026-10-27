@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "unchanged_functions": [
+    "eval/relative_speed_representation.py:relative_classes",
+    "eval/relative_speed_representation.py:masks",
+    "eval/relative_speed_representation.py:class_metrics",
+    "eval/relative_speed_representation.py:train_probes",
+    "eval/relative_speed_representation.py:load_data",
+    "eval/relative_speed_representation.py:analyze",
+    "eval/representation_analysis.py:episode_valid_length",
+    "eval/representation_analysis.py:prefix_mean_hidden",
+    "eval/representation_analysis.py:round_prefix_mean_hidden",
+    "eval/representation_analysis.py:final50_mean_hidden",
+    "eval/representation_analysis.py:load_checkpoint_rollouts",
+    "eval/representation_analysis.py:make_probe_split",
+    "eval/representation_analysis.py:split_masks",
+    "eval/round_state_prediction_comparison.py:round_end_indices",
+    "eval/round_state_prediction_comparison.py:prediction_fractions",
+    "eval/round_state_prediction_comparison.py:extract_states",
+    "eval/round_state_prediction_comparison.py:fit_policy"
+  ]
+}

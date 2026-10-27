@@ -1,0 +1,1221 @@
+{
+  "status": "verified_inputs",
+  "policies": [
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_influence",
+      "seed": 1,
+      "source_root": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/v1_matched_influence_t0fix_direct_input/source",
+      "evaluator_sha256": "4a289e58e72d1ae9e3499c88b576cf7ab92b97c5f2f45f34f2c7e18de6d76f2b",
+      "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed1_t0fix_direct_input_config.json",
+      "config_sha256": "f8334db42c02407e4d82f4d72b82b93ca39d09be57968ea0a8142d8f761a5709",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed1_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "314b0a7a581d0054f0da2e201497a10625f819094b7821944610b9dedb80451d",
+      "layouts_dir": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/corpus/layouts/train",
+      "allocation_protocol": "fixed_allocation",
+      "original_rollouts": {
+        "train": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed1_t0fix_direct_input_train.h5",
+        "test": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed1_t0fix_direct_input_test.h5"
+      },
+      "original_stats": {
+        "train": {
+          "size": 529930432,
+          "mtime_ns": 1792665101058651920
+        },
+        "test": {
+          "size": 485768792,
+          "mtime_ns": 1792665111350580831
+        }
+      }
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_influence",
+      "seed": 2,
+      "source_root": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/v1_matched_influence_t0fix_direct_input/source",
+      "evaluator_sha256": "4a289e58e72d1ae9e3499c88b576cf7ab92b97c5f2f45f34f2c7e18de6d76f2b",
+      "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed2_t0fix_direct_input_config.json",
+      "config_sha256": "e819d12f998963d4ac8a1e643d4eb48c0834251eae4b64dffb7d7ddfc11f1efe",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed2_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "e8b9bb35fda004963b77b504b4c94a860e289e3dc7d36370efadd59fbdcfa8b6",
+      "layouts_dir": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/corpus/layouts/train",
+      "allocation_protocol": "fixed_allocation",
+      "original_rollouts": {
+        "train": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed2_t0fix_direct_input_train.h5",
+        "test": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed2_t0fix_direct_input_test.h5"
+      },
+      "original_stats": {
+        "train": {
+          "size": 529930432,
+          "mtime_ns": 1792665174038147838
+        },
+        "test": {
+          "size": 485768792,
+          "mtime_ns": 1792665218245842501
+        }
+      }
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_influence",
+      "seed": 3,
+      "source_root": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/v1_matched_influence_t0fix_direct_input/source",
+      "evaluator_sha256": "4a289e58e72d1ae9e3499c88b576cf7ab92b97c5f2f45f34f2c7e18de6d76f2b",
+      "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed3_t0fix_direct_input_config.json",
+      "config_sha256": "1ea5cc5dc867c43c7145e02d77e0615138b3d582cabbf46eb066fab02621ddcb",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed3_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "c80669f24e3fd8ae57c03c92c68969983381c4e0549cf12689707c21932cec62",
+      "layouts_dir": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/corpus/layouts/train",
+      "allocation_protocol": "fixed_allocation",
+      "original_rollouts": {
+        "train": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed3_t0fix_direct_input_train.h5",
+        "test": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed3_t0fix_direct_input_test.h5"
+      },
+      "original_stats": {
+        "train": {
+          "size": 529930432,
+          "mtime_ns": 1792665162218229479
+        },
+        "test": {
+          "size": 485768792,
+          "mtime_ns": 1792665172522158309
+        }
+      }
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_influence",
+      "seed": 4,
+      "source_root": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/v1_matched_influence_t0fix_direct_input/source",
+      "evaluator_sha256": "4a289e58e72d1ae9e3499c88b576cf7ab92b97c5f2f45f34f2c7e18de6d76f2b",
+      "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed4_t0fix_direct_input_config.json",
+      "config_sha256": "4948b71dd170f980d934df48bb183f1476687f8ea8632906a635f42aefe2c562",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed4_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "d43d0a384d08edd3b2f3e3ac2b5748eea62c7e4f71a0d18a4a9dff3290960874",
+      "layouts_dir": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/corpus/layouts/train",
+      "allocation_protocol": "fixed_allocation",
+      "original_rollouts": {
+        "train": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed4_t0fix_direct_input_train.h5",
+        "test": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed4_t0fix_direct_input_test.h5"
+      },
+      "original_stats": {
+        "train": {
+          "size": 529930432,
+          "mtime_ns": 1792667026249227259
+        },
+        "test": {
+          "size": 485768792,
+          "mtime_ns": 1792667036549154715
+        }
+      }
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_influence",
+      "seed": 5,
+      "source_root": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/v1_matched_influence_t0fix_direct_input/source",
+      "evaluator_sha256": "4a289e58e72d1ae9e3499c88b576cf7ab92b97c5f2f45f34f2c7e18de6d76f2b",
+      "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed5_t0fix_direct_input_config.json",
+      "config_sha256": "3d0e6d7e4875470979314511fd5bdb31046e53669d1ed2301efd456892782899",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed5_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "058edcb5e2cd39e56db5fc48f042a81ecc8251c2bd6a8d5a66462846ad9a3693",
+      "layouts_dir": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/corpus/layouts/train",
+      "allocation_protocol": "fixed_allocation",
+      "original_rollouts": {
+        "train": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed5_t0fix_direct_input_train.h5",
+        "test": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed5_t0fix_direct_input_test.h5"
+      },
+      "original_stats": {
+        "train": {
+          "size": 529930432,
+          "mtime_ns": 1792667082888824140
+        },
+        "test": {
+          "size": 485768792,
+          "mtime_ns": 1792667093760745425
+        }
+      }
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_single_influence",
+      "seed": 1,
+      "source_root": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/v1_matched_influence_t0fix_direct_input/source",
+      "evaluator_sha256": "4a289e58e72d1ae9e3499c88b576cf7ab92b97c5f2f45f34f2c7e18de6d76f2b",
+      "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed1_t0fix_direct_input_config.json",
+      "config_sha256": "9e9ae9b2238fed4c0abd9f31983bd9bc9a5628e4463d4b3139d7f331b6158e52",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed1_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "24987e7014e7b6bb5122bc99fd4fff2a9cb0a0928e115706e3a19128dbcac339",
+      "layouts_dir": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/corpus/layouts/train",
+      "allocation_protocol": "fixed_allocation",
+      "original_rollouts": {
+        "train": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed1_t0fix_direct_input_train.h5",
+        "test": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed1_t0fix_direct_input_test.h5"
+      },
+      "original_stats": {
+        "train": {
+          "size": 529930432,
+          "mtime_ns": 1792667983974295420
+        },
+        "test": {
+          "size": 485768792,
+          "mtime_ns": 1792667994550216832
+        }
+      }
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_single_influence",
+      "seed": 2,
+      "source_root": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/v1_matched_influence_t0fix_direct_input/source",
+      "evaluator_sha256": "4a289e58e72d1ae9e3499c88b576cf7ab92b97c5f2f45f34f2c7e18de6d76f2b",
+      "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed2_t0fix_direct_input_config.json",
+      "config_sha256": "d745dcd53e6aba2075cd33dec1cbd2d12b7d35d7f39b45e7e15d6444fccabb2d",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed2_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "660cc42753051822dee7ca76028aec436a759bddb1e72ececfe12089784312a1",
+      "layouts_dir": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/corpus/layouts/train",
+      "allocation_protocol": "fixed_allocation",
+      "original_rollouts": {
+        "train": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed2_t0fix_direct_input_train.h5",
+        "test": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed2_t0fix_direct_input_test.h5"
+      },
+      "original_stats": {
+        "train": {
+          "size": 529930432,
+          "mtime_ns": 1792668039709882413
+        },
+        "test": {
+          "size": 485768792,
+          "mtime_ns": 1792668050313804150
+        }
+      }
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_single_influence",
+      "seed": 3,
+      "source_root": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/v1_matched_influence_t0fix_direct_input/source",
+      "evaluator_sha256": "4a289e58e72d1ae9e3499c88b576cf7ab92b97c5f2f45f34f2c7e18de6d76f2b",
+      "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed3_t0fix_direct_input_config.json",
+      "config_sha256": "c4213d0599400973d26364d2c50373bb503f1e6517c3bf7c43e401721788d9cc",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed3_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "fb06e2cebb1ba4da0b0de495abf8932e34d92236f7b40a4186aa777cf0f30d74",
+      "layouts_dir": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/corpus/layouts/train",
+      "allocation_protocol": "fixed_allocation",
+      "original_rollouts": {
+        "train": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed3_t0fix_direct_input_train.h5",
+        "test": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed3_t0fix_direct_input_test.h5"
+      },
+      "original_stats": {
+        "train": {
+          "size": 529930432,
+          "mtime_ns": 1792668104269407070
+        },
+        "test": {
+          "size": 485768792,
+          "mtime_ns": 1792668114713330403
+        }
+      }
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_single_influence",
+      "seed": 4,
+      "source_root": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/v1_matched_influence_t0fix_direct_input/source",
+      "evaluator_sha256": "4a289e58e72d1ae9e3499c88b576cf7ab92b97c5f2f45f34f2c7e18de6d76f2b",
+      "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed4_t0fix_direct_input_config.json",
+      "config_sha256": "185bb4a716888f5905ea07b9e15da76bd9d5c2d3cdaf2c81684e92396461c1a4",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed4_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "29e87e1177521e75dfe8d4ed5c214ba3ad66746ad684cccf3cbcbf847a5aa596",
+      "layouts_dir": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/corpus/layouts/train",
+      "allocation_protocol": "fixed_allocation",
+      "original_rollouts": {
+        "train": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed4_t0fix_direct_input_train.h5",
+        "test": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed4_t0fix_direct_input_test.h5"
+      },
+      "original_stats": {
+        "train": {
+          "size": 529930432,
+          "mtime_ns": 1792668162916977580
+        },
+        "test": {
+          "size": 485768792,
+          "mtime_ns": 1792668175216887810
+        }
+      }
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_single_influence",
+      "seed": 5,
+      "source_root": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/v1_matched_influence_t0fix_direct_input/source",
+      "evaluator_sha256": "4a289e58e72d1ae9e3499c88b576cf7ab92b97c5f2f45f34f2c7e18de6d76f2b",
+      "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed5_t0fix_direct_input_config.json",
+      "config_sha256": "724b18da4cded855639816903a03349e8619e315b459ccd1f03ee39337a04573",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed5_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "9829e7e03e56e5a36913451ba1076f9d454e4b5578be4514460eeac85604d04d",
+      "layouts_dir": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/corpus/layouts/train",
+      "allocation_protocol": "fixed_allocation",
+      "original_rollouts": {
+        "train": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed5_t0fix_direct_input_train.h5",
+        "test": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed5_t0fix_direct_input_test.h5"
+      },
+      "original_stats": {
+        "train": {
+          "size": 529930432,
+          "mtime_ns": 1792668162676979333
+        },
+        "test": {
+          "size": 485768792,
+          "mtime_ns": 1792668175240887635
+        }
+      }
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 1,
+      "source_root": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/v1_matched_t0fix_direct_input/source",
+      "evaluator_sha256": "4a289e58e72d1ae9e3499c88b576cf7ab92b97c5f2f45f34f2c7e18de6d76f2b",
+      "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed1_t0fix_direct_input_config.json",
+      "config_sha256": "b08bfb192521fd74469bdae0c2134afdb02fef17aa575fcb5cbb8867770090d0",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed1_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "ac8389e6430f5f638adb7aca52ad9d9acd1d3813891e70f93152af1223f8b71e",
+      "layouts_dir": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/corpus/layouts/train",
+      "allocation_protocol": "fixed_allocation",
+      "original_rollouts": {
+        "train": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed1_t0fix_direct_input_train.h5",
+        "test": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed1_t0fix_direct_input_test.h5"
+      },
+      "original_stats": {
+        "train": {
+          "size": 529930432,
+          "mtime_ns": 1792668222908540691
+        },
+        "test": {
+          "size": 485768792,
+          "mtime_ns": 1792668233180466112
+        }
+      }
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 2,
+      "source_root": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/v1_matched_t0fix_direct_input/source",
+      "evaluator_sha256": "4a289e58e72d1ae9e3499c88b576cf7ab92b97c5f2f45f34f2c7e18de6d76f2b",
+      "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed2_t0fix_direct_input_config.json",
+      "config_sha256": "1f4e23c2093c49003bd4350debb77c166780e66e1eb24e18a0f2215b91dbc2b3",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed2_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "479c225d548982a0846aab1dd8c6a9ba0919a673ac9f7a5311ab24d63eabe606",
+      "layouts_dir": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/corpus/layouts/train",
+      "allocation_protocol": "fixed_allocation",
+      "original_rollouts": {
+        "train": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed2_t0fix_direct_input_train.h5",
+        "test": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed2_t0fix_direct_input_test.h5"
+      },
+      "original_stats": {
+        "train": {
+          "size": 529930432,
+          "mtime_ns": 1792668403119234963
+        },
+        "test": {
+          "size": 485768792,
+          "mtime_ns": 1792668413959156540
+        }
+      }
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 3,
+      "source_root": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/v1_matched_t0fix_direct_input/source",
+      "evaluator_sha256": "4a289e58e72d1ae9e3499c88b576cf7ab92b97c5f2f45f34f2c7e18de6d76f2b",
+      "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed3_t0fix_direct_input_config.json",
+      "config_sha256": "4c0c68c8d8eee0154e112bf642b3268cafc5671301dab9e44b257f4d935d26b9",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed3_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "e680a110410909ac111a9950bfd5a51294409af3c45cb88be1e0a74da68c507f",
+      "layouts_dir": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/corpus/layouts/train",
+      "allocation_protocol": "fixed_allocation",
+      "original_rollouts": {
+        "train": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed3_t0fix_direct_input_train.h5",
+        "test": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed3_t0fix_direct_input_test.h5"
+      },
+      "original_stats": {
+        "train": {
+          "size": 529930432,
+          "mtime_ns": 1792668641961515919
+        },
+        "test": {
+          "size": 485768792,
+          "mtime_ns": 1792668652521439435
+        }
+      }
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 4,
+      "source_root": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/v1_matched_t0fix_direct_input/source",
+      "evaluator_sha256": "4a289e58e72d1ae9e3499c88b576cf7ab92b97c5f2f45f34f2c7e18de6d76f2b",
+      "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed4_t0fix_direct_input_config.json",
+      "config_sha256": "b8c0228901da1415801fd9157e4650541182eddf99aabdbc8eee8bf781cd092c",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed4_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "d01b09bb4b1dd4f91a0a7ee6fe67a81629d57fe36112ca53849a48f6ecd48f9b",
+      "layouts_dir": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/corpus/layouts/train",
+      "allocation_protocol": "fixed_allocation",
+      "original_rollouts": {
+        "train": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed4_t0fix_direct_input_train.h5",
+        "test": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed4_t0fix_direct_input_test.h5"
+      },
+      "original_stats": {
+        "train": {
+          "size": 529930432,
+          "mtime_ns": 1792679725123242652
+        },
+        "test": {
+          "size": 485768792,
+          "mtime_ns": 1792679733483183729
+        }
+      }
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 5,
+      "source_root": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/v1_matched_t0fix_direct_input/source",
+      "evaluator_sha256": "4a289e58e72d1ae9e3499c88b576cf7ab92b97c5f2f45f34f2c7e18de6d76f2b",
+      "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed5_t0fix_direct_input_config.json",
+      "config_sha256": "c540003fc99c0226677ebc3bacdf8dff80e320e836902a31a2bb02f77cf3597b",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed5_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "6aa84a799eddd14ef71cdbab9117c49ef4f8210994b007188e94dac180fd3249",
+      "layouts_dir": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/corpus/layouts/train",
+      "allocation_protocol": "fixed_allocation",
+      "original_rollouts": {
+        "train": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed5_t0fix_direct_input_train.h5",
+        "test": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed5_t0fix_direct_input_test.h5"
+      },
+      "original_stats": {
+        "train": {
+          "size": 529930432,
+          "mtime_ns": 1792679799838716078
+        },
+        "test": {
+          "size": 485768792,
+          "mtime_ns": 1792679808270656658
+        }
+      }
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_influence",
+      "seed": 1,
+      "source_root": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/v2_t0fix_direct_input/source",
+      "evaluator_sha256": "9028c4b1a8c15db965e1849d08af8da9707985d60721aca2c9c6b806b2629b59",
+      "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed1_t0fix_direct_input_config.json",
+      "config_sha256": "261445a4a7e4e74236db9a75f95c94cc644ebf0fa05efb8300bb7a074e45ded9",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed1_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "73076c0540ecacb71910707335b716ba9e6cadb9bb5f2cfef3300a0f93be601b",
+      "layouts_dir": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/corpus/layouts/train",
+      "allocation_protocol": "online_v2",
+      "original_rollouts": {
+        "train": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed1_t0fix_direct_input_train.h5",
+        "test": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed1_t0fix_direct_input_test.h5"
+      },
+      "original_stats": {
+        "train": {
+          "size": 531854400,
+          "mtime_ns": 1792679854990327438
+        },
+        "test": {
+          "size": 487534224,
+          "mtime_ns": 1792679862646273492
+        }
+      }
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_influence",
+      "seed": 2,
+      "source_root": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/v2_t0fix_direct_input/source",
+      "evaluator_sha256": "9028c4b1a8c15db965e1849d08af8da9707985d60721aca2c9c6b806b2629b59",
+      "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed2_t0fix_direct_input_config.json",
+      "config_sha256": "aa9e44dc422afe17c9efc6fa4a37372a5259a00ee3d5f6168d9513aa4d07fafb",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed2_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "63deabd3fbaac7519b02bbceae6d68d68fc109ea49a9f8ebb0b751246e802641",
+      "layouts_dir": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/corpus/layouts/train",
+      "allocation_protocol": "online_v2",
+      "original_rollouts": {
+        "train": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed2_t0fix_direct_input_train.h5",
+        "test": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed2_t0fix_direct_input_test.h5"
+      },
+      "original_stats": {
+        "train": {
+          "size": 531854400,
+          "mtime_ns": 1792679917793884928
+        },
+        "test": {
+          "size": 487534224,
+          "mtime_ns": 1792679925633829692
+        }
+      }
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_influence",
+      "seed": 3,
+      "source_root": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/v2_t0fix_direct_input/source",
+      "evaluator_sha256": "9028c4b1a8c15db965e1849d08af8da9707985d60721aca2c9c6b806b2629b59",
+      "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed3_t0fix_direct_input_config.json",
+      "config_sha256": "0dfa4b72e78bc52324b31b9ae96aac344319237b1065ee38599285e2452b8146",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed3_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "78efbf20b310fc925c5ab032326b5cd67452f710e135442f8a7da4bfbacd3092",
+      "layouts_dir": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/corpus/layouts/train",
+      "allocation_protocol": "online_v2",
+      "original_rollouts": {
+        "train": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed3_t0fix_direct_input_train.h5",
+        "test": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed3_t0fix_direct_input_test.h5"
+      },
+      "original_stats": {
+        "train": {
+          "size": 531854400,
+          "mtime_ns": 1792679974481485557
+        },
+        "test": {
+          "size": 487534224,
+          "mtime_ns": 1792679982217431060
+        }
+      }
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_influence",
+      "seed": 4,
+      "source_root": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/v2_t0fix_direct_input/source",
+      "evaluator_sha256": "9028c4b1a8c15db965e1849d08af8da9707985d60721aca2c9c6b806b2629b59",
+      "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed4_t0fix_direct_input_config.json",
+      "config_sha256": "4b29d15e3f561630cd673a50c7887299a9f044b06da15a9c4a7116b5e0642c11",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed4_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "99e0b4436fe4d67b8bdf0fa4c558926d68a8b0f32fb771dba5c6124d82465dfe",
+      "layouts_dir": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/corpus/layouts/train",
+      "allocation_protocol": "online_v2",
+      "original_rollouts": {
+        "train": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed4_t0fix_direct_input_train.h5",
+        "test": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed4_t0fix_direct_input_test.h5"
+      },
+      "original_stats": {
+        "train": {
+          "size": 531854400,
+          "mtime_ns": 1792680024737131535
+        },
+        "test": {
+          "size": 487534224,
+          "mtime_ns": 1792680033181072056
+        }
+      }
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_influence",
+      "seed": 5,
+      "source_root": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/v2_t0fix_direct_input/source",
+      "evaluator_sha256": "9028c4b1a8c15db965e1849d08af8da9707985d60721aca2c9c6b806b2629b59",
+      "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed5_t0fix_direct_input_config.json",
+      "config_sha256": "9483c126047a28e4ed837a962b143a890df01d9adf210da2e5b75490ce06fb85",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed5_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "bf436d38985af652c1c9131c8b3663f86cab8b233fd0c3c39af2ecb30dc88cb5",
+      "layouts_dir": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/corpus/layouts/train",
+      "allocation_protocol": "online_v2",
+      "original_rollouts": {
+        "train": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed5_t0fix_direct_input_train.h5",
+        "test": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed5_t0fix_direct_input_test.h5"
+      },
+      "original_stats": {
+        "train": {
+          "size": 531854400,
+          "mtime_ns": 1792680098684610679
+        },
+        "test": {
+          "size": 487534224,
+          "mtime_ns": 1792680106628554729
+        }
+      }
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_single_influence",
+      "seed": 1,
+      "source_root": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/v2_t0fix_direct_input/source",
+      "evaluator_sha256": "9028c4b1a8c15db965e1849d08af8da9707985d60721aca2c9c6b806b2629b59",
+      "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed1_t0fix_direct_input_config.json",
+      "config_sha256": "8c3457197d698b0f03c24b1289b422a6c3e5f8ffd10ec8c56e05e1c953c6b3dd",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed1_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "3c4c20e235b3119c731dd95b8c857cd857bac8c3bf0133c04ab28f2b711c9d87",
+      "layouts_dir": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/corpus/layouts/train",
+      "allocation_protocol": "online_v2",
+      "original_rollouts": {
+        "train": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed1_t0fix_direct_input_train.h5",
+        "test": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed1_t0fix_direct_input_test.h5"
+      },
+      "original_stats": {
+        "train": {
+          "size": 531854400,
+          "mtime_ns": 1792680156912200814
+        },
+        "test": {
+          "size": 487534224,
+          "mtime_ns": 1792680164932144435
+        }
+      }
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_single_influence",
+      "seed": 2,
+      "source_root": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/v2_t0fix_direct_input/source",
+      "evaluator_sha256": "9028c4b1a8c15db965e1849d08af8da9707985d60721aca2c9c6b806b2629b59",
+      "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed2_t0fix_direct_input_config.json",
+      "config_sha256": "017f2912d947c38b1a49473efb5311111cb0be85a6f690eb92475f0a5eea6166",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed2_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "b11d1fdbff1c394d180a0a0d6f0890c98855d06b8c8e9725b0e91ca41f9f29ff",
+      "layouts_dir": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/corpus/layouts/train",
+      "allocation_protocol": "online_v2",
+      "original_rollouts": {
+        "train": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed2_t0fix_direct_input_train.h5",
+        "test": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed2_t0fix_direct_input_test.h5"
+      },
+      "original_stats": {
+        "train": {
+          "size": 531854400,
+          "mtime_ns": 1792680215595788212
+        },
+        "test": {
+          "size": 487534224,
+          "mtime_ns": 1792680223251734323
+        }
+      }
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_single_influence",
+      "seed": 3,
+      "source_root": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/v2_t0fix_direct_input/source",
+      "evaluator_sha256": "9028c4b1a8c15db965e1849d08af8da9707985d60721aca2c9c6b806b2629b59",
+      "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed3_t0fix_direct_input_config.json",
+      "config_sha256": "f01c244ea5c259f23721ac0180fc9a27772f3aad94597818370d29887ecbaf8e",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed3_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "126ce178614e7a2ac4a061faf283197127eb3b0865978be84a29c11b283f1b1b",
+      "layouts_dir": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/corpus/layouts/train",
+      "allocation_protocol": "online_v2",
+      "original_rollouts": {
+        "train": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed3_t0fix_direct_input_train.h5",
+        "test": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed3_t0fix_direct_input_test.h5"
+      },
+      "original_stats": {
+        "train": {
+          "size": 531854400,
+          "mtime_ns": 1792680276795357452
+        },
+        "test": {
+          "size": 487534224,
+          "mtime_ns": 1792680284711301736
+        }
+      }
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_single_influence",
+      "seed": 4,
+      "source_root": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/v2_t0fix_direct_input/source",
+      "evaluator_sha256": "9028c4b1a8c15db965e1849d08af8da9707985d60721aca2c9c6b806b2629b59",
+      "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed4_t0fix_direct_input_config.json",
+      "config_sha256": "cd5166e52a6a8d315d672ff1e2dfb039273a3c62da4c05c31edca541d683618b",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed4_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "c1dc90fb51bdd735ca6c5de429d958e94cb4648c6b2507522afa5f4972e67d48",
+      "layouts_dir": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/corpus/layouts/train",
+      "allocation_protocol": "online_v2",
+      "original_rollouts": {
+        "train": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed4_t0fix_direct_input_train.h5",
+        "test": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed4_t0fix_direct_input_test.h5"
+      },
+      "original_stats": {
+        "train": {
+          "size": 531854400,
+          "mtime_ns": 1792680325615013842
+        },
+        "test": {
+          "size": 487534224,
+          "mtime_ns": 1792680333770956439
+        }
+      }
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_single_influence",
+      "seed": 5,
+      "source_root": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/v2_t0fix_direct_input/source",
+      "evaluator_sha256": "9028c4b1a8c15db965e1849d08af8da9707985d60721aca2c9c6b806b2629b59",
+      "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed5_t0fix_direct_input_config.json",
+      "config_sha256": "9b89563d803fe25b3b08807730ce64d541f56cb4f97ee9a125ff8acaa21872cf",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed5_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "3a1dd873cfcf8348c34130769e23686e98e230768f4fbb3c477dd3b69e2b2194",
+      "layouts_dir": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/corpus/layouts/train",
+      "allocation_protocol": "online_v2",
+      "original_rollouts": {
+        "train": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed5_t0fix_direct_input_train.h5",
+        "test": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed5_t0fix_direct_input_test.h5"
+      },
+      "original_stats": {
+        "train": {
+          "size": 531854400,
+          "mtime_ns": 1792680397266509556
+        },
+        "test": {
+          "size": 487534224,
+          "mtime_ns": 1792680404954455450
+        }
+      }
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 1,
+      "source_root": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/v2_t0fix_direct_input/source",
+      "evaluator_sha256": "9028c4b1a8c15db965e1849d08af8da9707985d60721aca2c9c6b806b2629b59",
+      "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed1_t0fix_direct_input_config.json",
+      "config_sha256": "25b783fb7e1a78d90407b0aae141ea4533c5c1d6453b8c56b0f96f919480f7ad",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed1_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "41fe82ebc31541cb07caa109a884fa90d00d782cec1299217ff80fbdd1c4948d",
+      "layouts_dir": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/corpus/layouts/train",
+      "allocation_protocol": "online_v2",
+      "original_rollouts": {
+        "train": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed1_t0fix_direct_input_train.h5",
+        "test": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed1_t0fix_direct_input_test.h5"
+      },
+      "original_stats": {
+        "train": {
+          "size": 531854400,
+          "mtime_ns": 1792680455670098529
+        },
+        "test": {
+          "size": 487534224,
+          "mtime_ns": 1792680463878040765
+        }
+      }
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 2,
+      "source_root": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/v2_t0fix_direct_input/source",
+      "evaluator_sha256": "9028c4b1a8c15db965e1849d08af8da9707985d60721aca2c9c6b806b2629b59",
+      "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed2_t0fix_direct_input_config.json",
+      "config_sha256": "e47de6ddae0a8c5017c03691606a44be861a27853563ecb00007b6f2f2b00a81",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed2_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "888144aee5e61e471cd8d65d8c0958228a282e15de7c9a385964c2c94e8ae227",
+      "layouts_dir": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/corpus/layouts/train",
+      "allocation_protocol": "online_v2",
+      "original_rollouts": {
+        "train": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed2_t0fix_direct_input_train.h5",
+        "test": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed2_t0fix_direct_input_test.h5"
+      },
+      "original_stats": {
+        "train": {
+          "size": 531854400,
+          "mtime_ns": 1792680517845660974
+        },
+        "test": {
+          "size": 487534224,
+          "mtime_ns": 1792680525969603803
+        }
+      }
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 3,
+      "source_root": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/v2_t0fix_direct_input/source",
+      "evaluator_sha256": "9028c4b1a8c15db965e1849d08af8da9707985d60721aca2c9c6b806b2629b59",
+      "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed3_t0fix_direct_input_config.json",
+      "config_sha256": "7d2a82d5c0cb857094b451c63e2ed98ef8df6b07de3986c15e9c7dfebf042d32",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed3_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "8e6fc34ab9cfecc5678262986101f6b600bd7d2502cd21a916a79948b4be830b",
+      "layouts_dir": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/corpus/layouts/train",
+      "allocation_protocol": "online_v2",
+      "original_rollouts": {
+        "train": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed3_t0fix_direct_input_train.h5",
+        "test": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed3_t0fix_direct_input_test.h5"
+      },
+      "original_stats": {
+        "train": {
+          "size": 531854400,
+          "mtime_ns": 1792680574773260367
+        },
+        "test": {
+          "size": 487534224,
+          "mtime_ns": 1792680582917203058
+        }
+      }
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 4,
+      "source_root": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/v2_t0fix_direct_input/source",
+      "evaluator_sha256": "9028c4b1a8c15db965e1849d08af8da9707985d60721aca2c9c6b806b2629b59",
+      "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed4_t0fix_direct_input_config.json",
+      "config_sha256": "775a2290739f04179c0a2222f9c67d8fb246414965559076231a8e1f180d53e8",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed4_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "0370777d4e621d512462f079eb55a81bde05aacdce69ff827b8e03198c0960c9",
+      "layouts_dir": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/corpus/layouts/train",
+      "allocation_protocol": "online_v2",
+      "original_rollouts": {
+        "train": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed4_t0fix_direct_input_train.h5",
+        "test": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed4_t0fix_direct_input_test.h5"
+      },
+      "original_stats": {
+        "train": {
+          "size": 531854400,
+          "mtime_ns": 1792680629736873595
+        },
+        "test": {
+          "size": 487534224,
+          "mtime_ns": 1792680637760817132
+        }
+      }
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 5,
+      "source_root": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/v2_t0fix_direct_input/source",
+      "evaluator_sha256": "9028c4b1a8c15db965e1849d08af8da9707985d60721aca2c9c6b806b2629b59",
+      "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed5_t0fix_direct_input_config.json",
+      "config_sha256": "b7bbe70e9c3557758f5877904c49e99cf4e92315582ea8eb404d5c84210c1ac1",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed5_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "2182aae0210ce2c9126c0618e2f7fe7a077a2266c2882652aaa1ad4cccaf4520",
+      "layouts_dir": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/corpus/layouts/train",
+      "allocation_protocol": "online_v2",
+      "original_rollouts": {
+        "train": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed5_t0fix_direct_input_train.h5",
+        "test": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed5_t0fix_direct_input_test.h5"
+      },
+      "original_stats": {
+        "train": {
+          "size": 531854400,
+          "mtime_ns": 1792680958206561608
+        },
+        "test": {
+          "size": 487534224,
+          "mtime_ns": 1792680970746473341
+        }
+      }
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_influence",
+      "seed": 1,
+      "source_root": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/v3_t0fix_direct_input/source",
+      "evaluator_sha256": "9028c4b1a8c15db965e1849d08af8da9707985d60721aca2c9c6b806b2629b59",
+      "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed1_t0fix_direct_input_config.json",
+      "config_sha256": "c128ab9ddc0d7be714903a025b68151a6e76749b25b6b40fd307ee0cd4964567",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed1_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "de824d03ebad59f858066a0f184417677060397566afa68edd24e338248778ff",
+      "layouts_dir": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/corpus/layouts/train",
+      "allocation_protocol": "online_v3",
+      "original_rollouts": {
+        "train": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed1_t0fix_direct_input_train.h5",
+        "test": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed1_t0fix_direct_input_test.h5"
+      },
+      "original_stats": {
+        "train": {
+          "size": 531854400,
+          "mtime_ns": 1792680935690720095
+        },
+        "test": {
+          "size": 487534224,
+          "mtime_ns": 1792680943434665586
+        }
+      }
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_influence",
+      "seed": 2,
+      "source_root": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/v3_t0fix_direct_input/source",
+      "evaluator_sha256": "9028c4b1a8c15db965e1849d08af8da9707985d60721aca2c9c6b806b2629b59",
+      "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed2_t0fix_direct_input_config.json",
+      "config_sha256": "be3494f6acf89a63d61d1d6ab374154a2b16f863326ebd7d9844f5f659847fec",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed2_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "e6c73e6ec23103bf1b825f8e791e8fc5800b538925e7f35fbf9b400ad3280adc",
+      "layouts_dir": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/corpus/layouts/train",
+      "allocation_protocol": "online_v3",
+      "original_rollouts": {
+        "train": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed2_t0fix_direct_input_train.h5",
+        "test": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed2_t0fix_direct_input_test.h5"
+      },
+      "original_stats": {
+        "train": {
+          "size": 531854400,
+          "mtime_ns": 1792681251988493940
+        },
+        "test": {
+          "size": 487534224,
+          "mtime_ns": 1792681262896417177
+        }
+      }
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_influence",
+      "seed": 3,
+      "source_root": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/v3_t0fix_direct_input/source",
+      "evaluator_sha256": "9028c4b1a8c15db965e1849d08af8da9707985d60721aca2c9c6b806b2629b59",
+      "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed3_t0fix_direct_input_config.json",
+      "config_sha256": "184286a84a35f6dc2626fee08db0f8f2dfe03353422c888208d5f5f447444d98",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed3_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "d8cdc5e4dac2194789a67d47c639964bb6a995e3796916ceaec71dce066b7ebb",
+      "layouts_dir": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/corpus/layouts/train",
+      "allocation_protocol": "online_v3",
+      "original_rollouts": {
+        "train": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed3_t0fix_direct_input_train.h5",
+        "test": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed3_t0fix_direct_input_test.h5"
+      },
+      "original_stats": {
+        "train": {
+          "size": 531854400,
+          "mtime_ns": 1792681237556595504
+        },
+        "test": {
+          "size": 487534224,
+          "mtime_ns": 1792681245932536558
+        }
+      }
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_influence",
+      "seed": 4,
+      "source_root": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/v3_t0fix_direct_input/source",
+      "evaluator_sha256": "9028c4b1a8c15db965e1849d08af8da9707985d60721aca2c9c6b806b2629b59",
+      "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed4_t0fix_direct_input_config.json",
+      "config_sha256": "c43d69d1bd38acc0650541952743373923c8246f704c103ece11507f1cba3f46",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed4_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "2140d5014cbbb405aa53cbcfe37e609869a0bfe233b94d98f12eeebaa1ddac81",
+      "layouts_dir": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/corpus/layouts/train",
+      "allocation_protocol": "online_v3",
+      "original_rollouts": {
+        "train": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed4_t0fix_direct_input_train.h5",
+        "test": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed4_t0fix_direct_input_test.h5"
+      },
+      "original_stats": {
+        "train": {
+          "size": 531854400,
+          "mtime_ns": 1792681551054389168
+        },
+        "test": {
+          "size": 487534224,
+          "mtime_ns": 1792681561130318259
+        }
+      }
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_influence",
+      "seed": 5,
+      "source_root": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/v3_t0fix_direct_input/source",
+      "evaluator_sha256": "9028c4b1a8c15db965e1849d08af8da9707985d60721aca2c9c6b806b2629b59",
+      "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed5_t0fix_direct_input_config.json",
+      "config_sha256": "54827dc39acf9f0678323acc5f7ec74233006e9d407de4871dcea5d4bdcd3b41",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed5_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "e62dc8931fe1383ebae6119b3feaf1310ea65f6d75f40535346b4c258223dfa0",
+      "layouts_dir": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/corpus/layouts/train",
+      "allocation_protocol": "online_v3",
+      "original_rollouts": {
+        "train": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed5_t0fix_direct_input_train.h5",
+        "test": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed5_t0fix_direct_input_test.h5"
+      },
+      "original_stats": {
+        "train": {
+          "size": 531854400,
+          "mtime_ns": 1792681852408268426
+        },
+        "test": {
+          "size": 487534224,
+          "mtime_ns": 1792681863120193081
+        }
+      }
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_single_influence",
+      "seed": 1,
+      "source_root": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/v3_t0fix_direct_input/source",
+      "evaluator_sha256": "9028c4b1a8c15db965e1849d08af8da9707985d60721aca2c9c6b806b2629b59",
+      "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed1_t0fix_direct_input_config.json",
+      "config_sha256": "f0ccd7e127e847b0e69b0f62abb0e2ac2466b552bd554a7b426c3eadf7d6d7c4",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed1_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "e1953f67649391c2858d165da276e81049d40b8f11abfcb8bbaf44ca6833327b",
+      "layouts_dir": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/corpus/layouts/train",
+      "allocation_protocol": "online_v3",
+      "original_rollouts": {
+        "train": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed1_t0fix_direct_input_train.h5",
+        "test": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed1_t0fix_direct_input_test.h5"
+      },
+      "original_stats": {
+        "train": {
+          "size": 531854400,
+          "mtime_ns": 1792684581169095035
+        },
+        "test": {
+          "size": 487534224,
+          "mtime_ns": 1792684591577021953
+        }
+      }
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_single_influence",
+      "seed": 2,
+      "source_root": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/v3_t0fix_direct_input/source",
+      "evaluator_sha256": "9028c4b1a8c15db965e1849d08af8da9707985d60721aca2c9c6b806b2629b59",
+      "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed2_t0fix_direct_input_config.json",
+      "config_sha256": "a8c802e43dba2962a8c2977e8f673df005748efca94283de57b211ae3fa83352",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed2_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "63fe68f451c2872e3c25880a985efb8ed88203548569f5fb44ecb54e384db94e",
+      "layouts_dir": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/corpus/layouts/train",
+      "allocation_protocol": "online_v3",
+      "original_rollouts": {
+        "train": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed2_t0fix_direct_input_train.h5",
+        "test": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed2_t0fix_direct_input_test.h5"
+      },
+      "original_stats": {
+        "train": {
+          "size": 531854400,
+          "mtime_ns": 1792684887686942370
+        },
+        "test": {
+          "size": 487534224,
+          "mtime_ns": 1792684898254868145
+        }
+      }
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_single_influence",
+      "seed": 3,
+      "source_root": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/v3_t0fix_direct_input/source",
+      "evaluator_sha256": "9028c4b1a8c15db965e1849d08af8da9707985d60721aca2c9c6b806b2629b59",
+      "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed3_t0fix_direct_input_config.json",
+      "config_sha256": "974c3f9a4642e31bed040ebab1f1bb21b469fec81021f9b9eff74e1ffe930a67",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed3_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "70df35c3580ec3aff4e474658f1c519210d11afe4e0c45be19c0729aeb6d9e4a",
+      "layouts_dir": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/corpus/layouts/train",
+      "allocation_protocol": "online_v3",
+      "original_rollouts": {
+        "train": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed3_t0fix_direct_input_train.h5",
+        "test": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed3_t0fix_direct_input_test.h5"
+      },
+      "original_stats": {
+        "train": {
+          "size": 531854400,
+          "mtime_ns": 1792685192808799753
+        },
+        "test": {
+          "size": 487534224,
+          "mtime_ns": 1792685203164727185
+        }
+      }
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_single_influence",
+      "seed": 4,
+      "source_root": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/v3_t0fix_direct_input/source",
+      "evaluator_sha256": "9028c4b1a8c15db965e1849d08af8da9707985d60721aca2c9c6b806b2629b59",
+      "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed4_t0fix_direct_input_config.json",
+      "config_sha256": "92217d1ca6e3fa7c51d503a15151930c796ea18ff73e7424d9059f0f1b68216a",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed4_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "02930896b48a6f62d10bfee0e98a92ab14f241369d97a6f42ed57cae0f2fe7c3",
+      "layouts_dir": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/corpus/layouts/train",
+      "allocation_protocol": "online_v3",
+      "original_rollouts": {
+        "train": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed4_t0fix_direct_input_train.h5",
+        "test": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed4_t0fix_direct_input_test.h5"
+      },
+      "original_stats": {
+        "train": {
+          "size": 531854400,
+          "mtime_ns": 1792685194892785147
+        },
+        "test": {
+          "size": 487534224,
+          "mtime_ns": 1792685206540703532
+        }
+      }
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_single_influence",
+      "seed": 5,
+      "source_root": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/v3_t0fix_direct_input/source",
+      "evaluator_sha256": "9028c4b1a8c15db965e1849d08af8da9707985d60721aca2c9c6b806b2629b59",
+      "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed5_t0fix_direct_input_config.json",
+      "config_sha256": "217aae66b69fe3765aa399e6a92f12a5940729dc3a620cbba658c0567aa7975f",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed5_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "7b0ba1363e7adba8d90d44ef10577d296fc215c572247ec6df3596329917b646",
+      "layouts_dir": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/corpus/layouts/train",
+      "allocation_protocol": "online_v3",
+      "original_rollouts": {
+        "train": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed5_t0fix_direct_input_train.h5",
+        "test": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed5_t0fix_direct_input_test.h5"
+      },
+      "original_stats": {
+        "train": {
+          "size": 531854400,
+          "mtime_ns": 1792685192988798492
+        },
+        "test": {
+          "size": 487534224,
+          "mtime_ns": 1792685204228719731
+        }
+      }
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 1,
+      "source_root": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/v3_t0fix_direct_input/source",
+      "evaluator_sha256": "9028c4b1a8c15db965e1849d08af8da9707985d60721aca2c9c6b806b2629b59",
+      "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed1_t0fix_direct_input_config.json",
+      "config_sha256": "d0e45fb373f7cba46329fe1c02177f1a55c0e7650a5af2f9da9e23186243e850",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed1_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "41fe82ebc31541cb07caa109a884fa90d00d782cec1299217ff80fbdd1c4948d",
+      "layouts_dir": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/corpus/layouts/train",
+      "allocation_protocol": "online_v3",
+      "original_rollouts": {
+        "train": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed1_t0fix_direct_input_train.h5",
+        "test": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed1_t0fix_direct_input_test.h5"
+      },
+      "original_stats": {
+        "train": {
+          "size": 531854400,
+          "mtime_ns": 1792685196792771832
+        },
+        "test": {
+          "size": 487534224,
+          "mtime_ns": 1792685206412704429
+        }
+      }
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 2,
+      "source_root": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/v3_t0fix_direct_input/source",
+      "evaluator_sha256": "9028c4b1a8c15db965e1849d08af8da9707985d60721aca2c9c6b806b2629b59",
+      "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed2_t0fix_direct_input_config.json",
+      "config_sha256": "ee61de2e936233a4c5c5cf544c40f95fdb7a40c3c08afcdb82b3a7ad8aab576b",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed2_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "888144aee5e61e471cd8d65d8c0958228a282e15de7c9a385964c2c94e8ae227",
+      "layouts_dir": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/corpus/layouts/train",
+      "allocation_protocol": "online_v3",
+      "original_rollouts": {
+        "train": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed2_t0fix_direct_input_train.h5",
+        "test": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed2_t0fix_direct_input_test.h5"
+      },
+      "original_stats": {
+        "train": {
+          "size": 531854400,
+          "mtime_ns": 1792685193956791707
+        },
+        "test": {
+          "size": 487534224,
+          "mtime_ns": 1792685206340704933
+        }
+      }
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 3,
+      "source_root": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/v3_t0fix_direct_input/source",
+      "evaluator_sha256": "9028c4b1a8c15db965e1849d08af8da9707985d60721aca2c9c6b806b2629b59",
+      "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed3_t0fix_direct_input_config.json",
+      "config_sha256": "73f3b9600935726d22586f05bb59aca3a3c8a9c64fc27fe9933d104ecc5bd75f",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed3_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "8e6fc34ab9cfecc5678262986101f6b600bd7d2502cd21a916a79948b4be830b",
+      "layouts_dir": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/corpus/layouts/train",
+      "allocation_protocol": "online_v3",
+      "original_rollouts": {
+        "train": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed3_t0fix_direct_input_train.h5",
+        "test": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed3_t0fix_direct_input_test.h5"
+      },
+      "original_stats": {
+        "train": {
+          "size": 531854400,
+          "mtime_ns": 1792685193980791539
+        },
+        "test": {
+          "size": 487534224,
+          "mtime_ns": 1792685206312705129
+        }
+      }
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 4,
+      "source_root": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/v3_t0fix_direct_input/source",
+      "evaluator_sha256": "9028c4b1a8c15db965e1849d08af8da9707985d60721aca2c9c6b806b2629b59",
+      "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed4_t0fix_direct_input_config.json",
+      "config_sha256": "2283d892b0afea226a1f31bc6eb6b88c04364057e65374cec6566009fe8a200e",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed4_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "0370777d4e621d512462f079eb55a81bde05aacdce69ff827b8e03198c0960c9",
+      "layouts_dir": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/corpus/layouts/train",
+      "allocation_protocol": "online_v3",
+      "original_rollouts": {
+        "train": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed4_t0fix_direct_input_train.h5",
+        "test": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed4_t0fix_direct_input_test.h5"
+      },
+      "original_stats": {
+        "train": {
+          "size": 531854400,
+          "mtime_ns": 1792685496062674928
+        },
+        "test": {
+          "size": 487534224,
+          "mtime_ns": 1792685507486594879
+        }
+      }
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 5,
+      "source_root": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/v3_t0fix_direct_input/source",
+      "evaluator_sha256": "9028c4b1a8c15db965e1849d08af8da9707985d60721aca2c9c6b806b2629b59",
+      "config": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed5_t0fix_direct_input_config.json",
+      "config_sha256": "b0db7dc30869a62ec1ffbb5b093d914ee46652068e549f7dd43e2861d80575bc",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed5_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "2182aae0210ce2c9126c0618e2f7fe7a077a2266c2882652aaa1ad4cccaf4520",
+      "layouts_dir": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/corpus/layouts/train",
+      "allocation_protocol": "online_v3",
+      "original_rollouts": {
+        "train": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed5_t0fix_direct_input_train.h5",
+        "test": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed5_t0fix_direct_input_test.h5"
+      },
+      "original_stats": {
+        "train": {
+          "size": 531854400,
+          "mtime_ns": 1792685799972544297
+        },
+        "test": {
+          "size": 487534224,
+          "mtime_ns": 1792685811308464728
+        }
+      }
+    }
+  ],
+  "training_manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_v1_matched_v2_v3_20261022_080155_t0fix_direct_input.json"
+}

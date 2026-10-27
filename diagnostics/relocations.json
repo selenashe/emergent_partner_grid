@@ -1,0 +1,107 @@
+{
+  "date": "2026-10-15",
+  "scripts": [
+    {
+      "previous_path": "train/diagnose_seed_variability.py",
+      "path": "diagnostics/diagnose_seed_variability.py",
+      "sha256_before_move": "688ab7a52d07a0a9235da03b26e58fd35e18e52db06cbe47db30cc23cbd5c34e",
+      "sha256_after_import_updates": "688ab7a52d07a0a9235da03b26e58fd35e18e52db06cbe47db30cc23cbd5c34e"
+    },
+    {
+      "previous_path": "eval/diagnose_switch_interventions.py",
+      "path": "diagnostics/diagnose_switch_interventions.py",
+      "sha256_before_move": "18bdd830fd2e98c525fa300f8031d5c4a31df729f398dcbdc101638ccb34b922",
+      "sha256_after_import_updates": "18bdd830fd2e98c525fa300f8031d5c4a31df729f398dcbdc101638ccb34b922"
+    },
+    {
+      "previous_path": "eval/analyze_initial_seed_stimuli.py",
+      "path": "diagnostics/analyze_initial_seed_stimuli.py",
+      "sha256_before_move": "f412a11a4f2eab017c6910269a4344681fa04032574c5f6ba57e292a66bf5d31",
+      "sha256_after_import_updates": "f412a11a4f2eab017c6910269a4344681fa04032574c5f6ba57e292a66bf5d31"
+    },
+    {
+      "previous_path": "train/replay_early_exposure.py",
+      "path": "diagnostics/replay_early_exposure.py",
+      "sha256_before_move": "479adbe55a3c48e61ce473e5469ead1b01dcf309a888b43f095774392e3354c1",
+      "sha256_after_import_updates": "479adbe55a3c48e61ce473e5469ead1b01dcf309a888b43f095774392e3354c1"
+    },
+    {
+      "previous_path": "eval/audit_early_window.py",
+      "path": "diagnostics/audit_early_window.py",
+      "sha256_before_move": "67c2a5282d6edb415cedd1d260b850b590862cae0e2a76616a8c20eeed9b633f",
+      "sha256_after_import_updates": "6fe26425c81bd7f9c1eb7ff82e50a6290ef05e2849d12dd503617b4a556f6d53"
+    },
+    {
+      "previous_path": "train/replay_exposure_snapshots.py",
+      "path": "diagnostics/replay_exposure_snapshots.py",
+      "sha256_before_move": "2e169067077ab31db589224e93b3c351b1decffb1b172d690aee0e3cecfea6b6",
+      "sha256_after_import_updates": "9011fccec3166f5bd352e148fdf439702a46a9ba56db3a9a421f1bde6e195503"
+    },
+    {
+      "previous_path": "eval/audit_exposure_snapshots.py",
+      "path": "diagnostics/audit_exposure_snapshots.py",
+      "sha256_before_move": "4e6d7a23961cb93a187023cad2859a0ae026690ff5248a61689494849697b4f5",
+      "sha256_after_import_updates": "351b25fb62c1ce956f9cca4ecc95b6fee1118e9a60bdd36e76085dc725fe3c98"
+    },
+    {
+      "previous_path": "train/audit_counterbalanced_results.py",
+      "path": "diagnostics/audit_counterbalanced_results.py",
+      "sha256_before_move": "410c2ac19e686ed7d55feebe4dd6c1de5e9ad304bf3e6ee10748473825f74c5f",
+      "sha256_after_import_updates": "410c2ac19e686ed7d55feebe4dd6c1de5e9ad304bf3e6ee10748473825f74c5f"
+    },
+    {
+      "previous_path": "train/validate_counterbalanced_training.py",
+      "path": "diagnostics/validate_counterbalanced_training.py",
+      "sha256_before_move": "c3fc724b67ba1bb6007066dc72ba14f3e064030157cc01dc4ddf61a5705a8050",
+      "sha256_after_import_updates": "c3fc724b67ba1bb6007066dc72ba14f3e064030157cc01dc4ddf61a5705a8050"
+    },
+    {
+      "previous_path": "eval/audit_v1_matched_results.py",
+      "path": "diagnostics/audit_v1_matched_results.py",
+      "sha256_before_move": "2cb061a755488a6d1f957890d6617d591c5b82e0385ea023c4a9ee6cb152bf48",
+      "sha256_after_import_updates": "2cb061a755488a6d1f957890d6617d591c5b82e0385ea023c4a9ee6cb152bf48"
+    },
+    {
+      "previous_path": "eval/verify_relative_speed_results.py",
+      "path": "diagnostics/verify_relative_speed_results.py",
+      "sha256_before_move": "86a9224eb69d0c4fcfc2a6afb71155c0e9a232aaaab0d99effdff82159416db1",
+      "sha256_after_import_updates": "86a9224eb69d0c4fcfc2a6afb71155c0e9a232aaaab0d99effdff82159416db1"
+    },
+    {
+      "previous_path": "eval/verify_round_state_comparison.py",
+      "path": "diagnostics/verify_round_state_comparison.py",
+      "sha256_before_move": "ae691168337efbd6da18d040e80505afe6c2fabc16a380947b95070ba8ee3364",
+      "sha256_after_import_updates": "ae691168337efbd6da18d040e80505afe6c2fabc16a380947b95070ba8ee3364"
+    },
+    {
+      "previous_path": "eval/validate_optimal_training_return.py",
+      "path": "diagnostics/validate_optimal_training_return.py",
+      "sha256_before_move": "5de8ccbaa345840cca48be53fad9d23e842ad554fd6f9348c16be0ff42d6db91",
+      "sha256_after_import_updates": "1dd939b061b515ad8619c51ef76b71769368caf8c701c460daa004414ff22a0e"
+    },
+    {
+      "previous_path": "data_prep/check_geometry_goal_dependence.py",
+      "path": "diagnostics/check_geometry_goal_dependence.py",
+      "sha256_before_move": "317d51c9fad01107bb5574dac89c0365fcd0ebd4186a32507c2a8f99e0171632",
+      "sha256_after_import_updates": "317d51c9fad01107bb5574dac89c0365fcd0ebd4186a32507c2a8f99e0171632"
+    },
+    {
+      "previous_path": "data_prep/capability_validation.py",
+      "path": "diagnostics/capability_validation.py",
+      "sha256_before_move": "c877fcec60b655454e8fd0bf5c2606b83931e17b7aaf0b4a5ddc3d5b80169800",
+      "sha256_after_import_updates": "a234c6c59d0d69ba2cb77ac11be73801de1a708dea5d52a37e4dde903618795e"
+    }
+  ],
+  "preserved": "Existing reports, result records, frozen experiment source, and archived source copies retain their original paths and bytes.",
+  "validation": {
+    "relocated_scripts": 16,
+    "cli_help_checks_passed": 15,
+    "import_only_helper_checks_passed": 1,
+    "geometry_regression_tests_passed": 6,
+    "primary_exposure_audit_reproduced": true,
+    "historical_scalar_comparisons_passed": 330,
+    "original_result_records_rewritten": false,
+    "full_oracle_validation_rerun": false,
+    "oracle_runtime_dependency": "numba is required for the oracle; absent from the existing training environment"
+  }
+}

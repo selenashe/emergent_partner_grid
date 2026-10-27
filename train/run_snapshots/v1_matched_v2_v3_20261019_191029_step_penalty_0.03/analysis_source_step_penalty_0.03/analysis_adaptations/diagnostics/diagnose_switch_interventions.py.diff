@@ -1,0 +1,11 @@
+--- diagnostics/diagnose_switch_interventions.py
++++ diagnostics/diagnose_switch_interventions.py
+@@ -46,7 +46,7 @@
+     from jaxmarl.wrappers.baselines import load_params
+     if Path(trainer.__file__).resolve() != (source / "baselines/IPPO/ippo_rnn_coordination_grid.py").resolve():
+         raise ValueError("Wrong trainer loaded")
+-    metadata = json.loads((ROOT / "train/training_curves/v1_matched_v2_v3_all_10_seeds/summary.json").read_text())
++    metadata = json.loads((ROOT / "/juice6/u/jshe/emergent_partner_grid/train/training_curves/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/summary.json").read_text())
+     records = [next(r for r in metadata["runs"] if
+         (r["version"], r["condition"], r["seed"]) == (args.version, condition, seed))
+         for condition, seed in POLICIES[args.version]]

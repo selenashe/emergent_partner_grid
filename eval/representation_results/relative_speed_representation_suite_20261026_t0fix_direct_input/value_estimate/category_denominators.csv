@@ -1,0 +1,5 @@
+category,n_profiles,probe_fit_profiles,fit_examples_per_policy,test_episodes_per_policy,policy_seeds_per_version_condition,episode_contributions_per_version_condition_timestep,terminal_rule
+one_delay_novel,42,0,0,168,5,840,Fixed cohort: hold each representation final valid vector after termination
+both_delays_novel,6,0,0,24,5,120,Fixed cohort: hold each representation final valid vector after termination
+unseen_pair_of_familiar_delays,18,0,0,72,5,360,Fixed cohort: hold each representation final valid vector after termination
+training_profile,24,24,384,96,5,480,Fixed cohort: hold each representation final valid vector after termination

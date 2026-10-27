@@ -1,0 +1,30 @@
+{
+  "source": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed5_t0fix_direct_input_test.h5",
+  "batch_size": 440,
+  "steps": 81,
+  "field_mismatches": {
+    "capability": 0,
+    "dones": 0,
+    "ego_alloc_action": 1,
+    "hidden_state": 79,
+    "is_t0": 1,
+    "layout_idx": 7,
+    "partner_assignment": 1,
+    "partner_goal": 1,
+    "rewards": 1,
+    "round_done": 1,
+    "round_idx": 7,
+    "round_time": 7,
+    "success": 1
+  },
+  "anchored_on_saved_hidden_states": true,
+  "hidden_absolute_tolerance": 0.002,
+  "max_hidden_error": 1.4680931568145752,
+  "test_episodes": 88,
+  "verified_test_episodes_all_steps": 86,
+  "verified_test_episodes_first30": 87,
+  "archive_sha256": "16fb4859607d334a3c872d1836fc510e00ffeba117bd9a453a1c03b03918bb3a",
+  "version": "v2",
+  "condition": "rnn_diverse_influence",
+  "training_seed": 5
+}

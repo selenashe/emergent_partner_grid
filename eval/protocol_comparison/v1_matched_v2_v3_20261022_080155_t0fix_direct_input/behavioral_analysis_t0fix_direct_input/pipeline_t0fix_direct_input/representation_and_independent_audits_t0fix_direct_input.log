@@ -1,0 +1,39 @@
+[stage] fit_specialist_probes_and_umaps
+[progress] specialist analyses 0/45
+[progress] specialist analyses 0/45
+[progress] specialist analyses 0/45
+[progress] specialist analyses 0/45
+[progress] specialist analyses 3/45
+[progress] specialist analyses 4/45
+[progress] specialist analyses 7/45
+[progress] specialist analyses 10/45
+[progress] specialist analyses 13/45
+[progress] specialist analyses 17/45
+[progress] specialist analyses 20/45
+[progress] specialist analyses 23/45
+[progress] specialist analyses 26/45
+[progress] specialist analyses 27/45
+[progress] specialist analyses 30/45
+[progress] specialist analyses 33/45
+[progress] specialist analyses 37/45
+[progress] specialist analyses 39/45
+[progress] specialist analyses 41/45
+[progress] specialist analyses 43/45
+[completed] /juice6/u/jshe/emergent_partner_grid/eval/representation_results/relative_speed_v1_matched_v2_v3_20261022_080155_t0fix_direct_input
+[stage] audit_specialist_probes
+Independent specialist-only audit passed for 45 policies.
+[stage] prepare_state_comparison
+/juice6/u/jshe/emergent_partner_grid/eval/representation_results/relative_speed_v1_matched_v2_v3_20261022_080155_t0fix_direct_input/prediction_fractions_state_comparison
+[stage] fit_discrete_state_probes
+[progress] discrete-state fits 0/45
+[progress] discrete-state fits 9/45
+[progress] discrete-state fits 25/45
+[progress] discrete-state fits 45/45
+[completed] /juice6/u/jshe/emergent_partner_grid/eval/representation_results/relative_speed_v1_matched_v2_v3_20261022_080155_t0fix_direct_input/prediction_fractions_state_comparison
+[stage] export_comparison_pngs
+/juice6/u/jshe/emergent_partner_grid/eval/representation_results/relative_speed_v1_matched_v2_v3_20261022_080155_t0fix_direct_input/prediction_fractions_state_comparison/rnn_diverse_influence/comparison_all_versions.png
+/juice6/u/jshe/emergent_partner_grid/eval/representation_results/relative_speed_v1_matched_v2_v3_20261022_080155_t0fix_direct_input/prediction_fractions_state_comparison/rnn_single_influence/comparison_all_versions.png
+/juice6/u/jshe/emergent_partner_grid/eval/representation_results/relative_speed_v1_matched_v2_v3_20261022_080155_t0fix_direct_input/prediction_fractions_state_comparison/rnn_diverse_noinfluence/comparison_all_versions.png
+[stage] audit_state_comparison
+Independent comparison audit passed for 45 policy entries.
+[completed] Specialist-only representation pipeline and both audits.

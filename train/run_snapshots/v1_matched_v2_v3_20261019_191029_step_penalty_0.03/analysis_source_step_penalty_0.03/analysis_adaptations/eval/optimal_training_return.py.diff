@@ -1,0 +1,38 @@
+--- eval/optimal_training_return.py
++++ eval/optimal_training_return.py
+@@ -160,7 +160,7 @@
+ 
+ 
+ def round_return(steps):
+-    return 1.0 - .01 * (steps - 1) if steps <= 100 else -1.0
++    return 1.0 - .03 * (steps - 1) if steps <= 100 else -3.0
+ 
+ 
+ def inputs(population="train"):
+@@ -178,7 +178,7 @@
+         raise ValueError("Expected the frozen 1,096-layout training corpus")
+     for version, config in configs.items():
+         kwargs = config["ENV_KWARGS"]
+-        if kwargs["step_penalty"] != .01 or kwargs["success_reward"] != 1 or kwargs["max_steps"] != 100:
++        if kwargs["step_penalty"] != .03 or kwargs["success_reward"] != 1 or kwargs["max_steps"] != 100:
+             raise ValueError(f"Unexpected reward or horizon: {version}")
+         if kwargs["rounds_per_episode"] != 20 or kwargs["augment_symmetries"]:
+             raise ValueError(f"Unexpected episode/layout setting: {version}")
+@@ -260,7 +260,7 @@
+     if args.limit_layouts:
+         paths = paths[:args.limit_layouts]
+     directory = "training_return_ceiling" if args.population == "train" else "heldout_return_ceiling"
+-    out_dir = (args.out_dir or ROOT / "eval" / directory / "v1_matched_v2_v3").resolve()
++    out_dir = (args.out_dir or Path('/juice6/u/jshe/emergent_partner_grid') / "eval" / directory / 'v1_matched_v2_v3_20261019_191029_step_penalty_0.03').resolve()
+     out_dir.mkdir(parents=True, exist_ok=True)
+     rows, node_count = [], 0
+     started = time.monotonic()
+@@ -310,7 +310,7 @@
+                       if args.population == "train" else
+                       "Uniform weight across the same familiar layouts and all 22 held-out profiles, including for the single-partner-trained policy. ")
+                      + "No-influence averages both fixed partner goals equally; v2 influence averages both random initial goals equally. Multiply mean round return by 20.",
+-        "episode_return_formula": "Sum over 20 rounds of 1 - 0.01*(optimal_round_steps-1), or -1 for a timeout.",
++        "episode_return_formula": "Sum over 20 rounds of 1 - 0.03*(optimal_round_steps-1), or -3 for a timeout.",
+         "absolute_reward_bound": 20, "layouts": len(paths), "profile_layout_pairs": len(rows),
+         "complete_corpus": len(paths) == 1096, "searched_states": node_count,
+         "elapsed_seconds": time.monotonic() - started,

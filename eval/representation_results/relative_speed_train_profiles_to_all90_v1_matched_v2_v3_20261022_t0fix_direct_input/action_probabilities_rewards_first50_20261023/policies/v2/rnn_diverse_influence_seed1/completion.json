@@ -1,0 +1,106 @@
+{
+  "status": "completed",
+  "version": "v2",
+  "condition": "rnn_diverse_influence",
+  "training_seed": 1,
+  "archive": "/juice6/u/jshe/emergent_partner_grid/eval/representation_results/relative_speed_train_profiles_to_all90_v1_matched_v2_v3_20261022_t0fix_direct_input/action_probabilities_rewards_first50_20261023/policies/v2/rnn_diverse_influence_seed1/episode_action_probabilities_rewards.npz",
+  "archive_sha256": "fd3772fe629171dd62d22874a375d80d9bfc5d6317f96a34cf3724cfdf61442b",
+  "episodes": 360,
+  "profiles": 90,
+  "steps": 50,
+  "test_repetitions": [
+    1,
+    9,
+    14,
+    15
+  ],
+  "reward_source": "original saved HDF5 rewards",
+  "probability_source": "frozen actor head applied to original saved h_t with exact phase/action mask",
+  "checkpoint_sha256": "73076c0540ecacb71910707335b716ba9e6cadb9bb5f2cfef3300a0f93be601b",
+  "input_rollouts": [
+    {
+      "path": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed1_t0fix_direct_input_train.h5",
+      "stats": {
+        "size": 531854400,
+        "mtime_ns": 1792679854990327438
+      },
+      "datasets": [
+        "assignment_changed",
+        "capability",
+        "capability_index_per_ep",
+        "capability_pool",
+        "dones",
+        "ego_alloc_action",
+        "ego_request_changed",
+        "hidden_state",
+        "is_t0",
+        "layout_idx",
+        "partner_assignment",
+        "partner_goal",
+        "rewards",
+        "round_done",
+        "round_idx",
+        "round_time",
+        "success"
+      ]
+    },
+    {
+      "path": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed1_t0fix_direct_input_test.h5",
+      "stats": {
+        "size": 487534224,
+        "mtime_ns": 1792679862646273492
+      },
+      "datasets": [
+        "assignment_changed",
+        "capability",
+        "capability_index_per_ep",
+        "capability_pool",
+        "dones",
+        "ego_alloc_action",
+        "ego_request_changed",
+        "hidden_state",
+        "is_t0",
+        "layout_idx",
+        "partner_assignment",
+        "partner_goal",
+        "rewards",
+        "round_done",
+        "round_idx",
+        "round_time",
+        "success"
+      ]
+    },
+    {
+      "path": "/juice6/u/jshe/emergent_partner_grid/eval/representation_results/relative_speed_all90_v1_matched_v2_v3_20261022_t0fix_direct_input/policies/v2/rnn_diverse_influence_seed1/additional_profiles.h5",
+      "stats": {
+        "size": 394816654,
+        "mtime_ns": 1792709966430912216
+      },
+      "datasets": [
+        "assignment_changed",
+        "capability",
+        "capability_index_per_ep",
+        "capability_pool",
+        "dones",
+        "ego_alloc_action",
+        "ego_request_changed",
+        "hidden_state",
+        "is_t0",
+        "layout_idx",
+        "partner_assignment",
+        "partner_goal",
+        "rewards",
+        "round_done",
+        "round_idx",
+        "round_time",
+        "success"
+      ]
+    }
+  ],
+  "probabilities_normalized": true,
+  "illegal_probability_zero": true,
+  "episode_padding": false,
+  "policy_retraining": false,
+  "probe_retraining": false,
+  "new_rollouts": false
+}

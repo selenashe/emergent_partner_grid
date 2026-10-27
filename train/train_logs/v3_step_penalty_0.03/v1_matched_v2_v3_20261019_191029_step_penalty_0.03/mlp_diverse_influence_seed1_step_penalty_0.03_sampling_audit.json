@@ -1,0 +1,329 @@
+{
+  "sampling_protocol": "paired_counterbalanced",
+  "experiment_version": "v2_balanced_training",
+  "allocation_protocol": "online_v3",
+  "schedule_path": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/schedules/diverse.npz",
+  "schedule_sha256": "3d41db4e8bdcb71d5300fd6fa2296a4e31367300c4e7e56e57620f89b40711ad",
+  "allocated_episode_prefix": 77998,
+  "unused_preallocated_episodes": 2927234,
+  "allocated_episode_count_difference": 1,
+  "collected_environment_steps": 59965440,
+  "rounds_started": 1557564,
+  "rounds_completed": 1557320,
+  "profiles": [
+    {
+      "capability": [
+        1,
+        4
+      ],
+      "episodes_allocated": 3250,
+      "episodes_started": 3250,
+      "episodes_completed": 3240,
+      "rounds_started": 64902,
+      "rounds_completed": 64892,
+      "environment_steps": 2298843,
+      "unique_layouts_started": 1096
+    },
+    {
+      "capability": [
+        1,
+        7
+      ],
+      "episodes_allocated": 3250,
+      "episodes_started": 3250,
+      "episodes_completed": 3236,
+      "rounds_started": 64859,
+      "rounds_completed": 64847,
+      "environment_steps": 3371177,
+      "unique_layouts_started": 1096
+    },
+    {
+      "capability": [
+        1,
+        8
+      ],
+      "episodes_allocated": 3250,
+      "episodes_started": 3250,
+      "episodes_completed": 3232,
+      "rounds_started": 64847,
+      "rounds_completed": 64829,
+      "environment_steps": 3725861,
+      "unique_layouts_started": 1096
+    },
+    {
+      "capability": [
+        1,
+        9
+      ],
+      "episodes_allocated": 3250,
+      "episodes_started": 3250,
+      "episodes_completed": 3231,
+      "rounds_started": 64825,
+      "rounds_completed": 64806,
+      "environment_steps": 4069731,
+      "unique_layouts_started": 1096
+    },
+    {
+      "capability": [
+        2,
+        4
+      ],
+      "episodes_allocated": 3250,
+      "episodes_started": 3250,
+      "episodes_completed": 3240,
+      "rounds_started": 64906,
+      "rounds_completed": 64896,
+      "environment_steps": 2298764,
+      "unique_layouts_started": 1096
+    },
+    {
+      "capability": [
+        2,
+        7
+      ],
+      "episodes_allocated": 3250,
+      "episodes_started": 3249,
+      "episodes_completed": 3235,
+      "rounds_started": 64859,
+      "rounds_completed": 64845,
+      "environment_steps": 3370609,
+      "unique_layouts_started": 1096
+    },
+    {
+      "capability": [
+        2,
+        8
+      ],
+      "episodes_allocated": 3250,
+      "episodes_started": 3250,
+      "episodes_completed": 3233,
+      "rounds_started": 64845,
+      "rounds_completed": 64830,
+      "environment_steps": 3723245,
+      "unique_layouts_started": 1096
+    },
+    {
+      "capability": [
+        2,
+        9
+      ],
+      "episodes_allocated": 3249,
+      "episodes_started": 3249,
+      "episodes_completed": 3231,
+      "rounds_started": 64827,
+      "rounds_completed": 64809,
+      "environment_steps": 4071150,
+      "unique_layouts_started": 1096
+    },
+    {
+      "capability": [
+        3,
+        4
+      ],
+      "episodes_allocated": 3249,
+      "episodes_started": 3249,
+      "episodes_completed": 3240,
+      "rounds_started": 64900,
+      "rounds_completed": 64891,
+      "environment_steps": 2300163,
+      "unique_layouts_started": 1096
+    },
+    {
+      "capability": [
+        3,
+        7
+      ],
+      "episodes_allocated": 3250,
+      "episodes_started": 3250,
+      "episodes_completed": 3235,
+      "rounds_started": 64861,
+      "rounds_completed": 64846,
+      "environment_steps": 3369144,
+      "unique_layouts_started": 1096
+    },
+    {
+      "capability": [
+        3,
+        8
+      ],
+      "episodes_allocated": 3250,
+      "episodes_started": 3250,
+      "episodes_completed": 3234,
+      "rounds_started": 64844,
+      "rounds_completed": 64828,
+      "environment_steps": 3725823,
+      "unique_layouts_started": 1096
+    },
+    {
+      "capability": [
+        3,
+        9
+      ],
+      "episodes_allocated": 3250,
+      "episodes_started": 3250,
+      "episodes_completed": 3231,
+      "rounds_started": 64828,
+      "rounds_completed": 64809,
+      "environment_steps": 4071092,
+      "unique_layouts_started": 1096
+    },
+    {
+      "capability": [
+        4,
+        1
+      ],
+      "episodes_allocated": 3250,
+      "episodes_started": 3250,
+      "episodes_completed": 3245,
+      "rounds_started": 64957,
+      "rounds_completed": 64952,
+      "environment_steps": 1318738,
+      "unique_layouts_started": 1096
+    },
+    {
+      "capability": [
+        4,
+        2
+      ],
+      "episodes_allocated": 3250,
+      "episodes_started": 3250,
+      "episodes_completed": 3244,
+      "rounds_started": 64940,
+      "rounds_completed": 64934,
+      "environment_steps": 1621083,
+      "unique_layouts_started": 1096
+    },
+    {
+      "capability": [
+        4,
+        3
+      ],
+      "episodes_allocated": 3250,
+      "episodes_started": 3250,
+      "episodes_completed": 3241,
+      "rounds_started": 64918,
+      "rounds_completed": 64912,
+      "environment_steps": 1949676,
+      "unique_layouts_started": 1096
+    },
+    {
+      "capability": [
+        7,
+        1
+      ],
+      "episodes_allocated": 3250,
+      "episodes_started": 3250,
+      "episodes_completed": 3246,
+      "rounds_started": 64958,
+      "rounds_completed": 64954,
+      "environment_steps": 1317362,
+      "unique_layouts_started": 1096
+    },
+    {
+      "capability": [
+        7,
+        2
+      ],
+      "episodes_allocated": 3250,
+      "episodes_started": 3250,
+      "episodes_completed": 3243,
+      "rounds_started": 64939,
+      "rounds_completed": 64933,
+      "environment_steps": 1620830,
+      "unique_layouts_started": 1096
+    },
+    {
+      "capability": [
+        7,
+        3
+      ],
+      "episodes_allocated": 3250,
+      "episodes_started": 3250,
+      "episodes_completed": 3243,
+      "rounds_started": 64926,
+      "rounds_completed": 64919,
+      "environment_steps": 1952353,
+      "unique_layouts_started": 1096
+    },
+    {
+      "capability": [
+        8,
+        1
+      ],
+      "episodes_allocated": 3250,
+      "episodes_started": 3250,
+      "episodes_completed": 3246,
+      "rounds_started": 64953,
+      "rounds_completed": 64949,
+      "environment_steps": 1316164,
+      "unique_layouts_started": 1096
+    },
+    {
+      "capability": [
+        8,
+        2
+      ],
+      "episodes_allocated": 3250,
+      "episodes_started": 3250,
+      "episodes_completed": 3244,
+      "rounds_started": 64941,
+      "rounds_completed": 64935,
+      "environment_steps": 1621356,
+      "unique_layouts_started": 1096
+    },
+    {
+      "capability": [
+        8,
+        3
+      ],
+      "episodes_allocated": 3250,
+      "episodes_started": 3250,
+      "episodes_completed": 3242,
+      "rounds_started": 64923,
+      "rounds_completed": 64916,
+      "environment_steps": 1954989,
+      "unique_layouts_started": 1096
+    },
+    {
+      "capability": [
+        9,
+        1
+      ],
+      "episodes_allocated": 3250,
+      "episodes_started": 3250,
+      "episodes_completed": 3245,
+      "rounds_started": 64948,
+      "rounds_completed": 64943,
+      "environment_steps": 1315575,
+      "unique_layouts_started": 1096
+    },
+    {
+      "capability": [
+        9,
+        2
+      ],
+      "episodes_allocated": 3250,
+      "episodes_started": 3250,
+      "episodes_completed": 3243,
+      "rounds_started": 64938,
+      "rounds_completed": 64932,
+      "environment_steps": 1624104,
+      "unique_layouts_started": 1096
+    },
+    {
+      "capability": [
+        9,
+        3
+      ],
+      "episodes_allocated": 3250,
+      "episodes_started": 3250,
+      "episodes_completed": 3242,
+      "rounds_started": 64920,
+      "rounds_completed": 64913,
+      "environment_steps": 1957608,
+      "unique_layouts_started": 1096
+    }
+  ],
+  "arrays": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v3_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/mlp_diverse_influence_seed1_step_penalty_0.03_sampling_audit.npz",
+  "note": "Allocation balance is exact up to one episode. Started/completed exposure can differ at the fixed-step cutoff; full matrices and active episodes are retained."
+}

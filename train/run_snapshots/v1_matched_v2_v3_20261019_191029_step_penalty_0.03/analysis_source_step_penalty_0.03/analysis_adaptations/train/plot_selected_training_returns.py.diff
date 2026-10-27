@@ -1,0 +1,22 @@
+--- train/plot_selected_training_returns.py
++++ train/plot_selected_training_returns.py
+@@ -22,8 +22,8 @@
+     VERSIONS, STYLES, DEFAULT_OUT, LOG_LINE, sha256, write_csv,
+ )
+ 
+-DEFAULT_SELECTION = DEFAULT_OUT / "best_of_10/selection.json"
+-OUTPUT_ROOT = ROOT / "train/training_curves/v1_matched_v2_v3_all_10_seeds/best_training_seeds"
++DEFAULT_SELECTION = DEFAULT_OUT / "best_of_5/selection.json"
++OUTPUT_ROOT = ROOT / "/juice6/u/jshe/emergent_partner_grid/train/training_curves/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/best_training_seeds"
+ 
+ 
+ def read_history(selected):
+@@ -141,7 +141,7 @@
+             ax.set_xlabel("Environment steps (millions)")
+             ax.set_xlim(0, 61)
+             ax.set_xticks([0, 20, 40, 60])
+-            ax.set_ylim(-21, 19)
++            ax.set_ylim(-61, 21)
+             ax.grid(axis="y", alpha=.15)
+         axes[0].set_ylabel("Average episode return", labelpad=12)
+         legend(fig, curves=True)

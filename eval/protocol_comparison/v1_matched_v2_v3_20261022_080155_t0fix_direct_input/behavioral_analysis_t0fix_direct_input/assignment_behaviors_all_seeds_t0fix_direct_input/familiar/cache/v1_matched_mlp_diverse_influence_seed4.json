@@ -1,0 +1,20 @@
+{
+  "source": {
+    "path": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/analyses_20261022_172833_t0fix_direct_input/analysis_source_t0fix_direct_input/inputs_t0fix_direct_input/evaluations/v1_matched_t0fix_direct_input/mlp_diverse_influence_seed4_train.h5",
+    "size": 42250432,
+    "mtime_ns": 1792665043619048689,
+    "summary": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/analyses_20261022_172833_t0fix_direct_input/analysis_source_t0fix_direct_input/inputs_t0fix_direct_input/evaluations/v1_matched_t0fix_direct_input/mlp_diverse_influence_seed4_summary.json",
+    "summary_sha256": "064abeb59690b1881d8006a984db60b33ef1a0e3c0a95ae350c2b81f742282fd",
+    "cache_version": 1
+  },
+  "scalar_datasets_sha256": {
+    "dones": "53fa8ab222a9884a8790936126d5f458ee85c8b3736eec7a262dea0978ae06f2",
+    "round_done": "960c18b3e7635f8df79d60133a0da3d7c9e61d128f86ded28bfa80039984bc3e",
+    "round_idx": "d6853ebbdd67b406de349cdedb5bfa8c5252988623fc0f9db2d8797828b7f161",
+    "round_time": "222f363e013900d6dd09bf0b591e795f9d8ae649906c672ca84b8ea5b9f6cd4b",
+    "is_t0": "d5c31230afe3f39f94ff2e44386b2259810e4c636c9629fcbee6b6da0913ea14",
+    "partner_assignment": "311282d685a174ab9b76e3a5e38c3f9d0500dd83f70832562881b64eb1f033b4"
+  },
+  "saved_episode_return": 12.890335083007812,
+  "saved_success": 0.9865625
+}

@@ -1,0 +1,9 @@
+[read saved final-policy states] {'version': 'v2', 'condition': 'rnn_diverse_noinfluence', 'training_seed': 4}
+[fit 384 familiar-profile examples] 0 63
+[fit 384 familiar-profile examples] 64 127
+[fit 384 familiar-profile examples] 128 191
+[fit 384 familiar-profile examples] 192 255
+[fit 384 familiar-profile examples] 256 319
+[fit 384 familiar-profile examples] 320 383
+[fit 384 familiar-profile examples] 384 400
+[completed] {'version': 'v2', 'condition': 'rnn_diverse_noinfluence', 'training_seed': 4}

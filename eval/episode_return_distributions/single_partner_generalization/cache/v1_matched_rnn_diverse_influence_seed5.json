@@ -1,0 +1,14 @@
+{
+  "version": "v1_matched",
+  "condition": "rnn_diverse_influence",
+  "seed": 5,
+  "checkpoint_sha256": "058edcb5e2cd39e56db5fc48f042a81ecc8251c2bd6a8d5a66462846ad9a3693",
+  "config_sha256": "3d0e6d7e4875470979314511fd5bdb31046e53669d1ed2301efd456892782899",
+  "episodes": 920,
+  "groups": [
+    "training_partner",
+    "other_reference",
+    "held_out"
+  ],
+  "value_source": "frozen critic head on original saved post-observation GRU states"
+}

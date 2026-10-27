@@ -1,0 +1,1033 @@
+{
+  "status": "passed",
+  "policies": 60,
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "differences": [
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_influence",
+      "seed": 1,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v1_matched_balanced_training/v1_matched_20261009_182845/rnn_diverse_influence_seed1.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_matched_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_diverse_influence_seed1_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_influence",
+      "seed": 2,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v1_matched_balanced_training/v1_matched_20261009_182845/rnn_diverse_influence_seed2.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_matched_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_diverse_influence_seed2_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_influence",
+      "seed": 3,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v1_matched_balanced_training/v1_matched_20261009_182845/rnn_diverse_influence_seed3.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_matched_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_diverse_influence_seed3_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_influence",
+      "seed": 4,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v1_matched_balanced_training/v1_matched_20261009_182845/rnn_diverse_influence_seed4.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_matched_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_diverse_influence_seed4_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_influence",
+      "seed": 5,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v1_matched_balanced_training/v1_matched_20261009_182845/rnn_diverse_influence_seed5.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_matched_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_diverse_influence_seed5_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v1_matched",
+      "condition": "mlp_diverse_influence",
+      "seed": 1,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v1_matched_balanced_training/v1_matched_20261009_182845/mlp_diverse_influence_seed1.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_matched_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/mlp_diverse_influence_seed1_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v1_matched",
+      "condition": "mlp_diverse_influence",
+      "seed": 2,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v1_matched_balanced_training/v1_matched_20261009_182845/mlp_diverse_influence_seed2.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_matched_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/mlp_diverse_influence_seed2_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v1_matched",
+      "condition": "mlp_diverse_influence",
+      "seed": 3,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v1_matched_balanced_training/v1_matched_20261009_182845/mlp_diverse_influence_seed3.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_matched_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/mlp_diverse_influence_seed3_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v1_matched",
+      "condition": "mlp_diverse_influence",
+      "seed": 4,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v1_matched_balanced_training/v1_matched_20261009_182845/mlp_diverse_influence_seed4.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_matched_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/mlp_diverse_influence_seed4_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v1_matched",
+      "condition": "mlp_diverse_influence",
+      "seed": 5,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v1_matched_balanced_training/v1_matched_20261009_182845/mlp_diverse_influence_seed5.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_matched_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/mlp_diverse_influence_seed5_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_single_influence",
+      "seed": 1,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v1_matched_balanced_training/v1_matched_20261009_182845/rnn_single_influence_seed1.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_matched_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_single_influence_seed1_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_single_influence",
+      "seed": 2,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v1_matched_balanced_training/v1_matched_20261009_182845/rnn_single_influence_seed2.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_matched_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_single_influence_seed2_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_single_influence",
+      "seed": 3,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v1_matched_balanced_training/v1_matched_20261009_182845/rnn_single_influence_seed3.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_matched_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_single_influence_seed3_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_single_influence",
+      "seed": 4,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v1_matched_balanced_training/v1_matched_20261009_182845/rnn_single_influence_seed4.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_matched_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_single_influence_seed4_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_single_influence",
+      "seed": 5,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v1_matched_balanced_training/v1_matched_20261009_182845/rnn_single_influence_seed5.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_matched_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_single_influence_seed5_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 1,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v1_matched_balanced_training/v1_matched_20261009_182845/rnn_diverse_noinfluence_seed1.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_matched_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_diverse_noinfluence_seed1_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 2,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v1_matched_balanced_training/v1_matched_20261009_182845/rnn_diverse_noinfluence_seed2.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_matched_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_diverse_noinfluence_seed2_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 3,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v1_matched_balanced_training/v1_matched_20261009_182845/rnn_diverse_noinfluence_seed3.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_matched_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_diverse_noinfluence_seed3_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 4,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v1_matched_balanced_training/v1_matched_20261009_182845/rnn_diverse_noinfluence_seed4.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_matched_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_diverse_noinfluence_seed4_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 5,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v1_matched_balanced_training/v1_matched_20261009_182845/rnn_diverse_noinfluence_seed5.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v1_matched_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_diverse_noinfluence_seed5_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_influence",
+      "seed": 1,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed1.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_diverse_influence_seed1_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_influence",
+      "seed": 2,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed2.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_diverse_influence_seed2_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_influence",
+      "seed": 3,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed3.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_diverse_influence_seed3_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_influence",
+      "seed": 4,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed4.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_diverse_influence_seed4_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_influence",
+      "seed": 5,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_influence_seed5.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_diverse_influence_seed5_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v2",
+      "condition": "mlp_diverse_influence",
+      "seed": 1,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/mlp_diverse_influence_seed1.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/mlp_diverse_influence_seed1_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v2",
+      "condition": "mlp_diverse_influence",
+      "seed": 2,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/mlp_diverse_influence_seed2.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/mlp_diverse_influence_seed2_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v2",
+      "condition": "mlp_diverse_influence",
+      "seed": 3,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/mlp_diverse_influence_seed3.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/mlp_diverse_influence_seed3_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v2",
+      "condition": "mlp_diverse_influence",
+      "seed": 4,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/mlp_diverse_influence_seed4.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/mlp_diverse_influence_seed4_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v2",
+      "condition": "mlp_diverse_influence",
+      "seed": 5,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/mlp_diverse_influence_seed5.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/mlp_diverse_influence_seed5_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_single_influence",
+      "seed": 1,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed1.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_single_influence_seed1_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_single_influence",
+      "seed": 2,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed2.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_single_influence_seed2_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_single_influence",
+      "seed": 3,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed3.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_single_influence_seed3_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_single_influence",
+      "seed": 4,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed4.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_single_influence_seed4_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_single_influence",
+      "seed": 5,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_single_influence_seed5.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_single_influence_seed5_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 1,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed1.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_diverse_noinfluence_seed1_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 2,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed2.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_diverse_noinfluence_seed2_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 3,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed3.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_diverse_noinfluence_seed3_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 4,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed4.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_diverse_noinfluence_seed4_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 5,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v2_balanced_training/counterbalanced1096_20261002_235609/rnn_diverse_noinfluence_seed5.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v2_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_diverse_noinfluence_seed5_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_influence",
+      "seed": 1,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v3_balanced_training/counterbalanced1096_20261008_035848_v3/rnn_diverse_influence_seed1.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v3_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_diverse_influence_seed1_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_influence",
+      "seed": 2,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v3_balanced_training/counterbalanced1096_20261008_035848_v3/rnn_diverse_influence_seed2.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v3_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_diverse_influence_seed2_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_influence",
+      "seed": 3,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v3_balanced_training/counterbalanced1096_20261008_035848_v3/rnn_diverse_influence_seed3.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v3_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_diverse_influence_seed3_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_influence",
+      "seed": 4,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v3_balanced_training/counterbalanced1096_20261008_035848_v3/rnn_diverse_influence_seed4.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v3_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_diverse_influence_seed4_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_influence",
+      "seed": 5,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v3_balanced_training/counterbalanced1096_20261008_035848_v3/rnn_diverse_influence_seed5.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v3_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_diverse_influence_seed5_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v3",
+      "condition": "mlp_diverse_influence",
+      "seed": 1,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v3_balanced_training/counterbalanced1096_20261008_035848_v3/mlp_diverse_influence_seed1.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v3_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/mlp_diverse_influence_seed1_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v3",
+      "condition": "mlp_diverse_influence",
+      "seed": 2,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v3_balanced_training/counterbalanced1096_20261008_035848_v3/mlp_diverse_influence_seed2.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v3_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/mlp_diverse_influence_seed2_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v3",
+      "condition": "mlp_diverse_influence",
+      "seed": 3,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v3_balanced_training/counterbalanced1096_20261008_035848_v3/mlp_diverse_influence_seed3.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v3_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/mlp_diverse_influence_seed3_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v3",
+      "condition": "mlp_diverse_influence",
+      "seed": 4,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v3_balanced_training/counterbalanced1096_20261008_035848_v3/mlp_diverse_influence_seed4.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v3_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/mlp_diverse_influence_seed4_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v3",
+      "condition": "mlp_diverse_influence",
+      "seed": 5,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v3_balanced_training/counterbalanced1096_20261008_035848_v3/mlp_diverse_influence_seed5.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v3_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/mlp_diverse_influence_seed5_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_single_influence",
+      "seed": 1,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v3_balanced_training/counterbalanced1096_20261008_035848_v3/rnn_single_influence_seed1.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v3_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_single_influence_seed1_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_single_influence",
+      "seed": 2,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v3_balanced_training/counterbalanced1096_20261008_035848_v3/rnn_single_influence_seed2.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v3_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_single_influence_seed2_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_single_influence",
+      "seed": 3,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v3_balanced_training/counterbalanced1096_20261008_035848_v3/rnn_single_influence_seed3.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v3_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_single_influence_seed3_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_single_influence",
+      "seed": 4,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v3_balanced_training/counterbalanced1096_20261008_035848_v3/rnn_single_influence_seed4.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v3_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_single_influence_seed4_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_single_influence",
+      "seed": 5,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v3_balanced_training/counterbalanced1096_20261008_035848_v3/rnn_single_influence_seed5.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v3_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_single_influence_seed5_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 1,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v3_balanced_training/counterbalanced1096_20261008_035848_v3/rnn_diverse_noinfluence_seed1.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v3_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_diverse_noinfluence_seed1_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 2,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v3_balanced_training/counterbalanced1096_20261008_035848_v3/rnn_diverse_noinfluence_seed2.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v3_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_diverse_noinfluence_seed2_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 3,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v3_balanced_training/counterbalanced1096_20261008_035848_v3/rnn_diverse_noinfluence_seed3.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v3_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_diverse_noinfluence_seed3_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 4,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v3_balanced_training/counterbalanced1096_20261008_035848_v3/rnn_diverse_noinfluence_seed4.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v3_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_diverse_noinfluence_seed4_step_penalty_0.03.safetensors"
+        }
+      ]
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 5,
+      "differences": [
+        {
+          "field": "ENV_KWARGS.step_penalty",
+          "before": 0.01,
+          "after": 0.03
+        },
+        {
+          "field": "SAVE_PARAMS_PATH",
+          "before": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v3_balanced_training/counterbalanced1096_20261008_035848_v3/rnn_diverse_noinfluence_seed5.safetensors",
+          "after": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/v3_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_diverse_noinfluence_seed5_step_penalty_0.03.safetensors"
+        }
+      ]
+    }
+  ]
+}

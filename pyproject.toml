@@ -6,6 +6,9 @@ build-backend = "setuptools.build_meta"
 [tool.setuptools.packages.find]
 include = ['jaxmarl*']
 
+[tool.setuptools]
+py-modules = ["repo_paths"]
+
 [tool.setuptools.dynamic]
 version = {attr = "jaxmarl.__version__"}
 dependencies = {file = ["requirements/requirements.txt"]}

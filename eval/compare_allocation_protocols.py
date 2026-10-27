@@ -1,4 +1,4 @@
-"""Compare saved v1/v2/v3 evaluations, including counterbalanced training batches."""
+"""Compare saved v1_matched/v2/v3 evaluations, including counterbalanced training batches."""
 import argparse
 import csv
 import json
@@ -16,11 +16,14 @@ import h5py
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from repo_paths import resolve_path, resolve_record_paths
-BATCH = "counterbalanced1096_20261002_235609"
-INPUTS = {v: ROOT / "eval/eval_out" / f"{v}_balanced_training" / BATCH for v in ("v1", "v2")}
+from eval.plot_episode_return_dots import plot_episode_return_dots
+from train.experiment import BATCH, VIEW_MANIFEST
+DEFAULT_MANIFEST = VIEW_MANIFEST
+INPUTS = {}
 OUT = ROOT / "eval/protocol_comparison" / BATCH
 COUNTERBALANCED = True
 SEEDS = tuple(range(1, 6))
+TAGS = {}
 POPULATION = "test"
 CONDITIONS = {
     "rnn_diverse_influence": "Diverse RNN\n+ influence",
@@ -28,17 +31,16 @@ CONDITIONS = {
     "rnn_single_influence": "Single RNN\n+ influence",
     "rnn_diverse_noinfluence": "Diverse RNN\nno influence",
 }
-VERSION_COLORS = {"v1": "#5979ad", "v2": "#de8845", "v3": "#29936b"}
-VERSION_LABELS = {"v1": "v1: commit at round start", "v2": "v2: random start + switching",
+VERSION_COLORS = {"v1_matched": "#9470bb", "v2": "#de8845", "v3": "#29936b"}
+VERSION_LABELS = {"v1_matched": "v1_matched: commit at round start", "v2": "v2: random start + switching",
                   "v3": "v3: chosen start + switching"}
 
 
 def main():
     # Audit guide:
     # Gather all requested policies per condition from the appropriate manifests and
-    # summarize the requested population performance separately for fixed v1 and online v2. Plot
-    # means and sample standard deviations over learner seeds. Original v1/v2
-    # comparisons also change corpus size; counterbalanced comparisons share a corpus
+    # summarize the requested population performance separately for fixed allocation and online allocation. Plot
+    # means and sample standard deviations over learner seeds. Maintained comparisons share a corpus
     # and schedule design.
     #
     OUT.mkdir(parents=True, exist_ok=True)
@@ -51,14 +53,15 @@ def main():
                 # An extension combines old and new runs without copying or overwriting
                 # their results. Map each seed explicitly to its evaluation directory.
                 seed_directory = Path(directory[str(seed)]) if isinstance(directory, dict) else directory
-                path = seed_directory / f"{condition}_seed{seed}_summary.json"
+                tag = TAGS.get((version, condition, seed), f"{condition}_seed{seed}")
+                path = seed_directory / f"{tag}_summary.json"
                 sources.append(str(path))
                 d = json.loads(path.read_text())[POPULATION]
                 expected_episodes = (24 if POPULATION == "train" else 22) * 20
                 assert d["n_episodes"] == expected_episodes and d["n_rounds"] == expected_episodes * 20
                 if version in ("v2", "v3"):
                     assert d["allocation_protocol"] == f"online_{version}"
-                rollout_path = seed_directory / f"{condition}_seed{seed}_{POPULATION}.h5"
+                rollout_path = seed_directory / f"{tag}_{POPULATION}.h5"
                 sources.append(str(rollout_path))
                 with h5py.File(rollout_path) as f:
                     dones = np.asarray(f["dones"], dtype=bool)
@@ -105,6 +108,7 @@ def main():
                  "Episode steps count environment transitions across all 20 rounds, including initialization and timeouts, through the first final done."],
         aggregates=aggregates, trajectories=trajectories)
     (OUT / "comparison.json").write_text(json.dumps(report, indent=2) + "\n")
+    plot_episode_return_dots(report, OUT)
     fig, axes = plt.subplots(1, 3, figsize=(18.5, 4.7))
     colors = VERSION_COLORS
     versions = tuple(INPUTS)
@@ -172,32 +176,15 @@ def main():
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--counterbalanced-batch", help="Batch under eval/eval_out/{v1,v2}_balanced_training")
-    parser.add_argument("--extension-manifest", type=Path, help="Explicit original/new evaluation directories for all ten seeds")
-    parser.add_argument("--population", choices=("train", "test"), default="test")
-    parser.add_argument("--out-dir", type=Path)
+    parser.add_argument('--manifest', type=Path, default=DEFAULT_MANIFEST)
+    parser.add_argument('--population', choices=('train', 'test'), default='test')
+    parser.add_argument('--out-dir', type=Path)
     args = parser.parse_args()
+    manifest = resolve_record_paths(json.loads(args.manifest.read_text()))
+    if manifest.get('evaluation_seeds', manifest.get('seeds')) != [1, 2, 3, 4, 5]:
+        parser.error('Expected the five-seed direct-input cohort')
     POPULATION = args.population
-    if args.extension_manifest:
-        if args.counterbalanced_batch:
-            parser.error("Choose either a batch or an extension manifest")
-        manifest = resolve_record_paths(json.loads(args.extension_manifest.read_text()))
-        if manifest.get("action_selection", "categorical") != "categorical":
-            parser.error("Seed extensions must retain original categorical sampling")
-        SEEDS = tuple(manifest["evaluation_seeds"])
-        if len(SEEDS) < 2 or len(SEEDS) != len(set(SEEDS)):
-            parser.error("At least two distinct learner seeds are required")
-        INPUTS = manifest["evaluation_inputs"]
-        COUNTERBALANCED = True
-        OUT = Path(manifest["aggregate_root"]) / ("familiar" if POPULATION == "train" else "novel")
-    if args.counterbalanced_batch:
-        BATCH = args.counterbalanced_batch
-        COUNTERBALANCED = True
-        INPUTS = {v: resolve_path(ROOT / "eval/eval_out" / f"{v}_balanced_training" / BATCH) for v in ("v1", "v2")}
-        OUT = resolve_path(ROOT / "eval/protocol_comparison" / BATCH)
-        manifest = json.loads(resolve_path(ROOT / "train/manifests" / f"sbatch_{BATCH}.json").read_text())
-        if manifest.get("sampling_protocol") != "paired_counterbalanced_v1" or manifest.get("action_selection", "categorical") != "categorical":
-            parser.error("Expected a categorical counterbalanced batch")
-    if args.out_dir:
-        OUT = args.out_dir
+    INPUTS = manifest.get('evaluation_inputs', {v: Path(d['evaluation_root']) for v, d in manifest['versions'].items()})
+    TAGS = {(j['version'], j['condition'], j['seed']): j['tag'] for j in manifest['training_jobs']}
+    OUT = args.out_dir or Path(manifest['comparison_root']) / 'all_5_seeds' / ('familiar' if POPULATION == 'train' else 'novel')
     main()

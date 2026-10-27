@@ -1,0 +1,85 @@
+--- diagnostics/diagnose_seed_variability.py
++++ diagnostics/diagnose_seed_variability.py
+@@ -28,9 +28,9 @@
+               "rnn_single_influence", "rnn_diverse_noinfluence")
+ LABELS = ("Diverse RNN + influence", "Diverse MLP + influence",
+           "Single RNN + influence", "Diverse RNN, no influence")
+-HISTORY = ROOT / "train/training_curves/v1_matched_v2_v3_all_10_seeds"
+-EVALUATION = ROOT / "eval/protocol_comparison/v1_matched_20261009_182845"
+-PROBES = ROOT / "eval/representation_results/relative_speed_v1_matched_v2_v3_20261013_all_10_seeds/probe_per_seed.csv"
++HISTORY = ROOT / "/juice6/u/jshe/emergent_partner_grid/train/training_curves/v1_matched_v2_v3_20261022_080155_t0fix_direct_input"
++EVALUATION = ROOT / "/juice6/u/jshe/emergent_partner_grid/eval/protocol_comparison/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/behavioral_analysis_t0fix_direct_input"
++PROBES = ROOT / "/juice6/u/jshe/emergent_partner_grid/eval/representation_results/relative_speed_v1_matched_v2_v3_20261022_080155_t0fix_direct_input/probe_per_seed.csv"
+ WINDOWS = ((1, 46), (47, 92), (93, 183), (184, 366), (367, 549),
+            (550, 732), (733, 869), (870, 915))
+ SOURCES = [
+@@ -103,13 +103,13 @@
+     updates = {}
+     for row in read_csv(HISTORY / "updates.csv"):
+         updates.setdefault(identity(row), []).append(row)
+-    expected = {(v, c, s) for v in VERSIONS for c in CONDITIONS for s in range(1, 11)}
++    expected = {(v, c, s) for v in VERSIONS for c in CONDITIONS for s in range(1, 6)}
+     if set(updates) != expected or len(metadata["runs"]) != 120:
+         raise ValueError("Need all 120 policies")
+     behavior = {identity(r): r for r in read_csv(
+         EVALUATION / "assignment_behaviors_all_seeds/novel/per_seed_summary.csv")}
+     evaluation = {pop: {identity(r): r for r in read_csv(
+-        EVALUATION / f"all_10_seeds/{pop}/per_seed.csv") if r["version"] in VERSIONS}
++        EVALUATION / f"all_5_seeds_t0fix_direct_input/{pop}/per_seed.csv") if r["version"] in VERSIONS}
+         for pop in ("familiar", "novel")}
+     probes = {(r["version"], r["condition"], int(r["training_seed"])): r
+               for r in read_csv(PROBES) if r["axis"] == "round" and r["cutoff"] == "20"
+@@ -210,7 +210,7 @@
+     rows = []
+     for record in records:
+         version, condition, seed = identity(record)
+-            # Include all ten seeds in every condition to separate failure modes.
++            # Include all five seeds in every condition to separate failure modes.
+         for population in ("train", "test"):
+             path = resolve_path(record["source"]["path"])
+             path = path.with_name(path.name.replace("_test.h5", f"_{population}.h5"))
+@@ -299,7 +299,7 @@
+     for ci, condition in enumerate(CONDITIONS):
+         for vi, version in enumerate(VERSIONS):
+             ax = axes[ci, vi]
+-            for seed in range(1, 11):
++            for seed in range(1, 6):
+                 data = curves[(version, condition, seed)]
+                 ax.plot(data["env_steps"][45:]/1e6, trailing(data["episode_return"]),
+                         color=colors[seed-1], lw=1.25, label=str(seed))
+@@ -388,7 +388,7 @@
+         reward_identity_max_abs_error=max(abs(r[p+"_return_identity_error"]) for r in rows for p in ("familiar", "novel")),
+         source_files={str(p): sha256(p) for p in (Path(__file__), HISTORY/"updates.csv", HISTORY/"summary.json",
+             EVALUATION/"assignment_behaviors_all_seeds/novel/per_seed_summary.csv",
+-            EVALUATION/"all_10_seeds/familiar/per_seed.csv", EVALUATION/"all_10_seeds/novel/per_seed.csv", PROBES)},
++            EVALUATION/"all_5_seeds_t0fix_direct_input/familiar/per_seed.csv", EVALUATION/"all_5_seeds_t0fix_direct_input/novel/per_seed.csv", PROBES)},
+         rollout_audited_policies=120 if rollout_rows else 0,
+         intervention_policy_count=len(interventions),
+         caveats=["Training histories are retrospective; no training ablation or rescue training was run. Separate small final-policy interventions were evaluated.",
+@@ -402,7 +402,7 @@
+             "V2/V3 no-influence histories and behaviors are identical; do not count them as independent replication.",
+             "Switch-delay replay measures movement eligibility, not realized movement or causal return gains.",
+             "Assignment dwell excludes initial and right-censored final segments.",
+-            "Early/final correlations describe ten seeds per cell, are post hoc, and are not causal evidence."],
++            "Early/final correlations describe five seeds per cell, are post hoc, and are not causal evidence."],
+         references=[dict(title=t,url=u) for t,u in SOURCES], runs=provenance)
+     (out/"audit.json").write_text(json.dumps(result, indent=2, allow_nan=False)+"\n")
+     selected = [("v1_matched", "rnn_diverse_influence", 2), ("v1_matched", "rnn_diverse_influence", 7),
+@@ -457,7 +457,7 @@
+ complete nearly 99% of novel rounds, and assign the partner its faster goal about 50% of the time.
+ {counts['v1_matched']['final_partner_faster_above_80pct']} of ten v1_matched main policies exceed 80% faster-goal assignment,
+ compared with {counts['v2']['final_partner_faster_above_80pct']} of ten V2 and {counts['v3']['final_partner_faster_above_80pct']} of ten V3.
+-All ten V3 main policies choose one initial color at least 98% of the time. Good navigation and high success can therefore coexist with failure to learn partner-dependent allocation.</p>
++All five V3 main policies choose one initial color at least 98% of the time. Good navigation and high success can therefore coexist with failure to learn partner-dependent allocation.</p>
+ <p>Early commitment is not necessarily permanent: v1_matched seeds 3 and 5 were almost exclusively one color around 3–6M steps,
+ then later developed partner-dependent choices. Conversely, seeds 6 and 7 learned navigation quickly and retained fixed-color strategies.
+ Early return therefore does not reliably identify which seeds will learn partner adaptation; the per-cell rank correlations are saved separately.</p>
+@@ -529,7 +529,7 @@
+     rollout_rows = audit_rollouts(out) if args.rollouts else []
+     if args.reuse_rollouts:
+         rollout_rows = read_csv(out/"rollout_diagnostics.csv")
+-        expected = {(v,c,s) for v in VERSIONS for c in CONDITIONS for s in range(1,11)}
++        expected = {(v,c,s) for v in VERSIONS for c in CONDITIONS for s in range(1,6)}
+         for population in ("train", "test"):
+             observed = {identity(r) for r in rollout_rows if r["population"]==population and r["orientation"]=="all"}
+             if observed != expected:

@@ -1,0 +1,46 @@
+--- diagnostics/scan_return_divergence.py
++++ diagnostics/scan_return_divergence.py
+@@ -95,14 +95,14 @@
+         for ax, (version, condition) in zip(axes.ravel(), families):
+             ax.axvspan(0, 32*STEPS/1e6, color="#4477aa", alpha=.07)
+             selected = sorted(k[2] for k in target_keys if k[:2] == (version, condition))
+-            for seed in range(1, 11):
++            for seed in range(1, 6):
+                 if seed not in selected:
+                     ax.plot(x, rolling(histories[(version, condition, seed)], 8), color="#bbbbbb", alpha=.55, linewidth=.7)
+             for seed in selected:
+                 ax.plot(x, rolling(histories[(version, condition, seed)], 8),
+                     color=colors[seed-1], label=f"Seed {seed}", linewidth=1.8)
+             if len(selected) == 1:
+-                ref = other_median([rolling(histories[(version, condition, seed)], 8) for seed in range(1, 11) if seed not in selected])
++                ref = other_median([rolling(histories[(version, condition, seed)], 8) for seed in range(1, 6) if seed not in selected])
+                 ax.plot(x, ref, color="#222222", linestyle="--", linewidth=1.2, label="Other 9 median")
+             ax.set_title(f"{version} · {LABELS[condition]}");ax.set_xlim(0, limit);ax.set_ylim(-17, 20)
+             ax.grid(alpha=.15);ax.legend(fontsize=8, frameon=False, loc="lower right")
+@@ -208,7 +208,7 @@
+     selection_audit = json.loads((SELECTION/"audit.json").read_text())
+     source = HISTORY/"updates.csv"
+     assert sha(source) == selection_audit["source_sha256"][str(source)]
+-    histories = {(v, c, s): np.full(915, np.nan) for v in VERSIONS for c in CONDITIONS for s in range(1, 11)}
++    histories = {(v, c, s): np.full(915, np.nan) for v in VERSIONS for c in CONDITIONS for s in range(1, 6)}
+     updates = {k: [] for k in histories}
+     for r in read_csv(source):
+         if key(r) not in histories:continue
+@@ -218,7 +218,7 @@
+     summaries, events, curves = [], [], []
+     for name, version, condition, a, b in COMPARISONS:
+         raw_a = histories[(version, condition, a)]
+-        peers = [histories[(version, condition, seed)] for seed in range(1, 11) if seed != a]
++        peers = [histories[(version, condition, seed)] for seed in range(1, 6) if seed != a]
+         row = dict(comparison=name, version=version, condition=condition, seed_A=a,
+             seed_B=str(b) if b is not None else "median_other_9", threshold=1., persistence=8,
+             last32_A=float(np.nanmean(raw_a[-32:])),
+@@ -271,7 +271,7 @@
+     write_csv(out/"comparison_curves.csv", curves);write_csv(out/"target_return_audit.csv", target_stats)
+     plot(out, histories, targets)
+     markers=plot_gap_onsets(out, summaries, curves)
+-    audit=dict(selected_policies=12, available_reference_policies=90, updates_per_policy=915,
++    audit=dict(selected_policies=12, available_reference_policies=45, updates_per_policy=915,
+         full_training_history_scanned=True, new_training_launched=False,
+         primary_rule="Absolute 8-update trailing-mean gap >=1 return unit for >=8 consecutive window endpoints; at least 6/8 finite returns per seed/window.",
+         sensitivity="Also 4- and 16-update windows (>=75% finite) and threshold 2; these are descriptive screens, not confidence intervals or hypothesis tests.",

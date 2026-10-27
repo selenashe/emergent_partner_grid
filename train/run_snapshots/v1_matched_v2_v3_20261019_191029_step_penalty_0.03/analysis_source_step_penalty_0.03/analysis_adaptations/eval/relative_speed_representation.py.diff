@@ -1,0 +1,85 @@
+--- eval/relative_speed_representation.py
++++ eval/relative_speed_representation.py
+@@ -232,8 +232,8 @@
+     rng = np.random.default_rng(30000)
+     keys = ["version", "condition", "axis", "cutoff", "kind", "population"]
+     for group_keys, group in table.groupby(keys, sort=True):
+-        if len(group) != 10 or set(group.training_seed) != set(range(1, 11)):
+-            raise ValueError("Every summary needs ten independent policy seeds")
++        if len(group) != 5 or set(group.training_seed) != set(range(1, 6)):
++            raise ValueError("Every summary needs five independent policy seeds")
+         row = dict(zip(keys, group_keys))
+         for metric in ("balanced_accuracy", "accuracy", "recall_0", "recall_1"):
+             values = group.sort_values("training_seed")[metric].to_numpy()
+@@ -241,7 +241,7 @@
+                 continue
+             if not np.isfinite(values).all():
+                 raise ValueError("Partial missing seed metrics")
+-            boot = values[rng.integers(0, 10, size=(10000, 10))].mean(axis=1)
++            boot = values[rng.integers(0, 5, size=(10000, 5))].mean(axis=1)
+             row.update({f"{metric}_mean": float(values.mean()), f"{metric}_sd": float(values.std(ddof=1)),
+                 f"{metric}_ci_low": float(np.quantile(boot, 0.025)), f"{metric}_ci_high": float(np.quantile(boot, 0.975))})
+         rows.append(row)
+@@ -267,13 +267,13 @@
+             ax.spines[["top", "right"]].set_visible(False)
+         axs[0].set_ylabel("Binary balanced accuracy")
+         axs[-1].legend(frameon=False, fontsize=8, loc="lower right")
+-        fig.suptitle("Mean across 10 training seeds; shading: 95% bootstrap CI across seeds", fontsize=11)
++        fig.suptitle("Mean across 5 training seeds; shading: 95% bootstrap CI across seeds", fontsize=11)
+         fig.tight_layout()
+         for ext in ("png", "pdf"):
+             fig.savefig(root / f"relative_speed_{axis}_all_seeds.{ext}", dpi=180)
+         plt.close(fig)
+         with PdfPages(root / f"relative_speed_{axis}_individual_seeds.pdf") as pdf:
+-            for seed in range(1, 11):
++            for seed in range(1, 6):
+                 fig, axs = plt.subplots(1, 3, figsize=(15, 4.8), sharey=True)
+                 for ax, version in zip(axs, VERSIONS):
+                     for condition, color in zip(CONDITIONS, CONDITION_COLORS):
+@@ -352,7 +352,7 @@
+     make_umap_book(umap, root)
+     make_confusion_figure(combined_confusions, root)
+     report = ["# Specialist-only relative-speed decoding", "",
+-        "v1_matched, v2, and v3; three RNN conditions; seeds 1–10: 90 fixed policies.", "",
++        "v1_matched, v2, and v3; three RNN conditions; seeds 1–5: 45 fixed policies.", "",
+         "Only the original 46 specialist profiles are used, with 20 episodes each: 920 episodes per policy. "
+         "Red faster means d_R<d_B (class 0); blue faster means d_B<d_R (class 1). "
+         "Equal-delay partners and all previous results containing them were deleted without archiving copies.", "",
+@@ -364,7 +364,7 @@
+         "Independent affine 128→2 softmax probes use full-batch Adam, lr=.01, 1000 updates, initialization seed 10000, "
+         "no scaling/regularization/early stopping/test-based selection. Inverse-frequency weights are exactly 1 for primary probes "
+         "because the two specialist classes are balanced. Primary metrics: binary accuracy, balanced accuracy, per-class recall, and confusion counts. Chance=1/2.", "",
+-        "All ten policy seeds contribute to means and 95% percentile bootstrap intervals (10000 resamples, RNG 30000). "
++        "All five policy seeds contribute to means and 95% percentile bootstrap intervals (10000 resamples, RNG 30000). "
+         "Gaussian-feature controls retain five feature seeds; a shuffled-label control is fit at t=400 with RNG/init seed 20000.", "",
+         "UMAP independently embeds each policy's 920 final-50-valid-state episode means from 128 dimensions to 2; "
+         "Euclidean distance, n_neighbors=919, min_dist=1, spectral initialization, random_state=42. No labels are used during fitting.", "",
+@@ -378,8 +378,8 @@
+                    "Aggregate tables/plots are in this root. Frozen sources and input hashes are in source/ and analysis_run.json. "
+                    "No RL policy was retrained and no evaluation episodes were added.", ""])
+     (root / "README.md").write_text("\n".join(report))
+-    write(root / "completion_audit.json", dict(status="completed", n_policies=90, n_episodes=82800,
+-        n_primary_probes=2610, n_umap_embeddings=90, episodes_per_policy=920,
++    write(root / "completion_audit.json", dict(status="completed", n_policies=45, n_episodes=41400,
++        n_primary_probes=1305, n_umap_embeddings=45, episodes_per_policy=920,
+         class_counts_per_policy=[460,460], original_rollouts_unchanged=True,
+         completed_utc=datetime.now(timezone.utc).isoformat()))
+     manifest["status"], manifest["completed_utc"] = "completed", datetime.now(timezone.utc).isoformat()
+@@ -392,7 +392,7 @@
+     from matplotlib.backends.backend_pdf import PdfPages
+     with PdfPages(root / "umap_relative_speed_all_seeds.pdf") as pdf:
+         for version in VERSIONS:
+-            for seed in range(1, 11):
++            for seed in range(1, 6):
+                 fig, axs = plt.subplots(1, 3, figsize=(15, 4.8))
+                 for ax, condition in zip(axs, CONDITIONS):
+                     draw_umap(ax, table[(table.version == version) & (table.training_seed == seed) & (table.condition == condition)])
+@@ -422,7 +422,7 @@
+             ax.set_yticks(range(2), CLASS_NAMES, fontsize=8)
+             ax.set_title(f"{version}: {original.CONDITION_LABELS[condition]}", fontsize=10)
+             ax.set_xlabel("Predicted class"); ax.set_ylabel("True class")
+-    fig.suptitle("Round 20: row-normalized confusion, pooled across 10 seeds (equal test counts per seed)")
++    fig.suptitle("Round 20: row-normalized confusion, pooled across 5 seeds (equal test counts per seed)")
+     fig.tight_layout()
+     for ext in ("png", "pdf"):
+         fig.savefig(root / f"relative_speed_confusions.{ext}", dpi=170)

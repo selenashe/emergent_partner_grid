@@ -1,7 +1,7 @@
 """Unified evaluation for the CoordinationGrid partner-modelling replication.
 
 Loads one trained checkpoint (from any of the four conditions), rolls out
-on the same 1000-layout distribution across the training and novel test
+on the saved training layout corpus across the training and novel test
 capability populations, and dumps a per-rollout record from which every
 downstream figure / probe can be reconstructed.
 
@@ -35,8 +35,8 @@ Derived headline metrics include success/return/completion time, partner
 assignment to its faster task during t>=1 decisions, and within-round
 switches. Random t=0 defaults are reported separately. Relative-speed
 adherence is a behavioral diagnostic, not an oracle including geometry.
-The analytical fixed-allocation helpers below are retained for historical
-layout validation, but are not used to score online reallocation policies.
+Task ceilings are computed separately by eval/optimal_training_return.py.
+Production launchers use the checkpoint-matching frozen evaluator.
 
 """
 
@@ -47,7 +47,7 @@ import json
 import os
 import sys
 from pathlib import Path
-from typing import Dict, Optional, Sequence, Tuple
+from typing import Dict, Sequence
 
 import numpy as np
 
@@ -64,122 +64,11 @@ from jaxmarl.environments.coordination_grid import (
     TRAIN_CAPABILITY_PAIRS,
     TEST_CAPABILITY_PAIRS,
     Allocations,
-    bfs_distance_map,
 )
 from jaxmarl.wrappers.baselines import load_params
 
-# Reuse the exact analytical primitive used by capability_selection /
-# capability_validation. One source of truth for reward math.
-sys.path.insert(0, str(_REPO_ROOT / "data_prep"))
-from capability_selection import completion_time, _reward_from_time  # noqa: E402
 from repo_paths import resolve_path, resolve_record_paths
 
-
-_REWARD_TIE_TOL = 1e-9
-
-
-# --------------------------------------------------------------------------- #
-# Analytical optimal-allocation primitive                                     #
-# --------------------------------------------------------------------------- #
-
-def per_layout_bfs(env: CoordinationGrid) -> Dict[str, np.ndarray]:
-    """Precompute BFS distances per loaded layout, per goal, from the
-    ego and partner starts. Returns four (n_layouts,) int arrays.
-    """
-    # Audit guide:
-    # Precompute four wall-aware distances for historical analytical allocation scoring.
-    # Distances reflect static start positions. They cannot be used as an online oracle
-    # after the agents move or assignments switch.
-    #
-    N = env.n_layouts
-    e2r = np.zeros(N, dtype=np.int64)
-    e2b = np.zeros(N, dtype=np.int64)
-    p2r = np.zeros(N, dtype=np.int64)
-    p2b = np.zeros(N, dtype=np.int64)
-    walls_all = np.asarray(env.wall_maps)
-    ego_all = np.asarray(env.ego_starts)
-    par_all = np.asarray(env.partner_starts)
-    red_all = np.asarray(env.red_goals)
-    blue_all = np.asarray(env.blue_goals)
-    for i in range(N):
-        d_red = bfs_distance_map(walls_all[i], red_all[i])
-        d_blue = bfs_distance_map(walls_all[i], blue_all[i])
-        ex, ey = int(ego_all[i, 0]), int(ego_all[i, 1])
-        px, py = int(par_all[i, 0]), int(par_all[i, 1])
-        e2r[i] = int(d_red[ey, ex])
-        e2b[i] = int(d_blue[ey, ex])
-        p2r[i] = int(d_red[py, px])
-        p2b[i] = int(d_blue[py, px])
-    return {"ego_to_red": e2r, "ego_to_blue": e2b,
-            "partner_to_red": p2r, "partner_to_blue": p2b}
-
-
-def analytical_alloc_rewards(
-    dists: Dict[str, np.ndarray],
-    layout_idx: np.ndarray,   # (M,) int32
-    capability: np.ndarray,   # (M, 2) int32   (d_R, d_B)
-    max_steps: int,
-    step_penalty: float,
-    success_reward: float,
-) -> Tuple[np.ndarray, np.ndarray]:
-    """Return (reward_A, reward_B) each (M,) float — the analytical reward
-    of allocation A (ego RED, partner BLUE) and B (ego BLUE, partner RED)
-    for every (layout, capability) row.
-    """
-    # Audit guide:
-    # Compute fixed-assignment rewards for ego-red/partner-blue and its complement over
-    # each layout. These helpers remain for historical validation; online-v2 headline
-    # metrics use actual decisions and realized outcomes instead.
-    #
-    M = layout_idx.shape[0]
-    reward_A = np.empty(M, dtype=np.float64)
-    reward_B = np.empty(M, dtype=np.float64)
-    e2r = dists["ego_to_red"]
-    e2b = dists["ego_to_blue"]
-    p2r = dists["partner_to_red"]
-    p2b = dists["partner_to_blue"]
-    for i in range(M):
-        li = int(layout_idx[i])
-        d_R, d_B = int(capability[i, 0]), int(capability[i, 1])
-        tA = completion_time(int(e2r[li]), int(p2b[li]), d_B, max_steps)
-        tB = completion_time(int(e2b[li]), int(p2r[li]), d_R, max_steps)
-        reward_A[i] = _reward_from_time(int(tA), max_steps, step_penalty, success_reward)
-        reward_B[i] = _reward_from_time(int(tB), max_steps, step_penalty, success_reward)
-    return reward_A, reward_B
-
-
-def optimal_allocation_and_regret(
-    reward_A: np.ndarray,
-    reward_B: np.ndarray,
-    chosen_alloc: np.ndarray,   # (M,) int32 — Allocations.red or Allocations.blue
-) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
-    """Return (is_optimal, regret, is_tie).
-
-    - is_optimal[i] : True iff chosen_alloc[i] is a reward-maximiser.
-    - regret[i]     : max(reward_A, reward_B) - reward_chosen[i]. Always >= 0.
-    - is_tie[i]     : |reward_A - reward_B| <= _REWARD_TIE_TOL.
-
-    Tie convention: is_optimal is True on ties (both allocs are optimal),
-    regret is 0. Downstream metrics exclude ties from optimal-fraction
-    accuracy while still counting them in regret (which is 0 there).
-    """
-    # Audit guide:
-    # Compare a proposed fixed allocation with the analytical better alternative and
-    # record reward regret plus ties. This is meaningful under the fixed-role model. In
-    # a no-influence control the ego request can be hypothetical rather than the actual
-    # partner assignment.
-    #
-    reward_chosen = np.where(chosen_alloc == int(Allocations.red), reward_A, reward_B)
-    reward_opt = np.maximum(reward_A, reward_B)
-    regret = reward_opt - reward_chosen
-    is_tie = np.abs(reward_A - reward_B) <= _REWARD_TIE_TOL
-    is_optimal = np.where(is_tie, True, regret <= _REWARD_TIE_TOL)
-    return is_optimal, regret, is_tie
-
-
-# --------------------------------------------------------------------------- #
-# Rollout                                                                     #
-# --------------------------------------------------------------------------- #
 
 def rollout_condition(
     params,
@@ -423,10 +312,12 @@ def _save_hdf5(path: str, record: Dict[str, np.ndarray], allocation_protocol=tra
     #
     import h5py
     os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
-    with h5py.File(path, "w") as f:
+    from repo_paths import prepare_artifact_path, link_artifact
+    with h5py.File(prepare_artifact_path(path), "w") as f:
         f.attrs["allocation_protocol"] = allocation_protocol
         for k, v in record.items():
             f.create_dataset(k, data=np.asarray(v))
+    link_artifact(path)
 
 
 def main():
@@ -467,8 +358,7 @@ def main():
     layouts_dir = str(resolve_path(layouts_dir))
     params = load_params(resolve_path(args.params))
 
-    # Analytical primitive parameters — read the training env's reward
-    # settings so blend / regret math matches what the policy was trained on.
+    # Read the saved reward settings for the recorded-outcome summary.
     env_kwargs = config["ENV_KWARGS"]
     max_steps = int(env_kwargs.get("max_steps", 100))
     step_penalty = float(env_kwargs.get("step_penalty", 0.01))

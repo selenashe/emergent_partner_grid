@@ -1,0 +1,6 @@
+[replay] {'version': 'v3', 'condition': 'rnn_diverse_influence', 'training_seed': 2} train
+[verified] train 96 / 96 hidden error 1.7943174839019775
+[replay] {'version': 'v3', 'condition': 'rnn_diverse_influence', 'training_seed': 2} test
+[verified] test 86 / 88 hidden error 1.7856054306030273
+[replay] {'version': 'v3', 'condition': 'rnn_diverse_influence', 'training_seed': 2} additional
+[verified] additional 173 / 176 hidden error 1.7861731052398682

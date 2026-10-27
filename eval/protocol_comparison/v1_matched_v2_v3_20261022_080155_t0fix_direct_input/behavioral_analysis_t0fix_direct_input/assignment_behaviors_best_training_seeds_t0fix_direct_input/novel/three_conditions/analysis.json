@@ -1,0 +1,457 @@
+{
+  "selection_source": {
+    "path": "/juice6/u/jshe/emergent_partner_grid/eval/protocol_comparison/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/behavioral_analysis_t0fix_direct_input/overcooked_paper_match/best_of_5/selection.json",
+    "sha256": "cd9020566352aa2a52be38dc3ea54a2e0ae9b8c51e5eab03ebb5714464e5f786",
+    "recomputed_from_training_logs": true
+  },
+  "selection": {
+    "candidate_seeds": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "metric": "Highest mean completed-episode return in final logged training rollout",
+    "per": "version and condition; policies were trained across layouts",
+    "held_out_results_used": false,
+    "tie_break": "Lowest seed number",
+    "logged_return_decimal_places": 3
+  },
+  "manifests": [
+    {
+      "path": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/analyses_20261022_172833_t0fix_direct_input/analysis_source_t0fix_direct_input/train/manifests/sbatch_v1_matched_v2_v3_20261022_080155_t0fix_direct_input.json",
+      "sha256": "e9b65b0f2af289d026b97d6bbaedd41bb834bc15b71551b492a3bdc0f29cb6e0"
+    }
+  ],
+  "population": "test",
+  "selected_policies": [
+    {
+      "version": "v1_matched",
+      "condition": "mlp_diverse_influence",
+      "seed": 1,
+      "population": "test",
+      "training_return": 13.431,
+      "episode_return": 13.763683319091797,
+      "n_episodes": 440,
+      "round_success": 0.9881818181818182,
+      "initial_ego_red": 0.7105681818181818,
+      "final_ego_red": 0.7105681818181818,
+      "final_ego_blue": 0.2894318181818182,
+      "switches_per_round": 0.0,
+      "fraction_rounds_switched": 0.0,
+      "final_partner_faster": 0.4935227272727273,
+      "switches_per_episode": 0.0,
+      "final_partner_faster_round1": 0.475,
+      "final_partner_faster_round20": 0.4772727272727273
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_influence",
+      "seed": 5,
+      "population": "test",
+      "training_return": 14.014,
+      "episode_return": 14.945842742919922,
+      "n_episodes": 440,
+      "round_success": 0.9692045454545455,
+      "initial_ego_red": 0.5306818181818181,
+      "final_ego_red": 0.5306818181818181,
+      "final_ego_blue": 0.46931818181818186,
+      "switches_per_round": 0.0,
+      "fraction_rounds_switched": 0.0,
+      "final_partner_faster": 0.8875,
+      "switches_per_episode": 0.0,
+      "final_partner_faster_round1": 0.5022727272727273,
+      "final_partner_faster_round20": 0.9136363636363637
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_single_influence",
+      "seed": 5,
+      "population": "test",
+      "training_return": 17.333,
+      "episode_return": 13.745001792907715,
+      "n_episodes": 440,
+      "round_success": 0.9839772727272728,
+      "initial_ego_red": 0.0,
+      "final_ego_red": 0.0,
+      "final_ego_blue": 1.0,
+      "switches_per_round": 0.0,
+      "fraction_rounds_switched": 0.0,
+      "final_partner_faster": 0.5,
+      "switches_per_episode": 0.0,
+      "final_partner_faster_round1": 0.5,
+      "final_partner_faster_round20": 0.5
+    },
+    {
+      "version": "v2",
+      "condition": "mlp_diverse_influence",
+      "seed": 4,
+      "population": "test",
+      "training_return": 13.287,
+      "episode_return": 13.847909927368164,
+      "n_episodes": 440,
+      "round_success": 0.9901136363636364,
+      "initial_ego_red": 0.5013636363636362,
+      "final_ego_red": 0.23409090909090907,
+      "final_ego_blue": 0.7659090909090909,
+      "switches_per_round": 0.5204545454545455,
+      "fraction_rounds_switched": 0.48875000000000013,
+      "final_partner_faster": 0.519090909090909,
+      "switches_per_episode": 10.409090909090908,
+      "final_partner_faster_round1": 0.5363636363636364,
+      "final_partner_faster_round20": 0.5340909090909091
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_influence",
+      "seed": 2,
+      "population": "test",
+      "training_return": 14.238,
+      "episode_return": 14.936478614807129,
+      "n_episodes": 440,
+      "round_success": 0.9813636363636363,
+      "initial_ego_red": 0.5019318181818182,
+      "final_ego_red": 0.5815909090909092,
+      "final_ego_blue": 0.41840909090909084,
+      "switches_per_round": 0.64375,
+      "fraction_rounds_switched": 0.5342045454545454,
+      "final_partner_faster": 0.8127272727272727,
+      "switches_per_episode": 12.875,
+      "final_partner_faster_round1": 0.5159090909090909,
+      "final_partner_faster_round20": 0.8318181818181818
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_single_influence",
+      "seed": 4,
+      "population": "test",
+      "training_return": 17.314,
+      "episode_return": 13.270001411437988,
+      "n_episodes": 440,
+      "round_success": 0.9804545454545455,
+      "initial_ego_red": 0.500909090909091,
+      "final_ego_red": 0.002159090909090909,
+      "final_ego_blue": 0.9978409090909091,
+      "switches_per_round": 0.8017045454545455,
+      "fraction_rounds_switched": 0.524431818181818,
+      "final_partner_faster": 0.5017045454545455,
+      "switches_per_episode": 16.03409090909091,
+      "final_partner_faster_round1": 0.5,
+      "final_partner_faster_round20": 0.5045454545454545
+    },
+    {
+      "version": "v3",
+      "condition": "mlp_diverse_influence",
+      "seed": 4,
+      "population": "test",
+      "training_return": 13.516,
+      "episode_return": 13.537093162536621,
+      "n_episodes": 440,
+      "round_success": 0.9823863636363637,
+      "initial_ego_red": 0.9995454545454546,
+      "final_ego_red": 1.0,
+      "final_ego_blue": 0.0,
+      "switches_per_round": 0.004090909090909091,
+      "fraction_rounds_switched": 0.0021590909090909095,
+      "final_partner_faster": 0.5,
+      "switches_per_episode": 0.08181818181818182,
+      "final_partner_faster_round1": 0.5,
+      "final_partner_faster_round20": 0.5
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_influence",
+      "seed": 3,
+      "population": "test",
+      "training_return": 14.811,
+      "episode_return": 15.492591857910156,
+      "n_episodes": 440,
+      "round_success": 0.9856818181818182,
+      "initial_ego_red": 0.546590909090909,
+      "final_ego_red": 0.5909090909090908,
+      "final_ego_blue": 0.409090909090909,
+      "switches_per_round": 0.14636363636363633,
+      "fraction_rounds_switched": 0.10034090909090909,
+      "final_partner_faster": 0.8515909090909091,
+      "switches_per_episode": 2.9272727272727272,
+      "final_partner_faster_round1": 0.5477272727272727,
+      "final_partner_faster_round20": 0.884090909090909
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_single_influence",
+      "seed": 5,
+      "population": "test",
+      "training_return": 17.436,
+      "episode_return": 13.780296325683594,
+      "n_episodes": 440,
+      "round_success": 0.9847727272727272,
+      "initial_ego_red": 0.0,
+      "final_ego_red": 0.003977272727272727,
+      "final_ego_blue": 0.9960227272727273,
+      "switches_per_round": 0.30625,
+      "fraction_rounds_switched": 0.03920454545454546,
+      "final_partner_faster": 0.5007954545454546,
+      "switches_per_episode": 6.125,
+      "final_partner_faster_round1": 0.5,
+      "final_partner_faster_round20": 0.5136363636363637
+    }
+  ],
+  "included_conditions": [
+    "mlp_diverse_influence",
+    "rnn_diverse_influence",
+    "rnn_single_influence"
+  ],
+  "sources": [
+    {
+      "version": "v1_matched",
+      "condition": "mlp_diverse_influence",
+      "seed": 1,
+      "population": "test",
+      "source": {
+        "path": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/analyses_20261022_172833_t0fix_direct_input/analysis_source_t0fix_direct_input/inputs_t0fix_direct_input/evaluations/v1_matched_t0fix_direct_input/mlp_diverse_influence_seed1_test.h5",
+        "size": 38728792,
+        "mtime_ns": 1792664942211747863,
+        "summary": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/analyses_20261022_172833_t0fix_direct_input/analysis_source_t0fix_direct_input/inputs_t0fix_direct_input/evaluations/v1_matched_t0fix_direct_input/mlp_diverse_influence_seed1_summary.json",
+        "summary_sha256": "4ab6993d9df073f1f032b7dd4da348ebe806e2de0698c2a2b53f1551e4cae8d4",
+        "cache_version": 1
+      },
+      "scalar_datasets_sha256": {
+        "dones": "2a6193d59948f8c1ae374203316b1c0287e6a63420a2e05bbc080f15e6c7934b",
+        "round_done": "2099ff210be6789e00a8288a220300b2b3a8511e86d6a5ce62ba74340ae9a8b5",
+        "round_idx": "8dc55a30262c0ce3e55df7151732c4c797ea6661c904225511a4ec56a9856d4d",
+        "round_time": "81ac1e5821cdec2a70a2fc4edc642b98ce16119b65e0222c55b64809b66200eb",
+        "is_t0": "0f33adeb3d3e0a134b768a21955d80eb6b951ead1052019ae32fb3e2238c4a04",
+        "partner_assignment": "34bd49fa1654c838c5bfadd44900d0be439732746b08076460f716445b46e20c"
+      },
+      "saved_episode_return": 13.763683319091797,
+      "saved_success": 0.9881818181818182
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_influence",
+      "seed": 5,
+      "population": "test",
+      "source": {
+        "path": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/analyses_20261022_172833_t0fix_direct_input/analysis_source_t0fix_direct_input/inputs_t0fix_direct_input/evaluations/v1_matched_t0fix_direct_input/rnn_diverse_influence_seed5_test.h5",
+        "size": 485768792,
+        "mtime_ns": 1792667093760745425,
+        "summary": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/analyses_20261022_172833_t0fix_direct_input/analysis_source_t0fix_direct_input/inputs_t0fix_direct_input/evaluations/v1_matched_t0fix_direct_input/rnn_diverse_influence_seed5_summary.json",
+        "summary_sha256": "675371553da648ace1c0dc707e372619f3ac9d0a81531f0f500f8551baadb0ff",
+        "cache_version": 1
+      },
+      "scalar_datasets_sha256": {
+        "dones": "205f090b368e342ae5da4f0b938871aa8a860096d5927d43a62fb695997cc2f9",
+        "round_done": "1be9333dabc917fef51b247366f8c1e343ae0a100daaa9acab48112078bd1fd1",
+        "round_idx": "106b945cd628cc72ef8d3215eebc8713b0cbfc332678d6ae5ad5449eb8b7ea4a",
+        "round_time": "d1578ef730982f36bbe5d713ff57a34a507d76d5a7a0e2e215d4ca16a1fdc0be",
+        "is_t0": "0fae8ad19e53c1e712999879c9e67af982ecd61062dba329710fc58eb718d3d3",
+        "partner_assignment": "146cc946d99f34e521a12fc241d971f02e102985ce3ac18a62e09c27c56767bd"
+      },
+      "saved_episode_return": 14.945842742919922,
+      "saved_success": 0.9692045454545455
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_single_influence",
+      "seed": 5,
+      "population": "test",
+      "source": {
+        "path": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/analyses_20261022_172833_t0fix_direct_input/analysis_source_t0fix_direct_input/inputs_t0fix_direct_input/evaluations/v1_matched_t0fix_direct_input/rnn_single_influence_seed5_test.h5",
+        "size": 485768792,
+        "mtime_ns": 1792668175240887635,
+        "summary": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/analyses_20261022_172833_t0fix_direct_input/analysis_source_t0fix_direct_input/inputs_t0fix_direct_input/evaluations/v1_matched_t0fix_direct_input/rnn_single_influence_seed5_summary.json",
+        "summary_sha256": "574a486f0ab59b290fd34f6eebc951b9c615ba998afcdc49ff582aa37abffae7",
+        "cache_version": 1
+      },
+      "scalar_datasets_sha256": {
+        "dones": "39e48466336fe8a9034236956ed2dd213ea8de8562093ccd16f288e528b7af33",
+        "round_done": "b4e87d3c319396ea9b607a2d560f9dea2b7644c9f6c21b0eb5c1a44a57a780dc",
+        "round_idx": "5aa4e7197a18bf6bb9e7419fa917392f4c979043f217edd147a398dc27ebf985",
+        "round_time": "02016b4281c1cbd9a94eccddfab4bebef880b523a717d511a1d75c0337ed5818",
+        "is_t0": "7db1d45d5cab7cb4e293d1c0a2799894a8e1e565e3b1de21f42e312d830946c0",
+        "partner_assignment": "faf595ec292bc43769cefe012039a3180cbdd29ca0b2883c7d18179587549287"
+      },
+      "saved_episode_return": 13.745001792907715,
+      "saved_success": 0.9839772727272728
+    },
+    {
+      "version": "v2",
+      "condition": "mlp_diverse_influence",
+      "seed": 4,
+      "population": "test",
+      "source": {
+        "path": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/analyses_20261022_172833_t0fix_direct_input/analysis_source_t0fix_direct_input/inputs_t0fix_direct_input/evaluations/v2_t0fix_direct_input/mlp_diverse_influence_seed4_test.h5",
+        "size": 40494224,
+        "mtime_ns": 1792668505998495000,
+        "summary": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/analyses_20261022_172833_t0fix_direct_input/analysis_source_t0fix_direct_input/inputs_t0fix_direct_input/evaluations/v2_t0fix_direct_input/mlp_diverse_influence_seed4_summary.json",
+        "summary_sha256": "41c61be1479e4bdd67f207d7d016e48ec18b862b6e49620b1e4d9775d77e9900",
+        "cache_version": 1
+      },
+      "scalar_datasets_sha256": {
+        "dones": "c8f5aa6ad723725b6c0b476b0942993e82031998c80eecc362b3fbd87df5b5ef",
+        "round_done": "dca8e5ca43aeb9c809cb5941926ec459f20fb59f30036432002046ae8db4507f",
+        "round_idx": "ad5cb70de36d8131254c0271a42ed881d7c55f50cc4a2999230525836e5d79c8",
+        "round_time": "05f1324c106fd18ede02504c843c571c373ba4c3d3f666da3c95f288cf6d1a70",
+        "is_t0": "5f0b525a72333e1fb6077ce8e40a204479cce1b001fe15497a91e31a356c2d51",
+        "partner_assignment": "392959486b05e9b1dad9a0ae950acde27b147a5d588ae879ad8b07bd03e43c4b",
+        "assignment_changed": "363393a509108cd4821dc9f3b32ee5436ec9ae4843b272e38d7ebfd70d682eab"
+      },
+      "saved_episode_return": 13.847909927368164,
+      "saved_success": 0.9901136363636364
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_influence",
+      "seed": 2,
+      "population": "test",
+      "source": {
+        "path": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/analyses_20261022_172833_t0fix_direct_input/analysis_source_t0fix_direct_input/inputs_t0fix_direct_input/evaluations/v2_t0fix_direct_input/rnn_diverse_influence_seed2_test.h5",
+        "size": 487534224,
+        "mtime_ns": 1792679925633829692,
+        "summary": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/analyses_20261022_172833_t0fix_direct_input/analysis_source_t0fix_direct_input/inputs_t0fix_direct_input/evaluations/v2_t0fix_direct_input/rnn_diverse_influence_seed2_summary.json",
+        "summary_sha256": "8299ce3e3b26696f081e8e826c43ad5e1b57af5ca724a05a12046620ef1579ea",
+        "cache_version": 1
+      },
+      "scalar_datasets_sha256": {
+        "dones": "8230d308b72a5375e7ddb78c6b2055ce608b74581910c51db05a4157eb140419",
+        "round_done": "a7a9eeaa81402f4ded23d6c9c34de3a78176c18c4ee0e77c47f2447c9097fa4b",
+        "round_idx": "18b667ce38307e8fba0a4d315e83d684b63fa470bb9535db19ffe3bff6eb6bd7",
+        "round_time": "b0abb49f18dd967c56e8124b9de8eb65e55efb0a295d84af2d4c2f09fbfe6423",
+        "is_t0": "96ad0328e78b1eab687f7597380c87071a0c9f5143820ce57862402d69c76209",
+        "partner_assignment": "81895a9b15ec8dca4abc947e8cb57897f3ae7bb450e5eb70ffb7ed61638ef41b",
+        "assignment_changed": "fa6c14e903a78dbdd5c9c17c675982ca9e58a63c79acdcb2d52bf57417612d4e"
+      },
+      "saved_episode_return": 14.936478614807129,
+      "saved_success": 0.9813636363636363
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_single_influence",
+      "seed": 4,
+      "population": "test",
+      "source": {
+        "path": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/analyses_20261022_172833_t0fix_direct_input/analysis_source_t0fix_direct_input/inputs_t0fix_direct_input/evaluations/v2_t0fix_direct_input/rnn_single_influence_seed4_test.h5",
+        "size": 487534224,
+        "mtime_ns": 1792680333770956439,
+        "summary": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/analyses_20261022_172833_t0fix_direct_input/analysis_source_t0fix_direct_input/inputs_t0fix_direct_input/evaluations/v2_t0fix_direct_input/rnn_single_influence_seed4_summary.json",
+        "summary_sha256": "d2a6848f97a702f30f0f1ca8ef060ffdaaa5b75f7cbc15b62863a5ccb74db0b2",
+        "cache_version": 1
+      },
+      "scalar_datasets_sha256": {
+        "dones": "391c3c4cca7835cc06eb38ede8f61d536e7f7c443ca68262565057da9b5ffb27",
+        "round_done": "32836df9383ba23a70b130480a94d9f989d5d0fa99e7356461c92921bfb67f19",
+        "round_idx": "e2b019b7c12ae25627d5b161366062aec51f2039b56c67f067075d6a4ea3a574",
+        "round_time": "038f22b1bf0f61d1aeb2b3e93375838cc4445ea6a4c72566855dfbf1c7e52b73",
+        "is_t0": "72ed01049587f679657a14a69d7050d722d9c7aac11df8479e6c66fd6da1dcaf",
+        "partner_assignment": "b2f49ade4cc9518689196b36e6e00680a3be2c385be723a07d981ea7928f1a0f",
+        "assignment_changed": "b623fcacd2a8f62f5865baae745398af2c4b3f135ce45f352cd7f503d9ab6b36"
+      },
+      "saved_episode_return": 13.270001411437988,
+      "saved_success": 0.9804545454545455
+    },
+    {
+      "version": "v3",
+      "condition": "mlp_diverse_influence",
+      "seed": 4,
+      "population": "test",
+      "source": {
+        "path": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/analyses_20261022_172833_t0fix_direct_input/analysis_source_t0fix_direct_input/inputs_t0fix_direct_input/evaluations/v3_t0fix_direct_input/mlp_diverse_influence_seed4_test.h5",
+        "size": 40494224,
+        "mtime_ns": 1792684584685070347,
+        "summary": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/analyses_20261022_172833_t0fix_direct_input/analysis_source_t0fix_direct_input/inputs_t0fix_direct_input/evaluations/v3_t0fix_direct_input/mlp_diverse_influence_seed4_summary.json",
+        "summary_sha256": "bbc218a05537e8cd31ca47a69aea66eefe97594d4e37c5e596eda0a4054281f7",
+        "cache_version": 1
+      },
+      "scalar_datasets_sha256": {
+        "dones": "273a5baa8258416106428f5519760baf09a488751ee8561ae52c4e7917a20678",
+        "round_done": "9211fbc86f0f354eeaf1f1de5e80bd96e32bab81f9663177c7a92314ae800d26",
+        "round_idx": "692a23a44c18ee9054ad474262bc3934d1204e1d982d2472d6dd3654294875a1",
+        "round_time": "811e7e09d60c60b55490e030628374a59485d1427488d24598067aa50697c113",
+        "is_t0": "fb5aaafc83d19ebdddd5a6d6ec20873fc68fbd638d90a0ed5d550ed57c055ad6",
+        "partner_assignment": "ff2b71d29b185599fe079ee1b12c278eaa6d55aa98c16437e770108ee8cd243a",
+        "assignment_changed": "004fd1bd7a51e1a3131c8da9e4cfca26aeed1398b3ef9f01289eb5e730ec573a"
+      },
+      "saved_episode_return": 13.537093162536621,
+      "saved_success": 0.9823863636363637
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_influence",
+      "seed": 3,
+      "population": "test",
+      "source": {
+        "path": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/analyses_20261022_172833_t0fix_direct_input/analysis_source_t0fix_direct_input/inputs_t0fix_direct_input/evaluations/v3_t0fix_direct_input/rnn_diverse_influence_seed3_test.h5",
+        "size": 487534224,
+        "mtime_ns": 1792681245932536558,
+        "summary": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/analyses_20261022_172833_t0fix_direct_input/analysis_source_t0fix_direct_input/inputs_t0fix_direct_input/evaluations/v3_t0fix_direct_input/rnn_diverse_influence_seed3_summary.json",
+        "summary_sha256": "776dbc61589180e4292a8310300708112fbdbd84e128f8a5311181a32c32f22d",
+        "cache_version": 1
+      },
+      "scalar_datasets_sha256": {
+        "dones": "537fe3d3f6fcf4cf4c780755934e35066c6297ea98722fd0fa2c618557c4c132",
+        "round_done": "ba3492bcbe40bc6be68392fe1027187a095dfc05ed9956927569d57d2c9b366d",
+        "round_idx": "14fc34e3648fa7ad14369011003e2666e2f2ea9eb874ae494b77e4114395fe3d",
+        "round_time": "29108ffe6efdee55b169cb9ade9983e6f21969bd21a0085253ae0dd0de73d6cb",
+        "is_t0": "c63dec2e49f712c87aa83f65af3374f0b69c13287ffe092885a0de4708962e04",
+        "partner_assignment": "03bf22a04dca3da450997d75e6b7219579abc0ca8fc4bbedfb5a94d5bf66636c",
+        "assignment_changed": "d2f6df1170b6a45ca443a573cbcd1ca7e58aa782c6652295fbc9c49133148162"
+      },
+      "saved_episode_return": 15.492591857910156,
+      "saved_success": 0.9856818181818182
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_single_influence",
+      "seed": 5,
+      "population": "test",
+      "source": {
+        "path": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/analyses_20261022_172833_t0fix_direct_input/analysis_source_t0fix_direct_input/inputs_t0fix_direct_input/evaluations/v3_t0fix_direct_input/rnn_single_influence_seed5_test.h5",
+        "size": 487534224,
+        "mtime_ns": 1792685204228719731,
+        "summary": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/analyses_20261022_172833_t0fix_direct_input/analysis_source_t0fix_direct_input/inputs_t0fix_direct_input/evaluations/v3_t0fix_direct_input/rnn_single_influence_seed5_summary.json",
+        "summary_sha256": "4927aff1aeca2c897e4287f20ce86bb2e6132201a8f310332d2406861dfadd80",
+        "cache_version": 1
+      },
+      "scalar_datasets_sha256": {
+        "dones": "243ac5bf17ba9a2d52d92fe85e97b61d231dbc1bd4e9951e2c7dc04b96ff7c8c",
+        "round_done": "013210afd3fc4677179959003eea239d517071e416ae2e0533cd56c39da9b8d3",
+        "round_idx": "65040f9fd86c23cda10eab9acd3456dfab979aa8934063c148dbe3eab936e024",
+        "round_time": "1ccfc821dce6317fdda730796afb86b6f2bd1aad4799b9ff642924f9f3878481",
+        "is_t0": "bf31b5f7ef89af4fe1c99a22f4f3363bbce18c142ac1890996a5b28b0588b9ca",
+        "partner_assignment": "ece2d64104e25ae8233e6fe4ce68782aef8979707d0c6fa6766f5cda5cbbc155",
+        "assignment_changed": "40a5b5024bb3462b8cf8716b3c803d60d41241250d784dff8813863b2db2fb45"
+      },
+      "saved_episode_return": 13.780296325683594,
+      "saved_success": 0.9847727272727272
+    }
+  ],
+  "definitions": {
+    "assignment": "RED assigns ego to red and partner to blue; BLUE does the reverse",
+    "initial": "Effective assignment on the first transition of each round",
+    "final": "Effective assignment on the terminal transition of each round, including timeouts",
+    "blue": "Final ego-blue fraction equals one minus the final ego-red fraction; BLUE assigns ego to blue and partner to red",
+    "switch": "Effective assignment changes within a round, excluding initialization and round resets; terminal transitions included",
+    "course": "Rounds 1-20 within one partner episode; capability is constant across those rounds",
+    "weighting": "Equal evaluation-episode weights at each round; 20 episodes per partner profile; one selected training seed per version/condition",
+    "faster_task": "Partner assigned its lower-delay color; equal-delay profiles excluded; descriptive rather than a dynamic optimality score"
+  },
+  "source_sha256": "6c43b765589d555e44365d0e633daeac87a2b844ad403f98775c043803f0cae0",
+  "metric_source_sha256": "1ed3652e7a5de9fcb62bdec718b49a25515654352d3e284f0257836c06ced722",
+  "validation": {
+    "policies": 9,
+    "episodes": 3960,
+    "rounds": 79200,
+    "training_selection_recomputed": true,
+    "return_figure_sources_match": true,
+    "saved_switch_summaries_verified": true
+  },
+  "report_pages": 10,
+  "caveats": [
+    "Only the previously selected policy is shown in each version/condition.",
+    "Final training rollout precedes the last gradient update; saved evaluation uses the final checkpoint.",
+    "V1_matched assignments cannot switch within a round.",
+    "No confidence bands are shown, matching the original assignment plots; curves condition on the selected policy."
+  ]
+}

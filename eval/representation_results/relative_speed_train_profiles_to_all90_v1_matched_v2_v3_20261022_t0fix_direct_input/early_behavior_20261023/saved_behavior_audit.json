@@ -1,0 +1,25 @@
+{
+  "status": "passed",
+  "completed_utc": "2026-10-23T07:43:11.099505+00:00",
+  "input_manifest": "/juice6/u/jshe/emergent_partner_grid/eval/representation_results/relative_speed_train_profiles_to_all90_v1_matched_v2_v3_20261022_t0fix_direct_input/analysis_run.json",
+  "input_manifest_sha256": "f20db4e8c1d5d08a6ee94229475cc6617617b20882e7d2e8e97421284ca4996e",
+  "policies": 30,
+  "primary_multi_partner_policies": 15,
+  "primary_test_episodes": 4320,
+  "timepoints": 101,
+  "probe_refitting": false,
+  "policy_retraining": false,
+  "information_timing": "h_t uses observations through t and prior event transitions <t. Current-action curve is explicitly subsequent to h_t.",
+  "selection": "Same four held-out episodes/profile as new training-capability-only probes. Same episodes at each paired cohort's window endpoints; equal profile weights within each seed.",
+  "onset": "Largest one-step and five-step accuracy increases among t=0..50. Timing uncertainty bootstraps five policy seeds. Windows are descriptive, selected from the same decoding curves.",
+  "fixed_decoder": "Saved step-20 probe is applied unchanged to h_t at all early timesteps; validates against original step-20 probabilities.",
+  "limitations": "Saved behavior alone omits physical positions. Verified replay is a separate audit; observational alignment cannot establish retrieval/inference causally.",
+  "source_sha256": {
+    "plot_early_decoding.py": "846df6bc60ddabe11563cba51279b990399b6a10bc4834110e9fd77e0974ad37",
+    "analyze_instantaneous_decoding.py": "971970b125a77932a8276af09c10a94f39c0f24584db7e8ad1a74c57d4829b5f",
+    "analyze_decoding_behavior.py": "2a1d033d8acb50c6f154861ab6e9fe4508e30a93bd0773a3e4fb524043bbbf9f",
+    "analyze_early_decoding.py": "8e7bdf18fa06fa5f413b76c34e88a8a95762af008d2a5640a65eca7fd733595f",
+    "replay_early_partner_motion.py": "e3a3f37c532fc4827f12e27dd1278e8202d4ce84890d50e82274e6a85972c20e",
+    "full_capability_evaluation.py": "1cf820af4a700e12ae48c6e045c063549e32b3c7d5fc7e533cab5fc63f3f5b52"
+  }
+}

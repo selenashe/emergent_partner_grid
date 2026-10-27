@@ -1,0 +1,21 @@
+{
+  "status": "completed",
+  "completed_utc": "2026-10-27T01:13:02.572776+00:00",
+  "version": "v2",
+  "condition": "rnn_diverse_influence",
+  "training_seed": 4,
+  "representation": "current_observation",
+  "feature_dimension": 249,
+  "archive_sha256": "0ab61d96c7e56e594a8352e4f83f28528ffa5f98a053c97dc563fa7d3da32380",
+  "timepoints": 401,
+  "profiles": 90,
+  "fit_profiles": 24,
+  "fit_episodes": 384,
+  "test_episodes": 360,
+  "unused_episodes": 1056,
+  "novel_profiles_in_probe_fit": 0,
+  "calibration_scope": "own_policy_training_capabilities",
+  "policy_retraining": false,
+  "new_rollouts": false,
+  "trajectory_reconstruction": true
+}

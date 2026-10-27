@@ -1,4 +1,4 @@
-"""Original v1/v2 random capability/layout sampler for CoordinationGrid.
+"""Original fixed-allocation/v2 random capability/layout sampler for CoordinationGrid.
 
 This is not a generator or hyperparameter sweep. Counterbalanced training
 uses counterbalanced_scheduler.py instead.

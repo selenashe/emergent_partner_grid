@@ -1,0 +1,48 @@
+Assignment behavior of the best training seeds
+
+Selection reuses overcooked_paper_match/best_of_5/selection.json, verified
+against all 120 training logs. Each experiment/condition maximizes mean
+completed-episode return in the final logged training rollout among seeds
+1-10 (lowest seed breaks ties). Held-out behavior never enters selection.
+
+Shown: the three influence-enabled conditions. RNN no influence is excluded.
+
+| Experiment | MLP | RNN | RNN single-partner |
+| --- | --- | --- | --- |
+| v1_matched | 1 | 5 | 5 |
+| v2 | 4 | 2 | 4 |
+| v3 | 4 | 3 | 5 |
+
+Population: 22 held-out profiles x 20 episodes x 20 rounds per policy.
+9 selected policies, 3,960 episodes, 79,200 rounds. These are the same
+final-checkpoint evaluations used in the best-of-five return figure.
+
+assignment: RED assigns ego to red and partner to blue; BLUE does the reverse.
+initial: Effective assignment on the first transition of each round.
+final: Effective assignment on the terminal transition of each round, including timeouts.
+blue: Final ego-blue fraction equals one minus the final ego-red fraction; BLUE assigns ego to blue and partner to red.
+switch: Effective assignment changes within a round, excluding initialization and round resets; terminal transitions included.
+course: Rounds 1-20 within one partner episode; capability is constant across those rounds.
+weighting: Equal evaluation-episode weights at each round; 20 episodes per partner profile; one selected training seed per version/condition.
+faster_task: Partner assigned its lower-delay color; equal-delay profiles excluded; descriptive rather than a dynamic optimality score.
+
+V1_matched is fixed within each round. V2 initializes randomly. Influence-enabled V3
+chooses its initial assignment. Scan padding after termination is excluded.
+No confidence bands are shown, as in the original assignment figures.
+
+Report: assignment_behavior_report.pdf (10 pages). Page 1 combines final red
+and blue assignment rows, faster-task matching, and switches. Page 2
+shows final red and blue assignments alone; pages 3-9 contain individual
+metric grids. Page 10 conditions final assignments on the partner's
+faster color. Switch grids show V2/V3, matching the reference layout;
+V1_matched has zero within-round switches and remains in the dashboard.
+At each round number, final assignments average all 440 evaluation
+episodes (22 profiles x 20 episodes). Blue percentage = 100 - red.
+Each figure is available as PNG, PDF and SVG.
+
+Data: selected_seed_summary.csv, selected_seed_by_round.csv, and
+per_profile_selected_seed_by_round.csv. analysis.json records selection,
+training-log verification, dataset hashes, definitions and source hashes.
+
+Reproduce from repository root:
+MPLCONFIGDIR=/tmp/grid-best-assignment-mpl /nlp/scr/jshe/miniconda3/envs/emergent_partner_model/bin/python eval/plot_best_seed_assignment_behaviors.py --exclude-no-influence

@@ -1,0 +1,117 @@
+{
+  "population": "train",
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "aggregates": [
+    {
+      "version": "v1_matched",
+      "condition": "mlp_diverse_influence",
+      "n_seeds": 5,
+      "episode_return_mean": 13.2008,
+      "episode_return_sd": 0.23398012736127782
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_influence",
+      "n_seeds": 5,
+      "episode_return_mean": 12.977599999999999,
+      "episode_return_sd": 0.6623241653450371
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_single_influence",
+      "n_seeds": 5,
+      "episode_return_mean": 17.2976,
+      "episode_return_sd": 0.04358669521769149
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_noinfluence",
+      "n_seeds": 5,
+      "episode_return_mean": 11.4164,
+      "episode_return_sd": 0.24479746730716032
+    },
+    {
+      "version": "v2",
+      "condition": "mlp_diverse_influence",
+      "n_seeds": 5,
+      "episode_return_mean": 12.4712,
+      "episode_return_sd": 0.5219714551582301
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_influence",
+      "n_seeds": 5,
+      "episode_return_mean": 13.7054,
+      "episode_return_sd": 0.4235384280086048
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_single_influence",
+      "n_seeds": 5,
+      "episode_return_mean": 17.2834,
+      "episode_return_sd": 0.034129166412322935
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_noinfluence",
+      "n_seeds": 5,
+      "episode_return_mean": 11.3662,
+      "episode_return_sd": 0.3521650181378042
+    },
+    {
+      "version": "v3",
+      "condition": "mlp_diverse_influence",
+      "n_seeds": 5,
+      "episode_return_mean": 13.123,
+      "episode_return_sd": 0.32528295374950106
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_influence",
+      "n_seeds": 5,
+      "episode_return_mean": 13.578,
+      "episode_return_sd": 0.7396249049349272
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_single_influence",
+      "n_seeds": 5,
+      "episode_return_mean": 17.4034,
+      "episode_return_sd": 0.03707829553795589
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_noinfluence",
+      "n_seeds": 5,
+      "episode_return_mean": 11.3662,
+      "episode_return_sd": 0.3521650181378042
+    }
+  ],
+  "plot_title": "Episode return at final training update",
+  "plot_subtitle": "Update 915 \u00b7 59,965,440 environment steps \u00b7 unsmoothed training returns",
+  "source_updates": "/juice6/u/jshe/emergent_partner_grid/train/training_curves/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/updates.csv",
+  "source_sha256": "24f9d48a93df52a44c31fa13bdd082d6d2313e5938fd775b784a87295cfc77fa",
+  "metric": "Per-policy mean return of full 20-round episodes completed in the final rollout collection update; dots weight all five policies equally.",
+  "training_layouts": "Same frozen 1,096 grid layouts used during training.",
+  "training_partners": {
+    "rnn_single_influence": [
+      [
+        1,
+        4
+      ]
+    ],
+    "other_conditions": "24-profile training population"
+  },
+  "limitations": [
+    "This is the final logged collection update, not a new evaluation of the post-update checkpoint.",
+    "This uses raw final-update returns, not the trailing-window endpoint from the smoothed curves.",
+    "Training returns were printed to three decimals; exact episode counts per update were not persisted.",
+    "Single-partner and diverse-partner conditions have different training partner populations."
+  ]
+}

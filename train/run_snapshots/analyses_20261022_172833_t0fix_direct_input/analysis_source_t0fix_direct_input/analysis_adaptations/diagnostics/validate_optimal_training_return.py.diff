@@ -1,0 +1,11 @@
+--- diagnostics/validate_optimal_training_return.py
++++ diagnostics/validate_optimal_training_return.py
+@@ -30,7 +30,7 @@
+     args = parser.parse_args()
+     from eval.optimal_training_return import geometry, inputs, round_return, shortest_round, transition
+     directory = "training_return_ceiling" if args.population == "train" else "heldout_return_ceiling"
+-    output_root = ROOT / "eval" / directory / "v1_matched_v2_v3"
++    output_root = Path('/juice6/u/jshe/emergent_partner_grid') / "eval" / directory / 'v1_matched_v2_v3_20261022_080155_t0fix_direct_input'
+     out = args.out or output_root / "validation.json"
+     paths, capabilities, _, sources = inputs(args.population)
+     profiles = ((1, 4), (3, 9), (7, 2)) if args.population == "train" else ((0, 5), (3, 6), (9, 0))

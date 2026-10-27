@@ -44,7 +44,7 @@
 "EVAL_EPISODES_PER_CAPABILITY": 20
 "EVAL_SEED": 12345
 
-"SAVE_PARAMS_PATH": "/juice6/u/jshe/emergent_partner_grid/train/train_logs/counterbalanced/capability_params.safetensors"
+"SAVE_PARAMS_PATH": "${oc.env:GRID_ARTIFACT_ROOT,/juice6/scr6/nlp/interp-models/emergent_partner_grid}/train/train_logs/counterbalanced/capability_params.safetensors"
 
 "SEED": 1
 "NUM_SEEDS": 1
@@ -71,11 +71,16 @@
 "MAX_GRAD_NORM": 0.25
 
 # --- network ---
+"GRID_ENCODER": "flat"                # direct symbolic input
+"INCLUDE_IS_T0": True                  # learned phase feature for actor AND critic
 "FC_DIM_SIZE": 128
 "GRU_HIDDEN_DIM": 128
 "GRID_EMB_DIM": 64
 "MSG_EMB_DIM": 8
 "ACTIVATION": "relu"
+
+# Optional short prefix of the full learning-rate schedule, for pilot runs.
+"PILOT_UPDATES": null
 
 # --- schedule length (episodes total materialized; wraps if exceeded) ---
 "N_EPS_TOTAL": 131072

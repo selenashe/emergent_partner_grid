@@ -3,6 +3,7 @@ import os
 from typing import Dict, Union
 from safetensors.flax import save_file, load_file
 from flax.traverse_util import flatten_dict, unflatten_dict
+from repo_paths import prepare_artifact_path, link_artifact, resolve_path
 
 def save_params(params: Dict, filename: Union[str, os.PathLike]) -> None:
     # Audit guide:
@@ -11,7 +12,8 @@ def save_params(params: Dict, filename: Union[str, os.PathLike]) -> None:
     # trajectories. The trainer saves resolved JSON configuration separately.
     #
     flattened_dict = flatten_dict(params, sep=',')
-    save_file(flattened_dict, filename)
+    save_file(flattened_dict, str(prepare_artifact_path(filename)))
+    link_artifact(filename)
 
 def load_params(filename:Union[str, os.PathLike]) -> Dict:
     # Audit guide:
@@ -19,5 +21,5 @@ def load_params(filename:Union[str, os.PathLike]) -> Dict:
     # evaluator must instantiate the same network architecture from the companion
     # configuration before applying these weights.
     #
-    flattened_dict = load_file(filename)
+    flattened_dict = load_file(str(resolve_path(filename)))
     return unflatten_dict(flattened_dict, sep=",")

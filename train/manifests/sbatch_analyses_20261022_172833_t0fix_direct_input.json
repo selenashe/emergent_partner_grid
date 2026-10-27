@@ -1,0 +1,229 @@
+{
+  "batch": "analyses_20261022_172833_t0fix_direct_input",
+  "status": "completed",
+  "prepared_at_utc": "2026-10-22T17:28:34.790463+00:00",
+  "artifact_suffix": "_t0fix_direct_input",
+  "training_manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_v1_matched_v2_v3_20261022_080155_t0fix_direct_input.json",
+  "training_manifest_sha256": "0c7ecdce1864af36a49a17701103fa90290a6b595ba0aaf723f0b5406bec2ed8",
+  "analysis_root": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/analyses_20261022_172833_t0fix_direct_input/analysis_source_t0fix_direct_input",
+  "analysis_adaptations": {
+    "repo_paths.py": {
+      "original_sha256": "b5a47e201734aa7242f334aada17bfc0a804e4b4985a62ce430baf56c759d7d3",
+      "frozen_sha256": "b5a47e201734aa7242f334aada17bfc0a804e4b4985a62ce430baf56c759d7d3"
+    },
+    "jaxmarl/environments/coordination_grid/capability_populations.py": {
+      "original_sha256": "2bfb7e8e9bfca175f23a2c43ae932fed609c9e1a8090b53523904dc6904a3552",
+      "frozen_sha256": "2bfb7e8e9bfca175f23a2c43ae932fed609c9e1a8090b53523904dc6904a3552"
+    },
+    "eval/__init__.py": {
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "frozen_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "eval/plot_selected_assignment_dashboard.py": {
+      "original_sha256": "c66d0796d8dcc176ccf3fb19fedd96e200ab5a9ee88598befc8ddf6201375f2d",
+      "frozen_sha256": "c66d0796d8dcc176ccf3fb19fedd96e200ab5a9ee88598befc8ddf6201375f2d"
+    },
+    "eval/analyze_assignment_behaviors.py": {
+      "original_sha256": "827826528a9b437707849e5d236d939fb44580c0628ca2f60a2f0f875f14b43f",
+      "frozen_sha256": "1ed3652e7a5de9fcb62bdec718b49a25515654352d3e284f0257836c06ced722"
+    },
+    "eval/plot_best_seed_assignment_behaviors.py": {
+      "original_sha256": "f1a40822ea51d962b4087dfeb0b46a50d0a960fd47c3d8ffceabec9842174af6",
+      "frozen_sha256": "6c43b765589d555e44365d0e633daeac87a2b844ad403f98775c043803f0cae0"
+    },
+    "eval/relative_speed_representation.py": {
+      "original_sha256": "ac7726b6ae7b709d8bb4f01697d2dce641b2333bdbe37f148be3b30215bbfce1",
+      "frozen_sha256": "530ab9262dbac3ca9546e311de42695c1b8ac9feafec2a3cfdcaf090147d1283"
+    },
+    "eval/run_relative_speed_pipeline.py": {
+      "original_sha256": "51637b64fbd09cd86d8b6c13ed32aab2bca17deefe823153d5e29a14c4c0a60f",
+      "frozen_sha256": "3e154d234f50e2f1f6747d03ccb6a28c7957bcd12e3806d5c46b7d1235b2214b"
+    },
+    "eval/run_relative_speed_representation.py": {
+      "original_sha256": "ec5dbea16bc1dd09fd05b866354d8a88ca2a2d43cf234afd57272e82cfc4e9a6",
+      "frozen_sha256": "efcdbf8695e85d802b8fc8111dbedd4e2b0d55991c3a9e315d4b9b2fff974fe2"
+    },
+    "eval/representation_analysis.py": {
+      "original_sha256": "5ff62ffc2391b563206c31db51a5ab76dfe47396770ff8a274531cf57c95db13",
+      "frozen_sha256": "5ff62ffc2391b563206c31db51a5ab76dfe47396770ff8a274531cf57c95db13"
+    },
+    "eval/plot_episode_return_dots.py": {
+      "original_sha256": "c1a2e3cbf9c5d6dd40f8397babe3a668d271eb43aa595c41fe046ba73c21f56d",
+      "frozen_sha256": "c1a2e3cbf9c5d6dd40f8397babe3a668d271eb43aa595c41fe046ba73c21f56d"
+    },
+    "eval/round_state_prediction_comparison.py": {
+      "original_sha256": "f47b8b118bca8d6a4aa80b774b32fe6fa3fc29aefcbf7a7a58a70a3202d48b21",
+      "frozen_sha256": "a0d32bf30b6a43d25a933063a41fc89f28aa5176e3d44ac4e9deda94ddc801e9"
+    },
+    "eval/plot_overcooked_paper_match.py": {
+      "original_sha256": "2271514ceaa8a2732766ab2ffb0bdc42c87ef9774056f9789d41d2be1b90b48e",
+      "frozen_sha256": "980e4536faafd6f3c5c7a040d55c2239c43a727d18226f9cc2d9ac977e693e8e"
+    },
+    "eval/export_round_state_comparison_pngs.py": {
+      "original_sha256": "334e85c6e00bf3e9f9113ca66fa3356b1e49cbbd3106ce0b51ea0fd9d8f8f94b",
+      "frozen_sha256": "38550a8cac4511f10fe142ecd0c345af94714e83298f7aee5ea5ca1335c28e27"
+    },
+    "train/__init__.py": {
+      "original_sha256": "c1751052997c1512097163b7fdd8e018a2947520230a0374c5804d639d5a3436",
+      "frozen_sha256": "c1751052997c1512097163b7fdd8e018a2947520230a0374c5804d639d5a3436"
+    },
+    "train/training_log_format.py": {
+      "original_sha256": "3a2309fb9d896206f4dbaf66d67b61c6d67e1afc4e0408215703499c15be6665",
+      "frozen_sha256": "3a2309fb9d896206f4dbaf66d67b61c6d67e1afc4e0408215703499c15be6665"
+    },
+    "diagnostics/verify_round_state_comparison.py": {
+      "original_sha256": "46f73fa16135627b296c2e8b8cf39c9de05a2c758c9023d35055151b21330f47",
+      "frozen_sha256": "78fd7ef95fffd42966b40a9c617630cc1cb8eda8c4a2590ea33d6e2d031bcc3b"
+    },
+    "diagnostics/validate_t0fix_direct_input_analyses.py": {
+      "original_sha256": "f5a12826172fe39c71c59ffb9b6e65c9026e7009bc61111ab8de1211dac2e9f0",
+      "frozen_sha256": "f5a12826172fe39c71c59ffb9b6e65c9026e7009bc61111ab8de1211dac2e9f0"
+    },
+    "diagnostics/__init__.py": {
+      "original_sha256": "55a552775eb9cbf1947f0435ef469a6fb37b7302ea227dab8469b045c84ae5f9",
+      "frozen_sha256": "55a552775eb9cbf1947f0435ef469a6fb37b7302ea227dab8469b045c84ae5f9"
+    },
+    "diagnostics/verify_relative_speed_results.py": {
+      "original_sha256": "ba2d98b355ba3febbf3001ac66fb4dda7fcfcbbea3def660977481c8b5dae064",
+      "frozen_sha256": "4c9ba7744380ce255e0771498f463bd0c05d6c05302ba90fd7eaaec81b9eff4e"
+    }
+  },
+  "view_manifest": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/analyses_20261022_172833_t0fix_direct_input/analysis_source_t0fix_direct_input/train/manifests/sbatch_v1_matched_v2_v3_20261022_080155_t0fix_direct_input.json",
+  "view_manifest_sha256": "f5a365302a429be6daa0036dff9d6e7a2d64ebba0a0ba3a506d7859c9d46228f",
+  "representation_inputs": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/analyses_20261022_172833_t0fix_direct_input/representation_inputs_t0fix_direct_input.json",
+  "representation_inputs_sha256": "58247b729a15fc4ff81c37c3bf001709838329841c97bf510b5619c2585ce5d6",
+  "behavior_root": "/juice6/u/jshe/emergent_partner_grid/eval/protocol_comparison/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/behavioral_analysis_t0fix_direct_input",
+  "representation_root": "/juice6/u/jshe/emergent_partner_grid/eval/representation_results/relative_speed_v1_matched_v2_v3_20261022_080155_t0fix_direct_input",
+  "pipeline_root": "/juice6/u/jshe/emergent_partner_grid/eval/protocol_comparison/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/behavioral_analysis_t0fix_direct_input/pipeline_t0fix_direct_input",
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "policies": 60,
+  "rnn_policies": 45,
+  "jobs": {
+    "behavior": {
+      "job_id": "18027030",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--account=nlp",
+        "--partition=sphinx",
+        "--cpus-per-task=4",
+        "--mem=32G",
+        "--exclude=sphinx9",
+        "--time=4:00:00",
+        "--job-name=behavior_t0fix_direct_input",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid",
+        "--export=ALL,GRID_PROJECT_ROOT=/juice6/u/jshe/emergent_partner_grid",
+        "--kill-on-invalid-dep=yes",
+        "--output=/juice6/u/jshe/emergent_partner_grid/eval/slurm_logs/analyses_20261022_172833_t0fix_direct_input/behavior_%j_t0fix_direct_input.out",
+        "--error=/juice6/u/jshe/emergent_partner_grid/eval/slurm_logs/analyses_20261022_172833_t0fix_direct_input/behavior_%j_t0fix_direct_input.err",
+        "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/analyses_20261022_172833_t0fix_direct_input/infrastructure/bash/run_counterbalanced_seed_extension.sh",
+        "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/analyses_20261022_172833_t0fix_direct_input/infrastructure/bash/run_t0fix_direct_input_analyses.py",
+        "behavior",
+        "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_analyses_20261022_172833_t0fix_direct_input.json"
+      ]
+    },
+    "representation": {
+      "job_id": "18027031",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--account=nlp",
+        "--partition=sphinx",
+        "--cpus-per-task=4",
+        "--mem=32G",
+        "--exclude=sphinx9",
+        "--time=8:00:00",
+        "--job-name=representation_t0fix_direct_input",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid",
+        "--export=ALL,GRID_PROJECT_ROOT=/juice6/u/jshe/emergent_partner_grid",
+        "--kill-on-invalid-dep=yes",
+        "--output=/juice6/u/jshe/emergent_partner_grid/eval/slurm_logs/analyses_20261022_172833_t0fix_direct_input/representation_%j_t0fix_direct_input.out",
+        "--error=/juice6/u/jshe/emergent_partner_grid/eval/slurm_logs/analyses_20261022_172833_t0fix_direct_input/representation_%j_t0fix_direct_input.err",
+        "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/analyses_20261022_172833_t0fix_direct_input/infrastructure/bash/run_counterbalanced_seed_extension.sh",
+        "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/analyses_20261022_172833_t0fix_direct_input/infrastructure/bash/run_t0fix_direct_input_analyses.py",
+        "representation",
+        "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_analyses_20261022_172833_t0fix_direct_input.json"
+      ]
+    },
+    "finish": {
+      "job_id": "18027032",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--account=nlp",
+        "--partition=sphinx",
+        "--cpus-per-task=4",
+        "--mem=32G",
+        "--exclude=sphinx9",
+        "--time=1:00:00",
+        "--job-name=finish_t0fix_direct_input",
+        "--chdir=/juice6/u/jshe/emergent_partner_grid",
+        "--export=ALL,GRID_PROJECT_ROOT=/juice6/u/jshe/emergent_partner_grid",
+        "--kill-on-invalid-dep=yes",
+        "--output=/juice6/u/jshe/emergent_partner_grid/eval/slurm_logs/analyses_20261022_172833_t0fix_direct_input/finish_%j_t0fix_direct_input.out",
+        "--error=/juice6/u/jshe/emergent_partner_grid/eval/slurm_logs/analyses_20261022_172833_t0fix_direct_input/finish_%j_t0fix_direct_input.err",
+        "--dependency=afterok:18027030:18027031",
+        "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/analyses_20261022_172833_t0fix_direct_input/infrastructure/bash/run_counterbalanced_seed_extension.sh",
+        "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/analyses_20261022_172833_t0fix_direct_input/infrastructure/bash/run_t0fix_direct_input_analyses.py",
+        "finish",
+        "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_analyses_20261022_172833_t0fix_direct_input.json"
+      ]
+    }
+  },
+  "log_dir": "/juice6/u/jshe/emergent_partner_grid/eval/slurm_logs/analyses_20261022_172833_t0fix_direct_input",
+  "validation": {
+    "passed": true,
+    "validated_at_utc": "2026-10-22T17:29:35.900486+00:00",
+    "scientific_functions_preserved": [
+      "eval/relative_speed_representation.py:relative_classes",
+      "eval/relative_speed_representation.py:masks",
+      "eval/relative_speed_representation.py:train_probes",
+      "eval/relative_speed_representation.py:load_data",
+      "eval/relative_speed_representation.py:analyze",
+      "eval/representation_analysis.py:make_probe_split",
+      "eval/representation_analysis.py:load_checkpoint_rollouts",
+      "eval/round_state_prediction_comparison.py:round_end_indices",
+      "eval/round_state_prediction_comparison.py:prediction_fractions",
+      "eval/round_state_prediction_comparison.py:extract_states",
+      "eval/round_state_prediction_comparison.py:fit_policy",
+      "eval/analyze_assignment_behaviors.py:extract_arrays",
+      "eval/analyze_assignment_behaviors.py:read_policy",
+      "eval/analyze_assignment_behaviors.py:round_metrics"
+    ],
+    "step_penalty": 0.01,
+    "seeds": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "policies": 60,
+    "representation_policies": 45
+  },
+  "infrastructure_root": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/analyses_20261022_172833_t0fix_direct_input/infrastructure",
+  "infrastructure_sha256": {
+    "bash/submit_t0fix_direct_input_training.py": "eaf5865dbc0aec5a7e9a0aac8b2c75f5a49e4e528bf0ead8713f1f69d5998882",
+    "bash/run_counterbalanced_seed_extension.sh": "debcc5d62cb8592daab144b1e28b8be9d3fb2b838fcf138d1fa00c8e8e1fc120",
+    "repo_paths.py": "b5a47e201734aa7242f334aada17bfc0a804e4b4985a62ce430baf56c759d7d3",
+    "train/__init__.py": "c1751052997c1512097163b7fdd8e018a2947520230a0374c5804d639d5a3436",
+    "train/experiment.py": "edea3fe85cf37b0ee42c1f68b79a9279f90a2a90e769cfcd5534fc064a8043ac",
+    "train/experiment_runtime.py": "4f92b34e71e0e667e4a3bb716554f5b25b546e0654424a3aa49f37938729affe",
+    "train/cohort_integrity.py": "de6c279024efdd6df0a273575f35ea239dad1234953825bb4a1ce5aff15f538d",
+    "train/prepare_experiment.py": "663d928d22473052698884e53ee8f67e7f1ebac55b4865dde3cec583ed178ef9",
+    "train/observation_pipeline.py": "5c28dc1fa8f0488c0fb2ca624b8f76bb94716f62bbebcfc52fbddb2eb4d9dd94",
+    "train/ippo_rnn_coordination_grid.py": "a0d5e5843ff20f2944ec7d6f88aa3e8d167973952951993d2760b57c36ad2f2a",
+    "train/training_log_format.py": "3a2309fb9d896206f4dbaf66d67b61c6d67e1afc4e0408215703499c15be6665",
+    "bash/run_t0fix_direct_input_analyses.py": "0832946a6678ff6c7e1cb4154cd51daf05c25f05ce6e559ef2749ad2ea3471f0",
+    "bash/step_penalty_downstream.py": "6aca59998e332e84db9d0dad8cac9654cc8b39035307a217aec8741abfcd23c4",
+    "diagnostics/validate_t0fix_direct_input_analyses.py": "f5a12826172fe39c71c59ffb9b6e65c9026e7009bc61111ab8de1211dac2e9f0"
+  },
+  "submitted_at_utc": "2026-10-22T17:30:39.246052+00:00",
+  "completed_at_utc": "2026-10-22T17:42:18.785288+00:00"
+}

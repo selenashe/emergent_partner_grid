@@ -1,0 +1,30 @@
+{
+  "source": "/juice6/u/jshe/emergent_partner_grid/eval/representation_results/relative_speed_all90_v1_matched_v2_v3_20261022_t0fix_direct_input/policies/v2/rnn_diverse_influence_seed2/additional_profiles.h5",
+  "batch_size": 880,
+  "steps": 81,
+  "field_mismatches": {
+    "capability": 0,
+    "dones": 0,
+    "ego_alloc_action": 4,
+    "hidden_state": 198,
+    "is_t0": 11,
+    "layout_idx": 100,
+    "partner_assignment": 4,
+    "partner_goal": 4,
+    "rewards": 11,
+    "round_done": 11,
+    "round_idx": 100,
+    "round_time": 162,
+    "success": 11
+  },
+  "anchored_on_saved_hidden_states": true,
+  "hidden_absolute_tolerance": 0.002,
+  "max_hidden_error": 1.6965160369873047,
+  "test_episodes": 176,
+  "verified_test_episodes_all_steps": 174,
+  "verified_test_episodes_first30": 175,
+  "archive_sha256": "0f67830cdca58f6b55db3d8cdfcd24c3e7150fd97e4d4763943733c21a91861d",
+  "version": "v2",
+  "condition": "rnn_diverse_influence",
+  "training_seed": 2
+}

@@ -1,0 +1,65 @@
+--- diagnostics/plot_targets_against_best_training.py
++++ diagnostics/plot_targets_against_best_training.py
+@@ -1,6 +1,6 @@
+ """Plot each approved debugging target against its previously selected best seed.
+ 
+-References come from the original best-of-ten artifact, selected by unsmoothed
++References come from the original best-of-five artifact, selected by unsmoothed
+ return in the final training rollout. No peer medians or held-out selection.
+ Targets that are the reference remain self-comparisons in the primary figure;
+ a separately labeled supplementary figure compares those targets to runner-up
+@@ -25,7 +25,7 @@
+ from diagnostics.scan_return_divergence import HISTORY, LABELS, STEPS, VERSIONS, CONDITIONS, rolling, segments
+ 
+ COHORT = ROOT / "train/seed_diagnostics/v1_matched_v2_v3/seed_selection/representative_seeds.csv"
+-SELECTION = ROOT / "eval/protocol_comparison/v1_matched_20261009_182845/overcooked_paper_match/best_of_10/selection.json"
++SELECTION = ROOT / "/juice6/u/jshe/emergent_partner_grid/eval/protocol_comparison/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/overcooked_paper_match/best_of_5/selection.json"
+ EXTREMES = COHORT.parent / "endpoint_extremes.csv"
+ DEFAULT_OUT = COHORT.parent.parent / "return_divergence/best_training_references"
+ TARGET_COLOR = "#2879b9"
+@@ -119,8 +119,8 @@
+         Line2D([], [], color="#202020", linewidth=1.3, linestyle=":", label="Lasting-gap onset, when present")]
+     fig.legend(handles=handles, loc="upper center", bbox_to_anchor=(.5, .965 if not supplemental else .92), ncol=3, frameon=False, fontsize=10)
+     caption = ("Supplement only: runner-up references are explicitly separate from the primary best-seed comparisons.\n" if supplemental else
+-        "Reference: original best-of-ten seed; the three best-seed targets use the runner-up, explicitly labeled. No self-comparisons or medians.\n" if different_seed else
+-        "References are the previously selected best-of-ten seeds by raw final training return (update 915); no medians.\n")
++        "Reference: original best-of-five seed; the three best-seed targets use the runner-up, explicitly labeled. No self-comparisons or medians.\n" if different_seed else
++        "References are the previously selected best-of-five seeds by raw final training return (update 915); no medians.\n")
+     caption += "8-update trailing means (≥6 finite returns) · marker: ≥1-unit gap continuing through update 915 · detection time, not a proven causal breakpoint"
+     fig.text(.5, .012, caption, ha="center", fontsize=9)
+     fig.tight_layout(rect=(0, .06 if not supplemental else .13, 1, .94 if not supplemental else .87), h_pad=1.6, w_pad=1.8)
+@@ -144,7 +144,7 @@
+     audit=json.loads((COHORT.parent/"audit.json").read_text())
+     assert sha(source)==audit["source_sha256"][str(source)]
+     families={key(r)[:2] for r in targets}
+-    histories={(v,c,s):np.full(915,np.nan) for v,c in families for s in range(1,11)}
++    histories={(v,c,s):np.full(915,np.nan) for v,c in families for s in range(1,6)}
+     seen={k:[] for k in histories}
+     for r in read_csv(source):
+         identity=key(r)
+@@ -154,14 +154,14 @@
+     assert all(sorted(u)==list(range(1,916)) for u in seen.values())
+     rankings={}
+     for family in families:
+-        ranked=sorted(range(1,11), key=lambda seed: (-histories[(*family,seed)][-1], seed))
++        ranked=sorted(range(1,6), key=lambda seed: (-histories[(*family,seed)][-1], seed))
+         rankings[family]=ranked
+         assert ranked[0]==int(best[family]["seed"])==int(recorded[family]["highest_seed"])
+         assert histories[(*family,ranked[0])][-1]==float(best[family]["training_return"])==float(recorded[family]["highest_return"])
+     comparisons=[];supplement=[];curves=[]
+     for target in targets:
+         identity=key(target);family=identity[:2];reference=int(best[family]["seed"])
+-        result=compare(histories,identity,reference,"previously_selected_best_of_10")
++        result=compare(histories,identity,reference,"previously_selected_best_of_5")
+         comparisons.append(result)
+         row,curve_target,curve_reference=result
+         for u in range(915):
+@@ -203,7 +203,7 @@
+     plot(out,different,"targets_vs_best_other_full",different_seed=True)
+     plot(out,different,"targets_vs_best_other_first_10M",limit=10,different_seed=True)
+     result=dict(targets=12,primary_comparisons=12,self_comparisons=3,supplementary_runner_up_comparisons=3,
+-        selection_rule="Use the original best-of-ten selection by raw completed-episode return at update 915 within the same version and condition.",
++        selection_rule="Use the original best-of-five selection by raw completed-episode return at update 915 within the same version and condition.",
+         original_selection_verified_against_all_10_final_scores=True,all_915_updates_checked=True,
+         no_peer_medians=True,no_training_launched=True,
+         marker_rule="8-update trailing mean, >=6 finite returns; signed gap >=1 unit in one direction continuously through update 915; at least 8 endpoints.",

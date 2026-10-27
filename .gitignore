@@ -10,9 +10,23 @@ multirun/
 
 # Large rollout data (regenerable: bash/eval_all_checkpoints.sh)
 *.h5
+*.hdf5
+*.h5.tmp
+*.hdf5.tmp
 
 # Model weights (regenerable: bash/train_final_experiment.sh)
 *.safetensors
+*.ckpt
+*.pt
+*.pth
+
+# Generated binary feature caches and probe checkpoints live on scratch.
+# Keep CSV/JSON summaries, figures, and small empirical sampling audits in Git.
+eval/**/features/*.npz
+eval/**/probe_models/*.npz
+eval/**/probe_splits/*.npz
+eval/**/umap_features_*.npz
+eval/**/duration_samples.npz
 
 # Generated preallocated schedules: retain JSON parameters/checksums in Git.
 # Rebuild with train/rebuild_counterbalanced_schedules.py.
@@ -35,3 +49,5 @@ wandb/
 .vscode/
 .idea/
 .DS_Store
+*.npz
+*.csv.gz

@@ -1,0 +1,167 @@
+{
+  "status": "passed",
+  "completed_utc": "2026-10-24T19:37:36.562303+00:00",
+  "input_sha256": {
+    "/juice6/u/jshe/emergent_partner_grid/eval/representation_results/relative_speed_train_profiles_to_all90_v1_matched_v2_v3_20261022_t0fix_direct_input/analysis_run.json": "f30c05b29c632d417404eb620b15555637de8d2eb5535f7151f2583457fe743b",
+    "/juice6/u/jshe/emergent_partner_grid/eval/representation_results/relative_speed_train_profiles_to_all90_v1_matched_v2_v3_20261022_t0fix_direct_input/early_behavior_20261023/motion_audit.json": "c4332850ee36efeb260cffc3af8f044700535cccd7331b7a62b521b8b8eef492",
+    "/juice6/u/jshe/emergent_partner_grid/eval/representation_results/relative_speed_train_profiles_to_all90_v1_matched_v2_v3_20261022_t0fix_direct_input/early_behavior_20261023/saved_behavior_audit.json": "14186b066249b87867ccca739643b641c2d10d63b789fa1e2f2f4f149baa4cd2",
+    "/juice6/u/jshe/emergent_partner_grid/eval/representation_results/relative_speed_train_profiles_to_all90_v1_matched_v2_v3_20261022_t0fix_direct_input/early_behavior_20261023/motion_per_seed.csv": "e84476d55c549dd9a8400abe53b7cf272d2b2fb18783fe00e1d69df32f0def41"
+  },
+  "policy_audits": [
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_influence",
+      "training_seed": 1,
+      "verified_test_episodes": 358,
+      "total_test_episodes": 360,
+      "probe_archive_sha256": "0e389bc677db73ebfb0dfd9714077d37e0ee05f3c6b3684b8aa9388c61f268c4"
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_influence",
+      "training_seed": 2,
+      "verified_test_episodes": 357,
+      "total_test_episodes": 360,
+      "probe_archive_sha256": "70ac35b5e59ddcf6d1fc2911d2f56a282c5d39b36b4c3b2100d5aa269536c3dd"
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_influence",
+      "training_seed": 3,
+      "verified_test_episodes": 358,
+      "total_test_episodes": 360,
+      "probe_archive_sha256": "f7ade180c4f55240fb22463031856fbcbbe5a362679bec804c0b448993f9248e"
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_influence",
+      "training_seed": 4,
+      "verified_test_episodes": 356,
+      "total_test_episodes": 360,
+      "probe_archive_sha256": "fafaf7213bb65727fac10eac09720679d1ee0e9bde120c9ade015b9d319c286c"
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_influence",
+      "training_seed": 5,
+      "verified_test_episodes": 356,
+      "total_test_episodes": 360,
+      "probe_archive_sha256": "bb5d86413518799e3bdeb35140e136681c342a9a0acf6ab6ade824e58cd7a911"
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_influence",
+      "training_seed": 1,
+      "verified_test_episodes": 357,
+      "total_test_episodes": 360,
+      "probe_archive_sha256": "d246ef5f22ab3da069cf3a0056796b8e681f67c1e5edc3fc3d0eb204a8f9bcff"
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_influence",
+      "training_seed": 2,
+      "verified_test_episodes": 358,
+      "total_test_episodes": 360,
+      "probe_archive_sha256": "31f874c6af0f21c92f6388b723608aaf49bc67f925432cb5085b122283c02e4c"
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_influence",
+      "training_seed": 3,
+      "verified_test_episodes": 360,
+      "total_test_episodes": 360,
+      "probe_archive_sha256": "b4a18ccb18e85a117e5646448c34cd92835920ec97e5e1cfa47bd0bdc28d31de"
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_influence",
+      "training_seed": 4,
+      "verified_test_episodes": 358,
+      "total_test_episodes": 360,
+      "probe_archive_sha256": "db13929c6c96ab3943b571caaff73af3e023a7b3aa4ccc35b1a62fe4747af399"
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_influence",
+      "training_seed": 5,
+      "verified_test_episodes": 356,
+      "total_test_episodes": 360,
+      "probe_archive_sha256": "2b911fcfc09f3673fa537a6b351bc41ecffd0412d2183f984ee9520ce8e2f596"
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_influence",
+      "training_seed": 1,
+      "verified_test_episodes": 360,
+      "total_test_episodes": 360,
+      "probe_archive_sha256": "ca413de54f49d1d3bfbfa8e5fe0ef41bb9a424c279cbf7779516785ff0a0726c"
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_influence",
+      "training_seed": 2,
+      "verified_test_episodes": 357,
+      "total_test_episodes": 360,
+      "probe_archive_sha256": "f98883c35b2bd94c4e08658a73e6754a83427dd2860e5c6ac6db410ee7d54197"
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_influence",
+      "training_seed": 3,
+      "verified_test_episodes": 354,
+      "total_test_episodes": 360,
+      "probe_archive_sha256": "a99a5bcf46eb7d22646258842018611f9c4e46172f68dae344cce285115baca4"
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_influence",
+      "training_seed": 4,
+      "verified_test_episodes": 358,
+      "total_test_episodes": 360,
+      "probe_archive_sha256": "2be6138608e13f069cdba612bcc06dafbabc98ced16b7102b362c45b240da2da"
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_influence",
+      "training_seed": 5,
+      "verified_test_episodes": 358,
+      "total_test_episodes": 360,
+      "probe_archive_sha256": "2026e169eba54a40c84fc17b884927f53439d3854b657b457b0222041a5e65b0"
+    }
+  ],
+  "source_sha256": {
+    "analyze_decoding_behavior_correlations.py": "d7d1a7ec4411380c491069c084f1485aabff23a03ff4b0246487a27f399a47e4",
+    "full_capability_evaluation.py": "1cf820af4a700e12ae48c6e045c063549e32b3c7d5fc7e533cab5fc63f3f5b52",
+    "analyze_decoding_behavior.py": "2a1d033d8acb50c6f154861ab6e9fe4508e30a93bd0773a3e4fb524043bbbf9f",
+    "analyze_replayed_motion.py": "022fe6e9963249b6c5a6d3bb88298eec21bc1d6a216542cce435750c12a0ccfc",
+    "plot_early_decoding.py": "846df6bc60ddabe11563cba51279b990399b6a10bc4834110e9fd77e0974ad37",
+    "analyze_early_decoding.py": "8e7bdf18fa06fa5f413b76c34e88a8a95762af008d2a5640a65eca7fd733595f",
+    "analyze_instantaneous_decoding.py": "971970b125a77932a8276af09c10a94f39c0f24584db7e8ad1a74c57d4829b5f"
+  },
+  "steps": [
+    0,
+    30
+  ],
+  "panels": 9,
+  "metrics": [
+    "four_waits_after_move_seen",
+    "second_partner_move_seen",
+    "first_partner_move_seen",
+    "round_feedback_seen",
+    "both_active_goals",
+    "any_goal_switch",
+    "current_assignment_faster"
+  ],
+  "conditions": [
+    "rnn_diverse_influence"
+  ],
+  "estimand": "Pearson correlation of seed-mean curves, centering each panel separately then pooling its timepoints; level, 1-step and 5-step changes",
+  "uncertainty": "Displayed approximate95% intervals: stratified delete-one-policy-seed jackknife SE on Fisher z, Student t12; contrasts use raw-correlation differences. Sensitivity:10,000 bootstrap draws of five seeds independently within each experiment, with all categories and metrics kept together",
+  "equal_profile_weights": true,
+  "identical_episode_cohort_for_all_metrics_and_timesteps": true,
+  "reproduces_saved_motion_curves": true,
+  "policy_retraining": false,
+  "probe_refitting": false,
+  "new_rollouts": false,
+  "interpretation": "Observational trajectory association; no causal inference, iid timestep p-values, or out-of-sample prediction claim. Five-step differences overlap; uncertainty resamples policy seeds rather than treating windows as independent."
+}

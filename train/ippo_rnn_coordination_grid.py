@@ -15,9 +15,10 @@ The four core conditions used in the replication:
 
 Only agent_0 is learned; the scripted partner runs inside the env. Obs
 is a dict {"grid": (H, W, 5), "last_allocation": (3,), "is_t0": ()}:
-the grid goes through a CNN, the allocation one-hot through a small
-dense embedding, and both are concatenated before either a GRU (rnn)
-or a plain MLP (mlp). Actor head is a flat 15-way Categorical over the
+GRID_ENCODER selects the original CNN or a direct flattened grid input.
+New training includes is_t0 in the learned input to both policy and value.
+The temporal module is either a GRU (rnn) or a plain MLP (mlp).
+Actor head is a flat 15-way Categorical over the
 factored (move, alloc) ego action.
 
 Each partner episode has a fixed 2-D capability vector (d_R, d_B); the
@@ -62,6 +63,7 @@ from jaxmarl.environments.coordination_grid import (
     ALLOCATION_PROTOCOL,
 )
 from episode_scheduler import build_schedule, initial_episode_cursor, summarize_schedule
+from repo_paths import artifact_root
 
 
 # ---------------------------------------------------------------------------
@@ -93,10 +95,11 @@ class ScannedRNN(nn.Module):
         ins, resets = x
         rnn_state = jnp.where(
             resets[:, jnp.newaxis],
-            self.initialize_carry(ins.shape[0], ins.shape[1]),
+            self.initialize_carry(ins.shape[0], rnn_state.shape[-1]),
             rnn_state,
         )
-        new_rnn_state, y = nn.GRUCell(features=ins.shape[1])(rnn_state, ins)
+        # Input width (249 for a direct 7x7x5 grid) is independent of memory width.
+        new_rnn_state, y = nn.GRUCell(features=rnn_state.shape[-1])(rnn_state, ins)
         return new_rnn_state, y
 
     @staticmethod
@@ -144,18 +147,16 @@ class CommObsEncoder(nn.Module):
 
     grid: (N, H, W, 5) -> CNN -> (N, grid_dim)
     last_allocation: (N, 3) -> Dense -> (N, msg_dim)
-    concatenate -> Dense(out_dim) -> (N, out_dim)
+    concatenate with is_t0 -> Dense(out_dim) -> (N, out_dim).
 
-    The final projection to ``out_dim`` matters because the downstream
-    ScannedRNN sizes its GRU cell from ``ins.shape[-1]`` and re-initializes
-    its carry at that width. If encoder output width ≠ GRU carry width, the
-    reset-on-done ``jnp.where`` blows up. So we lock encoder output width to
-    ``out_dim`` (== GRU_HIDDEN_DIM at the call site).
+    include_is_t0=False reconstructs historical checkpoints. New training
+    explicitly enables the phase feature; it is distinct from memory resets.
     """
 
     out_dim: int = 128
     grid_dim: int = 64
     msg_dim: int = 8
+    include_is_t0: bool = False
     activation: Callable[..., Any] = nn.relu
 
     @nn.compact
@@ -179,7 +180,10 @@ class CommObsEncoder(nn.Module):
         )(msg)
         msg_emb = self.activation(msg_emb)
 
-        joint = jnp.concatenate([grid_emb, msg_emb], axis=-1)
+        features = [grid_emb, msg_emb]
+        if self.include_is_t0:
+            features.append(obs["is_t0"].astype(jnp.float32)[..., None])
+        joint = jnp.concatenate(features, axis=-1)
         out = nn.Dense(
             features=self.out_dim,
             kernel_init=orthogonal(jnp.sqrt(2)),
@@ -187,6 +191,49 @@ class CommObsEncoder(nn.Module):
         )(joint)
         out = self.activation(out)
         return out
+
+
+class DirectObsEncoder(nn.Module):
+    """Lossless symbolic input: flattened grid, allocation one-hot, and phase.
+
+    There is no convolution, learned projection, or normalization before the GRU.
+    A 7x7x5 grid gives 245 + 3 + 1 = 249 inputs while memory remains 128 wide.
+    """
+
+    include_is_t0: bool = True
+
+    @nn.compact
+    def __call__(self, obs):
+        grid = obs["grid"].astype(jnp.float32)
+        features = [grid.reshape((grid.shape[0], -1)),
+                    obs["last_allocation"].astype(jnp.float32)]
+        if self.include_is_t0:
+            features.append(obs["is_t0"].astype(jnp.float32)[..., None])
+        return jnp.concatenate(features, axis=-1)
+
+
+def encode_observation(obs, config, activation):
+    """Shared learned inputs for the RNN and MLP actor/critic.
+
+    Missing INCLUDE_IS_T0 means legacy checkpoint reconstruction. make_train
+    supplies True for new training and saves it in the resolved configuration.
+    """
+    kind = config.get("GRID_ENCODER", "cnn")
+    phase = config.get("INCLUDE_IS_T0", False)
+    if not isinstance(phase, bool):
+        raise ValueError("INCLUDE_IS_T0 must be a Boolean")
+    if kind == "flat":
+        return jax.vmap(DirectObsEncoder(include_is_t0=phase))(obs)
+    if kind != "cnn":
+        raise ValueError("GRID_ENCODER must be 'cnn' or 'flat'")
+    encoder = CommObsEncoder(
+        out_dim=config["GRU_HIDDEN_DIM"],
+        grid_dim=config.get("GRID_EMB_DIM", 64),
+        msg_dim=config.get("MSG_EMB_DIM", 8),
+        include_is_t0=phase,
+        activation=activation,
+    )
+    return nn.LayerNorm()(jax.vmap(encoder)(obs))
 
 
 class ActorCriticCommRNN(nn.Module):
@@ -206,16 +253,7 @@ class ActorCriticCommRNN(nn.Module):
         obs, dones = x  # obs is a dict of leaves with leading (T, N, ...) shape
         activation = nn.relu if self.config["ACTIVATION"] == "relu" else nn.tanh
 
-        encoder = CommObsEncoder(
-            out_dim=self.config["GRU_HIDDEN_DIM"],
-            grid_dim=self.config.get("GRID_EMB_DIM", 64),
-            msg_dim=self.config.get("MSG_EMB_DIM", 8),
-            activation=activation,
-        )
-        # vmap encoder across the leading T dim; leaves are all keyed on the same
-        # first axis, and jax.vmap on a pytree vmaps every leaf uniformly.
-        embedding = jax.vmap(encoder)(obs)
-        embedding = nn.LayerNorm()(embedding)
+        embedding = encode_observation(obs, self.config, activation)
 
         rnn_in = (embedding, dones)
         hidden, embedding = ScannedRNN()(hidden, rnn_in)
@@ -273,14 +311,7 @@ class ActorCriticCommMLP(nn.Module):
         obs, dones = x  # dones unused; kept for interface parity
         activation = nn.relu if self.config["ACTIVATION"] == "relu" else nn.tanh
 
-        encoder = CommObsEncoder(
-            out_dim=self.config["GRU_HIDDEN_DIM"],
-            grid_dim=self.config.get("GRID_EMB_DIM", 64),
-            msg_dim=self.config.get("MSG_EMB_DIM", 8),
-            activation=activation,
-        )
-        embedding = jax.vmap(encoder)(obs)
-        embedding = nn.LayerNorm()(embedding)
+        embedding = encode_observation(obs, self.config, activation)
 
         # One extra dense in place of the RNN cell so parameter counts
         # are broadly comparable.
@@ -396,7 +427,7 @@ class Transition(NamedTuple):
 
 def require_current_protocol(config):
     # Audit guide:
-    # Guard against evaluating a fixed-v1 checkpoint with online-v2 transition rules.
+    # Guard against evaluating a fixed-fixed_allocation checkpoint with online-v2 transition rules.
     # Saved configurations must explicitly name online_v2 or online_v3.
     # Historical evaluation requires the matching frozen source.
     #
@@ -409,6 +440,8 @@ def require_current_protocol(config):
 
 
 def make_train(config):
+    config.setdefault("GRID_ENCODER", "cnn")
+    config.setdefault("INCLUDE_IS_T0", True)
     # Audit guide:
     # Build a complete training function from the resolved configuration. Count one
     # learned actor per environment because the partner is scripted. Integer division
@@ -442,6 +475,10 @@ def make_train(config):
     config["NUM_UPDATES"] = (
         config["TOTAL_TIMESTEPS"] // config["NUM_STEPS"] // config["NUM_ENVS"]
     )
+    run_updates = config.get("PILOT_UPDATES") or config["NUM_UPDATES"]
+    if not isinstance(run_updates, int) or not 1 <= run_updates <= config["NUM_UPDATES"]:
+        raise ValueError("PILOT_UPDATES must be between 1 and the scheduled NUM_UPDATES")
+    config["RUN_UPDATES"] = run_updates
     config["MINIBATCH_SIZE"] = (
         config["NUM_ACTORS"] * config["NUM_STEPS"] // config["NUM_MINIBATCHES"]
     )
@@ -1066,7 +1103,7 @@ def make_train(config):
             ep_length_acc0,
         )
         runner_state, metric = jax.lax.scan(
-            _update_step, runner_state, None, config["NUM_UPDATES"]
+            _update_step, runner_state, None, config["RUN_UPDATES"]
         )
         return {"runner_state": runner_state, "metrics": metric}
 
@@ -1247,8 +1284,8 @@ def main(config):
     # configuration next to the checkpoint makes architecture, influence, reward, and
     # action-selection settings auditable later.
     #
-    config = OmegaConf.to_container(config)
-    if (config.get("SAMPLING_PROTOCOL") != "paired_counterbalanced_v1"
+    config = OmegaConf.to_container(config, resolve=True)
+    if (config.get("SAMPLING_PROTOCOL") != "paired_counterbalanced"
             or not config.get("COUNTERBALANCED_SCHEDULE_PATHS")):
         raise ValueError(
             "This trainer is a preparation template. Run "
@@ -1261,6 +1298,9 @@ def main(config):
     model_type = str(config.get("MODEL_TYPE", "rnn")).lower()
     regime = str(config.get("PARTNER_REGIME", "diverse")).lower()
     influence = bool(config.get("INFLUENCE", True))
+    wandb_dir = artifact_root() / 'wandb'
+    wandb_dir.mkdir(parents=True, exist_ok=True)
+    os.environ.setdefault('WANDB_DIR', str(wandb_dir))
     wandb.init(
         entity=config.get("ENTITY", ""),
         project=config.get("PROJECT", "coordination_grid"),

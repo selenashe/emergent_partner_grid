@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "checks": [
+    "five-seed cumulative-probe bootstrap and coverage",
+    "five-seed discrete-state bootstrap and coverage",
+    "both aggregators reject incomplete policy coverage",
+    "0.03 per-tick and oracle reward accounting including timeout",
+    "exact 45-policy manifest with unchanged per-policy episodes and splits",
+    "discrete-state preparation accepts same 45-policy cohort"
+  ],
+  "policies": 60,
+  "representation_policies": 45,
+  "step_penalty": 0.03,
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "source_hashes_verified_by_training_manifest": true
+}

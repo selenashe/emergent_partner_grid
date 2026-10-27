@@ -1,0 +1,34 @@
+--- eval/run_relative_speed_representation.py
++++ eval/run_relative_speed_representation.py
+@@ -30,9 +30,9 @@
+ 
+ 
+ def verify_inputs(manifest):
+-    expected = {(v, c, s) for v in VERSIONS for c in CONDITIONS for s in range(1, 11)}
++    expected = {(v, c, s) for v in VERSIONS for c in CONDITIONS for s in range(1, 6)}
+     identities = [(r["version"], r["condition"], r["seed"]) for r in manifest["policies"]]
+-    if len(identities) != 90 or set(identities) != expected:
++    if len(identities) != 45 or set(identities) != expected:
+         raise ValueError("Require all 90 distinct specialist-policy input records")
+     for record in manifest["policies"]:
+         for field in ("checkpoint", "config"):
+@@ -80,8 +80,8 @@
+         hashes[relative] = sha(target)
+     manifest = dict(status="prepared", schema_version=2, root=str(out), repo_root=str(ROOT),
+         input_manifest=str(input_manifest), input_manifest_sha256=sha(input_manifest),
+-        prepared_utc=datetime.now(timezone.utc).isoformat(), policies=records, n_policies=90,
+-        versions=list(VERSIONS), conditions=list(CONDITIONS), seeds=list(range(1,11)),
++        prepared_utc=datetime.now(timezone.utc).isoformat(), policies=records, n_policies=45,
++        versions=list(VERSIONS), conditions=list(CONDITIONS), seeds=list(range(1,6)),
+         profiles_per_policy=46, episodes_per_profile=20, episodes_per_policy=920,
+         train_episodes_per_policy=736, test_episodes_per_policy=184,
+         train_counts=[368,368], test_counts=[92,92], classes={"0":"red faster","1":"blue faster"},
+@@ -180,7 +180,7 @@
+             if any(p.poll() not in (None,0) for p in processes):
+                 raise RuntimeError("A specialist analysis worker failed; inspect logs")
+             done=sum((Path(r["analysis_dir"])/'completion.json').exists() for r in manifest['policies'])
+-            print(f"[progress] specialist analyses {done}/90",flush=True)
++            print(f"[progress] specialist analyses {done}/45",flush=True)
+             time.sleep(20)
+         if any(p.returncode != 0 for p in processes):
+             raise RuntimeError("A specialist analysis worker failed")

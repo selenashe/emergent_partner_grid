@@ -1,0 +1,95 @@
+--- train/plot_protocol_training_curves.py
++++ train/plot_protocol_training_curves.py
+@@ -1,6 +1,6 @@
+ """Extract losses and training returns for the evaluated V1_matched/V2/V3 runs.
+ 
+-Use immutable submission manifests to identify all ten seeds per condition.
++Use immutable submission manifests to identify all five seeds per condition.
+ Reconstruct the total PPO objective from rounded actor/value/entropy summaries;
+ never treat optimizer loss as a behavioral score or a held-out evaluation.
+ """
+@@ -25,12 +25,7 @@
+ from train.training_log_format import FIELDS, PATTERN
+ 
+ VERSIONS = ("v1_matched", "v2", "v3")
+-BATCHES = (
+-    "counterbalanced1096_20261002_235609",
+-    "counterbalanced1096_20261007_001529_seeds6to10",
+-    "counterbalanced1096_20261008_035848_v3",
+-    "v1_matched_20261009_182845",
+-)
++BATCHES = ('v1_matched_v2_v3_20261019_191029_step_penalty_0.03',)
+ METRICS = ("total_loss_reconstructed", "actor_loss", "value_loss", "entropy",
+            "episode_return", "round_success", "episode_steps")
+ LABELS = {
+@@ -149,7 +144,7 @@
+                              sharex=True, sharey="row", squeeze=False)
+     for col, version in enumerate(VERSIONS):
+         for condition, label, color in CONDITION_STYLES:
+-            policies = [curves[(version, condition, s)] for s in range(1, 11)]
++            policies = [curves[(version, condition, s)] for s in range(1, 6)]
+             x = policies[0]["env_steps"] / 1e6
+             for row, metric in enumerate(metrics):
+                 values = np.stack([p[metric] for p in policies])
+@@ -159,7 +154,7 @@
+                 variance = np.divide(np.nansum((values - mean) ** 2, axis=0), valid_count - 1,
+                                      out=np.full(len(x), np.nan), where=valid_count > 1)
+                 # Only compare complete ten-policy aggregates (early returns may be missing).
+-                mean[valid_count != 10] = np.nan
++                mean[valid_count != 5] = np.nan
+                 sd = np.sqrt(variance)
+                 axes[row, col].plot(x, mean, color=color, lw=1.8, label=label)
+                 axes[row, col].fill_between(x, mean - sd, mean + sd, color=color, alpha=.12)
+@@ -174,12 +169,12 @@
+             if row == len(metrics) - 1:
+                 ax.set_xlabel("Collected environment steps (millions)")
+     title = "Training episode return" if metrics == ("episode_return",) else "PPO training losses"
+-    fig.suptitle(title + " · all ten training seeds", fontsize=18, weight="bold", y=.985)
++    fig.suptitle(title + " · all five training seeds", fontsize=18, weight="bold", y=.985)
+     fig.legend(*axes[0, 0].get_legend_handles_labels(), loc="upper center", ncol=4,
+                bbox_to_anchor=(.5, .93), frameon=False)
+     smoothing = ("No smoothing" if raw else
+                  f"Trailing {window}-update mean ({window * 65536 / 1e6:.2f}M steps); early windows use available updates")
+-    fig.text(.5, .025, smoothing + ". Bands: sample SD across ten seeds.", ha="center", fontsize=10)
++    fig.text(.5, .025, smoothing + ". Bands: sample SD across five seeds.", ha="center", fontsize=10)
+     fig.tight_layout(rect=(0, .075, 1, .85 if len(metrics) == 1 else .89))
+     for extension in ("png", "pdf", "svg"):
+         fig.savefig(out_dir / f"{name}.{extension}", dpi=180, facecolor="white")
+@@ -188,7 +183,7 @@
+ 
+ def main():
+     parser = argparse.ArgumentParser(description=__doc__)
+-    parser.add_argument("--out-dir", type=Path, default=ROOT / "train/training_curves/v1_matched_v2_v3_all_10_seeds")
++    parser.add_argument("--out-dir", type=Path, default=ROOT / "/juice6/u/jshe/emergent_partner_grid/train/training_curves/v1_matched_v2_v3_20261019_191029_step_penalty_0.03")
+     parser.add_argument("--window-updates", type=int, default=46)
+     args = parser.parse_args()
+     if args.window_updates < 1:
+@@ -214,11 +209,11 @@
+                 entry = {"version": version, "condition": condition, "update": idx + 1,
+                          "env_steps": int(curves[(version, condition, 1)]["env_steps"][idx])}
+                 for metric in METRICS:
+-                    values = np.array([curves[(version, condition, s)][metric][idx] for s in range(1, 11)])
++                    values = np.array([curves[(version, condition, s)][metric][idx] for s in range(1, 6)])
+                     finite = values[np.isfinite(values)]
+                     entry[metric + "_n_seeds"] = len(finite)
+-                    entry[metric + "_mean"] = float(finite.mean()) if len(finite) == 10 else np.nan
+-                    entry[metric + "_sd"] = float(finite.std(ddof=1)) if len(finite) == 10 else np.nan
++                    entry[metric + "_mean"] = float(finite.mean()) if len(finite) == 5 else np.nan
++                    entry[metric + "_sd"] = float(finite.std(ddof=1)) if len(finite) == 5 else np.nan
+                 summary_rows.append(entry)
+     write_csv(out_dir / "updates.csv", raw_rows)
+     write_csv(out_dir / "smoothed_per_seed.csv", smoothed_rows)
+@@ -231,11 +226,11 @@
+         plot_metrics(runs, out_dir, ("actor_loss", "value_loss"), "loss_components_unsmoothed", args.window_updates, raw=True)
+         plot_metrics(curves, out_dir, ("episode_return",), "training_episode_return", args.window_updates)
+     summary = {
+-        "versions": list(VERSIONS), "seeds": list(range(1, 11)), "policies": len(runs),
++        "versions": list(VERSIONS), "seeds": list(range(1, 6)), "policies": len(runs),
+         "raw_update_records": len(raw_rows), "window_updates": args.window_updates,
+         "window_steps": args.window_updates * 65536,
+         "smoothing": "Trailing equal-update mean per policy; early windows use available updates; missing episode placeholders excluded.",
+-        "aggregation": "Equal-policy mean and sample SD after smoothing; means require all ten seeds.",
++        "aggregation": "Equal-policy mean and sample SD after smoothing; means require all five seeds.",
+         "total_loss": "actor_loss + VF_COEF * value_loss - ENT_COEF * entropy, reconstructed from four-decimal summaries; exact total loss was not saved.",
+         "limitations": [
+             "PPO losses are optimization diagnostics, not test losses or behavioral performance scores.",

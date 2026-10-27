@@ -1,0 +1,64 @@
+{
+  "version": "v2",
+  "condition": "rnn_diverse_noinfluence",
+  "seed": 1,
+  "status": "completed",
+  "episodes": 920,
+  "rounds": 18400,
+  "tail_episodes": 92,
+  "checkpoint_sha256": "41fe82ebc31541cb07caa109a884fa90d00d782cec1299217ff80fbdd1c4948d",
+  "config_sha256": "25b783fb7e1a78d90407b0aae141ea4533c5c1d6453b8c56b0f96f919480f7ad",
+  "producer_sha256": "0470a471612fa3872560deceab67c9bab2d2dac59f75f504aa83e18fe1d2020a",
+  "sources": [
+    {
+      "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed1_t0fix_direct_input_train.h5",
+      "physical_path": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed1_t0fix_direct_input_train.h5",
+      "size": 531854400,
+      "mtime_ns": 1792680455670098529,
+      "scalar_sha256": {
+        "dones": "ceb759ddae9f67dd9e0f3ac659f03a160ccaf9adce2f6b71c50bade9e668dbd7",
+        "round_done": "62a9adbd8fdf6fb7202602a83998d973bb688fe11dbd5d68dcb9b13060a7a051",
+        "round_idx": "bbfc20387128cbd3ed81ad2de3cff02eb666623373cb3e95d464991d3db7a2d2",
+        "round_time": "14d0b9610b69b05accfcf82581dabe2a2fd0e37785f4bd89d9a0d1b161d75040",
+        "is_t0": "9ccbc2bf72f83645169718f79d31accaa85c8ccd25d7854c724a49a4f30bc046",
+        "rewards": "199656771f8e99f0af626cbe9b10d27f5ea2ecf049a279c6068d88b4ba9bdf2f",
+        "success": "bd56ec5941edf385a87ffe6b4a32210d894f3d2ba8b2d9107fa5cb42783c1a5b",
+        "partner_assignment": "a2d7a95f28f61c6fd59893fb815d9638dbc739b943f28ef36f9470fa5c611171",
+        "partner_goal": "b3a1595356ac1bd3044805d2cc3d6481a32bbd2019c334ad35f73cc4e3cb1f62",
+        "ego_alloc_action": "8c0c38e1e7acacf8404d403e096d65151c8e40e23d9ee2563081694807694348",
+        "layout_idx": "f663f2331dc895cc6d31153c9f9668c3f8a0c59dd830d44726d1f002b80a94c0"
+      }
+    },
+    {
+      "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed1_t0fix_direct_input_test.h5",
+      "physical_path": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed1_t0fix_direct_input_test.h5",
+      "size": 487534224,
+      "mtime_ns": 1792680463878040765,
+      "scalar_sha256": {
+        "dones": "b280045ce22292666ed50e9cbb4aa3772cb8eb6626ba904d51a054de4239dc3e",
+        "round_done": "ea0534fefb2a26763efb0771959e5ea8de40b2e917c649cec80c421b1174cb7c",
+        "round_idx": "c4a8e2e79010ed6af67f3c0e334eb17e3a4ea4e47ab792ba785f0593e055687e",
+        "round_time": "a9dcced0c1f55419702472cecd9f66d6ab12e5ae5d34004696c7a0d48e23ef10",
+        "is_t0": "5f314bcef98ff52f089e271f267b347fc24146f71d4dc8c129c243c5a3723068",
+        "rewards": "6e6a4022a064a14cef25ef498ebfb416747e0c76d5068d56b8a937e9fc095b5b",
+        "success": "20dbe0d698153fce562b23f147c594fe2b4c5ef1d2978a08eff943fa8cf20870",
+        "partner_assignment": "9e837e803919a8e5b09a1a4e7d1e7f688b9d850c51c82836b96b84bc2bababc8",
+        "partner_goal": "1d0301922750fa1008af6bc1abc2ce20b89823ae22a1cfc884091c63ecfc9284",
+        "ego_alloc_action": "181ba84f40ecc5ae6852cdff28e02fbd3eb0f38ca334eea2480ba577323be464",
+        "layout_idx": "82804615b8ab63c3cf47511838e5ce03e508ba048f5cd589547368fe4943f687"
+      }
+    }
+  ],
+  "oracles": [
+    {
+      "path": "/juice6/u/jshe/emergent_partner_grid/eval/training_return_ceiling/v1_matched_v2_v3/per_layout_profile.csv",
+      "sha256": "5f845f57a7f78be804638064d106e7b830087e518a2e64582693cfe8e73f1005"
+    },
+    {
+      "path": "/juice6/u/jshe/emergent_partner_grid/eval/heldout_return_ceiling/v1_matched_v2_v3/per_layout_profile.csv",
+      "sha256": "5f7d17259bef62b5a4391f7af6919d65ba706fda6e2bc00914f8c1ed6a7c2eca"
+    }
+  ],
+  "method": "first-done inclusive; recorded reward ledger; effective within-round switches; exact conditional geometry bounds",
+  "new_rollouts": false
+}

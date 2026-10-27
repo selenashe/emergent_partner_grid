@@ -1,0 +1,611 @@
+{
+  "inputs": [
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_influence",
+      "seed": 1,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed1_t0fix_direct_input_summary.json",
+      "summary_sha256": "6d0541cdab55b9aad19aecd112aae30e535dfaf1ef0b3e51c7b175db0d214d89",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_0_t0fix_direct_input.out",
+      "log_sha256": "3428bbfb4643527854268e991fd850125a8dec7193c24c290f370383e15d7405"
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_influence",
+      "seed": 2,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed2_t0fix_direct_input_summary.json",
+      "summary_sha256": "ef20a500b2f8a2c232e241baae3d4a2be94b1e2248eabb0a226ba2827a037a45",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_1_t0fix_direct_input.out",
+      "log_sha256": "3b99beb4097979f072bb3608798fd5f10d8db9277fd00fba90871359ecc67db3"
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_influence",
+      "seed": 3,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed3_t0fix_direct_input_summary.json",
+      "summary_sha256": "1d4ac70524fe5276d83f8ba446168b2bc83298b6af9e2ec16df377e2aeeea8ff",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_2_t0fix_direct_input.out",
+      "log_sha256": "2fdfd56659fd4aadfab36b30951e0d03306504c4cfb37e59fb17174d99828b04"
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_influence",
+      "seed": 4,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed4_t0fix_direct_input_summary.json",
+      "summary_sha256": "f509ad29892b1b46d8ad03f4b0b4bad569065bb85d96a70b46b6d75f53114a7d",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_3_t0fix_direct_input.out",
+      "log_sha256": "212ef2a6150150154e7230bb2a8612ef9f38e5a892f3ae377cbb14044324a3dc"
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_influence",
+      "seed": 5,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed5_t0fix_direct_input_summary.json",
+      "summary_sha256": "675371553da648ace1c0dc707e372619f3ac9d0a81531f0f500f8551baadb0ff",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_4_t0fix_direct_input.out",
+      "log_sha256": "5f013c024006a30c7030e3ba745ddafde20e042a8fe0b7a5dd2528149062c894"
+    },
+    {
+      "version": "v1_matched",
+      "condition": "mlp_diverse_influence",
+      "seed": 1,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/mlp_diverse_influence_seed1_t0fix_direct_input_summary.json",
+      "summary_sha256": "4ab6993d9df073f1f032b7dd4da348ebe806e2de0698c2a2b53f1551e4cae8d4",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_5_t0fix_direct_input.out",
+      "log_sha256": "11747efc1205472f0dcaea28cf876da79ad2bfa88150248dfdb45257f35fdd7a"
+    },
+    {
+      "version": "v1_matched",
+      "condition": "mlp_diverse_influence",
+      "seed": 2,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/mlp_diverse_influence_seed2_t0fix_direct_input_summary.json",
+      "summary_sha256": "0bfeceff36831a9c357c2866e00ef2f77a51938287425fcdd04014e67a7493d4",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_6_t0fix_direct_input.out",
+      "log_sha256": "b5839c03cce4f5845b3ba344da4564a771a110995a997edfcb5872b6a6ad0f18"
+    },
+    {
+      "version": "v1_matched",
+      "condition": "mlp_diverse_influence",
+      "seed": 3,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/mlp_diverse_influence_seed3_t0fix_direct_input_summary.json",
+      "summary_sha256": "506d7f4eccf985184a186677f317e2a0b3251d391fe9172f9d7a08206fc9d97e",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_7_t0fix_direct_input.out",
+      "log_sha256": "648e442c5cf63f0d621ea7de3c1443480aa85fafc154ade859c6d0a54d19f53d"
+    },
+    {
+      "version": "v1_matched",
+      "condition": "mlp_diverse_influence",
+      "seed": 4,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/mlp_diverse_influence_seed4_t0fix_direct_input_summary.json",
+      "summary_sha256": "064abeb59690b1881d8006a984db60b33ef1a0e3c0a95ae350c2b81f742282fd",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_8_t0fix_direct_input.out",
+      "log_sha256": "517bebb3a6eb1db92ed433ec39140920cafcb82c5b6f31464c6e67739c7c99cb"
+    },
+    {
+      "version": "v1_matched",
+      "condition": "mlp_diverse_influence",
+      "seed": 5,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/mlp_diverse_influence_seed5_t0fix_direct_input_summary.json",
+      "summary_sha256": "236334ca53b9c6b5a5a2446d5942f2064b5146649b8bff1cbc4471cb22a73f20",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_9_t0fix_direct_input.out",
+      "log_sha256": "a88a42ef5f1c299b5f6ae19a4f357bc61db5a6760845905e503c0e1a495a1c37"
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_single_influence",
+      "seed": 1,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed1_t0fix_direct_input_summary.json",
+      "summary_sha256": "389e72e75886238b67f07a76257fea04a780fa18957613c49d30a28ea438fd6f",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_10_t0fix_direct_input.out",
+      "log_sha256": "c989c828a066b0a07c889357633718ed39ab010bcad49d860a71cc2fa41b6afd"
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_single_influence",
+      "seed": 2,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed2_t0fix_direct_input_summary.json",
+      "summary_sha256": "903433e59acab51f11ff5b6724ae199ac42e958c2c004c299830bf1edfd98637",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_11_t0fix_direct_input.out",
+      "log_sha256": "a0161f139b34e17d25f85a3f571162b41ca6f6dc0fd28bc179edeebfa4004722"
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_single_influence",
+      "seed": 3,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed3_t0fix_direct_input_summary.json",
+      "summary_sha256": "30268260aeb10d96d4b7844390b3570b3d9ce998202cbc6c03115985a21a7462",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_12_t0fix_direct_input.out",
+      "log_sha256": "f426747585bc988b7b3e141149a117cef8d6061599f2f0ff200b36aafe74dca6"
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_single_influence",
+      "seed": 4,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed4_t0fix_direct_input_summary.json",
+      "summary_sha256": "97f1bf17927207fc4012e93d4e5fff59f13f80585011f51954bc248df911a41f",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_13_t0fix_direct_input.out",
+      "log_sha256": "796c1893fd7aa0159e8d6039835008ea3504c8a12a6c510f94e002682d95c14e"
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_single_influence",
+      "seed": 5,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed5_t0fix_direct_input_summary.json",
+      "summary_sha256": "574a486f0ab59b290fd34f6eebc951b9c615ba998afcdc49ff582aa37abffae7",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_14_t0fix_direct_input.out",
+      "log_sha256": "7198930da103e1e22516199a0ab7ca174dca745eda4771e695c3a32fe1ba9e0f"
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 1,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed1_t0fix_direct_input_summary.json",
+      "summary_sha256": "a43912cc6520400694631872ebba462cb3f1842a04e07215cd5a7ce72d1e5c84",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_15_t0fix_direct_input.out",
+      "log_sha256": "24adad75833c375dc0349f5d0da8941335fd74a827e962cc6526670553ece627"
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 2,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed2_t0fix_direct_input_summary.json",
+      "summary_sha256": "e3363d562e2a2c183a8bd5a2a859e67e4d7d4d02991134bab966a83df79c5e88",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_16_t0fix_direct_input.out",
+      "log_sha256": "7c0a93d03930b3ab74950db23eb2870c02e9b1c30cdc99412d24deb60da29aee"
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 3,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed3_t0fix_direct_input_summary.json",
+      "summary_sha256": "ca5f37185ef3cd4d9a034e50a51d781338ebf7d3d4766fb7b595bc63c329c4c3",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_17_t0fix_direct_input.out",
+      "log_sha256": "cf77a29bcb88d36605dbb59db318fde401229d89e734fe8e269b9558202644f1"
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 4,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed4_t0fix_direct_input_summary.json",
+      "summary_sha256": "622747eae274fea0f456dd9c6b7274a8a52050e1a05fd5e4ea7fbf4eded23055",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_18_t0fix_direct_input.out",
+      "log_sha256": "3da70461b5c46fa6abebefb1af0cc32f2f4019dfeb4d807310c3174d694f7208"
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 5,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed5_t0fix_direct_input_summary.json",
+      "summary_sha256": "1740de7b1f3ee09ef9eb99a3369e92001c8922ddd35c4611cac8753df58a25cb",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_19_t0fix_direct_input.out",
+      "log_sha256": "e2fa2d4978e20e5bf7e462066b9f76b50b3517ae74e6f8851e3bfecd4c98a5f5"
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_influence",
+      "seed": 1,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed1_t0fix_direct_input_summary.json",
+      "summary_sha256": "1076bf180d323d2fc493c5ef12ed5d2f942286e14823c2780e55cfb82d3e4aac",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_20_t0fix_direct_input.out",
+      "log_sha256": "ff1244a97172bfd905925419537071a92cf7eb61f6e98feb39aadd553f97f7ff"
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_influence",
+      "seed": 2,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed2_t0fix_direct_input_summary.json",
+      "summary_sha256": "8299ce3e3b26696f081e8e826c43ad5e1b57af5ca724a05a12046620ef1579ea",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_21_t0fix_direct_input.out",
+      "log_sha256": "4c717ac828c74b469b9f1d73f88f8054af2a9d2c5ff080d225cfe33a2cd10aa5"
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_influence",
+      "seed": 3,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed3_t0fix_direct_input_summary.json",
+      "summary_sha256": "771a382ed006051fd38194cc4070907259cdda91afa1d831b4dc23fdbaef1089",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_22_t0fix_direct_input.out",
+      "log_sha256": "fc2ad2e3dc84f4953bc2d7b90b5e6be64d0b0bee916b866ba05ef487903d625a"
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_influence",
+      "seed": 4,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed4_t0fix_direct_input_summary.json",
+      "summary_sha256": "a58be66a1fafba7440502d8b12ce742d24f8f3972409bfb65fee65180a5f8988",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_23_t0fix_direct_input.out",
+      "log_sha256": "197b3abc36961ac235e6e117466ccdbec38983376203507deb18d905d7fcfe29"
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_influence",
+      "seed": 5,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed5_t0fix_direct_input_summary.json",
+      "summary_sha256": "415a9c74632b1bed559b4f17466eaa42f3cf11a7df5bc52ef8ef3aa6a4b2160a",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_24_t0fix_direct_input.out",
+      "log_sha256": "52aa675322b2278c367adf970c79be1fc5f24bfdab0bd206106b6079cf27d8fa"
+    },
+    {
+      "version": "v2",
+      "condition": "mlp_diverse_influence",
+      "seed": 1,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/mlp_diverse_influence_seed1_t0fix_direct_input_summary.json",
+      "summary_sha256": "a54ffd999ef3e6422afd90a22eb60a3ab39d98f3bda2f92dcc70cebc9523e24d",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_25_t0fix_direct_input.out",
+      "log_sha256": "55789e8e03d0498ca6dbaece31685f1df7302bd2f92ee90d1a24007a26640fef"
+    },
+    {
+      "version": "v2",
+      "condition": "mlp_diverse_influence",
+      "seed": 2,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/mlp_diverse_influence_seed2_t0fix_direct_input_summary.json",
+      "summary_sha256": "b5f267ec3f6b33060e82f645734ea9963e9b26b1791573ae5f39dab8bf187627",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_26_t0fix_direct_input.out",
+      "log_sha256": "958692073b8f8a6b6bb99a0ac44bd0761451acfd243853b9dc6b37e67e8806e0"
+    },
+    {
+      "version": "v2",
+      "condition": "mlp_diverse_influence",
+      "seed": 3,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/mlp_diverse_influence_seed3_t0fix_direct_input_summary.json",
+      "summary_sha256": "fc6a67ad9c4047cb308090b61f40ff6db0bde4cec09ded08d4f12eb0a6a69cc7",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_27_t0fix_direct_input.out",
+      "log_sha256": "e97d33a5de7a520c57c134d63cdf546aaa2283e0399010d8c4f5be8759772ba1"
+    },
+    {
+      "version": "v2",
+      "condition": "mlp_diverse_influence",
+      "seed": 4,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/mlp_diverse_influence_seed4_t0fix_direct_input_summary.json",
+      "summary_sha256": "41c61be1479e4bdd67f207d7d016e48ec18b862b6e49620b1e4d9775d77e9900",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_28_t0fix_direct_input.out",
+      "log_sha256": "d688232c9a62ba6168b76a86330d2c7e765ceb9d8a189816fdcf39274d5034d7"
+    },
+    {
+      "version": "v2",
+      "condition": "mlp_diverse_influence",
+      "seed": 5,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/mlp_diverse_influence_seed5_t0fix_direct_input_summary.json",
+      "summary_sha256": "c9ec63968843056f8cc840c18d073d38068f8af5525591fbb334bb319861efd7",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_29_t0fix_direct_input.out",
+      "log_sha256": "d032e98dcc79091d149429518f347e0976e128a87e8f1b54db1506b23d466501"
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_single_influence",
+      "seed": 1,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed1_t0fix_direct_input_summary.json",
+      "summary_sha256": "35537e0b40afdeb4eab793c176eab10bdff6f5daffa169d37aaece7d32665595",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_30_t0fix_direct_input.out",
+      "log_sha256": "c83c6271ebef738603a65c7bb7211fa14a70db31aa3c819b21e7f84c6b370601"
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_single_influence",
+      "seed": 2,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed2_t0fix_direct_input_summary.json",
+      "summary_sha256": "97d2506ec47701b06ecac8374ae88d89e5d16d499641d57fdab32d139baaa35f",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_31_t0fix_direct_input.out",
+      "log_sha256": "332666c6e723420bcc2e728f88a531037888a64b34c623858c7d5c6be5947808"
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_single_influence",
+      "seed": 3,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed3_t0fix_direct_input_summary.json",
+      "summary_sha256": "9ba22a4b735b9d691f320bd9f1de13211f3e17ec3a859f78dc4bc95c2ff93002",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_32_t0fix_direct_input.out",
+      "log_sha256": "cdfaf93b4b12944920b5e7eae41c2497832ec85e8e33bddf2c6c091c83e9080e"
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_single_influence",
+      "seed": 4,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed4_t0fix_direct_input_summary.json",
+      "summary_sha256": "d2a6848f97a702f30f0f1ca8ef060ffdaaa5b75f7cbc15b62863a5ccb74db0b2",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_33_t0fix_direct_input.out",
+      "log_sha256": "49f03096869f3f45ff5f3bee211b3147d3c205601ae31d30196e9fd8bbb51234"
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_single_influence",
+      "seed": 5,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed5_t0fix_direct_input_summary.json",
+      "summary_sha256": "fe7daa0d99361c29eddec0c1f0d33f9d633e1e53721952c9f78cda505709d1d6",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_34_t0fix_direct_input.out",
+      "log_sha256": "c82493aa61fae48135c51fe85d5c68fac2e80bcf40cb32a545543059cf70e93d"
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 1,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed1_t0fix_direct_input_summary.json",
+      "summary_sha256": "e294dbb14d5941528e7ddc9f46cca972f937e031d6d0166fbc96135518b81ff3",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_35_t0fix_direct_input.out",
+      "log_sha256": "1080126054796528555c3916f74c8fe1013fdd37e7ec02a613becb0fe0ddfdbf"
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 2,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed2_t0fix_direct_input_summary.json",
+      "summary_sha256": "40478e20d2cd7b4d821c92ad34425ee3824ce14509015bd856582b9110de7b8b",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_36_t0fix_direct_input.out",
+      "log_sha256": "6f0d068f8d2245ebf1c8d906af4cb3b891ac98dbe6b5413b15f94955d25541ee"
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 3,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed3_t0fix_direct_input_summary.json",
+      "summary_sha256": "4f8f8a5db8e9d3c5710a356a8d0b7a2570ce2e8e2c653f9e5db3b626f6af59da",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_37_t0fix_direct_input.out",
+      "log_sha256": "7bb9ad5a90e69ec654e9fa681148a5468659dbc19ec5dcc65b83597d7db04e41"
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 4,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed4_t0fix_direct_input_summary.json",
+      "summary_sha256": "a848c4308d38842de3cb3ca066473a5db2d5b631ef0d1c01121b22bf26216e48",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_38_t0fix_direct_input.out",
+      "log_sha256": "fc4d88486ff9d47f7cc70feed388f593fe4bd48895c42410cbd28b030784559f"
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 5,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed5_t0fix_direct_input_summary.json",
+      "summary_sha256": "7a8eab9ed1c7b2a8655eafc76bb9730057946d920ed35d41b84f41e859521f22",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_39_t0fix_direct_input.out",
+      "log_sha256": "a4e929919032bbca7cee344134144840ffe0714aca23bf214bc0037ca8700975"
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_influence",
+      "seed": 1,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed1_t0fix_direct_input_summary.json",
+      "summary_sha256": "1917412a2a71e885dd177659aa73223a48bfa5b27a06fbc790d114c56603141d",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_40_t0fix_direct_input.out",
+      "log_sha256": "e59c8e512f4ba50298ca40e123c846ba744e5e953394a9b9b15bfaf7ed6ed4fa"
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_influence",
+      "seed": 2,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed2_t0fix_direct_input_summary.json",
+      "summary_sha256": "df24ae8291e72f3893b783c7065e296ad37f9d48931c7e85d9efdaaa50e3ae1d",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_41_t0fix_direct_input.out",
+      "log_sha256": "7ff472261def68b6aaccfe89d0a1c6a8653058b24101af1654ffc54bdad036e7"
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_influence",
+      "seed": 3,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed3_t0fix_direct_input_summary.json",
+      "summary_sha256": "776dbc61589180e4292a8310300708112fbdbd84e128f8a5311181a32c32f22d",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_42_t0fix_direct_input.out",
+      "log_sha256": "c255085292ff899ed93b9734b119ef7a20cef43342b27e72c69cde6cfcc3b41c"
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_influence",
+      "seed": 4,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed4_t0fix_direct_input_summary.json",
+      "summary_sha256": "fa5aff0628ce66e1c0344c17039bb9509e819e46c1e251531d91fbdb9fcb10f9",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_43_t0fix_direct_input.out",
+      "log_sha256": "b25fd603f5e6257d3a564fce99a2d66d149e316ee0b105919c2badbfe0fe9bee"
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_influence",
+      "seed": 5,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed5_t0fix_direct_input_summary.json",
+      "summary_sha256": "3b76da562c5740cda153ea0c2ccea9dc10290f1191367848eae029aae38da772",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_44_t0fix_direct_input.out",
+      "log_sha256": "ce8bb9a5a40506ce71a7fa72feb8826df7cdd5c1415b687075b2182a1939377f"
+    },
+    {
+      "version": "v3",
+      "condition": "mlp_diverse_influence",
+      "seed": 1,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/mlp_diverse_influence_seed1_t0fix_direct_input_summary.json",
+      "summary_sha256": "d168c911c1239c4ee5f82ee154671badb40b14f106b151a886fea9aa990e979f",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_45_t0fix_direct_input.out",
+      "log_sha256": "e9d4d0503620d65403d3f3b12e7ce860dc4e8e5ed1f2c42245e631a70587e3b5"
+    },
+    {
+      "version": "v3",
+      "condition": "mlp_diverse_influence",
+      "seed": 2,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/mlp_diverse_influence_seed2_t0fix_direct_input_summary.json",
+      "summary_sha256": "bf599c8e74c53c4d2d96101f7aded16b940be970d7fa4f95f6ab1c4cbc8c2f3f",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_46_t0fix_direct_input.out",
+      "log_sha256": "a6505297c96a31952a8f448a5aa7f8ca29c86a45c58c1f92d7ad989538d109fd"
+    },
+    {
+      "version": "v3",
+      "condition": "mlp_diverse_influence",
+      "seed": 3,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/mlp_diverse_influence_seed3_t0fix_direct_input_summary.json",
+      "summary_sha256": "15ab8bb60b4e61f0b9b336634563ae6211d55fcb6d507d2473b354c253c1ff13",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_47_t0fix_direct_input.out",
+      "log_sha256": "c87efbad5b13f791002a0e795695b7e2f9dbcbc183908847cc4f1860fe820a93"
+    },
+    {
+      "version": "v3",
+      "condition": "mlp_diverse_influence",
+      "seed": 4,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/mlp_diverse_influence_seed4_t0fix_direct_input_summary.json",
+      "summary_sha256": "bbc218a05537e8cd31ca47a69aea66eefe97594d4e37c5e596eda0a4054281f7",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_48_t0fix_direct_input.out",
+      "log_sha256": "ba32f01c01bc1dea1caee8b1bc7d5a3ffe7cc398892c7a2f38ac1a93b864e9c3"
+    },
+    {
+      "version": "v3",
+      "condition": "mlp_diverse_influence",
+      "seed": 5,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/mlp_diverse_influence_seed5_t0fix_direct_input_summary.json",
+      "summary_sha256": "e380f639b8f90446c902506d33736700c3f91a6e3b8b3481d27b8787655cdda2",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_49_t0fix_direct_input.out",
+      "log_sha256": "18e9e06e46dad53d694a0bfccd6f14bba777a78c5786ba3849643eb81825024f"
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_single_influence",
+      "seed": 1,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed1_t0fix_direct_input_summary.json",
+      "summary_sha256": "970dd7c64b82cfabe7bf45c7a4d53d25c4337b84690c464cda9a4e958bfea74b",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_50_t0fix_direct_input.out",
+      "log_sha256": "4fcb2be75e789e3ebd2c3cf0abcc4e8808c40ea0016d9303f1fd9d7a1314aa06"
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_single_influence",
+      "seed": 2,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed2_t0fix_direct_input_summary.json",
+      "summary_sha256": "fcfb394783ef04512f448d4a6cdc6e867c4a9d85b7b2888bbf6b59f882d16d2a",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_51_t0fix_direct_input.out",
+      "log_sha256": "95e434650e2bbd427d9da4f38389a85e5aac25019638d39414874d7e2ac93c3c"
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_single_influence",
+      "seed": 3,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed3_t0fix_direct_input_summary.json",
+      "summary_sha256": "1eda7464bd8cc6ce56d011be151e6ab9cfed333fce2703a5ce6933da79d1c69f",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_52_t0fix_direct_input.out",
+      "log_sha256": "ec6a41325c833d222d920cfb2379258201c88b69785e47dac6fd28f016651cbb"
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_single_influence",
+      "seed": 4,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed4_t0fix_direct_input_summary.json",
+      "summary_sha256": "2456635f1e9de5b5d53b34cf801a8293fb1ea3eba0abbbf4ce24c54857fcd606",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_53_t0fix_direct_input.out",
+      "log_sha256": "c6d5cc724e4845de6a7925c6a3a163b37d0be634a1b7bdcfaff89599ee0ecdfe"
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_single_influence",
+      "seed": 5,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_single_influence_seed5_t0fix_direct_input_summary.json",
+      "summary_sha256": "4927aff1aeca2c897e4287f20ce86bb2e6132201a8f310332d2406861dfadd80",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_54_t0fix_direct_input.out",
+      "log_sha256": "12d26924454474d62ced51fac1d678152be66739651f373a6babc21abc3745c6"
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 1,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed1_t0fix_direct_input_summary.json",
+      "summary_sha256": "5abe2bf871743f9a9fc81ae07a6a7543c976145c91c08815f42ee525b549aff7",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_55_t0fix_direct_input.out",
+      "log_sha256": "bc5998a3636e88e46c175f4e1797c6769b72c4a7fd7e6523ee671ec38c7ab1ca"
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 2,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed2_t0fix_direct_input_summary.json",
+      "summary_sha256": "6e8d7ad4aa2a51dd968940d3e1a404b98e36ca942613fede4ed7a4d244e0edaf",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_56_t0fix_direct_input.out",
+      "log_sha256": "e324ceff0fcd59ce499fdbd8d6c5fe06d52be5ce0008320427e31f1e19ed60f0"
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 3,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed3_t0fix_direct_input_summary.json",
+      "summary_sha256": "a3625c7d7143c71bbf6d6b4903b16b597a62d2259248dda94e24785d3634c7ba",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_57_t0fix_direct_input.out",
+      "log_sha256": "713b3bbe92234ba1031aab8ead3e228d542c6c1652f8f92380bee619d1a50774"
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 4,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed4_t0fix_direct_input_summary.json",
+      "summary_sha256": "64be13607394f54503cf74164db4e1f42827270ec5b38d63ab2dce3532c61e5c",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_58_t0fix_direct_input.out",
+      "log_sha256": "03d0fa5b0e302f9a2ad3a1ec87b60367484178b7e83e4476329d820446ef2b4d"
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 5,
+      "cohort": "t0fix_direct_input",
+      "summary": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v3_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed5_t0fix_direct_input_summary.json",
+      "summary_sha256": "b8137094d021b8827372fdd718d7f377b2d3ae335190ab4e2d748a7616a68c2e",
+      "log": "/juice6/u/jshe/emergent_partner_grid/train/slurm_logs/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/train_18020795_59_t0fix_direct_input.out",
+      "log_sha256": "3ba40352bc83000bfe529cb68db23c8dce75bbd1659e785264f6214626256bc1"
+    }
+  ],
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ]
+}

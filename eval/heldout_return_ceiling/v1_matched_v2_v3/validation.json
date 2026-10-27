@@ -1,0 +1,65 @@
+{
+  "population": "test",
+  "passed": true,
+  "layout_indices": [
+    0,
+    1,
+    35,
+    200,
+    548,
+    1095,
+    9
+  ],
+  "profiles": [
+    [
+      0,
+      5
+    ],
+    [
+      3,
+      6
+    ],
+    [
+      9,
+      0
+    ]
+  ],
+  "astar_matches_exhaustive_bfs": 84,
+  "frozen_environment_transition_checks": 1500,
+  "frozen_environment_optimal_trajectory_checks": 248,
+  "timeout_cases_without_successful_trajectory": 4,
+  "versions": [
+    "v1_matched",
+    "v2",
+    "v3"
+  ],
+  "both_influence_settings": true,
+  "reward_tolerance": 2e-06,
+  "environment_variants": {
+    "v1_matched_influence": {
+      "path": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/v1_matched_influence_t0fix_direct_input/source/jaxmarl/environments/coordination_grid/coordination_grid.py",
+      "sha256": "7bc593fd7ba1adbd6ab3080dcf3c800c1f98e27501a799e797bbd81077c5feea"
+    },
+    "v1_matched_noinfluence": {
+      "path": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/v1_matched_t0fix_direct_input/source/jaxmarl/environments/coordination_grid/coordination_grid.py",
+      "sha256": "03ca4969d22c719d1dcaec3f6b8e65dfb69a8b98e37cf018f1d2d41c8fc007a2"
+    },
+    "v2_influence": {
+      "path": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/v2_t0fix_direct_input/source/jaxmarl/environments/coordination_grid/coordination_grid.py",
+      "sha256": "d30dd64479f9bb9c06607e62f142dfbf9d3abb6597ab50eaba527f92765e69eb"
+    },
+    "v2_noinfluence": {
+      "path": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/v2_t0fix_direct_input/source/jaxmarl/environments/coordination_grid/coordination_grid.py",
+      "sha256": "d30dd64479f9bb9c06607e62f142dfbf9d3abb6597ab50eaba527f92765e69eb"
+    },
+    "v3_influence": {
+      "path": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/v3_t0fix_direct_input/source/jaxmarl/environments/coordination_grid/coordination_grid.py",
+      "sha256": "31bb914ff9ba3ea122277aa2bd33453330cb942aa969f7ae6c4e3a62bdd99e06"
+    },
+    "v3_noinfluence": {
+      "path": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/v3_t0fix_direct_input/source/jaxmarl/environments/coordination_grid/coordination_grid.py",
+      "sha256": "31bb914ff9ba3ea122277aa2bd33453330cb942aa969f7ae6c4e3a62bdd99e06"
+    }
+  },
+  "validator_source_sha256": "32596f74a074644772a68089f5618f17c8ab3db9802acc15335e3b1172411b44"
+}

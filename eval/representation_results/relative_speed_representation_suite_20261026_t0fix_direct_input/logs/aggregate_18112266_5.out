@@ -1,0 +1,47 @@
+[plot all90 profiles] action_logits
+[early behavior] action_logits {'version': 'v1_matched', 'condition': 'rnn_diverse_influence', 'training_seed': 1}
+[early behavior] action_logits {'version': 'v1_matched', 'condition': 'rnn_diverse_influence', 'training_seed': 2}
+[early behavior] action_logits {'version': 'v1_matched', 'condition': 'rnn_diverse_influence', 'training_seed': 3}
+[early behavior] action_logits {'version': 'v1_matched', 'condition': 'rnn_diverse_influence', 'training_seed': 4}
+[early behavior] action_logits {'version': 'v1_matched', 'condition': 'rnn_diverse_influence', 'training_seed': 5}
+[early behavior] action_logits {'version': 'v1_matched', 'condition': 'rnn_diverse_noinfluence', 'training_seed': 1}
+[early behavior] action_logits {'version': 'v1_matched', 'condition': 'rnn_diverse_noinfluence', 'training_seed': 2}
+[early behavior] action_logits {'version': 'v1_matched', 'condition': 'rnn_diverse_noinfluence', 'training_seed': 3}
+[early behavior] action_logits {'version': 'v1_matched', 'condition': 'rnn_diverse_noinfluence', 'training_seed': 4}
+[early behavior] action_logits {'version': 'v1_matched', 'condition': 'rnn_diverse_noinfluence', 'training_seed': 5}
+[early behavior] action_logits {'version': 'v2', 'condition': 'rnn_diverse_influence', 'training_seed': 1}
+[early behavior] action_logits {'version': 'v2', 'condition': 'rnn_diverse_influence', 'training_seed': 2}
+[early behavior] action_logits {'version': 'v2', 'condition': 'rnn_diverse_influence', 'training_seed': 3}
+[early behavior] action_logits {'version': 'v2', 'condition': 'rnn_diverse_influence', 'training_seed': 4}
+[early behavior] action_logits {'version': 'v2', 'condition': 'rnn_diverse_influence', 'training_seed': 5}
+[early behavior] action_logits {'version': 'v2', 'condition': 'rnn_diverse_noinfluence', 'training_seed': 1}
+[early behavior] action_logits {'version': 'v2', 'condition': 'rnn_diverse_noinfluence', 'training_seed': 2}
+[early behavior] action_logits {'version': 'v2', 'condition': 'rnn_diverse_noinfluence', 'training_seed': 3}
+[early behavior] action_logits {'version': 'v2', 'condition': 'rnn_diverse_noinfluence', 'training_seed': 4}
+[early behavior] action_logits {'version': 'v2', 'condition': 'rnn_diverse_noinfluence', 'training_seed': 5}
+[early behavior] action_logits {'version': 'v3', 'condition': 'rnn_diverse_influence', 'training_seed': 1}
+[early behavior] action_logits {'version': 'v3', 'condition': 'rnn_diverse_influence', 'training_seed': 2}
+[early behavior] action_logits {'version': 'v3', 'condition': 'rnn_diverse_influence', 'training_seed': 3}
+[early behavior] action_logits {'version': 'v3', 'condition': 'rnn_diverse_influence', 'training_seed': 4}
+[early behavior] action_logits {'version': 'v3', 'condition': 'rnn_diverse_influence', 'training_seed': 5}
+[early behavior] action_logits {'version': 'v3', 'condition': 'rnn_diverse_noinfluence', 'training_seed': 1}
+[early behavior] action_logits {'version': 'v3', 'condition': 'rnn_diverse_noinfluence', 'training_seed': 2}
+[early behavior] action_logits {'version': 'v3', 'condition': 'rnn_diverse_noinfluence', 'training_seed': 3}
+[early behavior] action_logits {'version': 'v3', 'condition': 'rnn_diverse_noinfluence', 'training_seed': 4}
+[early behavior] action_logits {'version': 'v3', 'condition': 'rnn_diverse_noinfluence', 'training_seed': 5}
+[matched curves] {'version': 'v1_matched', 'condition': 'rnn_diverse_influence', 'training_seed': 1}
+[matched curves] {'version': 'v1_matched', 'condition': 'rnn_diverse_influence', 'training_seed': 2}
+[matched curves] {'version': 'v1_matched', 'condition': 'rnn_diverse_influence', 'training_seed': 3}
+[matched curves] {'version': 'v1_matched', 'condition': 'rnn_diverse_influence', 'training_seed': 4}
+[matched curves] {'version': 'v1_matched', 'condition': 'rnn_diverse_influence', 'training_seed': 5}
+[matched curves] {'version': 'v2', 'condition': 'rnn_diverse_influence', 'training_seed': 1}
+[matched curves] {'version': 'v2', 'condition': 'rnn_diverse_influence', 'training_seed': 2}
+[matched curves] {'version': 'v2', 'condition': 'rnn_diverse_influence', 'training_seed': 3}
+[matched curves] {'version': 'v2', 'condition': 'rnn_diverse_influence', 'training_seed': 4}
+[matched curves] {'version': 'v2', 'condition': 'rnn_diverse_influence', 'training_seed': 5}
+[matched curves] {'version': 'v3', 'condition': 'rnn_diverse_influence', 'training_seed': 1}
+[matched curves] {'version': 'v3', 'condition': 'rnn_diverse_influence', 'training_seed': 2}
+[matched curves] {'version': 'v3', 'condition': 'rnn_diverse_influence', 'training_seed': 3}
+[matched curves] {'version': 'v3', 'condition': 'rnn_diverse_influence', 'training_seed': 4}
+[matched curves] {'version': 'v3', 'condition': 'rnn_diverse_influence', 'training_seed': 5}
+[representation completed] action_logits /juice6/u/jshe/emergent_partner_grid/eval/representation_results/relative_speed_representation_suite_20261026_t0fix_direct_input/action_logits

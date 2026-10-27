@@ -1,0 +1,21 @@
+{
+  "source": {
+    "path": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/analyses_20261022_172833_t0fix_direct_input/analysis_source_t0fix_direct_input/inputs_t0fix_direct_input/evaluations/v2_t0fix_direct_input/rnn_diverse_noinfluence_seed5_test.h5",
+    "size": 487534224,
+    "mtime_ns": 1792680970746473341,
+    "summary": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/analyses_20261022_172833_t0fix_direct_input/analysis_source_t0fix_direct_input/inputs_t0fix_direct_input/evaluations/v2_t0fix_direct_input/rnn_diverse_noinfluence_seed5_summary.json",
+    "summary_sha256": "7a8eab9ed1c7b2a8655eafc76bb9730057946d920ed35d41b84f41e859521f22",
+    "cache_version": 1
+  },
+  "scalar_datasets_sha256": {
+    "dones": "8fde2e886f757244820c7cce2cdfbeded441ce14daba1847eb33eec6f63d50b1",
+    "round_done": "cbcd23392b58b2861793e0ec1a993c072e11ea7ee7525d29e379b449b5f45521",
+    "round_idx": "d9e3a9f0d7150bcaf82b8175180bc964a2a7c026dac8b233a1af3b19ac381cf7",
+    "round_time": "3ee492824edd8ffe1858699b4649b18f123a43e2668426a141e0ff138c7e193e",
+    "is_t0": "6e72e23986e12c31a7c2d66a8226a1f9ad153745ae9c569ea913b0ebc5f2a535",
+    "partner_assignment": "177ed5d522e03f61c85fc34ba385e220140358f5a00ba373d44992cceea6a5d4",
+    "assignment_changed": "e5a972be302a7fc76c06acf94f6f494e94058d5ae37eb56a2296060e72a785e3"
+  },
+  "saved_episode_return": 11.863500595092773,
+  "saved_success": 0.9497727272727273
+}

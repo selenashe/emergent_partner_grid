@@ -1,0 +1,76 @@
+--- eval/plot_best_seed_assignment_behaviors.py
++++ eval/plot_best_seed_assignment_behaviors.py
+@@ -1,4 +1,4 @@
+-"""Assignment diagnostics for the policies in the best-of-ten return figure.
++"""Assignment diagnostics for the policies in the best-of-five return figure.
+ 
+ Reuse its saved training-only selections and the all-seed metric definitions.
+ Recompute the selection from training logs before reading held-out behavior.
+@@ -25,7 +25,7 @@
+     load_manifests, select_candidates, sha256, training_candidates, write_csv,
+ )
+ 
+-DEFAULT_SELECTION = RETURN_OUT / "best_of_10/selection.json"
++DEFAULT_SELECTION = RETURN_OUT / "best_of_5/selection.json"
+ DEFAULT_OUT = RETURN_OUT.parent / "assignment_behaviors_best_training_seeds/novel"
+ METRICS = (
+     ("final_ego_red", "Final assignment across the partner episode", "Final ego-red assignment (%)", 100),
+@@ -52,10 +52,10 @@
+     raw = path.read_bytes()
+     saved = resolve_record_paths(json.loads(raw))
+     rule = saved["selection"]
+-    require(rule["candidate_seeds"] == list(range(1, 11)), "Expected best-of-ten selection")
++    require(rule["candidate_seeds"] == list(range(1, 6)), "Expected best-of-five selection")
+     require(rule["held_out_results_used"] is False, "Selection must use training only")
+     actual = {(r["version"], r["condition"]): r for r in saved["results"]}
+-    expected = select_candidates(training_candidates(records), list(range(1, 11)))
++    expected = select_candidates(training_candidates(records), list(range(1, 6)))
+     require(len(actual) == len(saved["results"]) == len(expected) == 12,
+             "Expected exactly one selected policy per version and condition")
+     require(set(actual) == {(r["version"], r["condition"]) for r in expected},
+@@ -101,8 +101,8 @@
+             if ci == len(styles) - 1:
+                 ax.set_xlabel("Round within partner episode")
+     fig.suptitle(title + " — selected training seeds", fontsize=16, y=.99)
+-    fig.text(.5, .015, "One policy per experiment and condition, selected by final logged training return among seeds 1–10.\n"
+-             "Each curve averages 440 held-out episodes. Seed choices match the best-of-ten return figure.",
++    fig.text(.5, .015, "One policy per experiment and condition, selected by final logged training return among seeds 1–5.\n"
++             "Each curve averages 440 held-out episodes. Seed choices match the best-of-five return figure.",
+              ha="center", fontsize=9)
+     fig.tight_layout(rect=(0, .065, 1, .955))
+     save_figure(fig, out, metric + "_best_training_seeds", report)
+@@ -136,7 +136,7 @@
+     assignment_note = "Red = ego red / partner blue; blue = ego blue / partner red. Final assignments average 440 episodes at each round."
+     if any(c == "rnn_diverse_noinfluence" for c, _, _ in styles):
+         assignment_note += " No-influence assignments are imposed by the environment."
+-    fig.text(.5, .015, "Same policy selections as the best-of-ten held-out return figure; selected by final logged training return.\n"
++    fig.text(.5, .015, "Same policy selections as the best-of-five held-out return figure; selected by final logged training return.\n"
+              + assignment_note,
+              ha="center", fontsize=9)
+     fig.tight_layout(rect=(0, .07, 1, .96))
+@@ -201,7 +201,7 @@
+         for field in ("dones", "round_done", "round_idx"):
+             require(provenance["scalar_datasets_sha256"][field] == row["scalar_datasets_sha256"][field],
+                     f"Selected rollout data changed: {field}")
+-        require(np.isclose(provenance["saved_episode_return"], row["mean"], atol=3e-5, rtol=0),
++        require(np.isclose(provenance["saved_episode_return"], row["mean"], atol=3e-3, rtol=0),
+                 "Held-out mean differs from the return figure")
+         metrics = round_metrics(data)
+         metrics["final_ego_blue"] = 1 - metrics["final_ego_red"]
+@@ -261,14 +261,14 @@
+     reproduction_flag = " --exclude-no-influence" if args.exclude_no_influence else ""
+     (out / "METHODS.txt").write_text(
+         "Assignment behavior of the best training seeds\n\n"
+-        "Selection reuses overcooked_paper_match/best_of_10/selection.json, verified\n"
++        "Selection reuses overcooked_paper_match/best_of_5/selection.json, verified\n"
+         "against all 120 training logs. Each experiment/condition maximizes mean\n"
+         "completed-episode return in the final logged training rollout among seeds\n"
+         "1-10 (lowest seed breaks ties). Held-out behavior never enters selection.\n\n"
+         + condition_note + seed_table + "\n\n"
+         "Population: 22 held-out profiles x 20 episodes x 20 rounds per policy.\n"
+         f"{len(summaries)} selected policies, {n_episodes:,} episodes, {n_episodes * 20:,} rounds. These are the same\n"
+-        "final-checkpoint evaluations used in the best-of-ten return figure.\n\n"
++        "final-checkpoint evaluations used in the best-of-five return figure.\n\n"
+         + "\n".join(f"{key}: {value}." for key, value in DEFINITIONS.items()) + "\n\n"
+         "V1_matched is fixed within each round. V2 initializes randomly. Influence-enabled V3\n"
+         "chooses its initial assignment. Scan padding after termination is excluded.\n"

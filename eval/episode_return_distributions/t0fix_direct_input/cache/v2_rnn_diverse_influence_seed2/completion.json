@@ -1,0 +1,64 @@
+{
+  "version": "v2",
+  "condition": "rnn_diverse_influence",
+  "seed": 2,
+  "status": "completed",
+  "episodes": 920,
+  "rounds": 18400,
+  "tail_episodes": 92,
+  "checkpoint_sha256": "63deabd3fbaac7519b02bbceae6d68d68fc109ea49a9f8ebb0b751246e802641",
+  "config_sha256": "aa9e44dc422afe17c9efc6fa4a37372a5259a00ee3d5f6168d9513aa4d07fafb",
+  "producer_sha256": "0470a471612fa3872560deceab67c9bab2d2dac59f75f504aa83e18fe1d2020a",
+  "sources": [
+    {
+      "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed2_t0fix_direct_input_train.h5",
+      "physical_path": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed2_t0fix_direct_input_train.h5",
+      "size": 531854400,
+      "mtime_ns": 1792679917793884928,
+      "scalar_sha256": {
+        "dones": "afb3d82cf05ed772b154a992055004d79652b9baca6c8a405e54256a576f54c1",
+        "round_done": "44d7c8d050581ad26abf8ed7c4c5e1453a14d4de7cb06558735b7c6a9c757f3b",
+        "round_idx": "44ba1d885331666e9cbfab8e4f855463af5a6743cd87f784dd9998da481801aa",
+        "round_time": "8c3eea4155a665718c33aa11c2851c5b3542123c586ee29b3891dd8b1383f9e4",
+        "is_t0": "d21c3426552476886b1de2549f1737ebb967e8c8cca20b4e947db8ba72823cfc",
+        "rewards": "9c9dd89493eb5229bb34d5c4312aa01b3271f831ffd714e4eb17139bd1a3459c",
+        "success": "7dfc8f1eb736f1ee0a6cb3589dabcdfefcff35e2549cff5ed4d68b55156579f5",
+        "partner_assignment": "e5e59ef02d442fa68407519604af6249242383b93dc4952aab0d8190a1ab3ec0",
+        "partner_goal": "e6cbaf80972f54ea5092ea3ca8da4317e520b08c10792c985dc974bc44a3ee61",
+        "ego_alloc_action": "e5e59ef02d442fa68407519604af6249242383b93dc4952aab0d8190a1ab3ec0",
+        "layout_idx": "cbc57f883bc6f22757048fdfb0c9f84093aceab4d9ce164952e11881c64eda3f"
+      }
+    },
+    {
+      "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed2_t0fix_direct_input_test.h5",
+      "physical_path": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed2_t0fix_direct_input_test.h5",
+      "size": 487534224,
+      "mtime_ns": 1792679925633829692,
+      "scalar_sha256": {
+        "dones": "8230d308b72a5375e7ddb78c6b2055ce608b74581910c51db05a4157eb140419",
+        "round_done": "a7a9eeaa81402f4ded23d6c9c34de3a78176c18c4ee0e77c47f2447c9097fa4b",
+        "round_idx": "18b667ce38307e8fba0a4d315e83d684b63fa470bb9535db19ffe3bff6eb6bd7",
+        "round_time": "b0abb49f18dd967c56e8124b9de8eb65e55efb0a295d84af2d4c2f09fbfe6423",
+        "is_t0": "96ad0328e78b1eab687f7597380c87071a0c9f5143820ce57862402d69c76209",
+        "rewards": "4a15305eefd7afd60c648fc70ea25e5e02b161b387ab98cf9dea7f5a008b23c3",
+        "success": "1654eaad7bc3d88b8c28d2e5ed5b232cd55d8a09dda2c69a62d28007fb1cd8d1",
+        "partner_assignment": "81895a9b15ec8dca4abc947e8cb57897f3ae7bb450e5eb70ffb7ed61638ef41b",
+        "partner_goal": "f05dc0022337240bd9f8987a1e53a6997ac1799f4731a9fac4881632b6eb6f86",
+        "ego_alloc_action": "81895a9b15ec8dca4abc947e8cb57897f3ae7bb450e5eb70ffb7ed61638ef41b",
+        "layout_idx": "81418d87b8405523592f61c9469907ec19a622c24b9aacf8d92f4e285d534094"
+      }
+    }
+  ],
+  "oracles": [
+    {
+      "path": "/juice6/u/jshe/emergent_partner_grid/eval/training_return_ceiling/v1_matched_v2_v3/per_layout_profile.csv",
+      "sha256": "5f845f57a7f78be804638064d106e7b830087e518a2e64582693cfe8e73f1005"
+    },
+    {
+      "path": "/juice6/u/jshe/emergent_partner_grid/eval/heldout_return_ceiling/v1_matched_v2_v3/per_layout_profile.csv",
+      "sha256": "5f7d17259bef62b5a4391f7af6919d65ba706fda6e2bc00914f8c1ed6a7c2eca"
+    }
+  ],
+  "method": "first-done inclusive; recorded reward ledger; effective within-round switches; exact conditional geometry bounds",
+  "new_rollouts": false
+}

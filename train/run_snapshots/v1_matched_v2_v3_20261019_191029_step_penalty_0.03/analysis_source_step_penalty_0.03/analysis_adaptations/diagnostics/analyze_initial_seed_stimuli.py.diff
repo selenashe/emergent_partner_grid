@@ -1,0 +1,11 @@
+--- diagnostics/analyze_initial_seed_stimuli.py
++++ diagnostics/analyze_initial_seed_stimuli.py
+@@ -30,7 +30,7 @@
+ CHECKPOINTS = ROOT / "train/train_logs/v1_matched_balanced_training/v1_matched_20261009_182845"
+ SOURCE = ROOT / "train/run_snapshots/v1_matched_20261009_182845/v1_matched/source"
+ ORACLES = ROOT / "eval/training_return_ceiling/v1_matched_v2_v3"
+-HISTORIES = ROOT / "train/training_curves/v1_matched_v2_v3_all_10_seeds"
++HISTORIES = ROOT / "/juice6/u/jshe/emergent_partner_grid/train/training_curves/v1_matched_v2_v3_20261019_191029_step_penalty_0.03"
+ PHASES = ((1,12), (13,20), (21,30), (31,46), (47,64), (65,92))
+ 
+ 

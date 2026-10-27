@@ -1,0 +1,51 @@
+{
+  "status": "passed",
+  "results": {
+    "current_observation": {
+      "curve_rows": 303,
+      "paired_rows": 9,
+      "fixed20_matches_time_specific_at_step20": true
+    },
+    "previous_memory": {
+      "curve_rows": 303,
+      "paired_rows": 9,
+      "fixed20_matches_time_specific_at_step20": true
+    },
+    "updated_memory": {
+      "curve_rows": 303,
+      "paired_rows": 9,
+      "fixed20_matches_time_specific_at_step20": true
+    },
+    "actor_features": {
+      "curve_rows": 303,
+      "paired_rows": 9,
+      "fixed20_matches_time_specific_at_step20": true
+    },
+    "critic_features": {
+      "curve_rows": 303,
+      "paired_rows": 9,
+      "fixed20_matches_time_specific_at_step20": true
+    },
+    "action_logits": {
+      "curve_rows": 303,
+      "paired_rows": 9,
+      "fixed20_matches_time_specific_at_step20": true
+    },
+    "action_probabilities": {
+      "curve_rows": 303,
+      "paired_rows": 9,
+      "fixed20_matches_time_specific_at_step20": true
+    },
+    "value_estimate": {
+      "curve_rows": 303,
+      "paired_rows": 9,
+      "fixed20_matches_time_specific_at_step20": true
+    },
+    "previous_memory_shift_check": {
+      "active_step_pairs": 170,
+      "held_out_predictions_compared": 61200,
+      "decision_disagreements": 0,
+      "probability_max_difference": 0.0
+    }
+  }
+}

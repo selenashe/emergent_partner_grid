@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "completed_utc": "2026-10-27T01:33:20.720537+00:00",
+  "completed_fits": 240,
+  "all_fitted_archive_hashes_verified": true,
+  "original_baseline_manifest_and_30_archives_unchanged": true,
+  "captions_use_global_observation_index": true,
+  "previous_memory_timing_explicit": true,
+  "archived_motion_observation_validation": {
+    "validated_episode_prefixes": 5361,
+    "validated_observations": 166191,
+    "ego_partner_goal_and_wall_grid_mismatches": 0,
+    "phase_mismatches": 0
+  },
+  "archived_behavior_validation": {
+    "episodes_checked": 8640,
+    "event_timestamps_checked": 25920,
+    "event_timestamp_mismatches": 0
+  },
+  "producer_sha256": "58baa0a0e9c65619ff14dfa0112a3657480000fc9c610539d2549594842e2dbd"
+}

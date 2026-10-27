@@ -1,0 +1,32 @@
+{
+  "slice": "test",
+  "episodes": 440,
+  "probability_max_error": 4.76837158203125e-07,
+  "probability_q999_error": 2.384185791015625e-07,
+  "prediction_disagreements": 0,
+  "used_prediction_disagreements": 0,
+  "test_prediction_disagreements": 0,
+  "terminal_mismatches": 0,
+  "original_field_mismatches": {
+    "rewards": 0,
+    "dones": 0,
+    "success": 0,
+    "round_done": 0,
+    "round_idx": 0,
+    "layout_idx": 0,
+    "partner_assignment": 0,
+    "ego_alloc_action": 0,
+    "partner_goal": 0,
+    "round_time": 0,
+    "is_t0": 0
+  },
+  "original_hidden_max_error": 0.0,
+  "status": "passed",
+  "archive_sha256": "bf0219267878beae99453a4836f86ebaf97df50c719a8a3550f1e4522b977de1",
+  "archive_stats": {
+    "size": 88747222,
+    "mtime_ns": 1793063442818476297
+  },
+  "producer_sha256": "481aca5e10a4370a47f1588d94556954268714682f81d7200eafe4f367678fc9",
+  "completed_utc": "2026-10-27T01:10:43.423422+00:00"
+}

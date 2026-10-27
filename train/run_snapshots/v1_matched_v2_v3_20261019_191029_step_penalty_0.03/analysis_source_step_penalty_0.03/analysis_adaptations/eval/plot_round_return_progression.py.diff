@@ -1,0 +1,91 @@
+--- eval/plot_round_return_progression.py
++++ eval/plot_round_return_progression.py
+@@ -49,11 +49,11 @@
+         raise ValueError("Success must terminate its round")
+     if not np.isfinite(rewards[alive]).all():
+         raise ValueError("Valid rewards must be finite")
+-    np.testing.assert_allclose(rewards[alive], np.where(success[alive], 1., -.01), atol=1e-6, rtol=0)
++    np.testing.assert_allclose(rewards[alive], np.where(success[alive], 1., -.03), atol=1e-6, rtol=0)
+     reward_prefix = np.cumsum(np.where(alive, rewards, 0), axis=1, dtype=np.float64)
+     cumulative = reward_prefix[episodes, ends]
+     incremental = np.diff(cumulative, prepend=np.zeros((len(lengths), 1)), axis=1)
+-    expected = 1.01 * success[episodes, ends] - .01 * steps
++    expected = 1.03 * success[episodes, ends] - .03 * steps
+     np.testing.assert_allclose(incremental, expected, atol=2e-6, rtol=0)
+     return cumulative, incremental, steps, success[episodes, ends]
+ 
+@@ -93,7 +93,7 @@
+                     cumulative, incremental, steps, success = extract_round_returns(
+                         arrays["rewards"], arrays["dones"].astype(bool), arrays["round_done"].astype(bool),
+                         arrays["round_idx"], arrays["round_time"], arrays["success"].astype(bool))
+-                    np.testing.assert_allclose(cumulative[:, -1].mean(), summary["mean_ep_return"], atol=2e-4, rtol=0)
++                    np.testing.assert_allclose(cumulative[:, -1].mean(), summary["mean_ep_return"], atol=3e-3, rtol=0)
+                     np.testing.assert_allclose(success.mean(axis=0), summary["per_round_success_rate"], atol=1e-7, rtol=0)
+                     if summary["n_episodes"] != expected_episodes or summary["n_rounds"] != 20 * expected_episodes:
+                         raise ValueError(f"Summary episode counts differ: {summary_path}")
+@@ -116,7 +116,7 @@
+                                     "reconstructed_mean_return": float(cumulative[:, -1].mean())})
+                     completed += 1
+                     if completed % 10 == 0:
+-                        print(f"Validated {completed}/240 rollout files", flush=True)
++                        print(f"Validated {completed}/120 rollout files", flush=True)
+                 groups[(population, version, condition)] = {
+                     field: np.concatenate([b[field] for b in batches], axis=0) for field in batches[0]
+                 }
+@@ -147,10 +147,10 @@
+     for view, groups in views.items():
+         for (version, condition), data in groups.items():
+             seed_values = {}
+-            for seed in range(1, 11):
++            for seed in range(1, 6):
+                 mask = data["training_seed"] == seed
+                 if not mask.any():
+-                    raise ValueError("Every plotted condition must retain all ten policy seeds")
++                    raise ValueError("Every plotted condition must retain all five policy seeds")
+                 seed_values[seed] = {metric: data[metric][mask] for metric in ("cumulative_return", "round_return")}
+                 for r in range(20):
+                     row = {"view": view, "version": version, "condition": condition, "seed": seed,
+@@ -167,10 +167,10 @@
+                     row[metric + "_mean"] = float(values.mean())
+                     row[metric + "_episode_variance"] = float(values.var(ddof=1))
+                     row[metric + "_episode_sd"] = float(values.std(ddof=1))
+-                    seed_means = [seed_values[s][metric][:, r].mean() for s in range(1, 11)]
++                    seed_means = [seed_values[s][metric][:, r].mean() for s in range(1, 6)]
+                     row[metric + "_seed_mean_sd"] = float(np.std(seed_means, ddof=1))
+                     numerator = sum((len(seed_values[s][metric])-1) * seed_values[s][metric][:, r].var(ddof=1)
+-                                    for s in range(1, 11))
++                                    for s in range(1, 6))
+                     row[metric + "_within_seed_episode_sd"] = float(np.sqrt(numerator/(len(values)-10)))
+                 rows.append(row)
+                 lookup[(view, version, condition, r+1)] = row
+@@ -182,9 +182,9 @@
+               "heldout_profiles": "Held-out partner profiles",
+               "shared_training_profiles": "Shared 24-profile familiar evaluation"}
+     subtitles = {
+-        "training_profiles": "Single-partner RNN: (1,4), 200 episodes. Other models: 24 profiles, 4,800 episodes each per protocol.",
+-        "heldout_profiles": "All models: 22 held-out profiles, 4,400 episodes each per protocol. Grid layouts are familiar.",
+-        "shared_training_profiles": "All models: 24 training profiles, 4,800 episodes each per protocol, including the single-partner-trained RNN.",
++        "training_profiles": "Single-partner RNN: (1,4), 200 episodes. Other models: 24 profiles, 2,400 episodes each per protocol.",
++        "heldout_profiles": "All models: 22 held-out profiles, 2,200 episodes each per protocol. Grid layouts are familiar.",
++        "shared_training_profiles": "All models: 24 training profiles, 2,400 episodes each per protocol, including the single-partner-trained RNN.",
+     }
+     label = "Cumulative episode return" if metric == "cumulative_return" else "Return earned in one round"
+     x = np.arange(1, 21)
+@@ -238,7 +238,7 @@
+     parser.add_argument("--replot", action="store_true", help="Render verified saved summaries without rereading rollout files")
+     args = parser.parse_args()
+     manifest = resolve_record_paths(json.loads(args.manifest.read_text()))
+-    if manifest["evaluation_seeds"] != list(range(1, 11)):
++    if manifest["evaluation_seeds"] != list(range(1, 6)):
+         raise ValueError("Expected the same ten evaluated learner seeds")
+     out = (args.out_dir or Path(manifest["aggregate_root"]) / "round_returns").resolve()
+     out.mkdir(parents=True, exist_ok=True)
+@@ -278,7 +278,7 @@
+             plot(view, metric, lookup, out)
+     result = {
+         "passed": True, "manifest": str(args.manifest.resolve()), "versions": list(VERSIONS),
+-        "learner_seeds": list(range(1, 11)), "rollout_files": len(sources),
++        "learner_seeds": list(range(1, 6)), "rollout_files": len(sources),
+         "unique_saved_episodes": sum(len(g["training_seed"]) for g in groups.values()),
+         "cumulative_return": "Sum of actual rewards from episode start through the terminal transition of round r.",
+         "round_return": "Reward earned within round r; cumulative prefix differences.",

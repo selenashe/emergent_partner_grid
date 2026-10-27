@@ -21,7 +21,7 @@ The scientific selection criteria are:
 
 All completion-time and reward math routes through :func:`completion_time`
 and :func:`evaluate_layout` — the analytical completion formula lives in
-exactly one place. ``data_prep/capability_validation.py`` re-uses these
+exactly one place. ``diagnostics/capability_validation.py`` re-uses these
 helpers.
 
 Public API used by ``data_prep/build_final_corpus.py``:

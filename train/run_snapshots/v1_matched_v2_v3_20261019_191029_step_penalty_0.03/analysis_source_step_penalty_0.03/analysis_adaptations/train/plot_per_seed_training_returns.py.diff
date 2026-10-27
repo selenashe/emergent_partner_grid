@@ -1,0 +1,62 @@
+--- train/plot_per_seed_training_returns.py
++++ train/plot_per_seed_training_returns.py
+@@ -1,4 +1,4 @@
+-"""Replot the original protocol training returns as nine panels of ten seeds.
++"""Replot the original protocol training returns as nine panels of five seeds.
+ 
+ Run: python train/plot_per_seed_training_returns.py
+ Uses the saved raw updates and the original trailing-mean implementation;
+@@ -23,13 +23,13 @@
+ sys.path.insert(0, str(ROOT))
+ from train.plot_protocol_training_curves import VERSIONS, trailing_mean
+ 
+-SOURCE = ROOT / "train/training_curves/v1_matched_v2_v3_all_10_seeds"
++SOURCE = ROOT / "/juice6/u/jshe/emergent_partner_grid/train/training_curves/v1_matched_v2_v3_20261019_191029_step_penalty_0.03"
+ CONDITIONS = (
+     ("mlp_diverse_influence", "MLP"),
+     ("rnn_diverse_influence", "RNN diverse-partner"),
+     ("rnn_single_influence", "RNN single-partner"),
+ )
+-SEEDS = tuple(range(1, 11))
++SEEDS = tuple(range(1, 6))
+ 
+ 
+ def sha256(path):
+@@ -62,8 +62,8 @@
+                 data = curves[(version, condition, seed)]
+                 ax.plot(data[:, 1] / 1e6, data[:, 2], color=colors[seed - 1],
+                         lw=1.5, alpha=.95, label=f"Seed {seed}")
+-            if len(ax.lines) != 10:
+-                raise ValueError("Every panel must contain exactly ten curves")
++            if len(ax.lines) != 5:
++                raise ValueError("Every panel must contain exactly five curves")
+             ax.set_xlim(0, 60)
+             ax.set_xticks(np.arange(0, 61, 10))
+             ax.grid(alpha=.18)
+@@ -76,7 +76,7 @@
+     handles = [Line2D([], [], color=colors[s - 1], lw=2, label=f"Seed {s}")
+                for s in SEEDS]
+     fig.legend(handles=handles, loc="upper center", bbox_to_anchor=(.5, .95),
+-               ncol=10, frameon=False, fontsize=11, handlelength=1.8,
++               ncol=5, frameon=False, fontsize=11, handlelength=1.8,
+                columnspacing=1.25)
+     fig.supylabel("Training return per 20-round episode", x=.012, fontsize=13)
+     fig.supxlabel("Collected environment steps (millions)", y=.067, fontsize=13)
+@@ -155,14 +155,14 @@
+         script_sha256=sha256(Path(__file__)),
+         versions=list(VERSIONS), conditions=[c for c, _ in CONDITIONS],
+         excluded_conditions=["rnn_diverse_noinfluence"], seeds=list(SEEDS),
+-        panels=9, curves_per_panel=10, policies=len(curves), records=len(rows),
++        panels=9, curves_per_panel=5, policies=len(curves), records=len(rows),
+         window_updates=window, window_steps=window * steps_per_update,
+         smoothing=metadata["smoothing"],
+-        validation="All 90 recomputed curves match the original saved smoothed "
++        validation="All 45 recomputed curves match the original saved smoothed "
+                    "returns to absolute tolerance 1e-12, including missing values.",
+         runs=validation)
+     (out / "provenance.json").write_text(json.dumps(report, indent=2) + "\n")
+-    print(json.dumps({"output": str(out), "panels": 9, "curves_per_panel": 10,
++    print(json.dumps({"output": str(out), "panels": 9, "curves_per_panel": 5,
+                       "policies": len(curves), "records": len(rows)}, indent=2))
+ 
+ 

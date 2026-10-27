@@ -1,0 +1,39 @@
+--- train/plot_final_training_return_dots.py
++++ train/plot_final_training_return_dots.py
+@@ -18,12 +18,12 @@
+ 
+ def main():
+     parser = argparse.ArgumentParser(description=__doc__)
+-    parser.add_argument("--updates", type=Path, default=ROOT / "train/training_curves/v1_matched_v2_v3_all_10_seeds/updates.csv")
++    parser.add_argument("--updates", type=Path, default=ROOT / "/juice6/u/jshe/emergent_partner_grid/train/training_curves/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/updates.csv")
+     parser.add_argument("--out-dir", type=Path)
+     args = parser.parse_args()
+     source = args.updates.resolve()
+     out_dir = (args.out_dir or source.parent / "final_update_dots").resolve()
+-    expected = {(v, c, s) for v in VERSIONS for c, _, _ in CONDITION_STYLES for s in range(1, 11)}
++    expected = {(v, c, s) for v in VERSIONS for c, _, _ in CONDITION_STYLES for s in range(1, 6)}
+     final = {}
+     with source.open(newline="") as file:
+         for row in csv.DictReader(file):
+@@ -47,18 +47,18 @@
+     aggregates = []
+     for version in VERSIONS:
+         for condition, _, _ in CONDITION_STYLES:
+-            values = [final[(version, condition, s)]["episode_return"] for s in range(1, 11)]
++            values = [final[(version, condition, s)]["episode_return"] for s in range(1, 6)]
+             aggregates.append({
+                 "version": version, "condition": condition, "n_seeds": len(values),
+                 "episode_return_mean": statistics.mean(values),
+                 "episode_return_sd": statistics.stdev(values),
+             })
+     report = {
+-        "population": "train", "seeds": list(range(1, 11)), "aggregates": aggregates,
++        "population": "train", "seeds": list(range(1, 6)), "aggregates": aggregates,
+         "plot_title": "Episode return at final training update",
+         "plot_subtitle": "Update 915 · 59,965,440 environment steps · unsmoothed training returns",
+         "source_updates": str(source), "source_sha256": hashlib.sha256(source.read_bytes()).hexdigest(),
+-        "metric": "Per-policy mean return of full 20-round episodes completed in the final rollout collection update; dots weight all ten policies equally.",
++        "metric": "Per-policy mean return of full 20-round episodes completed in the final rollout collection update; dots weight all five policies equally.",
+         "training_layouts": "Same frozen 1,096 grid layouts used during training.",
+         "training_partners": {"rnn_single_influence": [[1, 4]], "other_conditions": "24-profile training population"},
+         "limitations": [

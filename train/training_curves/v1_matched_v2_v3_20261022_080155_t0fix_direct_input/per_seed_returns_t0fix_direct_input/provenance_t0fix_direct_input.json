@@ -1,0 +1,441 @@
+{
+  "manifest": {
+    "path": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_v1_matched_v2_v3_20261022_080155_t0fix_direct_input.json",
+    "sha256": "f68650e99f48d34406cc5282ad86afe6dd7b02eeee90c1c9e0e5e9e176cc140c"
+  },
+  "source": {
+    "path": "/juice6/u/jshe/emergent_partner_grid/train/training_curves/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/updates_t0fix_direct_input.csv",
+    "sha256": "588a6bdb935ac8ce5c934d5eae07881511dbf2c69a5d3ed02d5d96be584e86f4"
+  },
+  "script_sha256": "cda83a60b14ebd9e933f2ed9cafe15d2f83ecf7585d54e1a35f433de70b0c157",
+  "plotter_sha256": "f9332bc1de5bc0534e938cab293343111c8c7176710cca76046792306aaa6b91",
+  "cohort": "t0fix_direct_input",
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "panels": 9,
+  "curves_per_panel": 5,
+  "conditions": [
+    "mlp_diverse_influence",
+    "rnn_diverse_influence",
+    "rnn_single_influence"
+  ],
+  "excluded_conditions": [
+    "rnn_diverse_noinfluence"
+  ],
+  "window_updates": 46,
+  "window_steps": 3014656,
+  "smoothing": "Trailing arithmetic mean over 46 updates; finite completed-episode means only; early windows use available updates.",
+  "validation": "All 45 histories contain 915 ordered updates; all smoothed values independently verified to 1e-10.",
+  "runs": [
+    {
+      "version": "v1_matched",
+      "condition": "mlp_diverse_influence",
+      "seed": 1,
+      "updates": 915,
+      "missing_episode_updates": 9,
+      "final_env_steps": 59965440,
+      "final_smoothed_return": 12.940434782608701
+    },
+    {
+      "version": "v1_matched",
+      "condition": "mlp_diverse_influence",
+      "seed": 2,
+      "updates": 915,
+      "missing_episode_updates": 8,
+      "final_env_steps": 59965440,
+      "final_smoothed_return": 12.882826086956573
+    },
+    {
+      "version": "v1_matched",
+      "condition": "mlp_diverse_influence",
+      "seed": 3,
+      "updates": 915,
+      "missing_episode_updates": 7,
+      "final_env_steps": 59965440,
+      "final_smoothed_return": 13.040304347826112
+    },
+    {
+      "version": "v1_matched",
+      "condition": "mlp_diverse_influence",
+      "seed": 4,
+      "updates": 915,
+      "missing_episode_updates": 8,
+      "final_env_steps": 59965440,
+      "final_smoothed_return": 12.925391304347732
+    },
+    {
+      "version": "v1_matched",
+      "condition": "mlp_diverse_influence",
+      "seed": 5,
+      "updates": 915,
+      "missing_episode_updates": 7,
+      "final_env_steps": 59965440,
+      "final_smoothed_return": 13.006478260869502
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_influence",
+      "seed": 1,
+      "updates": 915,
+      "missing_episode_updates": 9,
+      "final_env_steps": 59965440,
+      "final_smoothed_return": 12.939717391304246
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_influence",
+      "seed": 2,
+      "updates": 915,
+      "missing_episode_updates": 8,
+      "final_env_steps": 59965440,
+      "final_smoothed_return": 12.90826086956539
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_influence",
+      "seed": 3,
+      "updates": 915,
+      "missing_episode_updates": 8,
+      "final_env_steps": 59965440,
+      "final_smoothed_return": 12.946608695652131
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_influence",
+      "seed": 4,
+      "updates": 915,
+      "missing_episode_updates": 8,
+      "final_env_steps": 59965440,
+      "final_smoothed_return": 12.857630434782747
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_influence",
+      "seed": 5,
+      "updates": 915,
+      "missing_episode_updates": 7,
+      "final_env_steps": 59965440,
+      "final_smoothed_return": 14.409043478260845
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_single_influence",
+      "seed": 1,
+      "updates": 915,
+      "missing_episode_updates": 5,
+      "final_env_steps": 59965440,
+      "final_smoothed_return": 17.225413043478234
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_single_influence",
+      "seed": 2,
+      "updates": 915,
+      "missing_episode_updates": 6,
+      "final_env_steps": 59965440,
+      "final_smoothed_return": 17.266500000000157
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_single_influence",
+      "seed": 3,
+      "updates": 915,
+      "missing_episode_updates": 6,
+      "final_env_steps": 59965440,
+      "final_smoothed_return": 17.337565217391308
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_single_influence",
+      "seed": 4,
+      "updates": 915,
+      "missing_episode_updates": 5,
+      "final_env_steps": 59965440,
+      "final_smoothed_return": 17.325108695652133
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_single_influence",
+      "seed": 5,
+      "updates": 915,
+      "missing_episode_updates": 5,
+      "final_env_steps": 59965440,
+      "final_smoothed_return": 17.334239130434664
+    },
+    {
+      "version": "v2",
+      "condition": "mlp_diverse_influence",
+      "seed": 1,
+      "updates": 915,
+      "missing_episode_updates": 12,
+      "final_env_steps": 59965440,
+      "final_smoothed_return": 12.392130434782619
+    },
+    {
+      "version": "v2",
+      "condition": "mlp_diverse_influence",
+      "seed": 2,
+      "updates": 915,
+      "missing_episode_updates": 11,
+      "final_env_steps": 59965440,
+      "final_smoothed_return": 12.396978260869574
+    },
+    {
+      "version": "v2",
+      "condition": "mlp_diverse_influence",
+      "seed": 3,
+      "updates": 915,
+      "missing_episode_updates": 14,
+      "final_env_steps": 59965440,
+      "final_smoothed_return": 12.747891304347752
+    },
+    {
+      "version": "v2",
+      "condition": "mlp_diverse_influence",
+      "seed": 4,
+      "updates": 915,
+      "missing_episode_updates": 12,
+      "final_env_steps": 59965440,
+      "final_smoothed_return": 12.864804347826263
+    },
+    {
+      "version": "v2",
+      "condition": "mlp_diverse_influence",
+      "seed": 5,
+      "updates": 915,
+      "missing_episode_updates": 12,
+      "final_env_steps": 59965440,
+      "final_smoothed_return": 12.718826086956458
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_influence",
+      "seed": 1,
+      "updates": 915,
+      "missing_episode_updates": 13,
+      "final_env_steps": 59965440,
+      "final_smoothed_return": 13.485934782608599
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_influence",
+      "seed": 2,
+      "updates": 915,
+      "missing_episode_updates": 15,
+      "final_env_steps": 59965440,
+      "final_smoothed_return": 14.247434782608726
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_influence",
+      "seed": 3,
+      "updates": 915,
+      "missing_episode_updates": 14,
+      "final_env_steps": 59965440,
+      "final_smoothed_return": 13.792434782608641
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_influence",
+      "seed": 4,
+      "updates": 915,
+      "missing_episode_updates": 11,
+      "final_env_steps": 59965440,
+      "final_smoothed_return": 13.328347826086903
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_influence",
+      "seed": 5,
+      "updates": 915,
+      "missing_episode_updates": 13,
+      "final_env_steps": 59965440,
+      "final_smoothed_return": 13.37291304347831
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_single_influence",
+      "seed": 1,
+      "updates": 915,
+      "missing_episode_updates": 8,
+      "final_env_steps": 59965440,
+      "final_smoothed_return": 17.209130434782548
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_single_influence",
+      "seed": 2,
+      "updates": 915,
+      "missing_episode_updates": 9,
+      "final_env_steps": 59965440,
+      "final_smoothed_return": 17.278978260869575
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_single_influence",
+      "seed": 3,
+      "updates": 915,
+      "missing_episode_updates": 7,
+      "final_env_steps": 59965440,
+      "final_smoothed_return": 17.282630434782693
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_single_influence",
+      "seed": 4,
+      "updates": 915,
+      "missing_episode_updates": 7,
+      "final_env_steps": 59965440,
+      "final_smoothed_return": 17.299369565217326
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_single_influence",
+      "seed": 5,
+      "updates": 915,
+      "missing_episode_updates": 7,
+      "final_env_steps": 59965440,
+      "final_smoothed_return": 17.283217391304433
+    },
+    {
+      "version": "v3",
+      "condition": "mlp_diverse_influence",
+      "seed": 1,
+      "updates": 915,
+      "missing_episode_updates": 11,
+      "final_env_steps": 59965440,
+      "final_smoothed_return": 12.920717391304251
+    },
+    {
+      "version": "v3",
+      "condition": "mlp_diverse_influence",
+      "seed": 2,
+      "updates": 915,
+      "missing_episode_updates": 12,
+      "final_env_steps": 59965440,
+      "final_smoothed_return": 13.029043478260974
+    },
+    {
+      "version": "v3",
+      "condition": "mlp_diverse_influence",
+      "seed": 3,
+      "updates": 915,
+      "missing_episode_updates": 14,
+      "final_env_steps": 59965440,
+      "final_smoothed_return": 12.917760869565388
+    },
+    {
+      "version": "v3",
+      "condition": "mlp_diverse_influence",
+      "seed": 4,
+      "updates": 915,
+      "missing_episode_updates": 12,
+      "final_env_steps": 59965440,
+      "final_smoothed_return": 12.76265217391325
+    },
+    {
+      "version": "v3",
+      "condition": "mlp_diverse_influence",
+      "seed": 5,
+      "updates": 915,
+      "missing_episode_updates": 11,
+      "final_env_steps": 59965440,
+      "final_smoothed_return": 12.874630434782652
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_influence",
+      "seed": 1,
+      "updates": 915,
+      "missing_episode_updates": 11,
+      "final_env_steps": 59965440,
+      "final_smoothed_return": 12.950608695652155
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_influence",
+      "seed": 2,
+      "updates": 915,
+      "missing_episode_updates": 11,
+      "final_env_steps": 59965440,
+      "final_smoothed_return": 13.346739130434798
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_influence",
+      "seed": 3,
+      "updates": 915,
+      "missing_episode_updates": 13,
+      "final_env_steps": 59965440,
+      "final_smoothed_return": 14.75447826086941
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_influence",
+      "seed": 4,
+      "updates": 915,
+      "missing_episode_updates": 10,
+      "final_env_steps": 59965440,
+      "final_smoothed_return": 12.987913043478132
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_influence",
+      "seed": 5,
+      "updates": 915,
+      "missing_episode_updates": 12,
+      "final_env_steps": 59965440,
+      "final_smoothed_return": 13.014478260869549
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_single_influence",
+      "seed": 1,
+      "updates": 915,
+      "missing_episode_updates": 9,
+      "final_env_steps": 59965440,
+      "final_smoothed_return": 17.42650000000001
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_single_influence",
+      "seed": 2,
+      "updates": 915,
+      "missing_episode_updates": 7,
+      "final_env_steps": 59965440,
+      "final_smoothed_return": 17.404413043478204
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_single_influence",
+      "seed": 3,
+      "updates": 915,
+      "missing_episode_updates": 8,
+      "final_env_steps": 59965440,
+      "final_smoothed_return": 17.366391304347893
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_single_influence",
+      "seed": 4,
+      "updates": 915,
+      "missing_episode_updates": 7,
+      "final_env_steps": 59965440,
+      "final_smoothed_return": 17.35436956521734
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_single_influence",
+      "seed": 5,
+      "updates": 915,
+      "missing_episode_updates": 7,
+      "final_env_steps": 59965440,
+      "final_smoothed_return": 17.427760869565407
+    }
+  ]
+}

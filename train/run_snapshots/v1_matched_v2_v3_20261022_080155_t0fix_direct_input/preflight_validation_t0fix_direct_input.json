@@ -1,0 +1,335 @@
+{
+  "status": "passed",
+  "cpu_train_reload_and_standalone_eval": 12,
+  "network_inputs": [
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_influence",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/cpu_preflight_t0fix_direct_input/v1_matched_t0fix_direct_input/rnn_diverse_influence_seed1_t0fix_direct_input/params_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "b3840d4437d75ae7e53a0d11f4e4c4b931c60ab84efdc4071422a7f83ceb9964",
+      "input_tensors": [
+        {
+          "tensor": "params,ScannedRNN_0,GRUCell_1,in,kernel",
+          "shape": [
+            249,
+            128
+          ]
+        },
+        {
+          "tensor": "params,ScannedRNN_0,GRUCell_1,ir,kernel",
+          "shape": [
+            249,
+            128
+          ]
+        },
+        {
+          "tensor": "params,ScannedRNN_0,GRUCell_1,iz,kernel",
+          "shape": [
+            249,
+            128
+          ]
+        }
+      ],
+      "no_cnn_tensors": true
+    },
+    {
+      "version": "v1_matched",
+      "condition": "mlp_diverse_influence",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/cpu_preflight_t0fix_direct_input/v1_matched_t0fix_direct_input/mlp_diverse_influence_seed1_t0fix_direct_input/params_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "74491644feb58d82509ded850b0ae55b9adf4ca15cf9031a913137fd165ac7cf",
+      "input_tensors": [
+        {
+          "tensor": "params,Dense_0,kernel",
+          "shape": [
+            249,
+            128
+          ]
+        }
+      ],
+      "no_cnn_tensors": true
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_single_influence",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/cpu_preflight_t0fix_direct_input/v1_matched_t0fix_direct_input/rnn_single_influence_seed1_t0fix_direct_input/params_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "85583cba538d05adfa23e35449c31ff16a14089dfbc584a95aeee7257d751161",
+      "input_tensors": [
+        {
+          "tensor": "params,ScannedRNN_0,GRUCell_1,in,kernel",
+          "shape": [
+            249,
+            128
+          ]
+        },
+        {
+          "tensor": "params,ScannedRNN_0,GRUCell_1,ir,kernel",
+          "shape": [
+            249,
+            128
+          ]
+        },
+        {
+          "tensor": "params,ScannedRNN_0,GRUCell_1,iz,kernel",
+          "shape": [
+            249,
+            128
+          ]
+        }
+      ],
+      "no_cnn_tensors": true
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_noinfluence",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/cpu_preflight_t0fix_direct_input/v1_matched_t0fix_direct_input/rnn_diverse_noinfluence_seed1_t0fix_direct_input/params_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "b4786c89a17bc5613537c652a8de964cb85cb525b303bfff634497f686927b0b",
+      "input_tensors": [
+        {
+          "tensor": "params,ScannedRNN_0,GRUCell_1,in,kernel",
+          "shape": [
+            249,
+            128
+          ]
+        },
+        {
+          "tensor": "params,ScannedRNN_0,GRUCell_1,ir,kernel",
+          "shape": [
+            249,
+            128
+          ]
+        },
+        {
+          "tensor": "params,ScannedRNN_0,GRUCell_1,iz,kernel",
+          "shape": [
+            249,
+            128
+          ]
+        }
+      ],
+      "no_cnn_tensors": true
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_influence",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/cpu_preflight_t0fix_direct_input/v2_t0fix_direct_input/rnn_diverse_influence_seed1_t0fix_direct_input/params_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "f1be391c25d29a7f685ede17727f32c4ccfdf03bed162383ce45017779955088",
+      "input_tensors": [
+        {
+          "tensor": "params,ScannedRNN_0,GRUCell_1,in,kernel",
+          "shape": [
+            249,
+            128
+          ]
+        },
+        {
+          "tensor": "params,ScannedRNN_0,GRUCell_1,ir,kernel",
+          "shape": [
+            249,
+            128
+          ]
+        },
+        {
+          "tensor": "params,ScannedRNN_0,GRUCell_1,iz,kernel",
+          "shape": [
+            249,
+            128
+          ]
+        }
+      ],
+      "no_cnn_tensors": true
+    },
+    {
+      "version": "v2",
+      "condition": "mlp_diverse_influence",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/cpu_preflight_t0fix_direct_input/v2_t0fix_direct_input/mlp_diverse_influence_seed1_t0fix_direct_input/params_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "edf2a4f1a2b3661fe470ad34f8ab1c090fff1c55b0250bb05f7bc4ebadc2866f",
+      "input_tensors": [
+        {
+          "tensor": "params,Dense_0,kernel",
+          "shape": [
+            249,
+            128
+          ]
+        }
+      ],
+      "no_cnn_tensors": true
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_single_influence",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/cpu_preflight_t0fix_direct_input/v2_t0fix_direct_input/rnn_single_influence_seed1_t0fix_direct_input/params_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "df72e3ec04a954ec140d7b65425f3e6842fb146fb444775c44129f5fec7382e6",
+      "input_tensors": [
+        {
+          "tensor": "params,ScannedRNN_0,GRUCell_1,in,kernel",
+          "shape": [
+            249,
+            128
+          ]
+        },
+        {
+          "tensor": "params,ScannedRNN_0,GRUCell_1,ir,kernel",
+          "shape": [
+            249,
+            128
+          ]
+        },
+        {
+          "tensor": "params,ScannedRNN_0,GRUCell_1,iz,kernel",
+          "shape": [
+            249,
+            128
+          ]
+        }
+      ],
+      "no_cnn_tensors": true
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_noinfluence",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/cpu_preflight_t0fix_direct_input/v2_t0fix_direct_input/rnn_diverse_noinfluence_seed1_t0fix_direct_input/params_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "ebb09d230ccce9d56b50dbd15006d782d07099d78292d72ccc87d99a0c7a469e",
+      "input_tensors": [
+        {
+          "tensor": "params,ScannedRNN_0,GRUCell_1,in,kernel",
+          "shape": [
+            249,
+            128
+          ]
+        },
+        {
+          "tensor": "params,ScannedRNN_0,GRUCell_1,ir,kernel",
+          "shape": [
+            249,
+            128
+          ]
+        },
+        {
+          "tensor": "params,ScannedRNN_0,GRUCell_1,iz,kernel",
+          "shape": [
+            249,
+            128
+          ]
+        }
+      ],
+      "no_cnn_tensors": true
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_influence",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/cpu_preflight_t0fix_direct_input/v3_t0fix_direct_input/rnn_diverse_influence_seed1_t0fix_direct_input/params_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "e8307cbcad5d68162ed27d3d69e72601abd4dd414d832f29b399c3aa0c42ef23",
+      "input_tensors": [
+        {
+          "tensor": "params,ScannedRNN_0,GRUCell_1,in,kernel",
+          "shape": [
+            249,
+            128
+          ]
+        },
+        {
+          "tensor": "params,ScannedRNN_0,GRUCell_1,ir,kernel",
+          "shape": [
+            249,
+            128
+          ]
+        },
+        {
+          "tensor": "params,ScannedRNN_0,GRUCell_1,iz,kernel",
+          "shape": [
+            249,
+            128
+          ]
+        }
+      ],
+      "no_cnn_tensors": true
+    },
+    {
+      "version": "v3",
+      "condition": "mlp_diverse_influence",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/cpu_preflight_t0fix_direct_input/v3_t0fix_direct_input/mlp_diverse_influence_seed1_t0fix_direct_input/params_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "e06b8bda57c26b55cd6ef7915de7e7047c69411df6b848ae5deb5c6c0b554870",
+      "input_tensors": [
+        {
+          "tensor": "params,Dense_0,kernel",
+          "shape": [
+            249,
+            128
+          ]
+        }
+      ],
+      "no_cnn_tensors": true
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_single_influence",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/cpu_preflight_t0fix_direct_input/v3_t0fix_direct_input/rnn_single_influence_seed1_t0fix_direct_input/params_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "c570bd964b6a4c98d1df1ac9e95464c85add7d850f402692dd15b289db924448",
+      "input_tensors": [
+        {
+          "tensor": "params,ScannedRNN_0,GRUCell_1,in,kernel",
+          "shape": [
+            249,
+            128
+          ]
+        },
+        {
+          "tensor": "params,ScannedRNN_0,GRUCell_1,ir,kernel",
+          "shape": [
+            249,
+            128
+          ]
+        },
+        {
+          "tensor": "params,ScannedRNN_0,GRUCell_1,iz,kernel",
+          "shape": [
+            249,
+            128
+          ]
+        }
+      ],
+      "no_cnn_tensors": true
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_noinfluence",
+      "checkpoint": "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/cpu_preflight_t0fix_direct_input/v3_t0fix_direct_input/rnn_diverse_noinfluence_seed1_t0fix_direct_input/params_t0fix_direct_input.safetensors",
+      "checkpoint_sha256": "ebb09d230ccce9d56b50dbd15006d782d07099d78292d72ccc87d99a0c7a469e",
+      "input_tensors": [
+        {
+          "tensor": "params,ScannedRNN_0,GRUCell_1,in,kernel",
+          "shape": [
+            249,
+            128
+          ]
+        },
+        {
+          "tensor": "params,ScannedRNN_0,GRUCell_1,ir,kernel",
+          "shape": [
+            249,
+            128
+          ]
+        },
+        {
+          "tensor": "params,ScannedRNN_0,GRUCell_1,iz,kernel",
+          "shape": [
+            249,
+            128
+          ]
+        }
+      ],
+      "no_cnn_tensors": true
+    }
+  ],
+  "regression_tests": {
+    "passed": 11,
+    "command": "python -m pytest -q tests/train/test_t0fix_direct_input_training.py tests/train/test_step_penalty_evaluation_paths.py"
+  },
+  "report_fixture": {
+    "status": "passed",
+    "root": "/tmp/grid_full_comparison_fixture_t0fix_direct_input",
+    "evaluation_rows": 240,
+    "training_history_rows": 109800,
+    "comparison": "Identical baseline policies used as both cohorts; exact zero return differences."
+  }
+}

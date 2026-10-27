@@ -1,0 +1,49 @@
+--- diagnostics/select_debugging_seeds.py
++++ diagnostics/select_debugging_seeds.py
+@@ -26,8 +26,8 @@
+ VERSIONS = ("v1_matched", "v2", "v3")
+ CONDITIONS = ("mlp_diverse_influence", "rnn_diverse_influence", "rnn_single_influence")
+ LABELS = dict(zip(CONDITIONS, ("MLP", "RNN-multi", "RNN-single")))
+-HISTORY = ROOT / "train/training_curves/v1_matched_v2_v3_all_10_seeds"
+-BEHAVIOR = ROOT / "eval/protocol_comparison/v1_matched_20261009_182845/assignment_behaviors_all_seeds/novel"
++HISTORY = ROOT / "/juice6/u/jshe/emergent_partner_grid/train/training_curves/v1_matched_v2_v3_20261019_191029_step_penalty_0.03"
++BEHAVIOR = ROOT / "/juice6/u/jshe/emergent_partner_grid/eval/protocol_comparison/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/assignment_behaviors_all_seeds/novel"
+ DEFAULT_OUT = ROOT / "train/seed_diagnostics/v1_matched_v2_v3/seed_selection"
+ 
+ # Purposive mechanistic examples, not population estimates or a performance
+@@ -90,7 +90,7 @@
+ 
+ 
+ def load_training():
+-    expected = {(v, c, s) for v in VERSIONS for c in CONDITIONS for s in range(1, 11)}
++    expected = {(v, c, s) for v in VERSIONS for c in CONDITIONS for s in range(1, 6)}
+     histories = {k: [] for k in expected}
+     for row in read_csv(HISTORY / "updates.csv"):
+         if key(row) in expected:
+@@ -259,7 +259,7 @@
+     doc=f'''<!doctype html><meta charset="utf-8"><title>Debugging seed selection</title>
+ <style>body{{font:16px/1.55 system-ui;max-width:1400px;margin:36px auto;padding:0 24px;color:#202634}}table{{border-collapse:collapse;width:100%;font-size:14px}}td,th{{border:1px solid #ccd3dd;padding:7px;text-align:left}}img{{width:100%;height:auto}}</style>
+ <h1>Behavior-diverse debugging seeds</h1>
+-<p>All 90 policies from v1_matched/v2/v3 × MLP/RNN-multi/RNN-single × seeds 1–10. RNN without influence is excluded.</p>
++<p>All 90 policies from v1_matched/v2/v3 × MLP/RNN-multi/RNN-single × seeds 1–5. RNN without influence is excluded.</p>
+ <p>Color direction: the plot is ego-red assignment. V1_matched MLP seed 2 chooses red 100% of the time; seed 10 chooses blue 83.61% of the time.</p>
+ <h2>Highest and lowest final training return</h2>
+ <p>Rank by the unsmoothed mean completed-episode return in the final logged rollout, update 915 at 59,965,440 transitions.
+@@ -276,7 +276,7 @@
+ <p>V1_matched RNN-multi seed 4 is 99.84% ego-blue and 50.11% partner-faster matching, with 98.86% success. It completes rounds reliably,
+ but its assignment is nearly independent of partner capability. Seeds 6 and 7 in this condition have a similar near-all-blue phenotype;
+ seed 4 is not the only member. Compare it with adaptive seed 1 and mixed-choice seed 2.</p>
+-<p>No v3 RNN-multi seed has high partner-faster matching: all ten lie between 42.50% and 49.82% overall.
++<p>No v3 RNN-multi seed has high partner-faster matching: all five lie between 42.50% and 49.82% overall.
+ The best v3 RNN-multi training seed, seed 10, chooses ego red 96.25% of the time and matches partner speed 46.55% of the time.
+ Include it alongside seed 4 to distinguish efficient color commitment from repeated switching under the same protocol.</p>
+ <p>V3 RNN-single seeds 6 and 7 have final training returns 17.446 and 17.445. On held-out partners, seed 6 has return 14.020,
+@@ -310,7 +310,7 @@
+     write_csv(out/"representative_seeds.csv", selected)
+     write_csv(out/"partner_orientation.csv", orientations)
+     plot(out, selected);report(out, extrema, selected)
+-    audit=dict(policies=90, conditions=list(CONDITIONS), excluded_condition="rnn_diverse_noinfluence",
++    audit=dict(policies=45, conditions=list(CONDITIONS), excluded_condition="rnn_diverse_noinfluence",
+         final_training_update=915, final_training_transitions=59965440, training_metric="unsmoothed final logged completed-episode mean return",
+         heldout_episodes_per_policy=440, heldout_rounds_per_policy=8800,
+         all_training_log_and_config_hashes_and_final_scores_checked=True, all_heldout_successes_and_reward_identities_checked=True,

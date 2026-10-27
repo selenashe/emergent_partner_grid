@@ -1,0 +1,20 @@
+--- diagnostics/validate_optimal_training_return.py
++++ diagnostics/validate_optimal_training_return.py
+@@ -30,7 +30,7 @@
+     args = parser.parse_args()
+     from eval.optimal_training_return import geometry, inputs, round_return, shortest_round, transition
+     directory = "training_return_ceiling" if args.population == "train" else "heldout_return_ceiling"
+-    output_root = ROOT / "eval" / directory / "v1_matched_v2_v3"
++    output_root = Path('/juice6/u/jshe/emergent_partner_grid') / "eval" / directory / 'v1_matched_v2_v3_20261019_191029_step_penalty_0.03'
+     out = args.out or output_root / "validation.json"
+     paths, capabilities, _, sources = inputs(args.population)
+     profiles = ((1, 4), (3, 9), (7, 2)) if args.population == "train" else ((0, 5), (3, 6), (9, 0))
+@@ -57,7 +57,7 @@
+         module = load_environment(sources[version], version)
+         for influence in (True, False):
+             kwargs = dict(layout_paths=[str(p) for p in selected_paths], influence=influence,
+-                          rounds_per_episode=1, max_steps=100, step_penalty=.01,
++                          rounds_per_episode=1, max_steps=100, step_penalty=.03,
+                           success_reward=1., augment_symmetries=False,
+                           partner_capability_pairs=capabilities)
+             if version == "v3":

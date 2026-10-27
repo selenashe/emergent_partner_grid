@@ -1,0 +1,48 @@
+--- frozen_launcher_before_retry.py
++++ corrected_launcher.py
+@@ -19,7 +19,7 @@
+ sys.path.insert(0, str(INFRA))
+ from bash import extend_counterbalanced_training as original
+ from bash.step_penalty_downstream import freeze
+-from repo_paths import artifact_path, resolve_record_paths
++from repo_paths import artifact_path, resolve_path, resolve_record_paths
+ original.ROOT = ROOT
+ original.path_resolver.ROOT = ROOT
+ 
+@@ -180,21 +180,31 @@
+         tmp.symlink_to(physical);tmp.replace(logical)
+ 
+ 
+-def evaluate_job(m,job,smoke_target=None):
++def evaluation_command(m,job,smoke_target=None):
++    """Read each saved input where it exists; write new rollouts on scratch."""
+     source=Path(m['source_variants'][job['source_variant']]['frozen_source_root'])
+     data=m['versions'][job['version']]
+-    checkpoint=(smoke_target/'params') if smoke_target else artifact_path(data['checkpoint_root'])/job['tag']
++    checkpoint=(smoke_target/'params') if smoke_target else Path(data['checkpoint_root'])/job['tag']
++    config=resolve_path(str(checkpoint)+'_config.json')
++    params=resolve_path(str(checkpoint)+'.safetensors')
++    for input_path in (config,params):
++        if not input_path.is_file():raise FileNotFoundError(input_path)
+     prefix=(smoke_target/'standalone_eval') if smoke_target else artifact_path(data['evaluation_root'])/job['tag']
+-    prefix.parent.mkdir(parents=True,exist_ok=True)
+     cmd=[PYTHON,'-u',str(source/'analysis/evaluate_partner_modelling.py'),
+-        '--config',str(checkpoint)+'_config.json','--params',str(checkpoint)+'.safetensors',
++        '--config',str(config),'--params',str(params),
+         '--layouts_dir',m['frozen_layouts_dir'],'--n_episodes_per_capability','1' if smoke_target else '20',
+         '--seed','12345','--out_prefix',str(prefix)]
+     if job['condition'].startswith('rnn'):cmd.append('--save_hidden')
++    return cmd,source,prefix
++
++
++def evaluate_job(m,job,smoke_target=None):
++    cmd,source,prefix=evaluation_command(m,job,smoke_target)
++    prefix.parent.mkdir(parents=True,exist_ok=True)
+     subprocess.run(cmd,cwd=source,env=original.environment(source,cpu=bool(smoke_target)),check=True)
+     for ext in ['_summary.json','_train.h5','_test.h5']:
+         if not Path(str(prefix)+ext).is_file():raise FileNotFoundError(str(prefix)+ext)
+-    if not smoke_target:publish(data['evaluation_root'],job['tag'])
++    if not smoke_target:publish(m['versions'][job['version']]['evaluation_root'],job['tag'])
+ 
+ 
+ def validate(path):

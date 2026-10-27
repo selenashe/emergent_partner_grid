@@ -1,0 +1,21 @@
+--- eval/run_relative_speed_pipeline.py
++++ eval/run_relative_speed_pipeline.py
+@@ -46,14 +46,14 @@
+         for condition in manifest['conditions']:
+             path=comparison/condition/'comparison_all_versions.png';data=path.read_bytes()
+             assert struct.unpack('>II',data[16:24])==(1800,3960)
+-            assert len(list((comparison/condition).glob('comparison_*_seed*.png')))==30
++            assert len(list((comparison/condition).glob('comparison_*_seed*.png')))==15
+             figures.append(dict(condition=condition,path=str(path),sha256=hashlib.sha256(data).hexdigest()))
+-        status.update(status='completed',completed_utc=datetime.now(timezone.utc).isoformat(),policies=90,
++        status.update(status='completed',completed_utc=datetime.now(timezone.utc).isoformat(),policies=45,
+             episodes_per_policy=920,train_counts=[368,368],test_counts=[92,92],figures=figures)
+         save()
+         with (root/'README.md').open('a') as stream:
+-            stream.write('\nIndependent audits passed for all 90 base policies and all 90 state comparisons. '
+-                'All three combined comparison PNGs and 90 individual-seed PNGs were verified. '
++            stream.write('\nIndependent audits passed for all 45 base policies and all 45 state comparisons. '
++                'All three combined comparison PNGs and 45 individual-seed PNGs were verified. '
+                 'Pipeline execution and figure hashes are in pipeline_status.json.\n')
+         print('[completed] Specialist-only representation pipeline and both audits.',flush=True)
+     except BaseException as error:

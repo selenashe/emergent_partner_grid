@@ -1,0 +1,218 @@
+{
+  "policies": 30,
+  "held_out_predictions_compared": 4330800,
+  "changed_decisions": 18,
+  "maximum_probability_difference": 0.012019723653793335,
+  "per_policy": [
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 5,
+      "changed_decisions": 0,
+      "max_probability_difference": 0.0
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_influence",
+      "seed": 2,
+      "changed_decisions": 0,
+      "max_probability_difference": 3.159046173095703e-06
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_influence",
+      "seed": 5,
+      "changed_decisions": 0,
+      "max_probability_difference": 0.0
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 2,
+      "changed_decisions": 0,
+      "max_probability_difference": 0.0
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_influence",
+      "seed": 1,
+      "changed_decisions": 0,
+      "max_probability_difference": 0.0008713006973266602
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 1,
+      "changed_decisions": 0,
+      "max_probability_difference": 0.0
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 3,
+      "changed_decisions": 0,
+      "max_probability_difference": 0.0
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_influence",
+      "seed": 4,
+      "changed_decisions": 0,
+      "max_probability_difference": 0.0
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_influence",
+      "seed": 3,
+      "changed_decisions": 0,
+      "max_probability_difference": 5.930662155151367e-05
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 4,
+      "changed_decisions": 0,
+      "max_probability_difference": 0.0
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 1,
+      "changed_decisions": 0,
+      "max_probability_difference": 0.000949561595916748
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_influence",
+      "seed": 1,
+      "changed_decisions": 0,
+      "max_probability_difference": 0.0006345510482788086
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 2,
+      "changed_decisions": 10,
+      "max_probability_difference": 0.010831177234649658
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_influence",
+      "seed": 5,
+      "changed_decisions": 0,
+      "max_probability_difference": 2.5033950805664062e-06
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_influence",
+      "seed": 2,
+      "changed_decisions": 0,
+      "max_probability_difference": 3.993511199951172e-06
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 5,
+      "changed_decisions": 2,
+      "max_probability_difference": 0.0012950003147125244
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_influence",
+      "seed": 3,
+      "changed_decisions": 0,
+      "max_probability_difference": 2.3692846298217773e-05
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 4,
+      "changed_decisions": 0,
+      "max_probability_difference": 0.002020537853240967
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 3,
+      "changed_decisions": 1,
+      "max_probability_difference": 0.0014612078666687012
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_influence",
+      "seed": 4,
+      "changed_decisions": 0,
+      "max_probability_difference": 2.7418136596679688e-06
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 2,
+      "changed_decisions": 0,
+      "max_probability_difference": 0.0
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_influence",
+      "seed": 2,
+      "changed_decisions": 0,
+      "max_probability_difference": 0.0
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_influence",
+      "seed": 5,
+      "changed_decisions": 0,
+      "max_probability_difference": 0.0
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 5,
+      "changed_decisions": 2,
+      "max_probability_difference": 0.005952298641204834
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 1,
+      "changed_decisions": 0,
+      "max_probability_difference": 0.0
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_influence",
+      "seed": 1,
+      "changed_decisions": 3,
+      "max_probability_difference": 0.012019723653793335
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 4,
+      "changed_decisions": 0,
+      "max_probability_difference": 0.0018970966339111328
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_influence",
+      "seed": 4,
+      "changed_decisions": 0,
+      "max_probability_difference": 0.0
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_influence",
+      "seed": 3,
+      "changed_decisions": 0,
+      "max_probability_difference": 0.0
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_noinfluence",
+      "seed": 3,
+      "changed_decisions": 0,
+      "max_probability_difference": 0.0005674064159393311
+    }
+  ]
+}

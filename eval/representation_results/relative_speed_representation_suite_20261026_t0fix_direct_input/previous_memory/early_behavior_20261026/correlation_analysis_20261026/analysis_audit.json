@@ -1,0 +1,134 @@
+{
+  "status": "passed",
+  "representation": "previous_memory",
+  "policy_audits": [
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_influence",
+      "training_seed": 1,
+      "verified_test_episodes": 358,
+      "total_test_episodes": 360,
+      "probe_archive_sha256": "0db80ca5fb377f8c0dec04d8d68088b14f906492c6367512dd4c039719eaf333"
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_influence",
+      "training_seed": 2,
+      "verified_test_episodes": 357,
+      "total_test_episodes": 360,
+      "probe_archive_sha256": "b02bedf638f7f81cab724b996d86daa693d400a1acc9fbbfb79350ab4fcc4bb8"
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_influence",
+      "training_seed": 3,
+      "verified_test_episodes": 358,
+      "total_test_episodes": 360,
+      "probe_archive_sha256": "d25c7ca42df4d0adf3751c2017ac39c258d8cff9b7549e5238fc8270ef6f8ff3"
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_influence",
+      "training_seed": 4,
+      "verified_test_episodes": 356,
+      "total_test_episodes": 360,
+      "probe_archive_sha256": "5c843eb86303c9cfb0c9a551e15db3b7af4a9d8bb9629437d781c57e7bf61156"
+    },
+    {
+      "version": "v1_matched",
+      "condition": "rnn_diverse_influence",
+      "training_seed": 5,
+      "verified_test_episodes": 356,
+      "total_test_episodes": 360,
+      "probe_archive_sha256": "9d8375b66de3419ab780afa7cd6c32400fee037963490f54a44d7f5f0e7d64dd"
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_influence",
+      "training_seed": 1,
+      "verified_test_episodes": 357,
+      "total_test_episodes": 360,
+      "probe_archive_sha256": "f93c010848af197c6770b3c3c5da902178f90f0d357a1cd1e4110bf834f1e6ae"
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_influence",
+      "training_seed": 2,
+      "verified_test_episodes": 358,
+      "total_test_episodes": 360,
+      "probe_archive_sha256": "b71a54b94e586485483607973910cf64406f59d47f568dc06778bcb66224a0a7"
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_influence",
+      "training_seed": 3,
+      "verified_test_episodes": 360,
+      "total_test_episodes": 360,
+      "probe_archive_sha256": "2d682033975100ecebe1e0dfaf8965c5511851b035861d91fe9e2b3dda6e797a"
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_influence",
+      "training_seed": 4,
+      "verified_test_episodes": 358,
+      "total_test_episodes": 360,
+      "probe_archive_sha256": "6bdd9a63060d21b3f159f128d91c438e6ab63268c72f1462114cb3ca291e5f7c"
+    },
+    {
+      "version": "v2",
+      "condition": "rnn_diverse_influence",
+      "training_seed": 5,
+      "verified_test_episodes": 356,
+      "total_test_episodes": 360,
+      "probe_archive_sha256": "4fcadb848760effc20232cbb063e5bcae1ce5a0ebad3f73483c8ce972a55508f"
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_influence",
+      "training_seed": 1,
+      "verified_test_episodes": 360,
+      "total_test_episodes": 360,
+      "probe_archive_sha256": "0384df51fac679f0bae8b7a83c67a8900cfe4ff0fc3100064f98ea3c5163cb4c"
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_influence",
+      "training_seed": 2,
+      "verified_test_episodes": 357,
+      "total_test_episodes": 360,
+      "probe_archive_sha256": "bb9afb951f03dd44319ce994089614d345d51ffd398146dc90de4484f5f418ab"
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_influence",
+      "training_seed": 3,
+      "verified_test_episodes": 354,
+      "total_test_episodes": 360,
+      "probe_archive_sha256": "aa062ca4cc04fb066b76d052136ac60d877ac116d7a9d8745c6f77a2d9b5e8ba"
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_influence",
+      "training_seed": 4,
+      "verified_test_episodes": 358,
+      "total_test_episodes": 360,
+      "probe_archive_sha256": "4d0f50fe4e5096f0f2829e514241074b868f433b301052a148f86b5ee2ea56a9"
+    },
+    {
+      "version": "v3",
+      "condition": "rnn_diverse_influence",
+      "training_seed": 5,
+      "verified_test_episodes": 358,
+      "total_test_episodes": 360,
+      "probe_archive_sha256": "9ce8896df5ef2ca988ee395e4dd34c91c0863c9575d7815c302982077b1b05a2"
+    }
+  ],
+  "same_validated_cohort": true,
+  "panels": 9,
+  "steps": [
+    0,
+    30
+  ],
+  "policy_retraining": false,
+  "probe_refitting": false
+}

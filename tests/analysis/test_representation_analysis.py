@@ -1,6 +1,5 @@
-"""Regression tests for masking, grouping, selection and independent probes."""
+"""Shared-helper tests for masking, grouping and independent probes."""
 
-import json
 from pathlib import Path
 import sys
 
@@ -19,7 +18,7 @@ def test_allocation_protocols_cannot_be_mixed(tmp_path):
         with h5py.File(path, "w"):
             pass
     files = {("condition", 1): paths}
-    assert rep.validate_allocation_protocols(files) == "fixed_v1"
+    assert rep.validate_allocation_protocols(files) == "fixed_allocation"
     with h5py.File(paths["train"], "a") as handle:
         handle.attrs["allocation_protocol"] = "online_v2"
     with pytest.raises(ValueError, match="Mixed allocation protocols"):
@@ -127,25 +126,6 @@ def test_batched_probes_equal_independent_fits_and_decode_linear_signal():
         np.testing.assert_allclose(single_params["bias"][0], params["bias"][p], atol=2e-5, rtol=2e-5)
 
 
-def test_behavior_selection_prefers_final_training_return(tmp_path):
-    logs = tmp_path / "logs"
-    logs.mkdir()
-    for condition in rep.CONDITIONS:
-        for seed in range(1, 6):
-            (logs / f"{condition}_{seed}.out").write_text(
-                f"[main] training done in 10s\n ep_return_mean: [+99.0, +{seed}.0]\n"
-                f"[main] saved params (seed 0) -> /example/{condition}_seed{seed}.safetensors\n")
-            (tmp_path / f"{condition}_seed{seed}_summary.json").write_text(
-                json.dumps({"train": {"mean_ep_return": 6 - seed}, "test": {"mean_ep_return": 999 * seed}}))
-    selected = rep.select_paper_style_seed(tmp_path, logs)
-    assert all(info["selected_seed"] == 5 and info["exact_paper_style_final_training_return"]
-               for info in selected.values())
-    # One missing final-training metric forces a consistent evaluation proxy
-    # for the whole condition, never mixing incomparable metrics across seeds.
-    (logs / f"{rep.CONDITIONS[0]}_1.out").write_text("failed before saving\n")
-    selected = rep.select_paper_style_seed(tmp_path, logs)
-    assert selected[rep.CONDITIONS[0]]["selected_seed"] == 1
-    assert selected[rep.CONDITIONS[0]]["eval_return_proxy"]
 
 
 def test_bootstrap_unit_is_five_policy_seeds():
@@ -160,30 +140,6 @@ def test_bootstrap_unit_is_five_policy_seeds():
         rep.summarize_probes(pd.DataFrame(rows[:-1]), "reference_t", 30_000)
 
 
-def test_common_seed_selection_is_scoped_to_version_and_batch(tmp_path):
-    eval_dir = tmp_path / "v2_balanced_training" / "batch"
-    record = {"common_seed": 3, "selection": {"held_out_results_used": False}, "candidates": []}
-    for version in ("v1", "v2"):
-        for condition in rep.CONDITIONS:
-            for seed in range(1, 6):
-                record["candidates"].append({
-                    "experiment": "counterbalanced", "version": version, "condition": condition,
-                    "seed": seed, "training_return": seed + (100 if version == "v1" else 0),
-                    "training_log": f"/{version}/{condition}_{seed}.out",
-                    "config": f"/train/{version}_balanced_training/batch/{condition}_{seed}.json",
-                })
-    path = tmp_path / "selection.json"
-    path.write_text(json.dumps(record))
-    selected = rep.select_recorded_common_seed(eval_dir, path)
-    assert all(r["selected_seed"] == 3 and r["metric_value"] == 3 for r in selected.values())
-    assert all(r["source"].startswith("/v2/") for r in selected.values())
-    assert all(not r["eval_return_proxy"] for r in selected.values())
-    with pytest.raises(ValueError, match="different evaluated batch"):
-        rep.select_recorded_common_seed(eval_dir.parent / "other_batch", path)
-    record["selection"]["held_out_results_used"] = True
-    path.write_text(json.dumps(record))
-    with pytest.raises(ValueError, match="without held-out"):
-        rep.select_recorded_common_seed(eval_dir, path)
 
 
 def test_condition_contrasts_preserve_paired_seed_variation():
@@ -210,3 +166,58 @@ def test_discovery_excludes_mlp_and_requires_all_fifteen(tmp_path):
     (tmp_path / f"{rep.CONDITIONS[0]}_seed1_train.h5").unlink()
     with pytest.raises(FileNotFoundError, match="missing/malformed"):
         rep.discover_rollout_files(tmp_path)
+
+
+def test_ten_seed_manifest_discovery_uses_explicit_batches_and_fails_on_a_gap(tmp_path):
+    seeds = tuple(range(1, 11))
+    directories = {}
+    for seed in seeds:
+        folder = tmp_path / ("original" if seed <= 5 else "extension")
+        folder.mkdir(exist_ok=True)
+        directories[str(seed)] = str(folder)
+        for condition in (*rep.CONDITIONS, "mlp_diverse_influence"):
+            for population in ("train", "test"):
+                (folder / f"{condition}_seed{seed}_{population}.h5").touch()
+    files = rep.discover_rollout_files(tmp_path / "original", seeds, directories)
+    assert len(files) == 30
+    assert all(files[(condition, 10)]["test"].parent.name == "extension" for condition in rep.CONDITIONS)
+    files[(rep.CONDITIONS[0], 10)]["test"].unlink()
+    with pytest.raises(FileNotFoundError):
+        rep.discover_rollout_files(tmp_path / "original", seeds, directories)
+
+
+def test_v3_protocol_is_supported_but_cannot_be_pooled_with_v2(tmp_path):
+    paths = {}
+    for population in ("train", "test"):
+        path = tmp_path / f"{population}.h5"
+        with h5py.File(path, "w") as f:
+            f.attrs["allocation_protocol"] = "online_v3"
+        paths[population] = path
+    files = {(rep.CONDITIONS[0], 10): paths}
+    assert rep.validate_allocation_protocols(files) == "online_v3"
+    with h5py.File(paths["test"], "a") as f:
+        f.attrs["allocation_protocol"] = "online_v2"
+    with pytest.raises(ValueError, match="Mixed allocation protocols"):
+        rep.validate_allocation_protocols(files)
+
+
+def test_ten_seed_summaries_include_extension_and_reject_missing_seed():
+    seeds = tuple(range(1, 11))
+    rows = [{"condition": condition, "target": "d_R", "reference_t": 400,
+             "capability_subset": "all", "training_seed": seed,
+             "distance_accuracy": .5 + .3 * (seed > 5) + .05 * (condition == rep.CONDITIONS[0]),
+             "exact_accuracy": .2, "mae": 2.}
+            for condition in rep.CONDITIONS for seed in seeds]
+    table = pd.DataFrame(rows)
+    summary = rep.summarize_probes(table, "reference_t", 30_000, seeds)
+    entry = summary[summary.condition == rep.CONDITIONS[0]].iloc[0]
+    assert entry.n_training_seeds == 10
+    assert entry.distance_accuracy_mean == pytest.approx(.70)
+    assert entry.distance_accuracy_std == pytest.approx(np.std([.55] * 5 + [.85] * 5, ddof=1))
+    contrasts = rep.summarize_condition_differences(table, "reference_t", 30_000, seeds)
+    assert contrasts.n_training_seeds.tolist() == [10, 10]
+    np.testing.assert_allclose(contrasts.distance_accuracy_difference_mean, .05)
+    with pytest.raises(ValueError, match="all 10"):
+        rep.summarize_probes(table.iloc[:-1], "reference_t", 30_000, seeds)
+    with pytest.raises(ValueError):
+        rep.summarize_condition_differences(table.iloc[:-1], "reference_t", 30_000, seeds)

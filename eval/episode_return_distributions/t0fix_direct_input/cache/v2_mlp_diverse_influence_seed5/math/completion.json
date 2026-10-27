@@ -1,0 +1,17 @@
+{
+  "version": "v2",
+  "condition": "mlp_diverse_influence",
+  "seed": 5,
+  "status": "completed",
+  "saved_hidden_states_analyzed": 0,
+  "maximum_start_hidden_reconstruction_error": 0.0,
+  "observation_probes": 0,
+  "mlp_start_observations": 36800,
+  "initial_calibration_rows": 18400,
+  "new_rollouts": false,
+  "policy_training": false,
+  "critic_target": "whole-episode discounted recorded reward, terminal included, zero terminal bootstrap",
+  "observation_probe": "zero pre-observation GRU history or vary own previous-allocation channel; fixed factual action mask",
+  "mlp_scope": "exact round-start and immediately following stationary observation; no fabricated full-trajectory MLP activations",
+  "producer_sha256": "a49428366d5530d22c8aee494c866feee0512b956de4ef9c0fcb406f2e066401"
+}

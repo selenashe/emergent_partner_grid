@@ -1,0 +1,5 @@
+[eval] slice=train, |pool|=24, n_eps/cap=20
+    round_success=0.982 reward/round=+0.6754 faster_goal=0.524 switches/round=0.69
+[eval] slice=test, |pool|=22, n_eps/cap=20
+    round_success=0.976 reward/round=+0.7065 faster_goal=0.508 switches/round=0.69
+[eval] wrote /juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v2_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_influence_seed1_t0fix_direct_input_summary.json

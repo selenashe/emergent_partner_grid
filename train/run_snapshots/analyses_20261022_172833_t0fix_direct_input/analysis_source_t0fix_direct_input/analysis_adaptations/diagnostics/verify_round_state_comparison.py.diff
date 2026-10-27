@@ -1,0 +1,14 @@
+--- diagnostics/verify_round_state_comparison.py
++++ diagnostics/verify_round_state_comparison.py
+@@ -85,9 +85,9 @@
+                         np.testing.assert_allclose(subset.prediction_fraction.sum(), 1, atol=1e-12)
+         checks.append(dict(version=record["version"], condition=record["condition"], seed=record["seed"], status="passed"))
+     if not partial:
+-        assert len(checks) == 90
++        assert len(checks) == 45
+         combined = pd.read_csv(root / "prediction_fractions_per_seed.csv")
+-        assert len(combined) == 14400
++        assert len(combined) == 7200
+         summary = pd.read_csv(root / "prediction_fractions_summary.csv")
+         assert len(summary) == 1440
+         keys = ["version", "condition", "feature_type", "round", "ground_truth_class"]

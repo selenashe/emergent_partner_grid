@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "policies": 30,
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "episodes": 27600,
+  "groups": [
+    "one actual training partner",
+    "23 other reference profiles",
+    "22 held-out profiles"
+  ],
+  "critic_input": "original saved post-observation GRU state at episode start",
+  "new_rollouts": false
+}

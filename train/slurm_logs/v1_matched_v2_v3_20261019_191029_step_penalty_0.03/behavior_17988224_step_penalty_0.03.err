@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/infrastructure/bash/submit_step_penalty_training.py", line 441, in <module>
+    if __name__=='__main__':main()
+  File "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/infrastructure/bash/submit_step_penalty_training.py", line 437, in main
+    elif a.mode in ['behavior','representation']:downstream(a.manifest,a.mode)
+  File "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/infrastructure/bash/submit_step_penalty_training.py", line 321, in downstream
+    step('round_returns','eval/plot_round_return_progression.py','--manifest',view_path)
+  File "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/infrastructure/bash/submit_step_penalty_training.py", line 301, in step
+    subprocess.run([ANALYSIS_PYTHON,'-u',str(analysis/relative),*map(str,args)],cwd=analysis,env=env,stdout=log,stderr=subprocess.STDOUT,check=True)
+  File "/nlp/scr/jshe/miniconda3/envs/emergent_partner_model/lib/python3.10/subprocess.py", line 526, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/juice6/u/nlp/climblab/tmp/epg_repr_all10_20261008/bin/python', '-u', '/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/analysis_source_step_penalty_0.03/eval/plot_round_return_progression.py', '--manifest', '/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/analysis_source_step_penalty_0.03/train/manifests/sbatch_v1_matched_v2_v3_20261019_191029_step_penalty_0.03.json']' returned non-zero exit status 1.

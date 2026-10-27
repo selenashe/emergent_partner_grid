@@ -1,0 +1,14 @@
+{
+  "population": "test",
+  "observed_source": "/juice6/u/jshe/emergent_partner_grid/eval/protocol_comparison/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/all_5_seeds/novel/comparison.json",
+  "oracle_summary": "/juice6/u/jshe/emergent_partner_grid/eval/heldout_return_ceiling/v1_matched_v2_v3/summary.json",
+  "validation": "/juice6/u/jshe/emergent_partner_grid/eval/heldout_return_ceiling/v1_matched_v2_v3/validation.json",
+  "oracle_weighting": "Uniform weight across the same familiar layouts and all 22 held-out profiles, including for the single-partner-trained policy. No-influence averages both fixed partner goals equally; v2 influence averages both random initial goals equally. Multiply mean round return by 20.",
+  "observed_seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ]
+}

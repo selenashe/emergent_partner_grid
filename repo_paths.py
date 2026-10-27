@@ -4,7 +4,9 @@ Saved configs, manifests, rollout attributes and frozen sources are immutable
 evidence. Readers resolve their old paths in memory instead of rewriting them.
 """
 import json
+import os
 from pathlib import Path
+import uuid
 
 ROOT = Path(__file__).resolve().parent
 ORIGINAL_ROOT = Path("/juice6/u/jshe/emergent_partner_grid")
@@ -24,14 +26,103 @@ RELOCATIONS = (
 )
 
 
+def artifact_root():
+    """Shared storage for weights, rollouts and numerical training artifacts."""
+    root = Path(os.environ.get(
+        "GRID_ARTIFACT_ROOT", "/juice6/scr6/nlp/interp-models/emergent_partner_grid"
+    )).expanduser()
+    if not root.is_absolute():
+        raise ValueError("GRID_ARTIFACT_ROOT must be an absolute path")
+    return root
+
+
+def artifact_path(value):
+    """Map a project path to scratch, preserving its repository-relative tree.
+
+    Explicit paths outside the project (including temporary test outputs) stay
+    unchanged. Historical dev/analysis paths use the same relocation rules as
+    readers. This function also maps directories for frozen training launchers.
+    """
+    path = Path(value)
+    relative = path
+    if path.is_absolute():
+        for base in (ROOT, ORIGINAL_ROOT):
+            try:
+                relative = path.relative_to(base)
+                break
+            except ValueError:
+                pass
+        else:
+            return path
+    if ".." in relative.parts:
+        raise ValueError("Artifact paths must stay within the project")
+    for old, new in RELOCATIONS:
+        try:
+            relative = Path(new) / relative.relative_to(old)
+            break
+        except ValueError:
+            pass
+    for old, new in ARCHIVE_RELOCATIONS.items():
+        try:
+            relative = Path(new) / relative.relative_to(old)
+            break
+        except ValueError:
+            pass
+    return artifact_root() / relative
+
+
+def prepare_artifact_path(value):
+    """Create the scratch parent before writing a binary artifact."""
+    path = artifact_path(value)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    return path
+
+
+def link_artifact(value):
+    """Publish a compatibility link after a binary was successfully written."""
+    logical = Path(value)
+    if not logical.is_absolute():
+        logical = ROOT / logical
+    target = artifact_path(value)
+    if logical == target:
+        return target
+    if not target.is_file():
+        raise FileNotFoundError(target)
+    logical.parent.mkdir(parents=True, exist_ok=True)
+    temporary = logical.with_name(logical.name + ".link-" + uuid.uuid4().hex)
+    try:
+        temporary.symlink_to(target)
+        temporary.replace(logical)
+    finally:
+        temporary.unlink(missing_ok=True)
+    return target
+
+
+def save_numpy_archive(value, *, compressed=False, **arrays):
+    """Save binary arrays on scratch while keeping logical read paths valid."""
+    import numpy as np
+    path = prepare_artifact_path(value)
+    (np.savez_compressed if compressed else np.savez)(path, **arrays)
+    link_artifact(value)
+
+
+def _existing_artifact(path):
+    if path.is_symlink():
+        return path.resolve()
+    if path.exists():
+        return path
+    candidate = artifact_path(path)
+    return candidate if candidate.exists() else path
+
+
 def _archive_path(relative):
     for old, new in ARCHIVE_RELOCATIONS.items():
         try:
             suffix = relative.relative_to(old)
         except ValueError:
             continue
-        return ROOT / new / suffix
-    return ROOT / relative
+        return _existing_artifact(ROOT / new / suffix)
+    return _existing_artifact(ROOT / relative)
 
 
 def resolve_path(value):
@@ -44,7 +135,7 @@ def resolve_path(value):
     #
     path = Path(value)
     if path.exists():
-        return path
+        return path.resolve() if path.is_symlink() else path
     relative = path
     if path.is_absolute():
         for base in (ROOT, ORIGINAL_ROOT):

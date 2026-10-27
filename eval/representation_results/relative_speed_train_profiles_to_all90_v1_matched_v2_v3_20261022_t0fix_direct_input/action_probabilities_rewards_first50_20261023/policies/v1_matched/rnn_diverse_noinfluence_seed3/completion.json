@@ -1,0 +1,100 @@
+{
+  "status": "completed",
+  "version": "v1_matched",
+  "condition": "rnn_diverse_noinfluence",
+  "training_seed": 3,
+  "archive": "/juice6/u/jshe/emergent_partner_grid/eval/representation_results/relative_speed_train_profiles_to_all90_v1_matched_v2_v3_20261022_t0fix_direct_input/action_probabilities_rewards_first50_20261023/policies/v1_matched/rnn_diverse_noinfluence_seed3/episode_action_probabilities_rewards.npz",
+  "archive_sha256": "e9bfc83b65e2f9d782db17bbccad05acae22439d583c74023110574917bf3146",
+  "episodes": 360,
+  "profiles": 90,
+  "steps": 50,
+  "test_repetitions": [
+    1,
+    9,
+    14,
+    15
+  ],
+  "reward_source": "original saved HDF5 rewards",
+  "probability_source": "frozen actor head applied to original saved h_t with exact phase/action mask",
+  "checkpoint_sha256": "e680a110410909ac111a9950bfd5a51294409af3c45cb88be1e0a74da68c507f",
+  "input_rollouts": [
+    {
+      "path": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed3_t0fix_direct_input_train.h5",
+      "stats": {
+        "size": 529930432,
+        "mtime_ns": 1792668641961515919
+      },
+      "datasets": [
+        "capability",
+        "capability_index_per_ep",
+        "capability_pool",
+        "dones",
+        "ego_alloc_action",
+        "hidden_state",
+        "is_t0",
+        "layout_idx",
+        "partner_assignment",
+        "partner_goal",
+        "rewards",
+        "round_done",
+        "round_idx",
+        "round_time",
+        "success"
+      ]
+    },
+    {
+      "path": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed3_t0fix_direct_input_test.h5",
+      "stats": {
+        "size": 485768792,
+        "mtime_ns": 1792668652521439435
+      },
+      "datasets": [
+        "capability",
+        "capability_index_per_ep",
+        "capability_pool",
+        "dones",
+        "ego_alloc_action",
+        "hidden_state",
+        "is_t0",
+        "layout_idx",
+        "partner_assignment",
+        "partner_goal",
+        "rewards",
+        "round_done",
+        "round_idx",
+        "round_time",
+        "success"
+      ]
+    },
+    {
+      "path": "/juice6/u/jshe/emergent_partner_grid/eval/representation_results/relative_speed_all90_v1_matched_v2_v3_20261022_t0fix_direct_input/policies/v1_matched/rnn_diverse_noinfluence_seed3/additional_profiles.h5",
+      "stats": {
+        "size": 394534426,
+        "mtime_ns": 1792709658105118363
+      },
+      "datasets": [
+        "capability",
+        "capability_index_per_ep",
+        "capability_pool",
+        "dones",
+        "ego_alloc_action",
+        "hidden_state",
+        "is_t0",
+        "layout_idx",
+        "partner_assignment",
+        "partner_goal",
+        "rewards",
+        "round_done",
+        "round_idx",
+        "round_time",
+        "success"
+      ]
+    }
+  ],
+  "probabilities_normalized": true,
+  "illegal_probability_zero": true,
+  "episode_padding": false,
+  "policy_retraining": false,
+  "probe_retraining": false,
+  "new_rollouts": false
+}

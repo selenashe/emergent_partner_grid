@@ -1,0 +1,11 @@
+--- diagnostics/learning_diagnostics.py
++++ diagnostics/learning_diagnostics.py
+@@ -84,7 +84,7 @@
+ 
+ 
+ def historical(row):
+-    with (ROOT / 'train/training_curves/v1_matched_v2_v3_all_10_seeds/updates.csv').open() as f:
++    with (ROOT / '/juice6/u/jshe/emergent_partner_grid/train/training_curves/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/updates.csv').open() as f:
+         return {int(r['update']): r for r in csv.DictReader(f)
+                 if (r['version'], r['condition'], r['seed']) == (row['version'], row['condition'], row['seed'])}
+ 

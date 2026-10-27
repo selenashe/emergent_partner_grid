@@ -1,0 +1,20 @@
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+Traceback (most recent call last):
+  File "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/v3_step_penalty_0.03/source/analysis/evaluate_partner_modelling.py", line 454, in <module>
+    main()
+  File "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/v3_step_penalty_0.03/source/analysis/evaluate_partner_modelling.py", line 399, in main
+    with open(args.config) as f:
+FileNotFoundError: [Errno 2] No such file or directory: '/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v3_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_diverse_noinfluence_seed1_step_penalty_0.03_config.json'
+Traceback (most recent call last):
+  File "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/infrastructure/bash/submit_step_penalty_training.py", line 431, in <module>
+    if __name__=='__main__':main()
+  File "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/infrastructure/bash/submit_step_penalty_training.py", line 426, in main
+    if j['version']==a.version and j['condition']==a.condition:evaluate_job(m,j)
+  File "/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/infrastructure/bash/submit_step_penalty_training.py", line 194, in evaluate_job
+    subprocess.run(cmd,cwd=source,env=original.environment(source,cpu=bool(smoke_target)),check=True)
+  File "/nlp/scr/jshe/miniconda3/envs/emergent_partner_model/lib/python3.10/subprocess.py", line 526, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/nlp/scr/jshe/miniconda3/envs/emergent_partner_model/bin/python', '-u', '/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/v3_step_penalty_0.03/source/analysis/evaluate_partner_modelling.py', '--config', '/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v3_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_diverse_noinfluence_seed1_step_penalty_0.03_config.json', '--params', '/juice6/scr6/nlp/interp-models/emergent_partner_grid/train/train_logs/v3_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_diverse_noinfluence_seed1_step_penalty_0.03.safetensors', '--layouts_dir', '/juice6/u/jshe/emergent_partner_grid/train/run_snapshots/counterbalanced1096_20261002_235609/corpus/layouts/train', '--n_episodes_per_capability', '20', '--seed', '12345', '--out_prefix', '/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v3_step_penalty_0.03/v1_matched_v2_v3_20261019_191029_step_penalty_0.03/rnn_diverse_noinfluence_seed1_step_penalty_0.03', '--save_hidden']' returned non-zero exit status 1.

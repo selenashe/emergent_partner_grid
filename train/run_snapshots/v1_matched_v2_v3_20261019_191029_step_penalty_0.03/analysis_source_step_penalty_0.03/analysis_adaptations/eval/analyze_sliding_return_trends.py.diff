@@ -1,0 +1,11 @@
+--- eval/analyze_sliding_return_trends.py
++++ eval/analyze_sliding_return_trends.py
+@@ -134,7 +134,7 @@
+                     n_runs_per_curve=55, n_seeds_per_time=5,
+                     primary_trend="One-sided Welch-Satterthwaite linear contrast of the eleven mean returns; H0: slope >= 0, H1: slope < 0",
+                     slope_coefficients=coefficients.tolist(),
+-                    strict_decrease="Intersection-union test: all ten adjacent true-mean differences must be < 0; combined p=max(component one-sided p)",
++                    strict_decrease="Intersection-union test: all five adjacent true-mean differences must be < 0; combined p=max(component one-sided p)",
+                     nonincrease="A nonincreasing mean curve permits equality. Failure of the stronger strict-decrease test neither establishes nor disproves nonincrease.",
+                     multiplicity="Holm across eight curves, separately for each inferential question and population. Any adjacent increase/decrease discovery uses Holm across 80 comparisons per population.",
+                     seed_block_sensitivity="Treat each nominal seed's whole t-curve as a block: five per-seed slopes, one-sided t test with df=4. Matching identifiers does not establish identical experiences.",

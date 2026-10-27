@@ -1,0 +1,57 @@
+{
+  "status": "passed",
+  "checked_utc": "2026-10-27T01:47:27.261499+00:00",
+  "original_baseline_manifest_and_30_archives_unchanged": true,
+  "per_representation": [
+    {
+      "representation": "current_observation",
+      "profile_pngs": 90,
+      "early_behavior_pngs": 7,
+      "status": "passed"
+    },
+    {
+      "representation": "previous_memory",
+      "profile_pngs": 90,
+      "early_behavior_pngs": 7,
+      "status": "passed"
+    },
+    {
+      "representation": "updated_memory",
+      "profile_pngs": 90,
+      "early_behavior_pngs": 7,
+      "status": "passed"
+    },
+    {
+      "representation": "actor_features",
+      "profile_pngs": 90,
+      "early_behavior_pngs": 7,
+      "status": "passed"
+    },
+    {
+      "representation": "critic_features",
+      "profile_pngs": 90,
+      "early_behavior_pngs": 7,
+      "status": "passed"
+    },
+    {
+      "representation": "action_logits",
+      "profile_pngs": 90,
+      "early_behavior_pngs": 7,
+      "status": "passed"
+    },
+    {
+      "representation": "action_probabilities",
+      "profile_pngs": 90,
+      "early_behavior_pngs": 7,
+      "status": "passed"
+    },
+    {
+      "representation": "value_estimate",
+      "profile_pngs": 90,
+      "early_behavior_pngs": 7,
+      "status": "passed"
+    }
+  ],
+  "comparison_pngs": 4,
+  "comparison_pdfs": 4
+}

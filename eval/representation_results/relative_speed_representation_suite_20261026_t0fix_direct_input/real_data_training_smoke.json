@@ -1,0 +1,78 @@
+{
+  "status": "passed",
+  "scope": "Diagnostic: one original policy, seen profiles, steps0/20/100; full all90 production runs remain separate.",
+  "results": {
+    "previous_memory": {
+      "dimension": 128,
+      "fit_examples": 384,
+      "held_out_seen_examples": 96,
+      "seen_accuracy": [
+        0.5,
+        0.75,
+        0.8020833333333334
+      ]
+    },
+    "updated_memory": {
+      "dimension": 128,
+      "fit_examples": 384,
+      "held_out_seen_examples": 96,
+      "seen_accuracy": [
+        0.5208333333333334,
+        0.6979166666666666,
+        0.8541666666666666
+      ],
+      "baseline_probability_max_error": 9.834766387939453e-07,
+      "baseline_prediction_disagreements": 0
+    },
+    "actor_features": {
+      "dimension": 128,
+      "fit_examples": 384,
+      "held_out_seen_examples": 96,
+      "seen_accuracy": [
+        0.4895833333333333,
+        0.625,
+        0.75
+      ]
+    },
+    "critic_features": {
+      "dimension": 128,
+      "fit_examples": 384,
+      "held_out_seen_examples": 96,
+      "seen_accuracy": [
+        0.5520833333333334,
+        0.7708333333333334,
+        0.90625
+      ]
+    },
+    "action_logits": {
+      "dimension": 15,
+      "fit_examples": 384,
+      "held_out_seen_examples": 96,
+      "seen_accuracy": [
+        0.4583333333333333,
+        0.6979166666666666,
+        0.6979166666666666
+      ]
+    },
+    "action_probabilities": {
+      "dimension": 15,
+      "fit_examples": 384,
+      "held_out_seen_examples": 96,
+      "seen_accuracy": [
+        0.4791666666666667,
+        0.59375,
+        0.4791666666666667
+      ]
+    },
+    "value_estimate": {
+      "dimension": 1,
+      "fit_examples": 384,
+      "held_out_seen_examples": 96,
+      "seen_accuracy": [
+        0.4583333333333333,
+        0.8333333333333334,
+        0.8958333333333334
+      ]
+    }
+  }
+}

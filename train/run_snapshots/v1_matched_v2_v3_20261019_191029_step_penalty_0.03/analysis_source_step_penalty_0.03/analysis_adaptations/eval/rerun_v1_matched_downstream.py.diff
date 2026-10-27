@@ -1,0 +1,56 @@
+--- eval/rerun_v1_matched_downstream.py
++++ eval/rerun_v1_matched_downstream.py
+@@ -21,7 +21,7 @@
+ CONDITION = 'rnn_diverse_noinfluence'
+ VERSION = 'v1_matched'
+ CANONICAL = ROOT / 'train/manifests/sbatch_v1_matched_20261009_182845.json'
+-REPRESENTATION = ROOT / 'eval/representation_results/relative_speed_v1_matched_v2_v3_20261013_all_10_seeds'
++REPRESENTATION = ROOT / '/juice6/u/jshe/emergent_partner_grid/eval/representation_results/relative_speed_v1_matched_v2_v3_20261019_191029_step_penalty_0.03'
+ DOWNSTREAM_SOURCES = (
+     'eval/compare_v1_matched.py', 'eval/compare_allocation_protocols.py', 'eval/plot_episode_return_dots.py',
+     'eval/plot_profile_performance.py', 'eval/plot_round_return_progression.py', 'eval/plot_overcooked_paper_match.py',
+@@ -97,7 +97,7 @@
+             step('per_seed_training_returns', 'train/plot_per_seed_training_returns.py')
+             step('best_seed_returns', 'eval/plot_overcooked_paper_match.py', '--manifest', CANONICAL)
+             comparison_root = Path(manifest['aggregate_root']).parent
+-            selection = comparison_root / 'overcooked_paper_match/best_of_10/selection.json'
++            selection = comparison_root / 'overcooked_paper_match/best_of_5/selection.json'
+             step('selected_training_returns', 'train/plot_selected_training_returns.py', '--selection', selection)
+             step('assignment_behaviors', 'eval/analyze_assignment_behaviors.py', '--manifest', CANONICAL)
+             step('selected_assignment_behaviors', 'eval/plot_best_seed_assignment_behaviors.py',
+@@ -176,7 +176,7 @@
+     """Compare identical seed identities; retain all old files for human review."""
+     data = manifest['versions'][VERSION]
+     rows = []
+-    for seed in range(1, 11):
++    for seed in range(1, 6):
+         directory = Path(data['evaluation_root'])
+         active = read(directory / (CONDITION + '_seed' + str(seed) + '_summary.json'))
+         archived = read(directory / (CONDITION + '_archived_seed' + str(seed) + '_summary.json'))
+@@ -191,7 +191,7 @@
+         for metric in ('mean_ep_return', 'round_success_rate', 'mean_successful_completion_time'):
+             group = [r for r in rows if r['population'] == population and r['metric'] == metric]
+             differences = np.array([r['difference'] for r in group])
+-            bootstrap = differences[rng.integers(0, 10, size=(10000, 10))].mean(axis=1)
++            bootstrap = differences[rng.integers(0, 5, size=(10000, 5))].mean(axis=1)
+             aggregates.append(dict(population=population, metric=metric,
+                 random_mean=float(np.mean([r['random'] for r in group])),
+                 archived_alternating_mean=float(np.mean([r['archived_alternating'] for r in group])),
+@@ -208,7 +208,7 @@
+                                                  balanced_accuracy=float(row['balanced_accuracy'])))
+     if len(probe_comparison) != 20:
+         raise ValueError('Missing random/archived round-20 probe results')
+-    write(output / 'random_vs_archived.json', dict(status='ready_for_review', n_seeds=10,
++    write(output / 'random_vs_archived.json', dict(status='ready_for_review', n_seeds=5,
+         training_manifest=str(manifest['canonical_manifest']), archive_manifest=manifest['archive_plan'],
+         behavior=aggregates, per_seed=rows, round20_probes=probe_comparison,
+         uncertainty='Percentile bootstrap of ten paired learner-seed differences; 10000 resamples.',
+@@ -240,7 +240,7 @@
+     import h5py
+     checks = []
+     directory = Path(manifest['versions'][VERSION]['evaluation_root'])
+-    for seed in range(1, 11):
++    for seed in range(1, 6):
+         for population, expected in [('train', 480), ('test', 440)]:
+             path = directory / (CONDITION + '_seed' + str(seed) + '_' + population + '.h5')
+             with h5py.File(path) as file:

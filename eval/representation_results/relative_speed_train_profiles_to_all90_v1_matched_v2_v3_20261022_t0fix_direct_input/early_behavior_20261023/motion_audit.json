@@ -1,0 +1,24 @@
+{
+  "status": "passed",
+  "completed_utc": "2026-10-23T07:57:31.428566+00:00",
+  "policies": 15,
+  "test_episodes": 5400,
+  "verified_episode_prefixes_through_step30": 5361,
+  "coverage": 0.9927777777777778,
+  "invalid_prefixes_excluded": 39,
+  "reconstruction": "Replay original batch, layout reset seed and action keys. Anchor actor input to saved post-observation h_t and recurrent input to saved h_(t-1).",
+  "checks": "Exact saved behavior fields and one-step GRU-state closeness at every prior transition; absolute hidden tolerance .002 accommodates measured CPU/GPU recurrent matmul roundoff. Any mismatch invalidates that episode from that step onward.",
+  "caveat": "Reconstructed trajectories, not original position logs. Actor numerical differences can invalidate rare episodes. Summary uses a constant cohort validated through step30, reweights profiles equally within seeds, and excludes failed prefixes.",
+  "cue_definition": "A repeated move within four transitions or four consecutive off-goal stays after a move, within the same pursued goal and round. This describes motion compatible with the fast/slow training families, not a causal test of the network's mechanism.",
+  "probe_refitting": false,
+  "policy_retraining": false,
+  "source_sha256": {
+    "analyze_early_decoding.py": "8e7bdf18fa06fa5f413b76c34e88a8a95762af008d2a5640a65eca7fd733595f",
+    "full_capability_evaluation.py": "1cf820af4a700e12ae48c6e045c063549e32b3c7d5fc7e533cab5fc63f3f5b52",
+    "plot_early_decoding.py": "846df6bc60ddabe11563cba51279b990399b6a10bc4834110e9fd77e0974ad37",
+    "analyze_decoding_behavior.py": "2a1d033d8acb50c6f154861ab6e9fe4508e30a93bd0773a3e4fb524043bbbf9f",
+    "analyze_replayed_motion.py": "022fe6e9963249b6c5a6d3bb88298eec21bc1d6a216542cce435750c12a0ccfc",
+    "analyze_instantaneous_decoding.py": "971970b125a77932a8276af09c10a94f39c0f24584db7e8ad1a74c57d4829b5f",
+    "replay_early_partner_motion.py": "fa3ac2a5699f04bbc42e32ab47f2f2106916d6edbbfbc626928c7562bdbeb8fd"
+  }
+}

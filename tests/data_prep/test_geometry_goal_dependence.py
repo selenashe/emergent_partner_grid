@@ -6,7 +6,7 @@ import numpy as np
 import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
-from data_prep.check_geometry_goal_dependence import (
+from diagnostics.check_geometry_goal_dependence import (
     DEFAULT_CORPUS, assignment_times, capability_profiles, correlation,
     load_layouts, prediction_limit,
 )

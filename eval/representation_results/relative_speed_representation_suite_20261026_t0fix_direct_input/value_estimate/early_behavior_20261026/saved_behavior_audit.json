@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "representation": "value_estimate",
+  "policies": 30,
+  "primary_multi_partner_policies": 15,
+  "primary_test_episodes": 4320,
+  "timepoints": 101,
+  "identical_episode_split": true,
+  "equal_profile_weights": true,
+  "fixed_decoder_step": 20,
+  "trajectory_reconstruction": true,
+  "onset": "Largest five-step gain within 0..50; category/version-specific windows recomputed for this representation.",
+  "temporal_rule": "Prior-event histories exclude transition t; action/assignment at t follows the observation.",
+  "policy_retraining": false
+}

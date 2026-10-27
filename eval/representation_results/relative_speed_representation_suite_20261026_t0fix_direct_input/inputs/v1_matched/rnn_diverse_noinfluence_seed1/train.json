@@ -1,0 +1,32 @@
+{
+  "slice": "train",
+  "episodes": 480,
+  "probability_max_error": 5.960464477539062e-07,
+  "probability_q999_error": 2.682209014892578e-07,
+  "prediction_disagreements": 0,
+  "used_prediction_disagreements": 0,
+  "test_prediction_disagreements": 0,
+  "terminal_mismatches": 0,
+  "original_field_mismatches": {
+    "rewards": 0,
+    "dones": 0,
+    "success": 0,
+    "round_done": 0,
+    "round_idx": 0,
+    "layout_idx": 0,
+    "partner_assignment": 0,
+    "ego_alloc_action": 0,
+    "partner_goal": 0,
+    "round_time": 0,
+    "is_t0": 0
+  },
+  "original_hidden_max_error": 0.0,
+  "status": "passed",
+  "archive_sha256": "7d7ba102b621af11413f6d459dda6c2e5b049a8670e16d7818dfbfa57a931b71",
+  "archive_stats": {
+    "size": 93685226,
+    "mtime_ns": 1793062241382791636
+  },
+  "producer_sha256": "481aca5e10a4370a47f1588d94556954268714682f81d7200eafe4f367678fc9",
+  "completed_utc": "2026-10-27T00:50:41.980308+00:00"
+}

@@ -1,0 +1,9 @@
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+[eval] slice=train, |pool|=24, n_eps/cap=1
+    round_success=0.985 reward/round=-0.0277 faster_goal=0.297 switches/round=0.16
+[eval] slice=test, |pool|=22, n_eps/cap=1
+    round_success=0.986 reward/round=+0.0917 faster_goal=0.272 switches/round=0.63
+[eval] wrote /tmp/step_penalty_eval_recovery_nh6izy2j/v3_rnn_diverse_influence_summary.json

@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "version": "v3",
+  "condition": "rnn_diverse_noinfluence",
+  "training_seed": 1,
+  "compared_states": 154,
+  "max_absolute_probability_error": 1.7881393432617188e-07,
+  "reference": "original frozen Flax network.apply / Distrax probabilities; saved post-observation state injected at ScannedRNN output",
+  "environment_rollouts": false,
+  "original_gpu_action_probabilities_were_not_recorded": true
+}

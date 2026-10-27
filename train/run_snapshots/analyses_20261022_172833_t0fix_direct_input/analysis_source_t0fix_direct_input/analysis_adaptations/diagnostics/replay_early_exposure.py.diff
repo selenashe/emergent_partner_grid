@@ -1,0 +1,11 @@
+--- diagnostics/replay_early_exposure.py
++++ diagnostics/replay_early_exposure.py
+@@ -61,7 +61,7 @@
+ 
+ 
+ def historical(seed, updates):
+-    path = ROOT / "train/training_curves/v1_matched_v2_v3_all_10_seeds/updates.csv"
++    path = ROOT / "/juice6/u/jshe/emergent_partner_grid/train/training_curves/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/updates.csv"
+     with path.open() as file:
+         return [r for r in csv.DictReader(file) if r["version"] == "v1_matched"
+                 and r["condition"] == "rnn_diverse_influence" and int(r["seed"]) == seed

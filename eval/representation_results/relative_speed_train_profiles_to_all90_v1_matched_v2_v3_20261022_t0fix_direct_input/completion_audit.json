@@ -1,0 +1,34 @@
+{
+  "status": "passed",
+  "completed_utc": "2026-10-23T06:40:03.752548+00:00",
+  "policies": 30,
+  "policy_seed_count": 5,
+  "versions": 3,
+  "profiles": 90,
+  "fit_profiles": 24,
+  "novel_fit_profiles": 0,
+  "fit_episodes_per_policy": 384,
+  "fit_class_counts": [
+    192,
+    192
+  ],
+  "test_episodes_per_policy": 360,
+  "test_class_counts": [
+    180,
+    180
+  ],
+  "unused_episodes_per_policy": 1056,
+  "train_test_overlap": 0,
+  "test_episode_split_matches_previous": true,
+  "timepoints": 401,
+  "first_env_step": 0,
+  "last_env_step": 400,
+  "total_independent_probes": 12030,
+  "per_profile_figures": 90,
+  "metrics_recomputed": true,
+  "excluded_single_partner_policies": 15,
+  "single_partner_mode": "omit",
+  "carried_terminal_test_episode_points": 109078,
+  "policy_retraining": false,
+  "new_rollouts": false
+}

@@ -1,0 +1,23 @@
+{
+  "status": "completed",
+  "completed_utc": "2026-10-27T01:17:07.454816+00:00",
+  "version": "v2",
+  "condition": "rnn_diverse_noinfluence",
+  "training_seed": 3,
+  "representation": "updated_memory",
+  "feature_dimension": 128,
+  "archive_sha256": "594cfedd3538df7c15b51ca18c15a44fb32effb215245a5628e481104fa96512",
+  "timepoints": 401,
+  "profiles": 90,
+  "fit_profiles": 24,
+  "fit_episodes": 384,
+  "test_episodes": 360,
+  "unused_episodes": 1056,
+  "novel_profiles_in_probe_fit": 0,
+  "calibration_scope": "own_policy_training_capabilities",
+  "policy_retraining": false,
+  "new_rollouts": false,
+  "trajectory_reconstruction": true,
+  "baseline_probability_max_error": 0.0014612078666687012,
+  "baseline_test_decision_disagreements": 1
+}

@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "representation": "action_probabilities",
+  "policies": 15,
+  "test_episodes": 5400,
+  "verified_episode_prefixes_through_step30": 5361,
+  "same_baseline_validated_cohort": true,
+  "behavior_metrics_reused_from": "/juice6/u/jshe/emergent_partner_grid/eval/representation_results/relative_speed_train_profiles_to_all90_v1_matched_v2_v3_20261022_t0fix_direct_input/early_behavior_20261023/motion_per_seed.csv",
+  "window_snapshots": "Only selected window endpoints within the verified 0..30 motion range are reported.",
+  "policy_retraining": false
+}

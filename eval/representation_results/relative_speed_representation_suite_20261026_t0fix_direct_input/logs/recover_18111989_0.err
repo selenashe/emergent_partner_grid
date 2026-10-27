@@ -1,0 +1,31 @@
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+Traceback (most recent call last):
+  File "/juice6/u/jshe/emergent_partner_grid/eval/representation_results/relative_speed_representation_suite_20261026_t0fix_direct_input/recovery_source/representation_probe_suite.py", line 401, in <module>
+    main()
+  File "/juice6/u/jshe/emergent_partner_grid/eval/representation_results/relative_speed_representation_suite_20261026_t0fix_direct_input/recovery_source/representation_probe_suite.py", line 397, in main
+    else: recover(args.path, args.index, args.only, args.diagnostic)
+  File "/juice6/u/jshe/emergent_partner_grid/eval/representation_results/relative_speed_representation_suite_20261026_t0fix_direct_input/recovery_source/representation_probe_suite.py", line 185, in recover
+    audit = validate_recovery(suite, record, label, result)
+  File "/juice6/u/jshe/emergent_partner_grid/eval/representation_results/relative_speed_representation_suite_20261026_t0fix_direct_input/recovery_source/representation_probe_suite.py", line 154, in validate_recovery
+    np.testing.assert_array_equal(source["capability_pool"][:], result["pairs"][::20])
+  File "/nlp/scr/jshe/miniconda3/envs/emergent_partner_model/lib/python3.10/site-packages/numpy/testing/_private/utils.py", line 920, in assert_array_equal
+    assert_array_compare(operator.__eq__, x, y, err_msg=err_msg,
+  File "/nlp/scr/jshe/miniconda3/envs/emergent_partner_model/lib/python3.10/contextlib.py", line 79, in inner
+    return func(*args, **kwds)
+  File "/nlp/scr/jshe/miniconda3/envs/emergent_partner_model/lib/python3.10/site-packages/numpy/testing/_private/utils.py", line 797, in assert_array_compare
+    raise AssertionError(msg)
+AssertionError: 
+Arrays are not equal
+
+Mismatched elements: 24 / 44 (54.5%)
+Max absolute difference: 9
+Max relative difference: 2.5
+ x: array([[0, 5],
+       [0, 6],
+       [1, 5],...
+ y: array([[0, 5],
+       [0, 6],
+       [0, 7],...

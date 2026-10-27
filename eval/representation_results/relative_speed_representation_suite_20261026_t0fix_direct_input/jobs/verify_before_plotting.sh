@@ -1,0 +1,4 @@
+#!/bin/bash
+set -euo pipefail
+export PYTHONDONTWRITEBYTECODE=1
+exec /nlp/scr/jshe/miniconda3/envs/emergent_partner_model/bin/python -u /juice6/u/jshe/emergent_partner_grid/eval/representation_results/relative_speed_representation_suite_20261026_t0fix_direct_input/verification_source/verify_representation_suite_before_plotting.py /juice6/u/jshe/emergent_partner_grid/eval/representation_results/relative_speed_representation_suite_20261026_t0fix_direct_input/suite_run.json

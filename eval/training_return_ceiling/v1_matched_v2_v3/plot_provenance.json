@@ -1,0 +1,14 @@
+{
+  "population": "train",
+  "observed_source": "/juice6/u/jshe/emergent_partner_grid/train/training_curves/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/final_update_dots/aggregates.csv",
+  "oracle_summary": "/juice6/u/jshe/emergent_partner_grid/eval/training_return_ceiling/v1_matched_v2_v3/summary.json",
+  "validation": "/juice6/u/jshe/emergent_partner_grid/eval/training_return_ceiling/v1_matched_v2_v3/validation.json",
+  "oracle_weighting": "Uniform weight across all training layouts and the condition's training profiles. No-influence averages both fixed partner goals equally; v2 influence averages both random initial goals equally. Multiply mean round return by 20.",
+  "observed_seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ]
+}

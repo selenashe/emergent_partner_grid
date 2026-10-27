@@ -1,0 +1,64 @@
+{
+  "version": "v1_matched",
+  "condition": "rnn_diverse_noinfluence",
+  "seed": 1,
+  "status": "completed",
+  "episodes": 920,
+  "rounds": 18400,
+  "tail_episodes": 92,
+  "checkpoint_sha256": "ac8389e6430f5f638adb7aca52ad9d9acd1d3813891e70f93152af1223f8b71e",
+  "config_sha256": "b08bfb192521fd74469bdae0c2134afdb02fef17aa575fcb5cbb8867770090d0",
+  "producer_sha256": "0470a471612fa3872560deceab67c9bab2d2dac59f75f504aa83e18fe1d2020a",
+  "sources": [
+    {
+      "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed1_t0fix_direct_input_train.h5",
+      "physical_path": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed1_t0fix_direct_input_train.h5",
+      "size": 529930432,
+      "mtime_ns": 1792668222908540691,
+      "scalar_sha256": {
+        "dones": "223e11ad8af8e1e9569bc754c921c8a0ca79e1b731d15de541d899948ab2a78e",
+        "round_done": "56885608e3b56644027c865b17ef95455fc1cf47aff3aab0f149a802f536aa06",
+        "round_idx": "7701e96c62ada411950df225a52e1fd4b0dad8ffe4dd486697ff4126217851db",
+        "round_time": "28fbf380c79b847a57298c99a00becd10125a57a5502036733d1c6ecc42bb34c",
+        "is_t0": "1199eab8ea73b9d44e3a4bae79bd271bb48a647796ce548e079ccafaa0110810",
+        "rewards": "b3c56126b5c04eb777ce3ff42a85d9809a1ec3c2b6cdeafccc7239f8a061dcb3",
+        "success": "cc3922fa67f1720c73dc0f1c5740575745171d103255c90aa788ebce76d2a897",
+        "partner_assignment": "cdbd30366e14cbf872696f6a811b60d0ef3aacd4f79bad8ffd1e5fb676ee2733",
+        "partner_goal": "5cb8dd911a4a6de7795bec19554eb6f4b7b0595273e18fa70e863018b3d9b089",
+        "ego_alloc_action": "e9d3f808c1aa80b3d21429f5c621a97d0443dac784a15c00dcf4ab7d0867bc18",
+        "layout_idx": "4b35bc53a9b3a86b090c610ebd6adaa9a63344a068684c17397bd469556fc4ec"
+      }
+    },
+    {
+      "path": "/juice6/u/jshe/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed1_t0fix_direct_input_test.h5",
+      "physical_path": "/juice6/scr6/nlp/interp-models/emergent_partner_grid/eval/eval_out/v1_matched_t0fix_direct_input/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/rnn_diverse_noinfluence_seed1_t0fix_direct_input_test.h5",
+      "size": 485768792,
+      "mtime_ns": 1792668233180466112,
+      "scalar_sha256": {
+        "dones": "83ea4fdbfd6dc0eaad22e71d66795eb5a2c6e8e6f792bdb16bdccc140f69ad9e",
+        "round_done": "bfa98af3bd79b4d847c12e4c0ad7c3d0f7c77b6b4aa2d46ab817547e1e798b7d",
+        "round_idx": "9bc7535e19c33e30c7a94473a98ce469ccd8a52a605f78fa49f9571b5aacdb3b",
+        "round_time": "59ec729518eb1868858fbd2cd5a53cba496accc5ada43205a9bea5a5b1be6afc",
+        "is_t0": "4702e7e1cad4132709851c58d470f88a4f9c98c7dd28c4b199a4650387609a45",
+        "rewards": "5bdac202515ed61d8f065bd08e3ad869ffc51959b1c24ab966f832a9c050a33a",
+        "success": "e73ba2003ecba103adc3b3888ebd2e3644d4f5a7f68e98fb05082f34433e78fa",
+        "partner_assignment": "a4442bfdd7a76f5d2858444cf20e239ac014bf7c8e2afff78530f5102b40f042",
+        "partner_goal": "8087a4006001c3c59d26a935f664962b88a9e719766b071c3f0c6c7787073941",
+        "ego_alloc_action": "391e83cc935c1e466d255354ae469b08cec2ae998102faf8a3269368795586b0",
+        "layout_idx": "ad4999ef4df25c99e49cfdfd382599cad533831cd6f7359f30f5b8fdce2099eb"
+      }
+    }
+  ],
+  "oracles": [
+    {
+      "path": "/juice6/u/jshe/emergent_partner_grid/eval/training_return_ceiling/v1_matched_v2_v3/per_layout_profile.csv",
+      "sha256": "5f845f57a7f78be804638064d106e7b830087e518a2e64582693cfe8e73f1005"
+    },
+    {
+      "path": "/juice6/u/jshe/emergent_partner_grid/eval/heldout_return_ceiling/v1_matched_v2_v3/per_layout_profile.csv",
+      "sha256": "5f7d17259bef62b5a4391f7af6919d65ba706fda6e2bc00914f8c1ed6a7c2eca"
+    }
+  ],
+  "method": "first-done inclusive; recorded reward ledger; effective within-round switches; exact conditional geometry bounds",
+  "new_rollouts": false
+}

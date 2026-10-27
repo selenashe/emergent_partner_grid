@@ -1,0 +1,58 @@
+--- eval/analyze_assignment_behaviors.py
++++ eval/analyze_assignment_behaviors.py
+@@ -22,8 +22,8 @@
+ from repo_paths import resolve_record_paths
+ from eval.plot_overcooked_paper_match import DEFAULT_MANIFEST, STYLES, VERSIONS, sha256, write_csv
+ 
+-DEFAULT_OUT = ROOT / "eval/protocol_comparison/v1_matched_20261009_182845/assignment_behaviors_all_seeds"
+-SEEDS = tuple(range(1, 11))
++DEFAULT_OUT = ROOT / "/juice6/u/jshe/emergent_partner_grid/eval/protocol_comparison/v1_matched_v2_v3_20261022_080155_t0fix_direct_input/behavioral_analysis_t0fix_direct_input/assignment_behaviors_all_seeds"
++SEEDS = tuple(range(1, 6))
+ FIELDS = ("dones", "round_done", "round_idx", "round_time", "is_t0", "partner_assignment")
+ CACHE_VERSION = 1
+ 
+@@ -179,7 +179,7 @@
+             if ci == 3:
+                 ax.set_xlabel("Round within partner episode")
+     handles = [Line2D([], [], color=colors[s - 1], label=f"Seed {s}") for s in SEEDS]
+-    handles.append(Line2D([], [], color="black", linewidth=2.4, label="Mean of 10 seeds"))
++    handles.append(Line2D([], [], color="black", linewidth=2.4, label="Mean of 5 seeds"))
+     fig.suptitle(title, fontsize=17, y=.995)
+     fig.legend(handles=handles, loc="upper center", bbox_to_anchor=(.5, .965), ncol=6, fontsize=9, frameon=False)
+     note = "Every line averages complete rounds over all partner profiles for one training seed; black is the equal-seed mean."
+@@ -217,7 +217,7 @@
+                Line2D([], [], color="#337ac4", linestyle="--", label="Partner faster at blue (speed-matching ego-red target: 100%)")]
+     fig.suptitle("Final assignments by partner ability", fontsize=17, y=.995)
+     fig.legend(handles=handles, loc="upper center", bbox_to_anchor=(.5, .963), ncol=1, frameon=False, fontsize=10)
+-    fig.text(.5, .012, "Thin lines: all ten individual training seeds; thick lines: equal-seed means.\n"
++    fig.text(.5, .012, "Thin lines: all five individual training seeds; thick lines: equal-seed means.\n"
+              "Partner color is complementary to ego assignment. Speed matching is a behavioral diagnostic, not a geometry-aware optimal policy.",
+              ha="center", fontsize=9)
+     fig.tight_layout(rect=(0, .065, 1, .885))
+@@ -296,7 +296,7 @@
+                             initial_ego_red=float(pm["initial_ego_red"][r]), final_ego_red=float(pm["final_ego_red"][r]),
+                             switches_per_round=float(pm["switches_per_round"][r]),
+                             final_partner_faster=float(pm["final_partner_faster"][r])))
+-            print(f"Read {population}: {version}/{condition}, seeds 1–10", flush=True)
++            print(f"Read {population}: {version}/{condition}, seeds 1–5", flush=True)
+     write_csv(out / "per_seed_summary.csv", summaries)
+     write_csv(out / "per_seed_by_round.csv", round_rows)
+     write_csv(out / "per_profile_seed_by_round.csv", profile_rows)
+@@ -307,7 +307,7 @@
+             final="Effective assignment on the terminal transition of each round, including timeouts",
+             switch="Change in effective assignment after initialization and within the same round; initialization and changes across round resets are excluded",
+             course="Rounds 1–20 within one partner episode; the partner capability stays constant across those rounds",
+-            weighting="Per seed, equal episode and round weights; all profiles have twenty episodes. Thick overview lines average all ten seeds equally",
++            weighting="Per seed, equal episode and round weights; all profiles have twenty episodes. Thick overview lines average all five seeds equally",
+             faster_task="Partner assigned its lower-delay color, excluding equal-delay profiles; not a geometry-aware optimality claim"),
+         caveats=["All training seeds are included; none is selected or dropped.",
+                  "No-influence assignment is externally imposed; ego requests do not determine it.",
+@@ -343,7 +343,7 @@
+     args = parser.parse_args()
+     raw = args.manifest.read_bytes()
+     manifest = resolve_record_paths(json.loads(raw))
+-    require(manifest["evaluation_seeds"] == list(SEEDS), "Expected all ten training seeds")
++    require(manifest["evaluation_seeds"] == list(SEEDS), "Expected all five training seeds")
+     for population in args.populations:
+         folder = "novel" if population == "test" else "familiar"
+         analyze_population(manifest, args.out_dir.resolve() / folder, population,

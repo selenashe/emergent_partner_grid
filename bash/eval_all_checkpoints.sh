@@ -23,7 +23,15 @@ export XLA_FLAGS="--xla_gpu_deterministic_ops=true"
 REPO_ROOT="${REPO_ROOT:-/juice6/u/jshe/emergent_partner_grid}"
 cd "${REPO_ROOT}"
 export PYTHONPATH="${REPO_ROOT}${PYTHONPATH:+:${PYTHONPATH}}"
-CHECKPOINT_DIR="${CHECKPOINT_DIR:-${REPO_ROOT}/train/train_logs/online_v2}"
+export GRID_ARTIFACT_ROOT="${GRID_ARTIFACT_ROOT:-/juice6/scr6/nlp/interp-models/emergent_partner_grid}"
+# Historical configurations remain local; new frozen batches store their configs
+# with the weights on scratch. Explicit CHECKPOINT_DIR always takes precedence.
+if [[ -z "${CHECKPOINT_DIR:-}" ]]; then
+    CHECKPOINT_DIR="${REPO_ROOT}/train/train_logs/online_v2"
+    if [[ ! -d "${CHECKPOINT_DIR}" && -d "${GRID_ARTIFACT_ROOT}/train/train_logs/online_v2" ]]; then
+        CHECKPOINT_DIR="${GRID_ARTIFACT_ROOT}/train/train_logs/online_v2"
+    fi
+fi
 EVAL_OUT_DIR="${EVAL_OUT_DIR:-${REPO_ROOT}/eval/eval_out/online_v2}"
 mkdir -p "${EVAL_OUT_DIR}"
 EVALUATOR_SCRIPT="eval/evaluate_partner_modelling.py"

@@ -1,0 +1,1595 @@
+{
+  "status": "approved",
+  "training_manifest": "/juice6/u/jshe/emergent_partner_grid/train/manifests/sbatch_v1_matched_v2_v3_20261022_080155_t0fix_direct_input.json",
+  "training_manifest_sha256": "0c7ecdce1864af36a49a17701103fa90290a6b595ba0aaf723f0b5406bec2ed8",
+  "versions": [
+    "v1_matched",
+    "v2",
+    "v3"
+  ],
+  "training_seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "policy_retraining": false,
+  "pair_order": [
+    "red_delay",
+    "blue_delay"
+  ],
+  "delay_definition": "d waiting steps between moves; movement every d+1 steps",
+  "familiar_delay_values": [
+    1,
+    2,
+    3,
+    4,
+    7,
+    8,
+    9
+  ],
+  "novel_delay_values": [
+    0,
+    5,
+    6
+  ],
+  "existing_training_profiles": [
+    [
+      1,
+      4
+    ],
+    [
+      1,
+      7
+    ],
+    [
+      1,
+      8
+    ],
+    [
+      1,
+      9
+    ],
+    [
+      2,
+      4
+    ],
+    [
+      2,
+      7
+    ],
+    [
+      2,
+      8
+    ],
+    [
+      2,
+      9
+    ],
+    [
+      3,
+      4
+    ],
+    [
+      3,
+      7
+    ],
+    [
+      3,
+      8
+    ],
+    [
+      3,
+      9
+    ],
+    [
+      4,
+      1
+    ],
+    [
+      4,
+      2
+    ],
+    [
+      4,
+      3
+    ],
+    [
+      7,
+      1
+    ],
+    [
+      7,
+      2
+    ],
+    [
+      7,
+      3
+    ],
+    [
+      8,
+      1
+    ],
+    [
+      8,
+      2
+    ],
+    [
+      8,
+      3
+    ],
+    [
+      9,
+      1
+    ],
+    [
+      9,
+      2
+    ],
+    [
+      9,
+      3
+    ]
+  ],
+  "existing_held_out_profiles": [
+    [
+      0,
+      5
+    ],
+    [
+      0,
+      6
+    ],
+    [
+      0,
+      7
+    ],
+    [
+      0,
+      8
+    ],
+    [
+      0,
+      9
+    ],
+    [
+      1,
+      5
+    ],
+    [
+      1,
+      6
+    ],
+    [
+      2,
+      5
+    ],
+    [
+      2,
+      6
+    ],
+    [
+      3,
+      5
+    ],
+    [
+      3,
+      6
+    ],
+    [
+      5,
+      0
+    ],
+    [
+      5,
+      1
+    ],
+    [
+      5,
+      2
+    ],
+    [
+      5,
+      3
+    ],
+    [
+      6,
+      0
+    ],
+    [
+      6,
+      1
+    ],
+    [
+      6,
+      2
+    ],
+    [
+      6,
+      3
+    ],
+    [
+      7,
+      0
+    ],
+    [
+      8,
+      0
+    ],
+    [
+      9,
+      0
+    ]
+  ],
+  "new_fully_novel_unequal_profiles": [
+    [
+      5,
+      6
+    ],
+    [
+      6,
+      5
+    ]
+  ],
+  "proposed_profiles": [
+    {
+      "red_delay": 0,
+      "blue_delay": 1,
+      "category": "one_delay_novel",
+      "present_in_previous_46_profile_decoding": false,
+      "requires_new_profile_rollout": true,
+      "novel_delay_count": 1,
+      "faster_goal": "red",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 0,
+      "blue_delay": 2,
+      "category": "one_delay_novel",
+      "present_in_previous_46_profile_decoding": false,
+      "requires_new_profile_rollout": true,
+      "novel_delay_count": 1,
+      "faster_goal": "red",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 0,
+      "blue_delay": 3,
+      "category": "one_delay_novel",
+      "present_in_previous_46_profile_decoding": false,
+      "requires_new_profile_rollout": true,
+      "novel_delay_count": 1,
+      "faster_goal": "red",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 0,
+      "blue_delay": 4,
+      "category": "one_delay_novel",
+      "present_in_previous_46_profile_decoding": false,
+      "requires_new_profile_rollout": true,
+      "novel_delay_count": 1,
+      "faster_goal": "red",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 0,
+      "blue_delay": 5,
+      "category": "both_delays_novel",
+      "present_in_previous_46_profile_decoding": true,
+      "requires_new_profile_rollout": false,
+      "novel_delay_count": 2,
+      "faster_goal": "red",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 0,
+      "blue_delay": 6,
+      "category": "both_delays_novel",
+      "present_in_previous_46_profile_decoding": true,
+      "requires_new_profile_rollout": false,
+      "novel_delay_count": 2,
+      "faster_goal": "red",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 0,
+      "blue_delay": 7,
+      "category": "one_delay_novel",
+      "present_in_previous_46_profile_decoding": true,
+      "requires_new_profile_rollout": false,
+      "novel_delay_count": 1,
+      "faster_goal": "red",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 0,
+      "blue_delay": 8,
+      "category": "one_delay_novel",
+      "present_in_previous_46_profile_decoding": true,
+      "requires_new_profile_rollout": false,
+      "novel_delay_count": 1,
+      "faster_goal": "red",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 0,
+      "blue_delay": 9,
+      "category": "one_delay_novel",
+      "present_in_previous_46_profile_decoding": true,
+      "requires_new_profile_rollout": false,
+      "novel_delay_count": 1,
+      "faster_goal": "red",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 1,
+      "blue_delay": 0,
+      "category": "one_delay_novel",
+      "present_in_previous_46_profile_decoding": false,
+      "requires_new_profile_rollout": true,
+      "novel_delay_count": 1,
+      "faster_goal": "blue",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 1,
+      "blue_delay": 2,
+      "category": "unseen_pair_of_familiar_delays",
+      "present_in_previous_46_profile_decoding": false,
+      "requires_new_profile_rollout": true,
+      "novel_delay_count": 0,
+      "faster_goal": "red",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 1,
+      "blue_delay": 3,
+      "category": "unseen_pair_of_familiar_delays",
+      "present_in_previous_46_profile_decoding": false,
+      "requires_new_profile_rollout": true,
+      "novel_delay_count": 0,
+      "faster_goal": "red",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 1,
+      "blue_delay": 4,
+      "category": "training_profile",
+      "present_in_previous_46_profile_decoding": true,
+      "requires_new_profile_rollout": false,
+      "novel_delay_count": 0,
+      "faster_goal": "red",
+      "seen_by_diverse_training": true,
+      "seen_by_single_partner_training": true
+    },
+    {
+      "red_delay": 1,
+      "blue_delay": 5,
+      "category": "one_delay_novel",
+      "present_in_previous_46_profile_decoding": true,
+      "requires_new_profile_rollout": false,
+      "novel_delay_count": 1,
+      "faster_goal": "red",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 1,
+      "blue_delay": 6,
+      "category": "one_delay_novel",
+      "present_in_previous_46_profile_decoding": true,
+      "requires_new_profile_rollout": false,
+      "novel_delay_count": 1,
+      "faster_goal": "red",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 1,
+      "blue_delay": 7,
+      "category": "training_profile",
+      "present_in_previous_46_profile_decoding": true,
+      "requires_new_profile_rollout": false,
+      "novel_delay_count": 0,
+      "faster_goal": "red",
+      "seen_by_diverse_training": true,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 1,
+      "blue_delay": 8,
+      "category": "training_profile",
+      "present_in_previous_46_profile_decoding": true,
+      "requires_new_profile_rollout": false,
+      "novel_delay_count": 0,
+      "faster_goal": "red",
+      "seen_by_diverse_training": true,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 1,
+      "blue_delay": 9,
+      "category": "training_profile",
+      "present_in_previous_46_profile_decoding": true,
+      "requires_new_profile_rollout": false,
+      "novel_delay_count": 0,
+      "faster_goal": "red",
+      "seen_by_diverse_training": true,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 2,
+      "blue_delay": 0,
+      "category": "one_delay_novel",
+      "present_in_previous_46_profile_decoding": false,
+      "requires_new_profile_rollout": true,
+      "novel_delay_count": 1,
+      "faster_goal": "blue",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 2,
+      "blue_delay": 1,
+      "category": "unseen_pair_of_familiar_delays",
+      "present_in_previous_46_profile_decoding": false,
+      "requires_new_profile_rollout": true,
+      "novel_delay_count": 0,
+      "faster_goal": "blue",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 2,
+      "blue_delay": 3,
+      "category": "unseen_pair_of_familiar_delays",
+      "present_in_previous_46_profile_decoding": false,
+      "requires_new_profile_rollout": true,
+      "novel_delay_count": 0,
+      "faster_goal": "red",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 2,
+      "blue_delay": 4,
+      "category": "training_profile",
+      "present_in_previous_46_profile_decoding": true,
+      "requires_new_profile_rollout": false,
+      "novel_delay_count": 0,
+      "faster_goal": "red",
+      "seen_by_diverse_training": true,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 2,
+      "blue_delay": 5,
+      "category": "one_delay_novel",
+      "present_in_previous_46_profile_decoding": true,
+      "requires_new_profile_rollout": false,
+      "novel_delay_count": 1,
+      "faster_goal": "red",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 2,
+      "blue_delay": 6,
+      "category": "one_delay_novel",
+      "present_in_previous_46_profile_decoding": true,
+      "requires_new_profile_rollout": false,
+      "novel_delay_count": 1,
+      "faster_goal": "red",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 2,
+      "blue_delay": 7,
+      "category": "training_profile",
+      "present_in_previous_46_profile_decoding": true,
+      "requires_new_profile_rollout": false,
+      "novel_delay_count": 0,
+      "faster_goal": "red",
+      "seen_by_diverse_training": true,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 2,
+      "blue_delay": 8,
+      "category": "training_profile",
+      "present_in_previous_46_profile_decoding": true,
+      "requires_new_profile_rollout": false,
+      "novel_delay_count": 0,
+      "faster_goal": "red",
+      "seen_by_diverse_training": true,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 2,
+      "blue_delay": 9,
+      "category": "training_profile",
+      "present_in_previous_46_profile_decoding": true,
+      "requires_new_profile_rollout": false,
+      "novel_delay_count": 0,
+      "faster_goal": "red",
+      "seen_by_diverse_training": true,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 3,
+      "blue_delay": 0,
+      "category": "one_delay_novel",
+      "present_in_previous_46_profile_decoding": false,
+      "requires_new_profile_rollout": true,
+      "novel_delay_count": 1,
+      "faster_goal": "blue",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 3,
+      "blue_delay": 1,
+      "category": "unseen_pair_of_familiar_delays",
+      "present_in_previous_46_profile_decoding": false,
+      "requires_new_profile_rollout": true,
+      "novel_delay_count": 0,
+      "faster_goal": "blue",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 3,
+      "blue_delay": 2,
+      "category": "unseen_pair_of_familiar_delays",
+      "present_in_previous_46_profile_decoding": false,
+      "requires_new_profile_rollout": true,
+      "novel_delay_count": 0,
+      "faster_goal": "blue",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 3,
+      "blue_delay": 4,
+      "category": "training_profile",
+      "present_in_previous_46_profile_decoding": true,
+      "requires_new_profile_rollout": false,
+      "novel_delay_count": 0,
+      "faster_goal": "red",
+      "seen_by_diverse_training": true,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 3,
+      "blue_delay": 5,
+      "category": "one_delay_novel",
+      "present_in_previous_46_profile_decoding": true,
+      "requires_new_profile_rollout": false,
+      "novel_delay_count": 1,
+      "faster_goal": "red",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 3,
+      "blue_delay": 6,
+      "category": "one_delay_novel",
+      "present_in_previous_46_profile_decoding": true,
+      "requires_new_profile_rollout": false,
+      "novel_delay_count": 1,
+      "faster_goal": "red",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 3,
+      "blue_delay": 7,
+      "category": "training_profile",
+      "present_in_previous_46_profile_decoding": true,
+      "requires_new_profile_rollout": false,
+      "novel_delay_count": 0,
+      "faster_goal": "red",
+      "seen_by_diverse_training": true,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 3,
+      "blue_delay": 8,
+      "category": "training_profile",
+      "present_in_previous_46_profile_decoding": true,
+      "requires_new_profile_rollout": false,
+      "novel_delay_count": 0,
+      "faster_goal": "red",
+      "seen_by_diverse_training": true,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 3,
+      "blue_delay": 9,
+      "category": "training_profile",
+      "present_in_previous_46_profile_decoding": true,
+      "requires_new_profile_rollout": false,
+      "novel_delay_count": 0,
+      "faster_goal": "red",
+      "seen_by_diverse_training": true,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 4,
+      "blue_delay": 0,
+      "category": "one_delay_novel",
+      "present_in_previous_46_profile_decoding": false,
+      "requires_new_profile_rollout": true,
+      "novel_delay_count": 1,
+      "faster_goal": "blue",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 4,
+      "blue_delay": 1,
+      "category": "training_profile",
+      "present_in_previous_46_profile_decoding": true,
+      "requires_new_profile_rollout": false,
+      "novel_delay_count": 0,
+      "faster_goal": "blue",
+      "seen_by_diverse_training": true,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 4,
+      "blue_delay": 2,
+      "category": "training_profile",
+      "present_in_previous_46_profile_decoding": true,
+      "requires_new_profile_rollout": false,
+      "novel_delay_count": 0,
+      "faster_goal": "blue",
+      "seen_by_diverse_training": true,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 4,
+      "blue_delay": 3,
+      "category": "training_profile",
+      "present_in_previous_46_profile_decoding": true,
+      "requires_new_profile_rollout": false,
+      "novel_delay_count": 0,
+      "faster_goal": "blue",
+      "seen_by_diverse_training": true,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 4,
+      "blue_delay": 5,
+      "category": "one_delay_novel",
+      "present_in_previous_46_profile_decoding": false,
+      "requires_new_profile_rollout": true,
+      "novel_delay_count": 1,
+      "faster_goal": "red",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 4,
+      "blue_delay": 6,
+      "category": "one_delay_novel",
+      "present_in_previous_46_profile_decoding": false,
+      "requires_new_profile_rollout": true,
+      "novel_delay_count": 1,
+      "faster_goal": "red",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 4,
+      "blue_delay": 7,
+      "category": "unseen_pair_of_familiar_delays",
+      "present_in_previous_46_profile_decoding": false,
+      "requires_new_profile_rollout": true,
+      "novel_delay_count": 0,
+      "faster_goal": "red",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 4,
+      "blue_delay": 8,
+      "category": "unseen_pair_of_familiar_delays",
+      "present_in_previous_46_profile_decoding": false,
+      "requires_new_profile_rollout": true,
+      "novel_delay_count": 0,
+      "faster_goal": "red",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 4,
+      "blue_delay": 9,
+      "category": "unseen_pair_of_familiar_delays",
+      "present_in_previous_46_profile_decoding": false,
+      "requires_new_profile_rollout": true,
+      "novel_delay_count": 0,
+      "faster_goal": "red",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 5,
+      "blue_delay": 0,
+      "category": "both_delays_novel",
+      "present_in_previous_46_profile_decoding": true,
+      "requires_new_profile_rollout": false,
+      "novel_delay_count": 2,
+      "faster_goal": "blue",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 5,
+      "blue_delay": 1,
+      "category": "one_delay_novel",
+      "present_in_previous_46_profile_decoding": true,
+      "requires_new_profile_rollout": false,
+      "novel_delay_count": 1,
+      "faster_goal": "blue",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 5,
+      "blue_delay": 2,
+      "category": "one_delay_novel",
+      "present_in_previous_46_profile_decoding": true,
+      "requires_new_profile_rollout": false,
+      "novel_delay_count": 1,
+      "faster_goal": "blue",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 5,
+      "blue_delay": 3,
+      "category": "one_delay_novel",
+      "present_in_previous_46_profile_decoding": true,
+      "requires_new_profile_rollout": false,
+      "novel_delay_count": 1,
+      "faster_goal": "blue",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 5,
+      "blue_delay": 4,
+      "category": "one_delay_novel",
+      "present_in_previous_46_profile_decoding": false,
+      "requires_new_profile_rollout": true,
+      "novel_delay_count": 1,
+      "faster_goal": "blue",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 5,
+      "blue_delay": 6,
+      "category": "both_delays_novel",
+      "present_in_previous_46_profile_decoding": false,
+      "requires_new_profile_rollout": true,
+      "novel_delay_count": 2,
+      "faster_goal": "red",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 5,
+      "blue_delay": 7,
+      "category": "one_delay_novel",
+      "present_in_previous_46_profile_decoding": false,
+      "requires_new_profile_rollout": true,
+      "novel_delay_count": 1,
+      "faster_goal": "red",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 5,
+      "blue_delay": 8,
+      "category": "one_delay_novel",
+      "present_in_previous_46_profile_decoding": false,
+      "requires_new_profile_rollout": true,
+      "novel_delay_count": 1,
+      "faster_goal": "red",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 5,
+      "blue_delay": 9,
+      "category": "one_delay_novel",
+      "present_in_previous_46_profile_decoding": false,
+      "requires_new_profile_rollout": true,
+      "novel_delay_count": 1,
+      "faster_goal": "red",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 6,
+      "blue_delay": 0,
+      "category": "both_delays_novel",
+      "present_in_previous_46_profile_decoding": true,
+      "requires_new_profile_rollout": false,
+      "novel_delay_count": 2,
+      "faster_goal": "blue",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 6,
+      "blue_delay": 1,
+      "category": "one_delay_novel",
+      "present_in_previous_46_profile_decoding": true,
+      "requires_new_profile_rollout": false,
+      "novel_delay_count": 1,
+      "faster_goal": "blue",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 6,
+      "blue_delay": 2,
+      "category": "one_delay_novel",
+      "present_in_previous_46_profile_decoding": true,
+      "requires_new_profile_rollout": false,
+      "novel_delay_count": 1,
+      "faster_goal": "blue",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 6,
+      "blue_delay": 3,
+      "category": "one_delay_novel",
+      "present_in_previous_46_profile_decoding": true,
+      "requires_new_profile_rollout": false,
+      "novel_delay_count": 1,
+      "faster_goal": "blue",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 6,
+      "blue_delay": 4,
+      "category": "one_delay_novel",
+      "present_in_previous_46_profile_decoding": false,
+      "requires_new_profile_rollout": true,
+      "novel_delay_count": 1,
+      "faster_goal": "blue",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 6,
+      "blue_delay": 5,
+      "category": "both_delays_novel",
+      "present_in_previous_46_profile_decoding": false,
+      "requires_new_profile_rollout": true,
+      "novel_delay_count": 2,
+      "faster_goal": "blue",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 6,
+      "blue_delay": 7,
+      "category": "one_delay_novel",
+      "present_in_previous_46_profile_decoding": false,
+      "requires_new_profile_rollout": true,
+      "novel_delay_count": 1,
+      "faster_goal": "red",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 6,
+      "blue_delay": 8,
+      "category": "one_delay_novel",
+      "present_in_previous_46_profile_decoding": false,
+      "requires_new_profile_rollout": true,
+      "novel_delay_count": 1,
+      "faster_goal": "red",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 6,
+      "blue_delay": 9,
+      "category": "one_delay_novel",
+      "present_in_previous_46_profile_decoding": false,
+      "requires_new_profile_rollout": true,
+      "novel_delay_count": 1,
+      "faster_goal": "red",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 7,
+      "blue_delay": 0,
+      "category": "one_delay_novel",
+      "present_in_previous_46_profile_decoding": true,
+      "requires_new_profile_rollout": false,
+      "novel_delay_count": 1,
+      "faster_goal": "blue",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 7,
+      "blue_delay": 1,
+      "category": "training_profile",
+      "present_in_previous_46_profile_decoding": true,
+      "requires_new_profile_rollout": false,
+      "novel_delay_count": 0,
+      "faster_goal": "blue",
+      "seen_by_diverse_training": true,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 7,
+      "blue_delay": 2,
+      "category": "training_profile",
+      "present_in_previous_46_profile_decoding": true,
+      "requires_new_profile_rollout": false,
+      "novel_delay_count": 0,
+      "faster_goal": "blue",
+      "seen_by_diverse_training": true,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 7,
+      "blue_delay": 3,
+      "category": "training_profile",
+      "present_in_previous_46_profile_decoding": true,
+      "requires_new_profile_rollout": false,
+      "novel_delay_count": 0,
+      "faster_goal": "blue",
+      "seen_by_diverse_training": true,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 7,
+      "blue_delay": 4,
+      "category": "unseen_pair_of_familiar_delays",
+      "present_in_previous_46_profile_decoding": false,
+      "requires_new_profile_rollout": true,
+      "novel_delay_count": 0,
+      "faster_goal": "blue",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 7,
+      "blue_delay": 5,
+      "category": "one_delay_novel",
+      "present_in_previous_46_profile_decoding": false,
+      "requires_new_profile_rollout": true,
+      "novel_delay_count": 1,
+      "faster_goal": "blue",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 7,
+      "blue_delay": 6,
+      "category": "one_delay_novel",
+      "present_in_previous_46_profile_decoding": false,
+      "requires_new_profile_rollout": true,
+      "novel_delay_count": 1,
+      "faster_goal": "blue",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 7,
+      "blue_delay": 8,
+      "category": "unseen_pair_of_familiar_delays",
+      "present_in_previous_46_profile_decoding": false,
+      "requires_new_profile_rollout": true,
+      "novel_delay_count": 0,
+      "faster_goal": "red",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 7,
+      "blue_delay": 9,
+      "category": "unseen_pair_of_familiar_delays",
+      "present_in_previous_46_profile_decoding": false,
+      "requires_new_profile_rollout": true,
+      "novel_delay_count": 0,
+      "faster_goal": "red",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 8,
+      "blue_delay": 0,
+      "category": "one_delay_novel",
+      "present_in_previous_46_profile_decoding": true,
+      "requires_new_profile_rollout": false,
+      "novel_delay_count": 1,
+      "faster_goal": "blue",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 8,
+      "blue_delay": 1,
+      "category": "training_profile",
+      "present_in_previous_46_profile_decoding": true,
+      "requires_new_profile_rollout": false,
+      "novel_delay_count": 0,
+      "faster_goal": "blue",
+      "seen_by_diverse_training": true,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 8,
+      "blue_delay": 2,
+      "category": "training_profile",
+      "present_in_previous_46_profile_decoding": true,
+      "requires_new_profile_rollout": false,
+      "novel_delay_count": 0,
+      "faster_goal": "blue",
+      "seen_by_diverse_training": true,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 8,
+      "blue_delay": 3,
+      "category": "training_profile",
+      "present_in_previous_46_profile_decoding": true,
+      "requires_new_profile_rollout": false,
+      "novel_delay_count": 0,
+      "faster_goal": "blue",
+      "seen_by_diverse_training": true,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 8,
+      "blue_delay": 4,
+      "category": "unseen_pair_of_familiar_delays",
+      "present_in_previous_46_profile_decoding": false,
+      "requires_new_profile_rollout": true,
+      "novel_delay_count": 0,
+      "faster_goal": "blue",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 8,
+      "blue_delay": 5,
+      "category": "one_delay_novel",
+      "present_in_previous_46_profile_decoding": false,
+      "requires_new_profile_rollout": true,
+      "novel_delay_count": 1,
+      "faster_goal": "blue",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 8,
+      "blue_delay": 6,
+      "category": "one_delay_novel",
+      "present_in_previous_46_profile_decoding": false,
+      "requires_new_profile_rollout": true,
+      "novel_delay_count": 1,
+      "faster_goal": "blue",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 8,
+      "blue_delay": 7,
+      "category": "unseen_pair_of_familiar_delays",
+      "present_in_previous_46_profile_decoding": false,
+      "requires_new_profile_rollout": true,
+      "novel_delay_count": 0,
+      "faster_goal": "blue",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 8,
+      "blue_delay": 9,
+      "category": "unseen_pair_of_familiar_delays",
+      "present_in_previous_46_profile_decoding": false,
+      "requires_new_profile_rollout": true,
+      "novel_delay_count": 0,
+      "faster_goal": "red",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 9,
+      "blue_delay": 0,
+      "category": "one_delay_novel",
+      "present_in_previous_46_profile_decoding": true,
+      "requires_new_profile_rollout": false,
+      "novel_delay_count": 1,
+      "faster_goal": "blue",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 9,
+      "blue_delay": 1,
+      "category": "training_profile",
+      "present_in_previous_46_profile_decoding": true,
+      "requires_new_profile_rollout": false,
+      "novel_delay_count": 0,
+      "faster_goal": "blue",
+      "seen_by_diverse_training": true,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 9,
+      "blue_delay": 2,
+      "category": "training_profile",
+      "present_in_previous_46_profile_decoding": true,
+      "requires_new_profile_rollout": false,
+      "novel_delay_count": 0,
+      "faster_goal": "blue",
+      "seen_by_diverse_training": true,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 9,
+      "blue_delay": 3,
+      "category": "training_profile",
+      "present_in_previous_46_profile_decoding": true,
+      "requires_new_profile_rollout": false,
+      "novel_delay_count": 0,
+      "faster_goal": "blue",
+      "seen_by_diverse_training": true,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 9,
+      "blue_delay": 4,
+      "category": "unseen_pair_of_familiar_delays",
+      "present_in_previous_46_profile_decoding": false,
+      "requires_new_profile_rollout": true,
+      "novel_delay_count": 0,
+      "faster_goal": "blue",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 9,
+      "blue_delay": 5,
+      "category": "one_delay_novel",
+      "present_in_previous_46_profile_decoding": false,
+      "requires_new_profile_rollout": true,
+      "novel_delay_count": 1,
+      "faster_goal": "blue",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 9,
+      "blue_delay": 6,
+      "category": "one_delay_novel",
+      "present_in_previous_46_profile_decoding": false,
+      "requires_new_profile_rollout": true,
+      "novel_delay_count": 1,
+      "faster_goal": "blue",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 9,
+      "blue_delay": 7,
+      "category": "unseen_pair_of_familiar_delays",
+      "present_in_previous_46_profile_decoding": false,
+      "requires_new_profile_rollout": true,
+      "novel_delay_count": 0,
+      "faster_goal": "blue",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    },
+    {
+      "red_delay": 9,
+      "blue_delay": 8,
+      "category": "unseen_pair_of_familiar_delays",
+      "present_in_previous_46_profile_decoding": false,
+      "requires_new_profile_rollout": true,
+      "novel_delay_count": 0,
+      "faster_goal": "blue",
+      "seen_by_diverse_training": false,
+      "seen_by_single_partner_training": false
+    }
+  ],
+  "proposed_profile_count": 90,
+  "category_counts": {
+    "one_delay_novel": 42,
+    "both_delays_novel": 6,
+    "unseen_pair_of_familiar_delays": 18,
+    "training_profile": 24
+  },
+  "training_exposure_by_condition": {
+    "rnn_diverse_influence": [
+      [
+        1,
+        4
+      ],
+      [
+        1,
+        7
+      ],
+      [
+        1,
+        8
+      ],
+      [
+        1,
+        9
+      ],
+      [
+        2,
+        4
+      ],
+      [
+        2,
+        7
+      ],
+      [
+        2,
+        8
+      ],
+      [
+        2,
+        9
+      ],
+      [
+        3,
+        4
+      ],
+      [
+        3,
+        7
+      ],
+      [
+        3,
+        8
+      ],
+      [
+        3,
+        9
+      ],
+      [
+        4,
+        1
+      ],
+      [
+        4,
+        2
+      ],
+      [
+        4,
+        3
+      ],
+      [
+        7,
+        1
+      ],
+      [
+        7,
+        2
+      ],
+      [
+        7,
+        3
+      ],
+      [
+        8,
+        1
+      ],
+      [
+        8,
+        2
+      ],
+      [
+        8,
+        3
+      ],
+      [
+        9,
+        1
+      ],
+      [
+        9,
+        2
+      ],
+      [
+        9,
+        3
+      ]
+    ],
+    "mlp_diverse_influence": [
+      [
+        1,
+        4
+      ],
+      [
+        1,
+        7
+      ],
+      [
+        1,
+        8
+      ],
+      [
+        1,
+        9
+      ],
+      [
+        2,
+        4
+      ],
+      [
+        2,
+        7
+      ],
+      [
+        2,
+        8
+      ],
+      [
+        2,
+        9
+      ],
+      [
+        3,
+        4
+      ],
+      [
+        3,
+        7
+      ],
+      [
+        3,
+        8
+      ],
+      [
+        3,
+        9
+      ],
+      [
+        4,
+        1
+      ],
+      [
+        4,
+        2
+      ],
+      [
+        4,
+        3
+      ],
+      [
+        7,
+        1
+      ],
+      [
+        7,
+        2
+      ],
+      [
+        7,
+        3
+      ],
+      [
+        8,
+        1
+      ],
+      [
+        8,
+        2
+      ],
+      [
+        8,
+        3
+      ],
+      [
+        9,
+        1
+      ],
+      [
+        9,
+        2
+      ],
+      [
+        9,
+        3
+      ]
+    ],
+    "rnn_single_influence": [
+      [
+        1,
+        4
+      ]
+    ],
+    "rnn_diverse_noinfluence": [
+      [
+        1,
+        4
+      ],
+      [
+        1,
+        7
+      ],
+      [
+        1,
+        8
+      ],
+      [
+        1,
+        9
+      ],
+      [
+        2,
+        4
+      ],
+      [
+        2,
+        7
+      ],
+      [
+        2,
+        8
+      ],
+      [
+        2,
+        9
+      ],
+      [
+        3,
+        4
+      ],
+      [
+        3,
+        7
+      ],
+      [
+        3,
+        8
+      ],
+      [
+        3,
+        9
+      ],
+      [
+        4,
+        1
+      ],
+      [
+        4,
+        2
+      ],
+      [
+        4,
+        3
+      ],
+      [
+        7,
+        1
+      ],
+      [
+        7,
+        2
+      ],
+      [
+        7,
+        3
+      ],
+      [
+        8,
+        1
+      ],
+      [
+        8,
+        2
+      ],
+      [
+        8,
+        3
+      ],
+      [
+        9,
+        1
+      ],
+      [
+        9,
+        2
+      ],
+      [
+        9,
+        3
+      ]
+    ]
+  },
+  "plot_plan": {
+    "target": "which goal is faster from partner delays; red if d_R<d_B, blue otherwise for unequal delays",
+    "feature": "cumulative mean post-observation GRU state",
+    "timestep_cutoffs": [
+      1,
+      50,
+      100,
+      150,
+      200,
+      250,
+      300,
+      350,
+      400
+    ],
+    "per_profile_panels": "three experiment panels per capability profile, three RNN condition curves per experiment",
+    "aggregation": "five policy seeds with 95% bootstrap intervals across seeds",
+    "per_profile_metric": "accuracy / recall for the profile's faster-goal class; each profile has one class",
+    "training_labels": "Mark profile membership in the 24-profile diverse-training pool; single-partner control saw only (1,4). Distinguish new combinations of familiar delays, one-novel-delay profiles, and two-novel-delay profiles.",
+    "equal_delay_handling": "excluded from proposed 48 and 90; no unique faster-goal label",
+    "layout": "One combined figure with all 90 capability profiles as subplot groups. Each profile retains the v1_matched/v2/v3 panels and three RNN condition curves from the reference; export individual profile comparisons as well."
+  },
+  "review_questions": [
+    "Review the complete 90-profile inventory before any evaluation submission."
+  ],
+  "selected_scope": "90 profiles: every unequal ordered pair from delays 0..9",
+  "scope_selection_source": "User chose the 90-profile scope in the clarification reply.",
+  "new_profile_count": 44,
+  "all_fully_novel_unequal_profiles": [
+    [
+      0,
+      5
+    ],
+    [
+      0,
+      6
+    ],
+    [
+      5,
+      0
+    ],
+    [
+      5,
+      6
+    ],
+    [
+      6,
+      0
+    ],
+    [
+      6,
+      5
+    ]
+  ],
+  "episodes_per_profile": 20,
+  "episodes_per_policy": 1800,
+  "existing_episodes_per_policy": 920,
+  "additional_episodes_per_policy": 880,
+  "approved_scope": "90 unequal profiles",
+  "evaluation_manifest": "/juice6/u/jshe/emergent_partner_grid/eval/representation_results/relative_speed_all90_v1_matched_v2_v3_20261022_t0fix_direct_input/analysis_run.json"
+}

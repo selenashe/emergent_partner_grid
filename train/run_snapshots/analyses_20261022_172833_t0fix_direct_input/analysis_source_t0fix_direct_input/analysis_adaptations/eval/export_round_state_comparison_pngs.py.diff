@@ -1,0 +1,11 @@
+--- eval/export_round_state_comparison_pngs.py
++++ eval/export_round_state_comparison_pngs.py
+@@ -24,7 +24,7 @@
+     outputs = []
+     for condition, name in plotting.CONDITIONS.items():
+         fig, axes = plt.subplots(6, 2, figsize=(10, 22), sharey=True, sharex=True)
+-        fig.suptitle(f"{name}\nAll 10 training seeds · shading: 95% bootstrap CI across seeds", fontsize=15, y=.99)
++        fig.suptitle(f"{name}\nAll 5 training seeds · shading: 95% bootstrap CI across seeds", fontsize=15, y=.99)
+         for version_index, version in enumerate(plotting.VERSIONS):
+             for feature_index, feature in enumerate(plotting.FEATURE_NAMES):
+                 row = version_index * 2 + feature_index
